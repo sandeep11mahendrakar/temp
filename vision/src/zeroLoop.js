@@ -3,6 +3,9 @@
 /**
  * zeroLoop.js — B6 zero-LLM closed loop (all collaborators injected).
  *
+ * @deprecated v1 mechanism — superseded by vision/src/loopController.js (B6-full).
+ * This file is frozen: no behavior changes. New work targets loopController.js.
+ *
  * perceive -> planner -> executor(0 LLM) -> mergeLoop -> delta-stop.
  * Stop rule (exactly as specified): stop when
  *   (loop >= 2 AND delta <= 1) OR covered OR loop >= 5.

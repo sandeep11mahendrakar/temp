@@ -3,6 +3,9 @@
 /**
  * batchPlan.js — B5 ONE-LLM batch test-case contract (mock-LLM only).
  *
+ * @deprecated v1 mechanism — superseded by vision/src/planner.js (B5-full).
+ * This file is frozen: no behavior changes. New work targets planner.js.
+ *
  * CODE expands deterministic candidate test cases; ONE LLM call selects and
  * orders them; strict JSON rules apply throughout:
  *   - parse extractLastJSON-first (T1 rule: thought prefix + trailing prose),

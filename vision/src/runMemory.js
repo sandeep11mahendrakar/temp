@@ -3,6 +3,9 @@
 /**
  * runMemory.js — B4 per-site run memory (pure logic + atomic file writes).
  *
+ * @deprecated v1 mechanism — superseded by vision/src/memory.js (B4-full).
+ * This file is frozen: no behavior changes. New work targets memory.js.
+ *
  * Lessons today live only in RAM (explorer lessonBuffer) and raw
  * llm_calls.jsonl telemetry. This module persists a compact per-site memory:
  *   memory.json = { version: 1, runs: [record, ...] }
