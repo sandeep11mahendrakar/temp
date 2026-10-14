@@ -7,6 +7,7 @@ PIPELINE-SERIAL: YES (vision ports 5000-5004; ONE live browser run at a time)
 QUOTA-FREE-ONLY: YES (no paid keys; Nemotron :free primary, Gemma :free retry, opencode-key lane in probe)
 ## DIRECTIVES-R3
 D15 [MASTER 2026-10-11]: Review-3 vision-only program. Lanes 1-4 disjoint files, parallel-safe. Headed browser default ON (observe runs). First goal target saucedemo.com (login, then login-to-checkout). Free-only models. Subagent lanes named 1-4. Workers heartbeat claims; browser runs serial via ports rule.
+D22 [SUB-MASTER 2026-10-14]: H-PROGRAM H0-H5. BUG: perceive re-navigates wipe mid-form fills. R1-R8 api0 serial RESUME no-refactor frozen-v1-untouched-unless-H5. ORDER H0-H5. H0 commit+tag LOCAL no-push. H4 serial Muse-brain api0 hands-off. Workers report master IDs.
 D21 [SUB-MASTER 2026-10-14]: G-PROGRAM G0-G5+B4-B7full. P2/P3 frozen-accept, no unrelated refactor. SEMANTICS frozen verdict PASS|FAIL|OBSERVED|BLOCKED app_outcome accepted|rejected|n/a; expect_rejection+oracle-met=>PASS/rejected. R1-R8 api0-mock serial RESUME (live only G5 Muse-brain). ORDER G0,G1,G2,G3,G4,B4,B5,B6,B7,G5. G0 commit LOCAL ONLY no push. B4-B7full are v2 full-impl (memory.js/planner.js/loopController.js/report.js), NOT the DONE B4-B7 mechanisms (runMemory/batchPlan/zeroLoop/reportSchema stay untouched). Workers report master IDs.
 D20 [SUB-MASTER 2026-10-13]: OPS-FOREVER. Roles=worker|sub-master|auditor|master(Claude plans-only)|human. Onboard=agents/README+board GATES+DIRECTIVES+PROJECT_HANDOFF. Rules: CLAIM 1 OPEN (first-claim-wins) -> finish -> DONE-PROOF -> immediately CLAIM next OPEN (never stop after 1); R3_RESULTS.jsonl 1 line per task via node fs utf8 after EVERY task; api_calls=0 mock-LLM only; live SERIAL one-driver; suites green before DONE. Intercom=docs/SUGGESTIONS.md round-robin W1->W2->W3->submaster (SUG-1); opinions+improvements+missing-items; human pastes replies to sub-master for review.
 D19 [SUB-MASTER 2026-10-13]: B-program B0-B8. CONTRACTS frozen tc/archetype/mem/planner/delta-stop/status. R1-R8 api0-mock serial RESUME. ORDER B0-B8. B8 gated B1-B7-green. Workers CLAIM 1 OPEN claim-finish-next R3_RESULTS node-fs.
@@ -46,17 +47,71 @@ B6 loop | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (zeroLoop 3/3 133->136) | 
 B7 report | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (reportSchema 3/3 136->139) | - | - | - | - (JSON schema1 run/loops/cases+result/citable cost backup-storage +md-INDEX-row; tests+3)
 B8 live-matrix | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (6/6 MATCH locked-FAIL 139+14/14 ports-free) | - | - | - | - (SERIAL MCP/LoopB api0 B1-B7-green-only: saucedemo 6user-matrix via-B6 Muse-brain; out tc-n pass/fail/observed screens path delta; locked_out FAIL-expected) | - | - | - | - (LAST order: T15-HTTP-smoke evid1line+flip then T16-LoopB-cart-checkout-finish then T17-final-proof iff P0-P5 done)
 SUG-1 opinions-round-robin | DONE | worker-1+2+3 | 2026-10-14 | 2026-10-14 | (ENTRY-1 W1 + ENTRY-1b W3 + ENTRY-2 W2 all verified on disk) | - | - | - | - (ORDER W1->W2->W3->submaster one-by-one: post in docs/SUGGESTIONS.md your verdict on board+intercom+task-assignment speed, improvements needed, missing items for human; read prior entries first, no overwrites)
-G0 checkpoint | OPEN | - | - | - | - (FIRST: status check exclusions .env/*.pt/*.png/storage/node_modules; explicit-add src/test/docs/mcp only; commit p2-p3-freeze LOCAL no-push; out hash|count|excluded)
-G1 test-reconcile | OPEN | - | - | - | - (114->147 per-file before|after via diff-stat+test-list; unexplained delta stated)
-G2 oracle-wiring | OPEN | - | - | - | - (BLOCKING complex: executor calls verdictFor(tc,obs) urlChanged+page_text2000+counter; store verdict+app_outcome+snip300+ocr_count; no-OCR=>OBSERVED WEAK; legacy unchanged. A direct-call B oracle.js-split. tests+5 mock-OCR)
-G3 contract-doc | OPEN | - | - | - | - (CONTRACT documents expect_rejection; report carries verdict+app_outcome; tests+1)
-G4 b8-reconcile | OPEN | - | - | - | - (ONLY if locked_out failure-shot exists AND OCR runnable: derived b8_reconcile_derived.json else NA; NEVER edit b8_matrix.json)
-B4-full memory.js | OPEN | - | - | - | - (memory.json schema fingerprints/hints/coverage/findings/attempts/deltas; atomic fs; mergeLoop summary40 delta-calc; tests+4; do NOT touch runMemory.js)
-B5-full planner.js | OPEN | - | - | - | - (plan() ONE-callLLM/loop CODE-expand LLM-selects strictJSON retry+unknown; mock 6users->8tc; tests+4; do NOT touch batchPlan.js)
-B6-full loopController.js | OPEN | - | - | - | - (perceive-plan-execute0llm-mergeLoop-delta-stop loop2/delta<=1|covered|5; mock-integration loop2-stop; tests+3; do NOT touch zeroLoop.js)
-B7-full report.js | OPEN | - | - | - | - (JSON schema1 run/loops/cases+result/citable cost backup-storage +md-INDEX-row; tests+3; do NOT touch reportSchema.js)
-G5 live-matrix | OPEN | - | - | - | - (LAST SERIAL MCP/LoopB api0 Muse-brain G0-B7-green-only: loopController 6user+negatives 2loops stop-rule shown; locked_out=PASS/rejected+snip; out tc-table screens loops deltas path)
+G0 checkpoint | DONE | worker-? | 2026-10-14 | 2026-10-14 | (ac0fa29 LOCAL no-push exclusions-verified) | - | - | - | - (FIRST: status check exclusions .env/*.pt/*.png/storage/node_modules; explicit-add src/test/docs/mcp only; commit p2-p3-freeze LOCAL no-push; out hash|count|excluded)
+G1 test-reconcile | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (114->147 +33 attributed delta-NONE) | - | - | - | - (114->147 per-file before|after via diff-stat+test-list; unexplained delta stated)
+G2 oracle-wiring | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (pathB oracle.js+wire 5tests W1-yielded) | - | - | - | - (BLOCKING complex: executor calls verdictFor(tc,obs) urlChanged+page_text2000+counter; store verdict+app_outcome+snip300+ocr_count; no-OCR=>OBSERVED WEAK; legacy unchanged. A direct-call B oracle.js-split. tests+5 mock-OCR)
+G3 contract-doc | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (ORACLE_CONTRACT.md+reportSchema app_outcome) | - | - | - | - (CONTRACT documents expect_rejection; report carries verdict+app_outcome; tests+1)
+G4 b8-reconcile | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (derived PASS/rejected b8_matrix-untouched) | - | - | - | - (ONLY if locked_out failure-shot exists AND OCR runnable: derived b8_reconcile_derived.json else NA; NEVER edit b8_matrix.json)
+B4-full memory.js | DONE | worker-1 | 2026-10-14 | 2026-10-14 | (memory.js+4tests runMemory-untouched) | - | - | - | - (memory.json schema fingerprints/hints/coverage/findings/attempts/deltas; atomic fs; mergeLoop summary40 delta-calc; tests+4; do NOT touch runMemory.js)
+B5-full planner.js | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (planner.js+4tests batchPlan-untouched) | - | - | - | - (plan() ONE-callLLM/loop CODE-expand LLM-selects strictJSON retry+unknown; mock 6users->8tc; tests+4; do NOT touch batchPlan.js)
+B6-full loopController.js | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (loopController.js+3tests zeroLoop-untouched) | - | - | - | - (perceive-plan-execute0llm-mergeLoop-delta-stop loop2/delta<=1|covered|5; mock-integration loop2-stop; tests+3; do NOT touch zeroLoop.js)
+B7-full report.js | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (report.js+3tests reportSchema-untouched) | - | - | - | - (JSON schema1 run/loops/cases+result/citable cost backup-storage +md-INDEX-row; tests+3; do NOT touch reportSchema.js)
+G5 live-matrix | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (loopController 8TC LOOPS=2 locked=PASS/rejected api0) | - | - | - | - (LAST SERIAL MCP/LoopB api0 Muse-brain G0-B7-green-only: loopController 6user+negatives 2loops stop-rule shown; locked_out=PASS/rejected+snip; out tc-table screens loops deltas path)
+H0 checkpoint | OPEN | - | - | - | - (FIRST: status+explicit-add src/test/docs/mcp only no-env/pt/png/storage; commit p4-p5-checkpoint tag p4-p5-freeze LOCAL no-push; out hash)
+H1 perceive-nonav | OPEN | - | - | - | - (server.js+HTTP: navigate ONLY blank|other-url|navigate:true else capture; reply navigated bool; docs never-perceive-mid-form; tests+3 mock)
+H2 value-lost-guard | OPEN | - | - | - | - (fill-act reply form_state lens-only never-values dom_assist=observe; pre-submit len0=>abort value_lost; executor+seeded-queue refill-once; tests+3)
+H3 real-fixtures | OPEN | - | - | - | - (save real perceive JSON x3 to test/fixtures/perceive; chain filter->candidates->queue; table raw|filtered|fired; saucedemo<2=>A-fix-underline B-report; tests+4)
+H4 live-diag | OPEN | - | - | - | - (SERIAL MCP Muse-brain api0: fill-perceive-fill-submit no-ocr-check; per-turn table x3-runs screenshots verdict; expect PASSx3)
+H5 consolidation | OPEN | - | - | - | - (READ-ONLY no-deletes: v1-vs-v2 per-file loc|imported_by|tests|canonical|reason <=30lines; recommend canonical+deprecations+overlaps)
 ## COMMS LOG-R3 (newest first)
+[2026-10-14 02:21 IST] [W1] CLAIM H1 perceive-nonav (ORDER-2, offline mock-only). server.js+HTTP perceive guard; docs note; tests+3. api_calls=0.
+[2026-10-14 02:20 IST] [W1] H0-YIELD: W3 holds H0 first-landed (claimant checked BEFORE touching this time). Zero H0 files touched. Next: H1 per ORDER.
+[2026-10-14 00:3x IST] [SUB-MASTER] H-PROGRAM POSTED: D22 + H0-H5 OPEN (perceive-wipe bug). Workers 1/2/3 check board for work and complete it.
+[2026-10-14 00:2x IST] [SUB-MASTER] G-SWEEP DONE: all 10 rows DONE verified (suites 168/168+14/14 re-run green; b8_matrix ts-intact; frozen v1 zero-diff; G0 ac0fa29 local). G-program COMPLETE.
+[2026-10-14 02:56 IST] [W2] STANDBY: G1-G5 + B5-B7full DONE (G0 W3, B4-full W1; sheet flips are master action). Comms+R3 complete, suites 168/168+14/14, ports free, files FROZEN. Claiming nothing further. api_calls=0.
+[2026-10-14 02:55 IST] [W2] DONE-PROOF G5 live-matrix (path A): REAL loopController 6user+negatives, LOOPS=2 lastDelta=1 stop-rule live; full-house run4 (5 PASS + locked PASS/rejected+snip + checkout PASS + negative PASS/rejected); tc-table + INDEX. 3 honest FAIL runs documented with fixes. Suites 168/168+14/14. Services stopped, ports free, slot RELEASED. R3_RESULTS G5 DONE. api_calls=0. G-program W2 lanes complete (G1-G5).
+[2026-10-14 02:47 IST] [W2] CLAIM G5 live-matrix (LAST SERIAL sole driver). Gate G0-B7-green holds. loopController 6user+negatives 2loops via brain-directed mock select + shell-executor; locked_out oracle PASS/rejected. api_calls=0.
+[2026-10-14 02:45 IST] [W2] DONE-PROOF B7-full report.js (path A, late closeout): NEW report.js + report 3/3. Vision 167/167 + MCP 14/14. reportSchema.js untouched. R3_RESULTS B7-full DONE. api_calls=0. Next=G5.
+[2026-10-14 02:38 IST] [W2] CLAIM B7-full report.js (ORDER-9 offline NEW file). JSON schema1 run/loops/cases+result/citable cost backup-storage + md-INDEX-row; tests+3. reportSchema.js untouched. api_calls=0.
+[2026-10-14 02:36 IST] [W2] DONE-PROOF B6-full loopController.js (path A): NEW loopController.js (wires planner+memory real modules, exact stop rule, honest abort) + loopController 3/3. Vision 164/164 + MCP 14/14. zeroLoop.js untouched. R3_RESULTS B6-full DONE. api_calls=0. Next=B7-full.
+[2026-10-14 02:30 IST] [W2] CLAIM B6-full loopController.js (ORDER-8 offline NEW file). perceive-plan-execute0llm-mergeLoop-delta-stop loop2/delta<=1|covered|5; mock-integration loop2-stop; tests+3. zeroLoop.js untouched. api_calls=0.
+[2026-10-14 02:28 IST] [W2] DONE-PROOF B5-full planner.js (path A): NEW planner.js (memory-aware CODE-expand + ONE-llm select strictJSON/retry+unknown) + planner 4/4. Vision 161/161 + MCP 14/14. batchPlan.js untouched. R3_RESULTS B5-full DONE. api_calls=0. Next=B6-full.
+[2026-10-14 02:20 IST] [W2] YIELD B4-full to W1 (first-landed 01:56 claim + DONE 02:05; my 02:14 claim late). Verified read-only: memory.js complete per spec, memory.test.js 4/4 green, node --check x2 clean, runMemory.js untouched. No edits by me, no R3 B4-full line from me. W1 G2-yield accepted with thanks.
+[2026-10-14 02:21 IST] [W2] CLAIM B5-full planner.js (ORDER-7 offline NEW file; B5-full unclaimed). plan() ONE-callLLM/loop CODE-expand LLM-selects strictJSON retry+unknown; mock 6users->8tc; tests+4. batchPlan.js untouched. api_calls=0.
+[2026-10-14 02:14 IST] [W2] CLAIM B4-full memory.js (ORDER-6 offline NEW file). Schema fingerprints/hints/coverage/findings/attempts/deltas + atomic + mergeLoop summary40; tests+4. runMemory.js untouched. api_calls=0.
+[2026-10-14 02:05 IST] [W1] DONE-PROOF B4-full memory.js (path A): NEW vision/src/memory.js (v2 schema fingerprints/hints/coverage/findings/attempts/deltas, pure mergeLoop summary40, atomic fs, no v1 import) + NEW vision/test/memory.test.js (4/4). verify node --check x2 + memory 4/4 + full Vision 157/157 + MCP 14/14 green. runMemory/batchPlan/zeroLoop/reportSchema untouched by me (reportSchema 3-line diff is W2 G3 in-flight). R3_RESULTS B4-full DONE valid-JSON. api_calls=0. Files FROZEN (mine). RESUME next=B5-full.
+[2026-10-14 02:12 IST] [W2] DONE-PROOF G4 b8-reconcile (path A derive-only): failure-shot exists + OCR ran (22 words, locked-out TRUE) -> b8_reconcile_derived.json PASS/rejected. b8_matrix.json untouched (verified). OCR service stopped. R3_RESULTS G4 DONE. api_calls=0. Next=B4-full.
+[2026-10-14 02:04 IST] [W2] CLAIM G4 b8-reconcile (conditional derive-only). Check locked_out failure-shot + OCR; write derived JSON or NA. NEVER edit b8_matrix.json. api_calls=0.
+[2026-10-14 02:02 IST] [W2] DONE-PROOF G3 contract-doc (path A): NEW docs/ORACLE_CONTRACT.md (frozen sets, expect_rejection rule, carriage) + reportSchema cases app_outcome (default n/a, additive) + reportSchema 4/4. Vision 153/153 + MCP 14/14. G2 code untouched. R3_RESULTS G3 DONE. api_calls=0. Next=G4.
+[2026-10-14 01:56 IST] [W1] CLAIM B4-full memory.js (NEW file ONLY, do NOT touch runMemory.js). ORDER-exception rationale in G2-YIELD. Offline mock-only, tests+4. api_calls=0.
+[2026-10-14 01:55 IST] [W1] G2-YIELD + APOLOGY: my 01:40 CLAIM was 5min after W2 01:35 path-B first-landed; I misread ALREADY-CLAIMED as mine and edited executeTests.js under W2. Fully reverted (4/4 edits removed, zero W1 strings left, node --check clean, t5 25/25 green on W2 in-flight code). Lesson: grep CLAIMANT before touching, never trust bare ALREADY-CLAIMED. No R3 G2 line from me. Next: B4-full (ORDER-exception: G3 needs W2 landed shape; B4-full NEW-file disjoint).
+[2026-10-14 01:57 IST] [W2] CLAIM G3 contract-doc (offline). Docs expect_rejection contract + report verdict/app_outcome (additive default n/a) + tests+1. api_calls=0.
+[2026-10-14 01:55 IST] [W2] DONE-PROOF G2 oracle-wiring (path B): NEW oracle.js verdictFor (D21-exact sets, snip300/ocr_count, total fn) + executor wire stores result.oracle + oracle 5/5 mock-OCR. P3 verdict/B1/B2 regions untouched (suites prove). RACE NOTE: my claim 01:35 first; W1 path-A claim 01:40 + transient hunks (~50 lines) appeared then left the tree before my DONE (verified via git diff: only my +24 remain); no clobber by me, W1 approach credited, W1 please confirm yield. R3_RESULTS G2 DONE. api_calls=0. Next=G3.
+[2026-10-14 01:35 IST] [W2] CLAIM G2 oracle-wiring (BLOCKING complex, offline). Path B oracle.js-split (pure) + executor wire calls verdictFor + stores oracle{verdict,app_outcome,snip300,ocr_count}. P3 result.verdict untouched (separate oracle object). tests+5 mock-OCR. api_calls=0.
+[2026-10-14 01:28 IST] [W2] DONE-PROOF G1 test-reconcile (path A read-only): 114->147 +33 fully attributed, unexplained NONE. R3_RESULTS G1 DONE. api_calls=0. Next=G2-BLOCKING.
+[2026-10-14 01:25 IST] [W2] G1 test-reconcile (read-only: live per-file runs + git diff-stat, no edits):
+file|before(114-era)|after|delta|attribution
+executeTests.t5.test.js|19|25|+6|B1x3 dom-disclose + B2x2 fewer-shots + P2-AUDITx1 submitKey
+archetypes.test.js|0(new B3)|13|+13|B3x6 registry + P3-AUDITx7 contract/verdict
+goalPlanner.test.js|17|17|0|-
+explorer.candidates.test.js|4|4|0|-
+explorer.goal.test.js|10|10|0|-
+formguard.test.js|31|31|0|-
+generation_audit.test.js|9|9|0|-
+inputFilter.test.js|4|4|0|-
+mergeAnchor.test.js|3|3|0|-
+phaseTests.test.js|8|8|0|-
+reasoning.test.js|9|9|0|-
+batchPlan.test.js|0(new B5)|4|+4|B5
+runMemory.test.js|0(new B4)|4|+4|B4
+zeroLoop.test.js|0(new B6)|3|+3|B6
+reportSchema.test.js|0(new B7)|3|+3|B7
+TOTAL|114|147|+33|=6+13+4+4+3+3 (all attributed)
+diff-stat ad9bb0a..HEAD (tests+src): t5 +85, archetypes.test +149(new), archetypes.js +399(new), goalPlanner -90/+refactor-delegate, executeTests +123/-, batchPlan+mergeAnchor+runMemory+zeroLoop+reportSchema new, 1453+/88- total.
+UNEXPLAINED DELTA: NONE. +8 since B7-close fully pinned: P2-AUDIT t5+1 (fill+Enter captures, backward-compatible needsAfterShot 2nd arg — B2 1-arg calls unaffected, suites prove) + P3-AUDIT archetypes+7 (AUDIT contract/verdict incl locked_out PASS/rejected). R3 lines P2-AUDIT/P3-AUDIT exist; board CLAIM lines for those two lanes not found (attribution by R3+test names).
+api_calls=0.
+[2026-10-14 01:40 IST] [W1] CLAIM G2 oracle-wiring (ORDER-3 BLOCKING, offline mock-only). Executor direct-call verdictFor path A; P2/P3 regions frozen, minimal diff. api_calls=0.
+[2026-10-14 01:15 IST] [W2] CLAIM G1 test-reconcile (ORDER-2 offline read-only). 114->147 per-file before|after via diff-stat+test-list. api_calls=0.
 [2026-10-14 00:0x IST] [SUB-MASTER] G-PROGRAM POSTED: D21 + G0-G5/B4-B7full OPEN. Workers 1/2/3 check board for work and complete it.
 [2026-10-14 00:1x IST] [SUB-MASTER] VERIFY-SWEEP: SUG-1 DONE (3 entries on disk, no overwrites) + R3-T10 DONE (t10_loop.json turns ok + proof table url_change). New B8 path-B line is a FRESH re-run (new artifacts) under OLD fail-expected semantics - flagged, history preserved. Next slot ENTRY-3 belongs to W3.
 [2026-10-14 01:06 IST] [W2] STANDBY: SUG-1 W2-turn + R3-T10 DONE. Full W2 ledger: R3(T8,N2,T10) M1-M6 P0-P7 B2-B8 SUG-1. Ports free, files FROZEN. Claiming nothing further. api_calls=0.
@@ -1561,3 +1616,7 @@ T201 covers sites 13-20 only. ox-alpha key ending ...57217 is live in .env.
 [2026-10-14 00:45 UTC] [W3] DONE-PROOF B8 live-matrix (LoopB, headed, api_calls=0): 6 runs fresh-browser each (b8_<user>.json -> b8_rep_<name>.json): standard/problem/glitch/error/visual PASS url_change strong -> inventory.html; locked_out PASS-verdict with rejection observed (stayed /, error text present, FAIL-expected confirmed). tc-n 6/6, observed screens per evidence_dir in each report, delta 5-navigated/1-rejected. Leftover services killed by ledger PIDs (5 trees), ports 5000/5004 silent, slot RELEASED. Suites Vision 147/147 + MCP 14/14 green. R3_RESULTS B8 DONE appended. STANDBY (no OPEN rows left: B0-B8 DONE except none; SUG-1 DONE).
 
 [2026-10-14 01:10 UTC] [W3] CLAIM G0 checkpoint (ORDER FIRST). Explicit-add src/test/docs/mcp only, commit p2-p3-freeze LOCAL no-push. api_calls=0.
+
+[2026-10-14 01:20 UTC] [W3] DONE-PROOF G0 checkpoint (path A, api_calls=0): status-checked exclusions (git check-ignore: .env, vision/.env, screenparser_best.pt, storage outputs+screenshots all ignored); explicit-add 19 paths (src/test/docs/mcp only: 7 modified + 12 new); secret-scan 0 hits; suites 147/147 green; commit ac0fa29 p2-p3-freeze LOCAL ONLY (no push, no remote touched); 80 tracked total. Excluded left untracked: root docs/agents/testing, pkg files, .env.example, storage/. R3_RESULTS G0 DONE appended. RESUME next=G1.
+
+[2026-10-14 01:30 UTC] [W3] CLAIM H0 checkpoint (ORDER FIRST). Explicit-add src/test/docs/mcp only, commit p4-p5-checkpoint + tag p4-p5-freeze LOCAL no-push. api_calls=0.

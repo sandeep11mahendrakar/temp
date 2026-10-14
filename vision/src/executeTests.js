@@ -29,6 +29,8 @@ const path = require('path');
 const axios = require('axios');
 const { chromium } = require('playwright');
 const { executeAction } = require('./llm');
+// G2: value-oracle verdicts (pure oracle.js; P3 ladder untouched).
+const { verdictFor } = require('./oracle');
 
 const OUTPUT_DIR = path.join(__dirname, '..', 'storage', 'outputs');
 const SCREENSHOT_ROOT = path.join(__dirname, '..', 'storage', 'screenshots');
@@ -982,6 +984,26 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     }
   }
 
+  // G2: value-oracle call (additive; P3 status/verdict ladder untouched).
+  // result.verdict stays the executor flag; the oracle shape lives under
+  // result.oracle as {verdict, app_outcome, snip300, ocr_count}.
+  let oraclePageText = '';
+  try {
+    oraclePageText = await page.evaluate(
+      () => (document.body ? document.body.innerText : '').slice(0, 2000)
+    );
+  } catch (_) { oraclePageText = ''; }
+  const oracle = verdictFor(testCase, {
+    urlChanged,
+    pageText: oraclePageText,
+    counter: null, // no generic counter source; per-flow callers pass their own
+    ocrWords: lastState && typeof lastState.ocr_words === 'number' ? lastState.ocr_words : null,
+    expectRejection: testCase.expect_rejection === true,
+    expectedNav: typeof testCase.expect_navigation === 'boolean' ? testCase.expect_navigation : null,
+    expectedText: testCase.expected_text,
+  });
+
+  // G2: oracle shape (verdict/app_outcome/snip300/ocr_count); legacy kept.
   return {
     id: testCase.id,
     objective: testCase.objective || '',
@@ -995,6 +1017,8 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     status,
     // P3: weak-resolved steps ride on the verdict, never inside plain PASS.
     ...weakVerdict(status, executedSteps),
+    // G2: oracle shape (verdict/app_outcome/snip300/ocr_count); legacy kept.
+    oracle,
     failure_reason: failureReason,
     verification,
     verification_strength: verificationStrength,

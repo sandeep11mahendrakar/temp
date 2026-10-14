@@ -278,3 +278,12 @@ T17 final proof: suites Vision 114/114 + MCP 14/14 green; evidence sweep 16/16 f
 ## B8 live-matrix (W2, 2026-10-14, LoopB headed api_calls=0, sole driver, 6 serial runs)
 
 Per hint user (LOGIN_HINTS): author login replay -> executor -> verdict vs expects -> mergeRun memory -> reportSchema INDEX. Results MATCH 6/6: standard/problem/error/visual/performance_glitch PASS (inventory.html, url_change); locked_out_user FAIL-expected (fills+click executed, stayed on login, url_change-expected detail — honest FAIL, no false-DONE). Matrix report b8_matrix.json with INDEX row (ref run-b8-matrix-*, pass_rate 1, cost 0, sha). Deltas per site-run recorded via B4 mergeRun. Services stopped after (ports free). api_calls=0 throughout (Muse-brain local reasoning, mock-LLM only, zero OpenRouter calls).
+
+## G5 live-matrix (W2, 2026-10-14, LoopB headed api_calls=0, sole driver, 4 matrix runs)
+
+REAL loopController.runLoops driving planner (brain-directed mock select) + shell-executor + memory mergeLoop + oracle verdictFor + reportSchema INDEX. perceive stubbed at controller edge (executor owns live pipeline captures; disclosed).
+- Run 1 FAIL: planner fill target text=username fuzzy-hijacked to credential-HINT links (typed into void, empty submit). Lesson pinned in planner.test.js (credential fills keep text '').
+- Run 2 partial: logins fixed; checkout chain missed badge-cart page (my planner chain skipped cart) + checkout-step-one variance.
+- Run 3 partial: 11-step T16-proven chain in planner; cart-page gap closed; form fragments land.
+- Run 4 FULL HOUSE (g5_matrix.json): 5 logins PASS/inventory + locked_out FAIL->oracle PASS/rejected+snip ("locked out user...") + checkout-full PASS->complete.html + negative-empty PASS->oracle PASS/rejected. LOOPS=2 lastDelta=1 covered (stop-rule shown live), pass_rate 0.875, tc-table verdict/screens/url per TC, memory attempts recorded, INDEX row with sha. Screens repaired offline (driver read evidence_dir off wrong object; no new runs needed).
+- Services stopped after (ports free, slot released).

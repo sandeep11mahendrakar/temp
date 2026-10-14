@@ -67,3 +67,22 @@
 {"t":"B8","path":"B","status":"DONE","files":["vision/storage/outputs/b8_standard_user.json","vision/storage/outputs/b8_rep_standard.json","vision/storage/outputs/b8_rep_locked.json","vision/storage/outputs/b8_rep_problem.json","vision/storage/outputs/b8_rep_glitch.json","vision/storage/outputs/b8_rep_error.json","vision/storage/outputs/b8_rep_visual.json"],"tests":"tc 6/6 PASS; Vision 147/147 + MCP 14/14 green","evid":"5x url_change inventory.html strong; locked_out stayed / + error text, FAIL-expected confirmed","note":"6-user LoopB matrix headed api0; 5 navigated 1 rejected-as-expected; services stopped ports free"}
 
 {"t":"R3-T10","path":"A","status":"DONE","files":["docs/MCP_LIVE_PROOF.md"],"tests":"suites 147/147+14/14 green post-run; live loop 9/9 turns","evid":"docs/MCP_LIVE_PROOF.md step table + vision/storage/outputs/t10_loop.json","note":"MCP HTTP tools loop PASS: url_change inventory + logout text; 2 honest FAILs kept"}
+{"t":"G0","path":"A","status":"DONE","files":["docs/TASK_BOARD.md","docs/R3_RESULTS.jsonl"],"tests":"Vision 147/147 green pre-commit; secret-scan 0 hits","evid":"commit ac0fa29 p2-p3-freeze, 19 files, 80 tracked","note":"LOCAL ONLY no push; .env/pt/png/storage/node_modules excluded+verified"}
+
+{"t":"G1","path":"A","status":"DONE","files":[],"tests":"per-file live runs now=147; others pinned at 114-era values","evid":"board G1 block: 114->147 +33 all attributed; diff-stat 1453+/88-","note":"reconcile read-only; unexplained delta NONE (+8 = P2/P3-AUDIT lanes)"}
+
+{"t":"G2","path":"B","status":"DONE","files":["vision/src/oracle.js","vision/src/executeTests.js","vision/test/oracle.test.js"],"tests":"oracle 5/5 mock-OCR; full Vision 147->152; MCP 14/14; P3/B1/B2 pins intact","evid":"executor calls verdictFor; result.oracle{verdict,app_outcome,snip300,ocr_count}; P3 verdict untouched","note":"pathB split; race: W2 claim 01:35 first, W1 01:40 hunks absent at DONE; D21 sets exact"}
+
+{"t":"G3","path":"A","status":"DONE","files":["docs/ORACLE_CONTRACT.md","vision/src/reportSchema.js","vision/test/reportSchema.test.js"],"tests":"reportSchema 3->4 (G3 app_outcome); full Vision 152->153; MCP 14/14","evid":"contract doc frozen sets; cases carry verdict+app_outcome default n/a","note":"expect_rejection documented; G2 shapes affirmed, no code touched there"}
+
+{"t":"B4-full","path":"A","status":"DONE","files":["vision/src/memory.js","vision/test/memory.test.js"],"tests":"memory 4/4 new; full Vision 157/157 + MCP 14/14 green","evid":"v2 schema fingerprints/hints/coverage/findings/attempts/deltas; atomic fs; runMemory.js untouched","note":"B4-full v2 memory.js NEW; mergeLoop pure summary40; mock-only api0"}
+
+{"t":"G4","path":"A","status":"DONE","files":["vision/storage/outputs/b8_reconcile_derived.json"],"tests":"no code change; suites stand 153/153+14/14","evid":"failure-shot OCR 22 words locked-out TRUE; b8_matrix.json untouched","note":"derived PASS/rejected; both G4 conditions held so NA branch not taken"}
+
+{"t":"B5-full","path":"A","status":"DONE","files":["vision/src/planner.js","vision/test/planner.test.js"],"tests":"planner 4/4; full Vision 157->161; MCP 14/14; mock-only","evid":"memory-aware expand (covered drop out); ONE-select retry+fallback; 6users->8tc","note":"loop planner v2; batchPlan.js untouched; W1 B4 yield respected"}
+
+{"t":"B6-full","path":"A","status":"DONE","files":["vision/src/loopController.js","vision/test/loopController.test.js"],"tests":"loopController 3/3 mock-integration; full Vision 161->164; MCP 14/14","evid":"stop-rule exact incl cap table; wires planner+memory real modules","note":"v2 controller; zeroLoop.js untouched; IO-only edges mockable"}
+
+{"t":"B7-full","path":"A","status":"DONE","files":["vision/src/report.js","vision/test/report.test.js"],"tests":"report 3/3 pipeline; full Vision 164->167; MCP 14/14","evid":"history->loops + results+oracle->cases + atomic persist + INDEX row","note":"v2 pipeline; reportSchema.js untouched; closeout after interrupt"}
+
+{"t":"G5","path":"A","status":"DONE","files":["vision/storage/outputs/g5_matrix.js","vision/storage/outputs/g5_matrix.json"],"tests":"suites 168/168+14/14; matrix 8TC via loopController LOOPS=2","evid":"g5 rep JSONs x8 + tc-table + locked_out PASS/rejected+snip + INDEX row","note":"4 runs: target-text hijack + cart-gap fixed live; full house run4; api0"}

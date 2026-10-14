@@ -48,6 +48,9 @@ function buildReport(input) {
     id: String((c && c.id) || ''),
     verdict: String((c && c.verdict) || 'UNKNOWN'),
     weak_steps: num(c && c.weak_steps),
+    // G3: report cases carry verdict + app_outcome (default n/a for
+    // pre-oracle results; additive, existing rows unaffected).
+    app_outcome: c && typeof c.app_outcome === 'string' ? c.app_outcome : 'n/a',
     evidence: String((c && c.evidence) || ''),
   })) : [];
   const costIn = (src.cost && typeof src.cost === 'object') ? src.cost : {};

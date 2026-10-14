@@ -57,3 +57,13 @@ test('B7 report: INDEX row renders pipes with verdict+cost+storage+sha', () => {
   assert.ok(row.includes('s1_rep1.json'));
   assert.ok(row.split('|').length >= 7);
 });
+
+test('G3 contract: case rows carry verdict + app_outcome (default n/a)', () => {
+  const r = demo();
+  for (const c of r.cases) assert.equal(c.app_outcome, 'n/a');
+  const r2 = buildReport({
+    runId: 'x', cases: [{ id: 'neg', verdict: 'PASS', app_outcome: 'rejected' }],
+  });
+  assert.equal(r2.cases[0].app_outcome, 'rejected');
+  assert.deepEqual(checkReport(r2), []);
+});
