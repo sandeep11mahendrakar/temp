@@ -57,8 +57,31 @@ function verdictFor(tc, obs) {
       : '');
   const textMet = Boolean(wantText && hay.toLowerCase().includes(wantText));
 
+  // D21 frozen priority: expect_rejection + oracle-met wins first.
   if (wantReject && rejected) {
     return { verdict: 'PASS', app_outcome: 'rejected', snip300, ocr_count: ocrCountOut };
+  }
+  // L2 text_absent: the assertion is ABSENCE (uncheck/modal-close/collapse).
+  // Present => FAIL. Absent + navigation (transition confirmed) => PASS
+  // STRONG; absent on a non-empty page => PASS MED (bare absence is weaker
+  // evidence); empty haystack without navigation => OBSERVED (vacuous, never
+  // PASS). Placed before the generic rules: generic `changed` would wrongly
+  // PASS a present-text case, and generic FAIL would wrongly fail bare
+  // absence.
+  const kind = tc && tc.oracle && tc.oracle.kind;
+  const kindExpect = tc && tc.oracle && typeof tc.oracle.expect === 'string' ? tc.oracle.expect : '';
+  if (kind === 'text_absent' && kindExpect) {
+    let present = false;
+    try {
+      present = new RegExp(kindExpect.slice(0, 120), 'i').test(hay);
+    } catch (_) {
+      present = hay.toLowerCase().includes(kindExpect.slice(0, 120).toLowerCase());
+    }
+    if (!present) {
+      if (changed || hay.trim()) return { verdict: 'PASS', app_outcome: 'accepted', snip300, ocr_count: ocrCountOut };
+      return { verdict: 'OBSERVED', app_outcome: 'n/a', snip300, ocr_count: ocrCountOut };
+    }
+    return { verdict: 'FAIL', app_outcome: rejected ? 'rejected' : 'n/a', snip300, ocr_count: ocrCountOut };
   }
   if (changed || textMet) {
     return { verdict: 'PASS', app_outcome: 'accepted', snip300, ocr_count: ocrCountOut };

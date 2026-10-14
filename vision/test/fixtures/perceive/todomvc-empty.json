@@ -1,0 +1,503 @@
+{
+  "source": "vision-pipeline",
+  "architecture": "B",
+  "image_size": {
+    "height": 900,
+    "width": 1280
+  },
+  "timestamp": "2026-10-11T15:06:12.281Z",
+  "element_count": 27,
+  "elements": [
+    {
+      "id": "elem-0",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "on Stack Overflow",
+      "bbox": {
+        "x1": 42.8,
+        "y1": 661.6,
+        "x2": 212.7,
+        "y2": 678.7
+      },
+      "confidence": {
+        "yolo": 0.809,
+        "ocr": 91,
+        "combined": 0.739
+      },
+      "word_count": 3
+    },
+    {
+      "id": "elem-1",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "API Reference",
+      "bbox": {
+        "x1": 42.8,
+        "y1": 540.5,
+        "x2": 133.5,
+        "y2": 557.6
+      },
+      "confidence": {
+        "yolo": 0.781,
+        "ocr": 94,
+        "combined": 0.73
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-2",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Philosophy",
+      "bbox": {
+        "x1": 43,
+        "y1": 560.2,
+        "x2": 111.8,
+        "y2": 578.4
+      },
+      "confidence": {
+        "yolo": 0.777,
+        "ocr": 83,
+        "combined": 0.645
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-3",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "React Community",
+      "bbox": {
+        "x1": 43,
+        "y1": 580.7,
+        "x2": 154.8,
+        "y2": 597.6
+      },
+      "confidence": {
+        "yolo": 0.762,
+        "ocr": 96,
+        "combined": 0.732
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-4",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Quick Start",
+      "bbox": {
+        "x1": 43,
+        "y1": 520.9,
+        "x2": 112.6,
+        "y2": 537
+      },
+      "confidence": {
+        "yolo": 0.684,
+        "ocr": 93,
+        "combined": 0.636
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-5",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Dauble-clck ta edit a todo",
+      "bbox": {
+        "x1": 725.3,
+        "y1": 258.1,
+        "x2": 854.2,
+        "y2": 272.1
+      },
+      "confidence": {
+        "yolo": 0.544,
+        "ocr": 73,
+        "combined": 0.396
+      },
+      "word_count": 5
+    },
+    {
+      "id": "elem-6",
+      "type": "search_field",
+      "yolo_label": "Search Field",
+      "text": "What needs to be done?",
+      "bbox": {
+        "x1": 513.2,
+        "y1": 128.2,
+        "x2": 1066.8,
+        "y2": 196.7
+      },
+      "confidence": {
+        "yolo": 0.5,
+        "ocr": 96,
+        "combined": 0.479
+      },
+      "word_count": 5
+    },
+    {
+      "id": "elem-7",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "React",
+      "bbox": {
+        "x1": 17.2,
+        "y1": 27.2,
+        "x2": 285.8,
+        "y2": 55.4
+      },
+      "confidence": {
+        "yolo": 0.485,
+        "ocr": 96,
+        "combined": 0.466
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-8",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "React is a JavaScript library for building user interfaces. You compose Uf from function components and describe state with hooks; React handles the rendering and keeps the Ul in syne as state changes. The modem ecosystem (createRoot, Suspense, Server Components) builds on the same component modet",
+      "bbox": {
+        "x1": 24.6,
+        "y1": 194.8,
+        "x2": 281,
+        "y2": 397.5
+      },
+      "confidence": {
+        "yolo": 0.457,
+        "ocr": 91,
+        "combined": 0.414
+      },
+      "word_count": 46
+    },
+    {
+      "id": "elem-9",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": null,
+      "bbox": {
+        "x1": 789.3,
+        "y1": 301.5,
+        "x2": 832.2,
+        "y2": 316.1
+      },
+      "confidence": {
+        "yolo": 0.446,
+        "ocr": 0,
+        "combined": 0.223
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-10",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "please",
+      "bbox": {
+        "x1": 18.1,
+        "y1": 773.3,
+        "x2": 60,
+        "y2": 789.2
+      },
+      "confidence": {
+        "yolo": 0.405,
+        "ocr": 91,
+        "combined": 0.369
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-11",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "you have other helpful to share, oF find any of the links above no fonger work,",
+      "bbox": {
+        "x1": 17.7,
+        "y1": 733.9,
+        "x2": 280.4,
+        "y2": 771.2
+      },
+      "confidence": {
+        "yolo": 0.399,
+        "ocr": 86,
+        "combined": 0.341
+      },
+      "word_count": 16
+    },
+    {
+      "id": "elem-12",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "TypeScript + React",
+      "bbox": {
+        "x1": 17.8,
+        "y1": 112.3,
+        "x2": 133.3,
+        "y2": 130.1
+      },
+      "confidence": {
+        "yolo": 0.399,
+        "ocr": 90,
+        "combined": 0.359
+      },
+      "word_count": 3
+    },
+    {
+      "id": "elem-13",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Source",
+      "bbox": {
+        "x1": 61.6,
+        "y1": 132,
+        "x2": 106.6,
+        "y2": 148.2
+      },
+      "confidence": {
+        "yolo": 0.395,
+        "ocr": 93,
+        "combined": 0.367
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-14",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "React",
+      "bbox": {
+        "x1": 253.4,
+        "y1": 427.5,
+        "x2": 289.5,
+        "y2": 444.1
+      },
+      "confidence": {
+        "yolo": 0.377,
+        "ocr": 96,
+        "combined": 0.362
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-15",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "Community",
+      "bbox": {
+        "x1": 18.3,
+        "y1": 629.4,
+        "x2": 287.8,
+        "y2": 650.3
+      },
+      "confidence": {
+        "yolo": 0.372,
+        "ocr": 94,
+        "combined": 0.35
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-16",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "the TodoMVC Team",
+      "bbox": {
+        "x1": 769.1,
+        "y1": 279.8,
+        "x2": 863.8,
+        "y2": 293.9
+      },
+      "confidence": {
+        "yolo": 0.355,
+        "ocr": 74,
+        "combined": 0.263
+      },
+      "word_count": 3
+    },
+    {
+      "id": "elem-17",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "us",
+      "bbox": {
+        "x1": 62.7,
+        "y1": 773.7,
+        "x2": 134.9,
+        "y2": 788.8
+      },
+      "confidence": {
+        "yolo": 0.354,
+        "ocr": 93,
+        "combined": 0.329
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-18",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Saurce",
+      "bbox": {
+        "x1": 17.5,
+        "y1": 84.9,
+        "x2": 61.8,
+        "y2": 100.5
+      },
+      "confidence": {
+        "yolo": 0.319,
+        "ocr": 83,
+        "combined": 0.265
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-19",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Demo,",
+      "bbox": {
+        "x1": 17.5,
+        "y1": 131.7,
+        "x2": 53,
+        "y2": 148.1
+      },
+      "confidence": {
+        "yolo": 0.31,
+        "ocr": 88,
+        "combined": 0.273
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-20",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "React",
+      "bbox": {
+        "x1": 17.7,
+        "y1": 66.6,
+        "x2": 56.4,
+        "y2": 83.6
+      },
+      "confidence": {
+        "yolo": 0.21,
+        "ocr": 93,
+        "combined": 0.195
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-21",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Parl of",
+      "bbox": {
+        "x1": 749,
+        "y1": 301.5,
+        "x2": 817.8,
+        "y2": 316.4
+      },
+      "confidence": {
+        "yolo": 0.192,
+        "ocr": 52,
+        "combined": 0.1
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-22",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "todos",
+      "bbox": {
+        "x1": 336,
+        "y1": 12.4,
+        "x2": 1268.8,
+        "y2": 100.8
+      },
+      "confidence": {
+        "yolo": 0.187,
+        "ocr": 96,
+        "combined": 0.18
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-23",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "Official Resources",
+      "bbox": {
+        "x1": 18.6,
+        "y1": 489.3,
+        "x2": 293.7,
+        "y2": 508.2
+      },
+      "confidence": {
+        "yolo": 0.173,
+        "ocr": 96,
+        "combined": 0.166
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-24",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "Official Resources",
+      "bbox": {
+        "x1": 17.3,
+        "y1": 489.1,
+        "x2": 161.2,
+        "y2": 508.1
+      },
+      "confidence": {
+        "yolo": 0.168,
+        "ocr": 96,
+        "combined": 0.161
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-25",
+      "type": "logo",
+      "yolo_label": "Logo",
+      "text": "todos",
+      "bbox": {
+        "x1": 692.2,
+        "y1": 14.9,
+        "x2": 885.8,
+        "y2": 99.9
+      },
+      "confidence": {
+        "yolo": 0.154,
+        "ocr": 96,
+        "combined": 0.148
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-26",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Demo, Source",
+      "bbox": {
+        "x1": 19.6,
+        "y1": 131,
+        "x2": 289.3,
+        "y2": 150
+      },
+      "confidence": {
+        "yolo": 0.153,
+        "ocr": 91,
+        "combined": 0.138
+      },
+      "word_count": 2
+    }
+  ],
+  "raw": {
+    "yolo_detections": 27,
+    "ocr_words_found": 109,
+    "full_text": "React React todos Saurce TypeScript + React Demo, Source What needs to be done? React is a JavaScript library for building user interfaces. You compose Uf from function Dauble-clck ta edit a todo components and describe state with hooks; React handles the rendering Crealed by the TodoMVC Team Parl of and keeps the Ul in syne as state changes. The modem ecosystem (createRoot, Suspense, Server Components) builds on the same component modet React Official Resources » Quick Start » API Reference » Philosophy » React Community Community + on Stack Overflow you have other helpful to share, oF find any of the links above no fonger work, please us"
+  }
+}

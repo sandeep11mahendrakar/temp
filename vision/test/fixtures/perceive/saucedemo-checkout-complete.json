@@ -1,0 +1,325 @@
+{
+  "source": "vision-pipeline",
+  "architecture": "B",
+  "image_size": {
+    "height": 900,
+    "width": 1280
+  },
+  "timestamp": "2026-10-14T06:50:31.496Z",
+  "element_count": 17,
+  "inputs_removed": 0,
+  "anchor_added": 0,
+  "elements": [
+    {
+      "id": "elem-0",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "arrive Your order has been dispatched, and will just as fast as the pony can get there!",
+      "bbox": {
+        "x1": 420.1,
+        "y1": 347.7,
+        "x2": 859.2,
+        "y2": 387
+      },
+      "confidence": {
+        "yolo": 0.778,
+        "ocr": 93,
+        "combined": 0.721
+      },
+      "word_count": 17
+    },
+    {
+      "id": "elem-1",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": null,
+      "bbox": {
+        "x1": 150.6,
+        "y1": 794.6,
+        "x2": 179.6,
+        "y2": 823.7
+      },
+      "confidence": {
+        "yolo": 0.765,
+        "ocr": 0,
+        "combined": 0.383
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-2",
+      "type": "button",
+      "yolo_label": "Button",
+      "text": "| Generate POF",
+      "bbox": {
+        "x1": 646.5,
+        "y1": 457.3,
+        "x2": 807.3,
+        "y2": 511.3
+      },
+      "confidence": {
+        "yolo": 0.737,
+        "ocr": 66,
+        "combined": 0.489
+      },
+      "word_count": 3
+    },
+    {
+      "id": "elem-3",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": null,
+      "bbox": {
+        "x1": 100,
+        "y1": 794.6,
+        "x2": 130.4,
+        "y2": 823.5
+      },
+      "confidence": {
+        "yolo": 0.686,
+        "ocr": 0,
+        "combined": 0.343
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-4",
+      "type": "button",
+      "yolo_label": "Button",
+      "text": null,
+      "bbox": {
+        "x1": 472.9,
+        "y1": 457.4,
+        "x2": 632.8,
+        "y2": 510.9
+      },
+      "confidence": {
+        "yolo": 0.662,
+        "ocr": 0,
+        "combined": 0.331
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-5",
+      "type": "image",
+      "yolo_label": "Image",
+      "text": null,
+      "bbox": {
+        "x1": 604.1,
+        "y1": 176.2,
+        "x2": 675.5,
+        "y2": 244.8
+      },
+      "confidence": {
+        "yolo": 0.661,
+        "ocr": 0,
+        "combined": 0.331
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-6",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": null,
+      "bbox": {
+        "x1": 50.3,
+        "y1": 794.4,
+        "x2": 79.9,
+        "y2": 823.6
+      },
+      "confidence": {
+        "yolo": 0.52,
+        "ocr": 0,
+        "combined": 0.26
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-7",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy",
+      "bbox": {
+        "x1": 50.1,
+        "y1": 839.6,
+        "x2": 522.9,
+        "y2": 858.4
+      },
+      "confidence": {
+        "yolo": 0.42,
+        "ocr": 95,
+        "combined": 0.397
+      },
+      "word_count": 12
+    },
+    {
+      "id": "elem-8",
+      "type": "utility_button",
+      "yolo_label": "Utility Button",
+      "text": null,
+      "bbox": {
+        "x1": 1224.9,
+        "y1": 16.4,
+        "x2": 1245.8,
+        "y2": 38.2
+      },
+      "confidence": {
+        "yolo": 0.384,
+        "ocr": 0,
+        "combined": 0.192
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-9",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "Thank you for your order!",
+      "bbox": {
+        "x1": 421.5,
+        "y1": 295,
+        "x2": 861.9,
+        "y2": 326.4
+      },
+      "confidence": {
+        "yolo": 0.369,
+        "ocr": 96,
+        "combined": 0.354
+      },
+      "word_count": 5
+    },
+    {
+      "id": "elem-10",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Privacy Policy",
+      "bbox": {
+        "x1": 430.9,
+        "y1": 839.5,
+        "x2": 520.4,
+        "y2": 857.7
+      },
+      "confidence": {
+        "yolo": 0.311,
+        "ocr": 96,
+        "combined": 0.299
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-11",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Checkout: Complete!",
+      "bbox": {
+        "x1": 19.5,
+        "y1": 71.5,
+        "x2": 199.1,
+        "y2": 95.8
+      },
+      "confidence": {
+        "yolo": 0.283,
+        "ocr": 94,
+        "combined": 0.266
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-12",
+      "type": "button",
+      "yolo_label": "Button",
+      "text": null,
+      "bbox": {
+        "x1": 509.9,
+        "y1": 474,
+        "x2": 594.5,
+        "y2": 494.7
+      },
+      "confidence": {
+        "yolo": 0.225,
+        "ocr": 0,
+        "combined": 0.113
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-13",
+      "type": "button",
+      "yolo_label": "Button",
+      "text": null,
+      "bbox": {
+        "x1": 19.8,
+        "y1": 18.7,
+        "x2": 39.9,
+        "y2": 39.5
+      },
+      "confidence": {
+        "yolo": 0.19,
+        "ocr": 0,
+        "combined": 0.095
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-14",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Swag",
+      "bbox": {
+        "x1": 575.9,
+        "y1": 13.2,
+        "x2": 632.5,
+        "y2": 42.8
+      },
+      "confidence": {
+        "yolo": 0.179,
+        "ocr": 96,
+        "combined": 0.172
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-15",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "Labs",
+      "bbox": {
+        "x1": 648.4,
+        "y1": 13.6,
+        "x2": 703.9,
+        "y2": 43.1
+      },
+      "confidence": {
+        "yolo": 0.169,
+        "ocr": 96,
+        "combined": 0.162
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-16",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Thank you for your order!",
+      "bbox": {
+        "x1": 459.9,
+        "y1": 295.1,
+        "x2": 823.7,
+        "y2": 325.8
+      },
+      "confidence": {
+        "yolo": 0.166,
+        "ocr": 96,
+        "combined": 0.159
+      },
+      "word_count": 5
+    }
+  ],
+  "raw": {
+    "yolo_detections": 17,
+    "ocr_words_found": 41,
+    "full_text": "Swag Labs Checkout: Complete! Thank you for your order! Your order has been dispatched, and will arrive just as fast as the pony can get there! | Generate POF 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+  }
+}

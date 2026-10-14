@@ -335,6 +335,80 @@ function expandGeneric(hints, goal) {
   }));
 }
 
+// ---- J3 plugins: form + table (demoqa practice-form + webtables).
+// Additive: core entries/helpers untouched; search/list PARKED (not built).
+// form = multi-field fill -> option-pick -> submit -> verify modal;
+// table = search/add/row-observe over a data grid.
+function detectForm(vdom) {
+  const els = elsOf(vdom);
+  const inputs = els.filter((e) => /text_input|password|input/i.test(String(e.type || '')));
+  const opts = els.filter((e) => /radio|checkbox/i.test(String(e.type || '')));
+  const submit = els.some((e) => /button|submit/i.test(String(e.type || '')) || /submit/i.test(String(e.text || '')));
+  if (inputs.length >= 3 && opts.length >= 1 && submit) return 0.95;
+  if (inputs.length >= 2 && submit) return 0.6;
+  return 0.1;
+}
+
+function hintsForm(vdom) {
+  const els = elsOf(vdom);
+  const fields = els.filter((e) => /text_input|password|input/i.test(String(e.type || '')))
+    .map((e) => String(e.text || '').slice(0, 40));
+  const options = els.filter((e) => /radio|checkbox/i.test(String(e.type || '')))
+    .map((e) => ({ type: String(e.type || ''), text: String(e.text || '').slice(0, 40) })).slice(0, 8);
+  const submit = (els.map((e) => String(e.text || '')).find((t) => /submit/i.test(t)) || 'Submit');
+  return { fields, options, submit };
+}
+
+function expandForm(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const fields = (Array.isArray(h.fields) ? h.fields : []).slice(0, 4);
+  const steps = fields.map((f) => ({
+    action: 'fill', target: { type: 'text_input', text: f }, value: `Test ${f || 'value'}`,
+  }));
+  steps.push({ action: 'click', target: { type: 'button', text: String(h.submit || 'Submit') } });
+  return [{
+    id: 'form-fill-submit', archetype: 'form',
+    params: { goal: String(goal || ''), fields },
+    steps,
+    oracle: { kind: 'text_present', expect: 'submitted|Thank', strength: 'MED' },
+    tags: ['form', 'submit'],
+  }];
+}
+
+function detectTable(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  const addSearch = /add/.test(txt) && hasInput(els, /text_input|search|input/i);
+  const rows = els.filter((e) => /edit|delete/i.test(String(e.text || ''))).length;
+  if (addSearch && rows >= 2) return 0.8;
+  if (addSearch || rows >= 2) return 0.55;
+  return 0.1;
+}
+
+function hintsTable(vdom) {
+  const els = elsOf(vdom);
+  const rows = els.filter((e) => /edit|delete/i.test(String(e.text || '')))
+    .map((e) => String(e.text || '').slice(0, 40)).slice(0, 6);
+  const search = els.some((e) => /search/i.test(String(e.text || '')));
+  const add = (els.map((e) => String(e.text || '')).find((t) => /^add$/i.test(t.trim())) || 'Add');
+  return { rows, search, add };
+}
+
+function expandTable(hints, goal) {
+  const mk = (id, steps, oracle, tags) => ({
+    id, archetype: 'table', params: { goal: String(goal || '') }, steps, oracle, tags,
+  });
+  return [
+    mk('table-search', [
+      { action: 'fill', target: { type: 'search_field', text: '' }, value: 'Alden' },
+    ], { ...ORACLES.stateDiff }, ['table', 'search']),
+    mk('table-add-open', [
+      { action: 'click', target: { type: 'button', text: 'Add' } },
+    ], { ...ORACLES.observed }, ['table', 'add']),
+    mk('table-rows', [], { ...ORACLES.observed }, ['table', 'observe']),
+  ];
+}
+
 // Expected-rejection semantics: a satisfied negative oracle is app-rejected,
 // test-PASS — never a test FAIL. obs={urlChanged,pageText}.
 function verdictFor(tc, obs) {
@@ -359,6 +433,8 @@ function verdictFor(tc, obs) {
 const CONTRACT_ARCHETYPES = {
   login: { name: 'login', detect: detectLogin, hints: hintsLogin, expand: expandLogin, oracles: ORACLES },
   crudlist: { name: 'crudlist', detect: detectCrudlist, hints: hintsCrudlist, expand: expandCrudlist, oracles: ORACLES },
+  form: { name: 'form', detect: detectForm, hints: hintsForm, expand: expandForm, oracles: ORACLES },
+  table: { name: 'table', detect: detectTable, hints: hintsTable, expand: expandTable, oracles: ORACLES },
   index: { name: 'index', detect: detectIndex, hints: hintsGeneric, expand: expandGeneric, oracles: ORACLES },
   generic: { name: 'generic', detect: detectGeneric, hints: hintsGeneric, expand: expandGeneric, oracles: ORACLES },
 };

@@ -59,10 +59,15 @@ node mcp\server.js
 
 Tools (final contract, all live since R3-T5 builder landing, verified 8/8):
 `status` (service health, no browser), `perceive` (url → compact visual
-DOM, SAME shape as API path), `act` (one grounded action in the persistent
-headed session with live re-detect; stale targets FAIL explicitly, never
-clicked), `evidence` (screenshots + history), `reset` (close session,
-services stay up).
+DOM, SAME shape as API path + `navigated` bool), `act` (one grounded action
+in the persistent headed session with live re-detect; stale targets FAIL
+explicitly, never clicked), `evidence` (screenshots + history), `reset`
+(close session, services stay up).
+
+Never-perceive-mid-form (H1): `perceive` navigates ONLY when the session is
+blank, the URL differs, or `navigate:true` is passed — perceiving the already
+loaded URL captures in place and preserves mid-form fills. Fill → perceive →
+fill chains are safe; the reply's `navigated` flag tells which happened.
 
 ### 4a. Claude Code
 

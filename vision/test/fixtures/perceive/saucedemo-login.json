@@ -1,0 +1,341 @@
+{
+  "source": "vision-pipeline",
+  "architecture": "B",
+  "image_size": {
+    "height": 900,
+    "width": 1280
+  },
+  "timestamp": "2026-10-11T14:18:57.274Z",
+  "element_count": 18,
+  "elements": [
+    {
+      "id": "elem-0",
+      "type": "button",
+      "yolo_label": "Button",
+      "text": "Login",
+      "bbox": {
+        "x1": 494.2,
+        "y1": 300.7,
+        "x2": 786.3,
+        "y2": 349.3
+      },
+      "confidence": {
+        "yolo": 0.834,
+        "ocr": 96,
+        "combined": 0.801
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-1",
+      "type": "text_input",
+      "yolo_label": "Text Input",
+      "text": null,
+      "bbox": {
+        "x1": 493.8,
+        "y1": 210.4,
+        "x2": 786.7,
+        "y2": 245.3
+      },
+      "confidence": {
+        "yolo": 0.737,
+        "ocr": 0,
+        "combined": 0.368
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-2",
+      "type": "text_input",
+      "yolo_label": "Text Input",
+      "text": null,
+      "bbox": {
+        "x1": 493.5,
+        "y1": 157.5,
+        "x2": 786.5,
+        "y2": 191.3
+      },
+      "confidence": {
+        "yolo": 0.711,
+        "ocr": 0,
+        "combined": 0.355
+      },
+      "word_count": 0
+    },
+    {
+      "id": "elem-3",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Accepted usernames are:",
+      "bbox": {
+        "x1": 249.4,
+        "y1": 432.4,
+        "x2": 472.1,
+        "y2": 451.1
+      },
+      "confidence": {
+        "yolo": 0.551,
+        "ocr": 94,
+        "combined": 0.518
+      },
+      "word_count": 3
+    },
+    {
+      "id": "elem-4",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "performance_glitch_user",
+      "bbox": {
+        "x1": 249.1,
+        "y1": 548.6,
+        "x2": 441.8,
+        "y2": 565.8
+      },
+      "confidence": {
+        "yolo": 0.444,
+        "ocr": 84,
+        "combined": 0.373
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-5",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "locked_out_user",
+      "bbox": {
+        "x1": 249.3,
+        "y1": 500,
+        "x2": 375.7,
+        "y2": 517.4
+      },
+      "confidence": {
+        "yolo": 0.413,
+        "ocr": 78,
+        "combined": 0.322
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-6",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "visual_user",
+      "bbox": {
+        "x1": 250,
+        "y1": 596.2,
+        "x2": 341.9,
+        "y2": 613.9
+      },
+      "confidence": {
+        "yolo": 0.407,
+        "ocr": 89,
+        "combined": 0.362
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-7",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "standard_user",
+      "bbox": {
+        "x1": 249.6,
+        "y1": 476.8,
+        "x2": 360.2,
+        "y2": 493.7
+      },
+      "confidence": {
+        "yolo": 0.406,
+        "ocr": 90,
+        "combined": 0.365
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-8",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Password for all users:",
+      "bbox": {
+        "x1": 640.2,
+        "y1": 430.8,
+        "x2": 1025.2,
+        "y2": 453.4
+      },
+      "confidence": {
+        "yolo": 0.389,
+        "ocr": 95,
+        "combined": 0.37
+      },
+      "word_count": 4
+    },
+    {
+      "id": "elem-9",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "problem_user",
+      "bbox": {
+        "x1": 249.3,
+        "y1": 524.6,
+        "x2": 350.1,
+        "y2": 541.7
+      },
+      "confidence": {
+        "yolo": 0.383,
+        "ocr": 91,
+        "combined": 0.349
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-10",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Password for all users:",
+      "bbox": {
+        "x1": 639.6,
+        "y1": 431.3,
+        "x2": 860.4,
+        "y2": 451.5
+      },
+      "confidence": {
+        "yolo": 0.373,
+        "ocr": 95,
+        "combined": 0.354
+      },
+      "word_count": 4
+    },
+    {
+      "id": "elem-11",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "secret_sauce",
+      "bbox": {
+        "x1": 640.3,
+        "y1": 477,
+        "x2": 742.1,
+        "y2": 491
+      },
+      "confidence": {
+        "yolo": 0.27,
+        "ocr": 53,
+        "combined": 0.143
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-12",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "Accepted usernames are:",
+      "bbox": {
+        "x1": 249.1,
+        "y1": 433.8,
+        "x2": 610.9,
+        "y2": 451.7
+      },
+      "confidence": {
+        "yolo": 0.232,
+        "ocr": 94,
+        "combined": 0.218
+      },
+      "word_count": 3
+    },
+    {
+      "id": "elem-13",
+      "type": "logo",
+      "yolo_label": "Logo",
+      "text": "Swag Labs",
+      "bbox": {
+        "x1": 575.1,
+        "y1": 39.2,
+        "x2": 704.8,
+        "y2": 68.2
+      },
+      "confidence": {
+        "yolo": 0.223,
+        "ocr": 96,
+        "combined": 0.214
+      },
+      "word_count": 2
+    },
+    {
+      "id": "elem-14",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "secret_sauce",
+      "bbox": {
+        "x1": 641,
+        "y1": 474,
+        "x2": 1026.4,
+        "y2": 495.2
+      },
+      "confidence": {
+        "yolo": 0.221,
+        "ocr": 53,
+        "combined": 0.117
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-15",
+      "type": "text",
+      "yolo_label": "Text",
+      "text": "standard_user locked_out_user problem_user performance_glitch_user error_user visual_user",
+      "bbox": {
+        "x1": 249.6,
+        "y1": 472.8,
+        "x2": 601.5,
+        "y2": 616.6
+      },
+      "confidence": {
+        "yolo": 0.205,
+        "ocr": 87,
+        "combined": 0.179
+      },
+      "word_count": 6
+    },
+    {
+      "id": "elem-16",
+      "type": "link",
+      "yolo_label": "Link",
+      "text": "error_user",
+      "bbox": {
+        "x1": 249.5,
+        "y1": 574.1,
+        "x2": 334,
+        "y2": 589.4
+      },
+      "confidence": {
+        "yolo": 0.204,
+        "ocr": 91,
+        "combined": 0.186
+      },
+      "word_count": 1
+    },
+    {
+      "id": "elem-17",
+      "type": "heading",
+      "yolo_label": "Heading",
+      "text": "Swag Labs",
+      "bbox": {
+        "x1": 223.7,
+        "y1": 37.2,
+        "x2": 1056.6,
+        "y2": 70.5
+      },
+      "confidence": {
+        "yolo": 0.179,
+        "ocr": 96,
+        "combined": 0.172
+      },
+      "word_count": 2
+    }
+  ],
+  "raw": {
+    "yolo_detections": 18,
+    "ocr_words_found": 17,
+    "full_text": "Swag Labs Login Accepted usernames are: Password for all users: standard_user secret_sauce locked_out_user problem_user performance_glitch_user error_user visual_user"
+  }
+}

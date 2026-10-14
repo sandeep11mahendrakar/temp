@@ -11,11 +11,12 @@ const path = require('node:path');
 
 const { assertStepAction } = require('../src/executeTests');
 
-// Oracle kinds verbatim from docs/ORACLE_CONTRACT.md (K2 frozen set).
+// Oracle kinds verbatim from docs/ORACLE_CONTRACT.md (K2 frozen set + L2 text_absent).
 const ORACLE_KINDS = new Set([
   'dialog_message', 'new_page_url', 'bbox_delta', 'value',
   'text_present', 'count_delta', 'state_diff',
   'url_change', 'observed',
+  'text_absent',
 ]);
 
 test('K3 demoqa targets: 26 items, valid shape, canonical actions+oracles, unique paths', () => {

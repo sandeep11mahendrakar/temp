@@ -35,6 +35,8 @@ async function runLoops(io, goal, opts) {
   const { perceive, execute, llmCall } = (io && typeof io === 'object' ? io : {});
   const maxLoops = (opts && Number.isFinite(opts.maxLoops) ? opts.maxLoops : MAX_LOOPS);
   const site = (opts && typeof opts.site === 'string' && opts.site) || 'loop-site';
+  // runAuto custom expansion hook (optional; default planner expansion).
+  const expandFn = opts && typeof opts.expand === 'function' ? opts.expand : null;
   let store = (opts && opts.store) || emptyStore();
   const runs = [];
   const doneTCs = new Set();
@@ -48,7 +50,7 @@ async function runLoops(io, goal, opts) {
     loops = loop;
     try {
       const state = await perceive({ goal, loop, site });
-      const planned = await plan(llmCall, goal, { runs });
+      const planned = await plan(llmCall, goal, { runs }, expandFn);
       const ids = planned.test_cases.map((c) => c.id);
       const result = await execute(planned.test_cases, state, { loop, site });
       const done = Array.isArray(result && result.doneTCs) ? result.doneTCs : [];

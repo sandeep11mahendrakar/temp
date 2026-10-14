@@ -26,6 +26,33 @@ action (locked-out login, bad credentials, empty required submit). Rule:
   => OBSERVED / n/a (WEAK: seen but unjudgeable — never PASS, never FAIL).
   Otherwise => FAIL / (rejected when rejection text present, else n/a).
 
+## Oracle kinds (K2)
+
+Each `tc.oracle` is `{kind, expect, strength}`. Kinds:
+
+- dialog_message: a modal/dialog/banner text appears. expect = regex for
+  the message (e.g. `Epic sadface|locked out`). strength MED.
+- new_page_url: navigation to a new URL. expect = regex for the URL
+  (e.g. `inventory|checkout-complete`). strength STRONG.
+- bbox_delta: a target element's box moved/appeared between states.
+  expect = `visible-state-changed`. strength MED.
+- value: a field holds an exact value (DOM read-back). expect = the value.
+  strength STRONG (observed, not self-reported).
+- text_present: page/body text contains a pattern. expect = regex.
+  strength MED. (Already used: loginRejected, counterText.)
+- text_absent: page/body text must NOT contain a pattern (uncheck removes
+  selection text, modal close hides dialog text, collapse hides body text).
+  expect = regex. strength CONDITIONAL: STRONG when urlChanged confirms the
+  transition, MED for bare absence on a non-empty page; empty haystack
+  without navigation => OBSERVED (vacuous absence never PASSes).
+- count_delta: a counter changed by N (e.g. `2 items left`). expect =
+  `N|regex`. strength MED.
+- state_diff: any observable visual-state change. expect =
+  `visible-state-changed`. strength MED. (Already used.)
+
+Pre-existing kinds reaffirmed (not renamed): url_change (STRONG),
+observed (WEAK, recorded-only, never PASS/FAIL alone).
+
 ## Report carriage (G3)
 
 - Execution reports carry per-result `oracle: {verdict, app_outcome,

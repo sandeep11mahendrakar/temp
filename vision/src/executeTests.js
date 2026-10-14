@@ -63,7 +63,7 @@ let CURRENT_RUN = { dir: '', id: '' };
 // B2 fewer-shots: post-action evidence screenshots are taken for
 // state-changing actions only; fills verify via the read-only DOM probe
 // (probeFillValue class: input_value signal) and skip the screenshot.
-const AFTER_SHOT_ACTIONS = new Set(['click', 'navigate', 'scroll', 'modal', 'submit']);
+const AFTER_SHOT_ACTIONS = new Set(['click', 'right_click', 'navigate', 'scroll', 'modal', 'submit']);
 
 // B2 + audit: a fill ending in Enter may submit/navigate, so it captures;
 // Tab stays a field move verified by probe readback.
@@ -349,6 +349,19 @@ function weakVerdict(status, stepsExecuted) {
   };
 }
 
+// H2 seeded-queue refill decision (pure): probes aligned with queue entries
+// ({len} numbers, null when unreadable). total>0 -> proceed; empty queue or
+// already refilled -> abort only when empty AND refilled (else proceed);
+// empty + never refilled -> refill once.
+function staleFillRecovery(queue, probeLens, alreadyRefilled) {
+  const q = Array.isArray(queue) ? queue : [];
+  if (!q.length) return 'proceed';
+  const total = (Array.isArray(probeLens) ? probeLens : [])
+    .reduce((n, len) => n + (Number.isFinite(len) && len > 0 ? len : 0), 0);
+  if (total > 0) return 'proceed';
+  return alreadyRefilled ? 'abort' : 'refill';
+}
+
 // B1 dom-disclose: every DOM-assisted actuation must say so on the step.
 // Vision boundary marker is `click-by-vision:Y|N` (<=25 chars): Y = final
 // click coords came from vision re-detect; N = DOM snapped them.
@@ -485,6 +498,29 @@ async function getScrollY(page) {
   return page.evaluate(() => window.scrollY || 0).catch(() => 0);
 }
 
+// L1 contextmenu observation: arm installs a one-shot listener BEFORE the
+// right-click; read returns the menu point {x, y} or null. The post-click
+// re-detect observes any opened menu in the fresh vdom; menu-text assertion
+// itself needs OCR (L2 lane), so this stays a coordinate observation.
+async function armContextMenuProbe(page) {
+  try {
+    await page.evaluate(() => {
+      window.__ctxMenu = null;
+      window.addEventListener('contextmenu', (e) => {
+        window.__ctxMenu = { x: e.clientX, y: e.clientY };
+      }, { once: true });
+    });
+  } catch (_) { /* probe is evidence, not a crash */ }
+}
+
+async function readContextMenuProbe(page) {
+  try {
+    const r = await page.evaluate(() => window.__ctxMenu || null);
+    if (r && Number.isFinite(r.x) && Number.isFinite(r.y)) return { x: r.x, y: r.y };
+  } catch (_) { /* probe is evidence, not a crash */ }
+  return null;
+}
+
 /**
  * Compare pre/post observable signals for one action and produce a
  * semantic verification signal (or null when nothing observable applies).
@@ -543,12 +579,35 @@ function loadTestCases(testCasesPath) {
 }
 
 /**
+ * K1 action-extensions: canonical test-item step actions (executor + mcp +
+ * explorer TYPES share this exact set; anything else is UNSUPPORTED).
+ */
+const STEP_ACTIONS = new Set(['click', 'fill', 'navigate', 'scroll', 'done',
+  'submit', 'key', 'select', 'check', 'uncheck',
+  // K1 batch2.
+  'hover', 'dblclick', 'press', 'wait', 'focus',
+  // K1 batch3.
+  'clear', 'upload', 'drag', 'snapshot', 'selectOption',
+  // L1 right_click (W3 lane: executor+mcp wired; gate accepts).
+  'right_click']);
+
+function assertStepAction(action) {
+  // K1: case-insensitive match returning the canonical member (selectOption).
+  const low = String(action || '').toLowerCase();
+  const hit = [...STEP_ACTIONS].find((a) => a.toLowerCase() === low);
+  if (!hit) {
+    throw new Error(`unsupported step action "${action}" (supported: ${[...STEP_ACTIONS].join(', ')})`);
+  }
+  return hit;
+}
+
+/**
  * Normalise a step into the shape llm.executeAction expects.
  * Generated test cases store navigate targets in `value`; executeAction
  * reads `url`, so translate here without touching the schema.
  */
 function normaliseStep(step, baseUrl) {
-  const action = String(step.action || '').toLowerCase();
+  const action = assertStepAction(step.action);
   const normalised = { ...step, action };
 
   if (action === 'navigate') {
@@ -599,6 +658,9 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
   let checkedStateFailure = null;
   // B2: true once a fill skipped its post-action capture (pool predates it).
   let poolStaleAfterFill = false;
+  // H2: seeded fill queue for pre-submit refill-once (per test case).
+  let seededQueue = [];
+  let refilledOnce = false;
 
   // Current visual state (resolvable elements). Seeded from the pipeline's
   // initial visual DOM when available, else detected from the fresh capture.
@@ -623,8 +685,9 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     let checkAttempts = 1;
     let checkOk = true;
     let checkSnap = false;
+    let contextMenuSeen = null;
 
-    if (REDETECT_ENABLED && ['click', 'fill'].includes(step.action)) {
+    if (REDETECT_ENABLED && ['click', 'fill', 'dblclick', 'right_click'].includes(step.action)) {
       if (!currentElements) {
         // One controlled detection of the current screen before acting.
         const absBefore = beforeScreenshot
@@ -751,12 +814,55 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     const pointProbeBefore = ['click', 'fill'].includes(step.action)
       ? await probePoint(page, execStep.x, execStep.y).catch(() => null)
       : null;
+    // L1: arm the contextmenu listener BEFORE the right-click lands.
+    if (step.action === 'right_click') await armContextMenuProbe(page);
+    // H2 seeded-queue refill-once: before a click, re-probe every seeded
+    // fill coord (lengths only); total 0 with an unrefilled queue refills
+    // once from seeded values, still 0 aborts as value_lost (no blind click).
+    if (step.action === 'click' && seededQueue.length) {
+      const lens = [];
+      for (const q of seededQueue) {
+        try {
+          const p = await probePoint(page, q.x, q.y).catch(() => null);
+          lens.push(p && typeof p.value === 'string' ? p.value.length : 0);
+        } catch (_) { lens.push(0); }
+      }
+      const decision = staleFillRecovery(seededQueue, lens, refilledOnce);
+      if (decision === 'refill') {
+        for (const q of seededQueue) {
+          try {
+            await executeAction(page, { action: 'fill', x: q.x, y: q.y, value: q.value, target: q.target });
+          } catch (_) { /* one entry failing must not break the refill */ }
+        }
+        refilledOnce = true;
+        warnings.push(`Step ${i + 1}: form values lost after fills — refilled once from seeded queue`);
+      } else if (decision === 'abort') {
+        status = 'FAIL';
+        failureReason = `Step ${i + 1} (click): value_lost — form still empty after one refill; submit aborted`;
+        console.warn(`[execute]   ${failureReason}`);
+        executedSteps.push({
+          index: i + 1,
+          ...execStep,
+          ok: false,
+          error: 'value_lost',
+          reason: failureReason,
+          state_id_before: lastState?.state_id || null,
+          duration_ms: Date.now() - stepStartedAt,
+        });
+        break;
+      }
+    }
     if (step.action === 'scroll') {
       scrollBefore = await getScrollY(page);
     }
 
     try {
+      const stepUrlBefore = page.url();
       await executeAction(page, execStep);
+      // L1: read back the armed contextmenu point (null = no menu observed).
+      if (step.action === 'right_click') {
+        contextMenuSeen = await readContextMenuProbe(page);
+      }
       // T5a: the original click has happened; verify, then retry only if needed.
       if (step.action === 'click' && isCheckTarget(step)) {
         const checkResult = await runCheckRetries({
@@ -780,9 +886,21 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       if (step.action === 'fill') {
         submitKeyPressed = submitKeyPress(step);
         if (submitKeyPressed) await page.keyboard.press(submitKeyPressed);
+        // H2: seed the refill queue (values stay in-memory only, per test).
+        if (typeof execStep.value === 'string' && execStep.value) {
+          seededQueue.push({ x: execStep.x, y: execStep.y, value: execStep.value, target: execStep.target });
+        }
       }
       await page.waitForLoadState('domcontentloaded', { timeout: 5000 }).catch(() => {});
       await page.waitForTimeout(500);
+      // H2 fix (G5 lesson): seeded values belong to their page — navigation
+      // retires the queue (probing old coords on a new page false-aborts).
+      try {
+        if (page.url() !== stepUrlBefore) {
+          seededQueue = [];
+          refilledOnce = false;
+        }
+      } catch (_) { /* url read must never break execution */ }
 
       // Post-action evidence: screenshot -> probe -> re-detect new visual state.
       // B2: fills skip the screenshot (probe input_value verifies instead);
@@ -869,6 +987,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         checked_state_attempts: isCheckTarget(step) && step.action === 'click' ? checkAttempts : null,
         checked_state_verified: isCheckTarget(step) && step.action === 'click' ? checkOk : null,
         check_snap: isCheckTarget(step) && step.action === 'click' ? checkSnap : null,
+        contextmenu_observed: step.action === 'right_click' ? contextMenuSeen : null,
         dom_assist: isCheckClick ? assist.dom_assist : null,
         vision_boundary: step.action === 'click' ? `click-by-vision:${assist.click_by_vision}` : null,
         submit_key_pressed: submitKeyPressed,
@@ -1248,7 +1367,8 @@ module.exports = {
   isCheckTarget, resolveCheckTarget, checkToggled, runCheckRetries,
   resolveLowConfFill, buildRedetectPayload, submitKeyPress,
   snapCheckToNativeInput, weakStepCount, weakVerdict,
-  domAssistTag, domAssistCount,
-  needsAfterShot, ScreenMeter,
+  domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
+  needsAfterShot, ScreenMeter, staleFillRecovery,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
+  STEP_ACTIONS, assertStepAction, normaliseStep,
 };

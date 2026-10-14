@@ -36,6 +36,43 @@ function num(n, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+// N5 schema-gaps: canonical 20-action enum (K5-gap3 — test-item steps had
+// NO action enum anywhere). checkAction() returns null when known, else a
+// violation string. Consumer: tc lanes (K1/K3); report cases carry no
+// steps so checkReport stays shape-only by design.
+const ACTION_ENUM = [
+  'click', 'fill', 'scroll', 'navigate',
+  'key', 'submit', 'select', 'check', 'uncheck',
+  'hover', 'dblclick', 'right_click', 'press', 'wait',
+  'focus', 'clear', 'upload', 'drag', 'snapshot',
+  'selectOption',
+];
+
+function checkAction(action) {
+  const a = String(action || '').trim();
+  if (!a) return 'action:missing';
+  const hit = ACTION_ENUM.find((k) => k.toLowerCase() === a.toLowerCase());
+  if (!hit) return `action:unknown:${a.slice(0, 40)}`;
+  return null;
+}
+
+// N4 blind rule: blind=Y ONLY when the run used an empty cwd AND tools-off
+// AND JSON-only I/O. Anything else is AUTONOMY_NONBLIND. AUTONOMOUS is
+// never granted unless blind (downgraded, never upgraded).
+function blindStatus(flags) {
+  const f = (flags && typeof flags === 'object' ? flags : {});
+  const blind = f.cwdEmpty === true && f.toolsOff === true && f.jsonOnly === true;
+  return blind ? 'Y' : 'AUTONOMY_NONBLIND';
+}
+
+function resolveAutonomy(input) {
+  const blind = blindStatus(input);
+  const req = input && typeof input.requested === 'string' ? input.requested : '';
+  if (req === 'AUTONOMOUS') return blind === 'Y' ? 'AUTONOMOUS' : 'AUTONOMY_NONBLIND';
+  if (req) return req;
+  return blind === 'Y' ? 'BLIND' : 'AUTONOMY_NONBLIND';
+}
+
 function buildReport(input) {
   const src = (input && typeof input === 'object' ? input : {});
   const runId = String(src.runId || `run_${Date.now()}`);
@@ -55,6 +92,7 @@ function buildReport(input) {
   })) : [];
   const costIn = (src.cost && typeof src.cost === 'object') ? src.cost : {};
   const passed = cases.filter((c) => c.verdict === 'PASS' || c.verdict.startsWith('PASS_WEAK')).length;
+  const brainIn = (src.brain && typeof src.brain === 'object') ? src.brain : null;
   const body = {
     schema: SCHEMA_VERSION,
     run: {
@@ -75,6 +113,16 @@ function buildReport(input) {
       usd_estimated: costIn.usd_estimated === null || costIn.usd_estimated === undefined
         ? null : Number(costIn.usd_estimated),
     },
+    // N4: report carries brain{mode,model,blind} when the caller provides a
+    // brain block; absent block means pre-N4 report (field omitted, old
+    // reports still validate).
+    ...(brainIn ? {
+      brain: {
+        mode: String(brainIn.mode || 'unknown'),
+        model: String(brainIn.model || 'unknown'),
+        blind: blindStatus(brainIn),
+      },
+    } : {}),
     storage: {
       paths: Array.isArray(src.storagePaths) ? src.storagePaths.map(String) : [],
     },
@@ -112,9 +160,13 @@ function checkReport(report) {
 
 module.exports = {
   SCHEMA_VERSION,
+  ACTION_ENUM,
+  checkAction,
   stableStringify,
   sha1Of,
   buildReport,
   indexRow,
   checkReport,
+  blindStatus,
+  resolveAutonomy,
 };

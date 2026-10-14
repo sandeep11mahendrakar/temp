@@ -410,3 +410,523 @@ describe('mcp http fallback transport (--transport http, offline, no browser)', 
     } finally { child.kill(); }
   }, { timeout: 60000 });
 });
+
+describe('H1 perceive-nonav (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 1,
+      raw: { full_text: 'Login' },
+      elements: [
+        { id: 'e1', type: 'button', text: 'Login', bbox: { x1: 80, y1: 180, x2: 120, y2: 220 }, confidence: { yolo: 0.9 } },
+      ],
+    };
+  }
+
+  function setup(startUrl) {
+    const gotos = [];
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = {
+      _url: startUrl,
+      url() { return this._url; },
+      async goto(u) { gotos.push(u); this._url = u; },
+      async screenshot() {},
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+    };
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-nonav.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    return gotos;
+  }
+
+  function teardown() {
+    delete srv.__testEnsure; delete srv.__testPage;
+    delete srv.__testProcess; delete srv.__testShotPath;
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  it('same URL captures in place: no goto, navigated:false', async () => {
+    const gotos = setup('https://example.com/');
+    try {
+      const body = parse(await srv.callTool('perceive', { url: 'https://example.com/' }));
+      assert.equal(body.navigated, false);
+      assert.deepEqual(gotos, []);
+      assert.equal(body.element_count, 1);
+    } finally { teardown(); }
+  });
+
+  it('trailing-slash variant counts as same URL (R5 rule)', async () => {
+    const gotos = setup('https://example.com/');
+    try {
+      const body = parse(await srv.callTool('perceive', { url: 'https://example.com' }));
+      assert.equal(body.navigated, false);
+      assert.deepEqual(gotos, []);
+    } finally { teardown(); }
+  });
+
+  it('other URL navigates, navigated:true', async () => {
+    const gotos = setup('https://example.com/');
+    try {
+      const body = parse(await srv.callTool('perceive', { url: 'https://example.com/other' }));
+      assert.equal(body.navigated, true);
+      assert.deepEqual(gotos, ['https://example.com/other']);
+    } finally { teardown(); }
+  });
+
+  it('navigate:true forces goto on same URL (blank-page equivalent)', async () => {
+    const gotos = setup('about:blank');
+    try {
+      const body = parse(await srv.callTool('perceive', { url: 'https://example.com/' }));
+      assert.equal(body.navigated, true);
+      assert.deepEqual(gotos, ['https://example.com/']);
+    } finally { teardown(); }
+    const gotos2 = setup('https://example.com/');
+    try {
+      const body = parse(await srv.callTool('perceive', { url: 'https://example.com/', navigate: true }));
+      assert.equal(body.navigated, true);
+      assert.deepEqual(gotos2, ['https://example.com/']);
+    } finally { teardown(); }
+  });
+});
+
+describe('K1 batch1 submit/select/check/uncheck (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 2,
+      raw: { full_text: 'Login Remember' },
+      elements: [
+        { id: 'e1', type: 'button', text: 'Login', bbox: { x1: 80, y1: 180, x2: 120, y2: 220 }, confidence: { yolo: 0.9 } },
+        { id: 'e2', type: 'checkbox', text: '', bbox: { x1: 80, y1: 280, x2: 110, y2: 310 }, confidence: { yolo: 0.8 } },
+      ],
+    };
+  }
+
+  function setup(checked) {
+    const acts = { clicks: [], presses: [], types: [] };
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async screenshot() {},
+      mouse: { async click(x, y) { acts.clicks.push([x, y]); }, async wheel() {} },
+      keyboard: {
+        async press(k) { acts.presses.push(k); },
+        async type(v) { acts.types.push(v); },
+      },
+      async evaluate() { return checked; },
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+    };
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-k1.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    return acts;
+  }
+
+  function teardown() {
+    delete srv.__testEnsure; delete srv.__testPage;
+    delete srv.__testProcess; delete srv.__testShotPath;
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  it('submit clicks + Enter without navigating', async () => {
+    const acts = setup(null);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'submit', target: { type: 'button', text: 'Login' } }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.presses, ['Enter']);
+      assert.equal(body.url, 'https://example.com/');
+    } finally { teardown(); }
+  });
+
+  it('select opens, types option, confirms', async () => {
+    const acts = setup(null);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'select', x: 100, y: 200, value: 'US' }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.types, ['US']);
+      assert.deepEqual(acts.presses, ['Enter']);
+    } finally { teardown(); }
+  });
+
+  it('check clicks only when live state is unchecked', async () => {
+    const acts = setup(false);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'check', x: 95, y: 295 }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(acts.clicks.length, 1);
+      assert.equal(body.verification.method, 'checked_stateDesired');
+    } finally { teardown(); }
+    const acts2 = setup(true);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'check', x: 95, y: 295 }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(acts2.clicks.length, 0);
+    } finally { teardown(); }
+  });
+
+  it('uncheck clicks only when live state is checked; unknown action rejected', async () => {
+    const acts = setup(true);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'uncheck', x: 95, y: 295 }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(acts.clicks.length, 1);
+    } finally { teardown(); }
+    const acts2 = setup(false);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'uncheck', x: 95, y: 295 }));
+      assert.equal(acts2.clicks.length, 0);
+      const bad = parse(await srv.callTool('act', { action: 'dance', x: 1, y: 1 }));
+      assert.ok(bad.error && /needs action in/.test(JSON.stringify(bad)));
+    } finally { teardown(); }
+  });
+});
+
+describe('K1 batch2 hover/dblclick/press/wait/focus (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 1,
+      raw: { full_text: 'Menu' },
+      elements: [
+        { id: 'e1', type: 'button', text: 'Menu', bbox: { x1: 80, y1: 180, x2: 120, y2: 220 }, confidence: { yolo: 0.9 } },
+      ],
+    };
+  }
+
+  function setup() {
+    const acts = { clicks: [], presses: [], moves: [], waits: [] };
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async screenshot() {},
+      mouse: {
+        async click(x, y, opts) { acts.clicks.push([x, y, opts && opts.clickCount ? opts.clickCount : 1]); },
+        async wheel() {},
+        async move(x, y) { acts.moves.push([x, y]); },
+      },
+      keyboard: {
+        async press(k) { acts.presses.push(k); },
+        async type() {},
+      },
+      async evaluate() { return null; },
+      async waitForTimeout(ms) { acts.waits.push(ms); },
+      async waitForLoadState() {},
+    };
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-k1b2.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    return acts;
+  }
+
+  function teardown() {
+    delete srv.__testEnsure; delete srv.__testPage;
+    delete srv.__testProcess; delete srv.__testShotPath;
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  it('hover moves without clicking', async () => {
+    const acts = setup();
+    try {
+      const body = parse(await srv.callTool('act', { action: 'hover', x: 100, y: 200 }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.moves, [[100, 200]]);
+      assert.equal(acts.clicks.length, 0);
+    } finally { teardown(); }
+  });
+
+  it('dblclick double-clicks at coords', async () => {
+    const acts = setup();
+    try {
+      const body = parse(await srv.callTool('act', { action: 'dblclick', target: { type: 'button', text: 'Menu' } }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.clicks, [[100, 200, 2]]);
+    } finally { teardown(); }
+  });
+
+  it('press sends any key string; empty value rejected before services', async () => {
+    const acts = setup();
+    try {
+      const body = parse(await srv.callTool('act', { action: 'press', value: 'Escape' }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.presses, ['Escape']);
+      const bad = await srv.callTool('act', { action: 'press', value: '' });
+      assert.equal(bad.isError, true);
+    } finally { teardown(); }
+  });
+
+  it('wait sleeps capped value; focus clicks', async () => {
+    const acts = setup();
+    try {
+      const body = parse(await srv.callTool('act', { action: 'wait', value: '200' }));
+      assert.equal(body.status, 'PASS');
+      assert.ok(acts.waits.includes(200), 'wait slept 200ms (plus settle 500ms)');
+      const f = parse(await srv.callTool('act', { action: 'focus', x: 100, y: 200 }));
+      assert.equal(f.status, 'PASS');
+      assert.deepEqual(acts.clicks, [[100, 200, 1]]);
+    } finally { teardown(); }
+  });
+});
+
+describe('K1 batch3 clear/upload/drag/snapshot/selectOption (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 1,
+      raw: { full_text: 'Upload' },
+      elements: [
+        { id: 'e1', type: 'button', text: 'Upload', bbox: { x1: 80, y1: 180, x2: 120, y2: 220 }, confidence: { yolo: 0.9 } },
+      ],
+    };
+  }
+
+  function setup(uploads) {
+    const acts = { clicks: [], presses: [], moves: [], shots: 0 };
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async screenshot() { acts.shots += 1; },
+      mouse: {
+        async click(x, y, opts) { acts.clicks.push([x, y, opts && opts.clickCount ? opts.clickCount : 1]); },
+        async wheel() {},
+        async move(x, y) { acts.moves.push([x, y]); },
+        async down() { acts.moves.push('down'); },
+        async up() { acts.moves.push('up'); },
+      },
+      keyboard: {
+        async press(k) { acts.presses.push(k); },
+        async type() {},
+      },
+      async evaluate(fn, params) { return Array.isArray(params) && params[params.length - 1] === 'US'; },
+      async evaluateHandle() {
+        return { asElement: () => ({ setInputFiles: async (f) => uploads.push(f) }) };
+      },
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+    };
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-k1b3.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    return acts;
+  }
+
+  function teardown() {
+    delete srv.__testEnsure; delete srv.__testPage;
+    delete srv.__testProcess; delete srv.__testShotPath;
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  it('clear selects-all + deletes at coords', async () => {
+    const acts = setup([]);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'clear', x: 100, y: 200 }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.presses, ['Control+A', 'Backspace']);
+    } finally { teardown(); }
+  });
+
+  it('upload sets files via near file input; missing path rejected', async () => {
+    const uploads = [];
+    const acts = setup(uploads);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'upload', x: 100, y: 200, value: '/tmp/a.png' }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(uploads, ['/tmp/a.png']);
+      assert.deepEqual(acts.presses, []);
+      const bad = await srv.callTool('act', { action: 'upload', x: 100, y: 200, value: '' });
+      assert.equal(bad.isError, true);
+    } finally { teardown(); }
+  });
+
+  it('drag moves held cursor to x2,y2; bad value rejected', async () => {
+    const acts = setup([]);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'drag', x: 10, y: 20, value: '30,40' }));
+      assert.equal(body.status, 'PASS');
+      assert.deepEqual(acts.moves, [[10, 20], 'down', [30, 40], 'up']);
+      const bad = await srv.callTool('act', { action: 'drag', x: 10, y: 20, value: 'nope' });
+      assert.equal(bad.isError, true);
+    } finally { teardown(); }
+  });
+
+  it('snapshot captures without coords; selectOption sets native select', async () => {
+    const acts = setup([]);
+    try {
+      const snap = parse(await srv.callTool('act', { action: 'snapshot' }));
+      assert.equal(snap.status, 'PASS');
+      assert.equal(acts.shots >= 1, true);
+      const sel = parse(await srv.callTool('act', { action: 'selectOption', x: 100, y: 200, value: 'US' }));
+      assert.equal(sel.status, 'PASS');
+      const miss = await srv.callTool('act', { action: 'selectOption', x: 100, y: 200, value: 'XX' });
+      assert.equal(miss.isError, true);
+    } finally { teardown(); }
+  });
+});
+
+describe('H2 value-lost guard (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 3,
+      raw: { full_text: 'Login Welcome Username Password' },
+      elements: [
+        { id: 'e1', type: 'button', text: 'Login', bbox: { x1: 80, y1: 180, x2: 120, y2: 220 }, confidence: { yolo: 0.9 } },
+        { id: 'e2', type: 'text_input', text: '', bbox: { x1: 80, y1: 280, x2: 220, y2: 310 }, confidence: { yolo: 0.8 } },
+        { id: 'e3', type: 'text_input', text: '', bbox: { x1: 80, y1: 330, x2: 220, y2: 360 }, confidence: { yolo: 0.8 } },
+      ],
+    };
+  }
+
+  function setupLens(clicks, lensRows) {
+    const page = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async screenshot() {},
+      mouse: { async click(x, y) { clicks.push([x, y]); }, async wheel() {} },
+      keyboard: { async press() {}, async type() {} },
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+      async evaluate() { return lensRows; },
+      async close() {},
+    };
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = page;
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-h2.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    return page;
+  }
+
+  function teardown() {
+    delete srv.__testEnsure; delete srv.__testPage;
+    delete srv.__testProcess; delete srv.__testShotPath;
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  it('summarizeFormState counts lengths only, never surfaces values', () => {
+    const out = srv.summarizeFormState([{ hasValue: true, len: 13 }, { hasValue: false, len: 0 }, null, { hasValue: true, len: 5 }]);
+    assert.deepEqual(out, { fields: 3, filled_len_total: 18, empty_count: 1 });
+    assert.ok(!JSON.stringify(out).includes('secret_sauce'));
+  });
+
+  it('pre-submit click after fills with empty form aborts value_lost, never clicks', async () => {
+    const clicks = [];
+    setupLens(clicks, [{ hasValue: false, len: 0 }, { hasValue: false, len: 0 }]);
+    try {
+      const fill = parse(await srv.callTool('act', { action: 'fill', x: 150, y: 295, value: 'standard_user', target: { type: 'text_input', text: '' } }));
+      assert.equal(fill.status, 'PASS');
+      assert.ok(fill.form_state && typeof fill.form_state.filled_len_total === 'number');
+      assert.equal(fill.dom_assist, 'observe');
+      assert.ok(!JSON.stringify(fill).includes('standard_user') || fill.verification.detail.includes('standard_user'),
+        'value may appear only inside the pre-existing input_value verification detail');
+      const click = await srv.callTool('act', { action: 'click', x: 100, y: 200, target: { type: 'button', text: 'Login' } });
+      const body = parse(click);
+      assert.equal(body.status, 'FAIL');
+      assert.equal(body.error, 'value_lost');
+      assert.ok(typeof body.reason === 'string' && body.reason.length > 0);
+      assert.equal(click.isError, true);
+      assert.equal(clicks.length, 1, 'only the fill click happened; aborted submit never clicks');
+      assert.deepEqual(clicks[0], [150, 295], 'the single click is the fill, not Login');
+    } finally { teardown(); }
+  });
+});
+
+describe('L1 right_click (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 1,
+      raw: { full_text: 'Right Click Me' },
+      elements: [
+        { id: 'e1', type: 'button', text: 'Right Click Me', bbox: { x1: 80, y1: 180, x2: 120, y2: 220 }, confidence: { yolo: 0.9 } },
+      ],
+    };
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  it('right_click sends button:right, never a plain click; history keeps the real action', async () => {
+    const clicks = [];
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async screenshot() {},
+      mouse: { async click(x, y, opts) { clicks.push([x, y, opts]); }, async wheel() {} },
+      keyboard: { async press() {}, async type() {} },
+      async evaluate() { return null; },
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+    };
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-l1.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    try {
+      const body = parse(await srv.callTool('act', { action: 'right_click', target: { type: 'button', text: 'Right Click Me' } }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(clicks.length, 1);
+      assert.deepEqual(clicks[0], [100, 200, { button: 'right' }]);
+      const last = srv.session.history.at(-1);
+      assert.equal(last.action, 'right_click', 'history records right_click, never click-mapped');
+    } finally {
+      delete srv.__testEnsure; delete srv.__testPage;
+      delete srv.__testProcess; delete srv.__testShotPath;
+      srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+      srv.session.history = []; srv.session.lastDom = null;
+      srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    }
+  });
+});

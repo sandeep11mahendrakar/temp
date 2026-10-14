@@ -80,3 +80,11 @@ test('G5 lesson: login fills keep empty target text; every login expects navigat
     }
   }
 });
+
+test('M2 expand hook: custom expandFn flows through plan()', async () => {
+  const custom = [{ id: 'btn-rightclick', objective: 'o', steps: [{ action: 'right_click', target: { type: 'button', text: 'Right Click Me' }, value: '', x: 1, y: 2 }] }];
+  const r = await plan(async () => JSON.stringify({ keep: ['btn-rightclick'] }), 'g', null, () => custom);
+  assert.equal(r.test_cases.length, 1);
+  assert.equal(r.test_cases[0].steps[0].action, 'right_click');
+  assert.equal(r.via, 'llm-first');
+});

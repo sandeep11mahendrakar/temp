@@ -147,3 +147,75 @@ test('AUDIT contract string documents detect/hints/expand/oracles', () => {
   assert.match(CONTRACT, /detect.*hints.*expand.*oracles/);
   assert.ok(ORACLES.loginSuccess && ORACLES.loginRejected && ORACLES.observed);
 });
+
+// J3 form plugin: demoqa practice-form vdom scores top + hints/expand shape.
+const FORM_VDOM = { elements: [
+  { type: 'text_input', text: 'First Name' },
+  { type: 'text_input', text: 'Last Name' },
+  { type: 'text_input', text: 'Email' },
+  { type: 'text_input', text: 'Mobile Number' },
+  { type: 'radio', text: 'Male' },
+  { type: 'radio', text: 'Female' },
+  { type: 'checkbox', text: 'Sports' },
+  { type: 'button', text: 'Submit' },
+] };
+
+test('J3 form plugin: practice-form vdom detects form top', () => {
+  const ranked = detectAll(FORM_VDOM, {});
+  assert.equal(ranked[0].name, 'form');
+  assert.ok(ranked[0].score >= 0.8);
+});
+
+test('J3 form plugin: hints capture fields+options, expand fills+submit', () => {
+  const tcs = expandAll('enter student details and send', FORM_VDOM, '', {});
+  assert.equal(tcs.length, 1);
+  assert.equal(tcs[0].archetype, 'form');
+  assert.equal(tcs[0].id, 'form-fill-submit');
+  assert.ok(tcs[0].steps.length >= 5, '4 fills + submit click');
+  assert.equal(tcs[0].steps.at(-1).action, 'click');
+  assert.equal(tcs[0].oracle.kind, 'text_present');
+});
+
+// J3 table plugin: demoqa webtables vdom scores top + search/add/rows shape.
+const TABLE_VDOM = { elements: [
+  { type: 'text', text: 'Add' },
+  { type: 'search_field', text: 'Type to search' },
+  { type: 'text', text: 'Alden Cantrell' },
+  { type: 'text', text: 'Edit' },
+  { type: 'text', text: 'Delete' },
+  { type: 'text', text: 'Cierra Vega' },
+  { type: 'text', text: 'Edit' },
+  { type: 'text', text: 'Delete' },
+] };
+
+test('J3 table plugin: webtables vdom detects table top', () => {
+  const ranked = detectAll(TABLE_VDOM, {});
+  assert.equal(ranked[0].name, 'table');
+  assert.ok(ranked[0].score >= 0.8);
+});
+
+test('J3 table plugin: hints capture rows+search, expand search/add/rows', () => {
+  const tcs = expandAll('look through the user grid', TABLE_VDOM, '', {});
+  assert.deepEqual(tcs.map((t) => t.id), ['table-search', 'table-add-open', 'table-rows']);
+  assert.ok(tcs.every((t) => t.archetype === 'table' && t.oracle && t.oracle.kind));
+});
+
+test('J3 plugins: core contract entries still win their own fixtures', () => {
+  const crud = expandAll('complete todos', { elements: [{ type: 'checkbox', text: 'Buy milk' }, { type: 'text', text: '2 items left' }] }, '2 items left', {});
+  assert.equal(crud[0].archetype, 'crudlist');
+  const gen = expandAll('do something cool', { elements: [{ type: 'button', text: 'Go' }] }, '', {});
+  assert.ok(gen.length >= 1);
+  assert.ok(!gen.some((t) => t.archetype === 'form' || t.archetype === 'table'), 'no plugin hijack on generic page');
+});
+
+test('J3 plugins: button-typed Add still recalls table at mid tier', () => {
+  const vdom = { elements: [
+    { type: 'button', text: 'Add' },
+    { type: 'text', text: 'Alden Cantrell' },
+    { type: 'text', text: 'Edit' },
+    { type: 'text', text: 'Delete' },
+  ] };
+  const ranked = detectAll(vdom, {});
+  const table = ranked.find((r) => r.name === 'table');
+  assert.ok(table.score >= 0.55, 'mid-tier recall without search box');
+});

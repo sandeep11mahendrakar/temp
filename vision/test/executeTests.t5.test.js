@@ -24,6 +24,9 @@ const {
   domAssistCount,
   needsAfterShot,
   ScreenMeter,
+  staleFillRecovery,
+  armContextMenuProbe,
+  readContextMenuProbe,
   DEFAULT_CONF,
   LOWCONF_RETRY_CONF,
 } = require('../src/executeTests');
@@ -294,5 +297,42 @@ test('B2 integration: fill-skip + stale-refresh + screens metric are wired', () 
   assert.match(executor, /screens_per_test/);
   ScreenMeter.reset();
   assert.deepEqual({ taken: ScreenMeter.taken, skipped: ScreenMeter.skipped }, { taken: 0, skipped: 0 });
+});
+
+test('H2 value-lost: staleFillRecovery proceeds/refills/aborts by lens total', () => {
+  const q = [{ x: 1, y: 2, value: 'a' }, { x: 3, y: 4, value: 'b' }];
+  assert.equal(staleFillRecovery(q, [5, 7], false), 'proceed');
+  assert.equal(staleFillRecovery(q, [0, 0], false), 'refill');
+  assert.equal(staleFillRecovery(q, [null, 0], false), 'refill');
+  assert.equal(staleFillRecovery(q, [0, 0], true), 'abort');
+  assert.equal(staleFillRecovery([], [0], false), 'proceed');
+  assert.equal(staleFillRecovery(q, null, false), 'refill');
+});
+
+test('H2 integration: seeded-queue refill-once + value_lost abort are wired', () => {
+  const source = fs.readFileSync(path.join(__dirname, '../src/executeTests.js'), 'utf8');
+  const executor = source.slice(source.indexOf('async function runTestCase'));
+  assert.match(executor, /seededQueue\.push\(\{/);
+  assert.match(executor, /staleFillRecovery\(seededQueue/);
+  assert.match(executor, /value_lost/);
+  assert.match(executor, /refilled once from seeded queue/);
+  assert.match(executor, /seededQueue = \[\]/);
+});
+
+test('L1 right-click: executor button:right + capture + menu probe wiring', async () => {
+  const { executeAction } = require('../src/llm');
+  const clicks = [];
+  let menu = null;
+  const fake = {
+    mouse: { async click(x, y, opts) { clicks.push([x, y, opts]); } },
+    evaluate: async () => menu,
+  };
+  await executeAction(fake, { action: 'right_click', x: 640, y: 300 });
+  assert.deepEqual(clicks, [[640, 300, { button: 'right' }]]);
+  assert.equal(needsAfterShot('right_click'), true, 'menu opens: state change captures');
+  await armContextMenuProbe(fake);
+  assert.equal(await readContextMenuProbe(fake), null, 'no menu yet');
+  menu = { x: 640, y: 300 };
+  assert.deepEqual(await readContextMenuProbe(fake), { x: 640, y: 300 });
 });
 

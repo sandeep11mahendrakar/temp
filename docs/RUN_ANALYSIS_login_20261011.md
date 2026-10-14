@@ -287,3 +287,17 @@ REAL loopController.runLoops driving planner (brain-directed mock select) + shel
 - Run 3 partial: 11-step T16-proven chain in planner; cart-page gap closed; form fragments land.
 - Run 4 FULL HOUSE (g5_matrix.json): 5 logins PASS/inventory + locked_out FAIL->oracle PASS/rejected+snip ("locked out user...") + checkout-full PASS->complete.html + negative-empty PASS->oracle PASS/rejected. LOOPS=2 lastDelta=1 covered (stop-rule shown live), pass_rate 0.875, tc-table verdict/screens/url per TC, memory attempts recorded, INDEX row with sha. Screens repaired offline (driver read evidence_dir off wrong object; no new runs needed).
 - Services stopped after (ports free, slot released).
+
+## H4 live-diag (W2, 2026-10-14, LoopB headed api_calls=0, sole driver, 3 runs)
+
+MCP HTTP tools, NO ocr cross-check anywhere (ocr_used=false): perceive -> fill -> fill -> submit -> confirm -> evidence -> reset, no mid-form perceives (T10 wipe lesson baked into the driver). All 3 runs PASS every turn: 18 elements, input_value x2, submit url_change to inventory.html, confirm inventory+logout/products true, evidence, reset. Per-turn tables in vision/storage/outputs/h4_diag.json; screenshots in MCP temp dir. Expectation PASSx3 met exactly. Services + MCP server stopped after (ports free, slot released).
+
+## N6 file-mode matrix (W2, 2026-10-14, LoopB headed api_calls=0, sole driver)
+
+runAuto.buildRunner + brain file-mode (pre-authored keep-all handshake reps, disclosed) + shell-executor per TC. N0 verdict forced file-mode (no local model, cli-spawn would burn quota).
+- Sauce: loops=2 lastDelta=0 (stop-rule live); 5 logins PASS/inventory + locked_out FAIL->oracle PASS/rejected+snip + negative PASS->oracle PASS/rejected + checkout PASS->complete.html (retry after H2 nav-fix).
+- Demoqa text-box: loops=1 covered (PASS).
+- FILE-CALLS=3 file-handshake selects, api_calls=0, CAP40 untouched.
+- Incident: fileTransport strictParse requires action field — keep-lists need action:"select" envelope (my reps fixed, no brain.js change; follow-up noted for W3 N1).
+- Incident: H2 seeded-queue false-aborted post-navigation clicks (probing stale login coords on inventory); fixed with nav-retire (queue cleared on URL change), proven by checkout PASS retry.
+- Services stopped after (ports free, HOLDER=W2 RELEASED).

@@ -54,7 +54,15 @@ const CANDIDATE_TYPES = new Set([
   'button', 'link', 'text_input', 'select', 'checkbox', 'radiobox',
   'tab', 'menu', 'list_item', 'search_field', 'bottom_navigation',
 ]);
-const ACTION_TYPES = new Set(['click', 'fill', 'scroll', 'navigate', 'submit', 'done']);
+const ACTION_TYPES = new Set(['click', 'fill', 'scroll', 'navigate', 'submit', 'done',
+  // K1 action-extensions batch1 (mirrors llm.js VALID_ACTIONS).
+  'key', 'select', 'check', 'uncheck',
+  // K1 batch2.
+  'hover', 'dblclick', 'press', 'wait', 'focus',
+  // K1 batch3.
+  'clear', 'upload', 'drag', 'snapshot', 'selectOption',
+  // L1 right_click (W3 lane).
+  'right_click']);
 
 // Authenticated-seed support (runBoth.js --auth user pass).
 const SEEDED_CREDS = (process.env.SEED_USERNAME && process.env.SEED_PASSWORD)
@@ -459,8 +467,10 @@ Respond ONLY with raw JSON: {"thought":"<one sentence: current screen vs current
       });
       return { action: 'unknown', candidate: null, value: '', reason: 'unparseable', thought: '', strikes: parseStrikes };
     }
-    let action = String(obj.action || '').toLowerCase();
-    if (!ACTION_TYPES.has(action)) action = 'unknown'; // NEVER silently done
+    // K1: case-insensitive TYPES match returning the canonical member.
+    const rawAction = String(obj.action || '');
+    let action = [...ACTION_TYPES].find((a) => a.toLowerCase() === rawAction.toLowerCase());
+    if (!action) action = 'unknown'; // NEVER silently done
     const chosen = candidates.find((c) => c.elementId === obj.elementId)
       || candidates.find((c) => normText(c.text) && obj.value && normText(c.text).includes(normText(obj.value)));
     const thought = typeof obj.thought === 'string' ? obj.thought.slice(0, 300) : '';

@@ -189,6 +189,37 @@ function resolveMcpTarget(elements, wantType, wantText, px, py, proximityPx = 90
 // Canonical key names for act 'key' + fill submitKey (Playwright press set).
 const KEY_PRESS_KEYS = ['Enter', 'Tab', 'Space'];
 const SUBMIT_KEYS = ['Enter', 'Tab'];
+// H2 value-lost guard: form-state lens (lengths only, NEVER values).
+// summarizeFormState() is pure over [{hasValue,len}]; formStateLens(page)
+// reads the live DOM the same lens-only way. dom_assist:'observe' marks
+// observation-only reads (no correction attempted).
+function summarizeFormState(fieldLens) {
+  const rows = Array.isArray(fieldLens) ? fieldLens.filter((r) => r && typeof r === 'object') : [];
+  let filled = 0;
+  let total = 0;
+  for (const r of rows) {
+    const len = Number.isFinite(r.len) && r.len > 0 ? Math.floor(r.len) : 0;
+    total += len;
+    if (r.hasValue === true || len > 0) filled += 1;
+  }
+  return { fields: rows.length, filled_len_total: total, empty_count: rows.length - filled };
+}
+
+async function formStateLens(page) {
+  if (!page || typeof page.evaluate !== 'function') return null;
+  try {
+    return await page.evaluate(() => [...document.querySelectorAll('input, textarea')].map((el) => {
+      const tag = (el.tagName || '').toLowerCase();
+      const type = String((el.getAttribute && el.getAttribute('type')) || '').toLowerCase();
+      if (tag !== 'textarea' && (type === 'checkbox' || type === 'radio' || type === 'button' || type === 'submit' || type === 'hidden')) return null;
+      const len = typeof el.value === 'string' ? el.value.length : 0;
+      return { hasValue: len > 0, len };
+    }).filter(Boolean));
+  } catch (_) {
+    return null;
+  }
+}
+
 function canonKeyName(v, allowed) {
   const t = String(v || '').trim().toLowerCase();
   return (allowed || []).find((k) => k.toLowerCase() === t) || null;
@@ -244,6 +275,12 @@ function currentUrlOf(page) {
   return session.lastUrl || null;
 }
 
+// H1 perceive-nonav: trailing-slash/case tolerant URL compare (R5 rule).
+function sameMcpUrl(a, b) {
+  const norm = (u) => String(u || '').trim().replace(/\/+$/, '').toLowerCase();
+  return norm(a) === norm(b) && norm(a) !== '';
+}
+
 async function settleMcpPage(page) {
   try { await page.waitForLoadState('domcontentloaded', { timeout: 5000 }); } catch { /* optional */ }
   try {
@@ -264,16 +301,25 @@ function freshMcpCompact(vdom, fallbackUrl, shotAbs) {
 /**
  * Unified perceive (R3-T9 P1): drives the PERSISTENT session page to the URL
  * instead of a one-shot capture browser, so act-after-perceive just works.
- * Same compact shape as before (dual-way contract frozen).
+ * Same compact shape as before (dual-way contract frozen) + `navigated` bool.
+ * H1 perceive-nonav: NEVER re-navigate onto a loaded same-URL page — a
+ * mid-form perceive (fill user, perceive, fill pass) must not wipe fills.
+ * Navigate ONLY when the session page is blank, the URL differs, or the
+ * caller passes navigate:true. Otherwise capture in place.
  */
-async function handlePerceive(url) {
+async function handlePerceive(url, opts = {}) {
   const ensured = await ensureMcpServices().catch((e) => ({ ok: false, error: e.message }));
   if (!ensured || !ensured.ok) return toolError(`services failed to start: ${(ensured && ensured.error) || 'unknown'}`, 'local-services');
   session.svcHandle = ensured;
   if (!(await waitForServices(90000))) return servicesNotReadyResult();
   const page = await ensureMcpPage();
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await settleMcpPage(page);
+  const now = currentUrlOf(page);
+  const blank = !now || now === 'about:blank';
+  const navigated = Boolean(blank || (opts && opts.navigate === true) || !sameMcpUrl(now, url));
+  if (navigated) {
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await settleMcpPage(page);
+  }
   const shotAbs = await shotCurrentPage(page, 'perceive');
   const vdom = await processMcpImage(shotAbs);
   const compact = {
@@ -282,6 +328,7 @@ async function handlePerceive(url) {
     page_text: ((vdom.raw && vdom.raw.full_text) || '').slice(0, 800),
     elements: compactElements(vdom),
     screenshot: shotAbs,
+    navigated,
   };
   appendHistory({ tool: 'perceive', url: compact.url, screenshot: shotAbs, at: new Date().toISOString() });
   session.lastDom = compact; session.lastScreenshot = shotAbs; session.lastUrl = compact.url;
@@ -289,9 +336,13 @@ async function handlePerceive(url) {
 }
 
 async function handleAct(args = {}) {
-  const action = String(args.action || '').toLowerCase();
-  if (!['click', 'fill', 'scroll', 'navigate', 'key'].includes(action)) {
-    return toolError(`act needs action in [click, fill, scroll, navigate, key], got "${args.action}"`, 'caller');
+  // K1 action-extensions batch1+2+3 (case-insensitive, canonical member).
+  const K1_COORDLESS = ['scroll', 'key', 'press', 'wait', 'snapshot'];
+  const K1_ALL = ['click', 'fill', 'scroll', 'navigate', 'key', 'submit', 'select', 'check', 'uncheck', 'hover', 'dblclick', 'right_click', 'press', 'wait', 'focus', 'clear', 'upload', 'drag', 'snapshot', 'selectOption'];
+  const rawAction = String(args.action || '');
+  const action = K1_ALL.find((a) => a.toLowerCase() === rawAction.toLowerCase()) || rawAction.toLowerCase();
+  if (!K1_ALL.includes(action)) {
+    return toolError(`act needs action in [${K1_ALL.join(', ')}], got "${args.action}"`, 'caller');
   }
   const dest = args.url || args.value || '';
   if (action === 'navigate') {
@@ -330,8 +381,8 @@ async function handleAct(args = {}) {
     submitKey = canonKeyName(args.submitKey, SUBMIT_KEYS);
     if (!submitKey) return toolError('act fill submitKey must be Enter|Tab', 'caller');
   }
-  if (!hasTarget && !Number.isFinite(args.x) && !Number.isFinite(args.y) && action !== 'scroll' && action !== 'key') {
-    return toolError('act click/fill needs {target:{type,text}} or numeric {x,y}', 'caller');
+  if (!hasTarget && !Number.isFinite(args.x) && !Number.isFinite(args.y) && !K1_COORDLESS.includes(action)) {
+    return toolError('act click/fill/submit/select/check/uncheck/hover/dblclick/right_click/focus/clear/upload/drag/selectOption needs {target:{type,text}} or numeric {x,y}', 'caller');
   }
   if (action === 'fill' && args.value !== undefined && typeof args.value !== 'string') {
     return toolError('act fill needs string {value}', 'caller');
@@ -347,6 +398,9 @@ async function handleAct(args = {}) {
   const beforeVdom = await processMcpImage(beforeShot);
   const elementsFull = toFullElements(beforeVdom);
   let execX = args.x; let execY = args.y; let resolvedElement = null; let via = 'direct_coordinates';
+  // K1 check/uncheck: live-read state (true/false/null-unresolved), surfaced
+  // in verification below; null falls back to visual_state_change.
+  let checkSeen = 'unread';
   if (hasTarget) {
     const r = resolveMcpTarget(elementsFull, wantType, wantText, args.x, args.y);
     if (!r.resolved) {
@@ -374,6 +428,31 @@ async function handleAct(args = {}) {
     if (!Number.isFinite(execX) || !Number.isFinite(execY)) {
       return toolError('act click/fill needs numeric coordinates after live re-detection', 'caller');
     }
+    // H2 pre-submit guard: a click following fills with a totally empty
+    // form aborts as value_lost (T10 empty-submit lesson) — never blind.
+    if (action === 'click') {
+      const hadFills = session.history.some((h) => h && h.tool === 'act' && h.action === 'fill' && h.ok === true);
+      if (hadFills) {
+        const lens = await formStateLens(page).catch(() => null);
+        const total = lens ? summarizeFormState(lens).filled_len_total : null;
+        if (total === 0) {
+          const entry = { tool: 'act', action, ok: false, error: 'value_lost', reason: 'form empty after fills; submit aborted, refill and retry the fills', at: new Date().toISOString() };
+          appendHistory(entry);
+          return {
+            content: [{
+              type: 'text',
+              text: JSON.stringify({
+                status: 'FAIL', action, error: 'value_lost',
+                reason: entry.reason, form_state: summarizeFormState(lens),
+                retryable: true,
+                suggested_action: 'Re-fill the form fields (values were lost, e.g. page reloaded), then click again.',
+              }),
+            }],
+            isError: true,
+          };
+        }
+      }
+    }
     await page.mouse.click(execX, execY);
     if (action === 'fill') {
       try { await page.keyboard.press('Control+A'); } catch { /* optional */ }
@@ -382,6 +461,118 @@ async function handleAct(args = {}) {
     }
   } else if (action === 'scroll') {
     await page.mouse.wheel(0, Number.isFinite(args.y) ? args.y : 600);
+  } else if (action === 'hover' || action === 'dblclick' || action === 'press' || action === 'wait' || action === 'focus') {
+    // K1 batch2 (vision-coords-only, one-per-step): hover moves only;
+    // dblclick double-clicks; press sends any key string (open lane next to
+    // key's canon set); wait sleeps value ms capped at 10s; focus clicks.
+    if ((action === 'hover' || action === 'dblclick' || action === 'focus') &&
+        (!Number.isFinite(execX) || !Number.isFinite(execY))) {
+      return toolError('act hover/dblclick/focus needs numeric coordinates after live re-detection', 'caller');
+    }
+    if (action === 'hover') {
+      await page.mouse.move(execX, execY);
+    } else if (action === 'dblclick' || action === 'focus') {
+      await page.mouse.click(execX, execY, action === 'dblclick' ? { clickCount: 2 } : {});
+    } else if (action === 'press') {
+      if (typeof args.value !== 'string' || !args.value) return toolError('act press needs string {value}', 'caller');
+      await page.keyboard.press(args.value);
+    } else if (action === 'wait') {
+      const ms = Math.min(Math.max(Number(args.value) || 1000, 0), 10000);
+      if (typeof page.waitForTimeout === 'function') await page.waitForTimeout(ms);
+      else await new Promise((r) => setTimeout(r, ms));
+    }
+  } else if (action === 'clear' || action === 'upload' || action === 'drag' || action === 'snapshot' || action === 'selectOption') {
+    // K1 batch3 (vision-coords-only, one-per-step): clear selects-all +
+    // deletes; upload sets files on the near file input (path in value);
+    // drag moves held cursor to absolute "x2,y2" in value; snapshot captures;
+    // selectOption sets a native select by option text/value + change events.
+    if (action !== 'snapshot' && (!Number.isFinite(execX) || !Number.isFinite(execY))) {
+      return toolError('act clear/upload/drag/selectOption needs numeric coordinates after live re-detection', 'caller');
+    }
+    if (action === 'clear') {
+      await page.mouse.click(execX, execY);
+      try { await page.keyboard.press('Control+A'); } catch { /* optional */ }
+      await page.keyboard.press('Backspace');
+    } else if (action === 'upload') {
+      if (typeof args.value !== 'string' || !args.value) return toolError('act upload needs {value} file path', 'caller');
+      const handle = (typeof page.evaluateHandle === 'function')
+        ? await page.evaluateHandle(([x, y]) => {
+          const el = document.elementFromPoint(Math.round(x), Math.round(y));
+          if (!el) return null;
+          if (el.tagName === 'INPUT' && (el.getAttribute('type') || '').toLowerCase() === 'file') return el;
+          const scope = (el.closest && el.closest('form,li,div')) || document;
+          return scope.querySelector('input[type="file"]');
+        }, [execX, execY]).catch(() => null)
+        : null;
+      const input = handle && typeof handle.asElement === 'function' ? handle.asElement() : null;
+      if (!input || typeof input.setInputFiles !== 'function') {
+        return toolError('act upload found no file input near coordinates', 'caller');
+      }
+      await input.setInputFiles(args.value);
+    } else if (action === 'drag') {
+      const m = /^(\d+)\s*,\s*(\d+)$/.exec(String(args.value || ''));
+      if (!m) return toolError('act drag needs {value} "x2,y2"', 'caller');
+      await page.mouse.move(execX, execY);
+      await page.mouse.down();
+      await page.mouse.move(Number(m[1]), Number(m[2]), { steps: 8 });
+      await page.mouse.up();
+    } else if (action === 'snapshot') {
+      await page.screenshot();
+    } else if (action === 'selectOption') {
+      if (typeof args.value !== 'string' || !args.value) return toolError('act selectOption needs {value} option text', 'caller');
+      const ok = await page.evaluate(([x, y, want]) => {
+        const el = document.elementFromPoint(Math.round(x), Math.round(y));
+        if (!el) return false;
+        const sel = el.tagName === 'SELECT' ? el
+          : ((el.closest && el.closest('div,form,li')) || document).querySelector('select');
+        if (!sel) return false;
+        const hit = [...sel.options].find((o) => o.value === want || (o.text || '').trim() === String(want).trim());
+        if (!hit) return false;
+        sel.value = hit.value;
+        sel.dispatchEvent(new Event('input', { bubbles: true }));
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        return true;
+      }, [execX, execY, args.value]).catch(() => false);
+      if (!ok) return toolError('act selectOption found no matching option', 'caller');
+    }
+  } else if (action === 'submit' || action === 'select' || action === 'check' || action === 'uncheck') {
+    // K1 batch1 (vision-coords-only, one-per-step): submit clicks + Enter;
+    // select opens, types the option, confirms; check/uncheck click ONLY
+    // when the live-checked state differs (state read, never blind toggle).
+    if (!Number.isFinite(execX) || !Number.isFinite(execY)) {
+      return toolError('act submit/select/check/uncheck needs numeric coordinates after live re-detection', 'caller');
+    }
+    if (action === 'submit') {
+      await page.mouse.click(execX, execY);
+      await page.keyboard.press('Enter');
+    } else if (action === 'select') {
+      await page.mouse.click(execX, execY);
+      if (typeof args.value === 'string' && args.value) {
+        await page.keyboard.type(args.value, { delay: 30 });
+      }
+      await page.keyboard.press('Enter');
+    } else {
+      // K1 check/uncheck: click ONLY when the live-checked state differs.
+      const want = action === 'check';
+      const st = await page.evaluate(([x, y]) => {
+        const el = document.elementFromPoint(Math.round(x), Math.round(y));
+        if (!el) return null;
+        let ctrl = null;
+        if (el.tagName === 'INPUT' && /checkbox|radio/i.test(el.getAttribute('type') || '')) ctrl = el;
+        else if (el.tagName === 'LABEL' && el.control) ctrl = el.control;
+        else { const scope = (el.closest && el.closest('li')) || document; ctrl = scope.querySelector('input[type="checkbox"],input[type="radio"]'); }
+        return ctrl ? !!ctrl.checked : null;
+      }, [execX, execY]).catch(() => null);
+      if (st === null || st !== want) await page.mouse.click(execX, execY);
+      checkSeen = st;
+    }
+  } else if (action === 'right_click') {
+    // L1 real right-click (never click-mapped): context menu opens at coords;
+    // the fresh re-detect below observes it (menu items land in the vdom).
+    if (!Number.isFinite(execX) || !Number.isFinite(execY)) {
+      return toolError('act right_click needs numeric coordinates after live re-detection', 'caller');
+    }
+    await page.mouse.click(execX, execY, { button: 'right' });
   }
   await settleMcpPage(page);
   const afterShot = await shotCurrentPage(page, `act_after_${action}`);
@@ -392,6 +583,8 @@ async function handleAct(args = {}) {
     verification = { method: 'url_change', detail: `navigated to ${compact.url}` };
   } else if (action === 'fill') {
     verification = { method: 'input_value', detail: `filled "${String(typeof args.value === 'string' ? args.value : 'test').slice(0, 40)}"` };
+  } else if ((action === 'check' || action === 'uncheck') && typeof checkSeen === 'boolean') {
+    verification = { method: 'checked_stateDesired', detail: `checkbox/radio read ${checkSeen}, want ${action === 'check'} (clicked=${checkSeen !== (action === 'check')})` };
   } else {
     verification = { method: 'visual_state_change', detail: `elements=${compact.element_count}` };
   }
@@ -405,10 +598,17 @@ async function handleAct(args = {}) {
   session.lastDom = compact; session.lastScreenshot = afterShot; session.lastUrl = compact.url;
   const recreated = session.recreated === true;
   session.recreated = false;
+  // H2: fill replies carry a values-free form_state lens (lengths only).
+  let formState = null;
+  if (action === 'fill') {
+    const lens = await formStateLens(page).catch(() => null);
+    if (lens) formState = summarizeFormState(lens);
+  }
   return textResult({
     status: 'PASS', action, resolved_element: resolvedElement, resolution_via: hasTarget ? via : null,
     key: keyPress, submit_key: submitKey,
     stale_coordinates_prevented: stalePrevented, session_recreated: recreated, ...compact, verification,
+    ...(formState ? { form_state: formState, dom_assist: 'observe' } : {}),
   });
 }
 
@@ -486,10 +686,13 @@ const TOOLS = [
   },
   {
     name: 'perceive',
-    description: 'Navigate the persistent headed session to a URL, run YOLO+OCR+merge, return the compact visual DOM (SAME shape as the API path). Later act calls continue on this same page. Spawns + waits for services automatically.',
+    description: 'Capture the persistent headed session (YOLO+OCR+merge, compact visual DOM, SAME shape as the API path + navigated bool). Navigates ONLY when the session is blank, the URL differs, or navigate:true — NEVER re-navigates mid-form (perceiving the same URL preserves fills). Later act calls continue on this same page. Spawns + waits for services automatically.',
     inputSchema: {
       type: 'object',
-      properties: { url: { type: 'string', description: 'http(s) URL to perceive' } },
+      properties: {
+        url: { type: 'string', description: 'http(s) URL to perceive' },
+        navigate: { type: 'boolean', description: 'force navigation even when the URL is already loaded' },
+      },
       required: ['url'],
     },
   },
@@ -499,7 +702,7 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        action: { type: 'string', enum: ['click', 'fill', 'scroll', 'navigate', 'key'] },
+        action: { type: 'string', enum: ['click', 'fill', 'scroll', 'navigate', 'key', 'submit', 'select', 'check', 'uncheck', 'hover', 'dblclick', 'right_click', 'press', 'wait', 'focus', 'clear', 'upload', 'drag', 'snapshot', 'selectOption'] },
         x: { type: ['number', 'null'] },
         y: { type: ['number', 'null'] },
         value: { type: 'string' },
@@ -548,7 +751,7 @@ async function callTool(name, args = {}) {
     const url = args.url;
     if (!url || !/^https?:\/\//.test(url)) return toolError('perceive needs {url} starting with http(s)', 'caller');
     try {
-      return await withTimeout(handlePerceive(url), 240000, 'perceive');
+      return await withTimeout(handlePerceive(url, { navigate: args.navigate === true }), 240000, 'perceive');
     } catch (e) {
       return String(e && e.message).startsWith('timeout:') ? timeoutResult('perceive') : toolError(e.message || 'perceive failed', 'local-services');
     }
@@ -726,4 +929,4 @@ if (require.main === module) {
   process.on('SIGTERM', shutdown);
 }
 
-module.exports = { SERVER_NAME, SERVER_VERSION, TOOLS, callTool, session, resolveMcpTarget, toFullElements, dispatchMessage };
+module.exports = { SERVER_NAME, SERVER_VERSION, TOOLS, callTool, session, resolveMcpTarget, toFullElements, dispatchMessage, summarizeFormState, formStateLens };

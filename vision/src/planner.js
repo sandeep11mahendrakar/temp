@@ -138,8 +138,10 @@ function validTestCase(tc) {
 }
 
 // Full loop plan: expand (memory-aware) -> ONE select -> ordered TCs.
-async function plan(llmCall, goal, mem) {
-  const expanded = expandForLoop(goal, mem);
+// expandFn overrides the default expansion (runAuto custom intents;
+// same TC shape contract, still validated below).
+async function plan(llmCall, goal, mem, expandFn) {
+  const expanded = typeof expandFn === 'function' ? expandFn(goal, mem) : expandForLoop(goal, mem);
   if (!expanded.length) return { test_cases: [], via: 'empty-expand', attempts: 0 };
   const sel = await selectForLoop(llmCall, expanded, goal);
   const ordered = sel.keep

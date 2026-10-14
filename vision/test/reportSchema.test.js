@@ -4,12 +4,18 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const {
   SCHEMA_VERSION,
+  ACTION_ENUM,
+  checkAction,
   buildReport,
   indexRow,
   checkReport,
+  blindStatus,
+  resolveAutonomy,
 } = require('../src/reportSchema');
 
 const demo = () => buildReport({
@@ -58,12 +64,54 @@ test('B7 report: INDEX row renders pipes with verdict+cost+storage+sha', () => {
   assert.ok(row.split('|').length >= 7);
 });
 
-test('G3 contract: case rows carry verdict + app_outcome (default n/a)', () => {
-  const r = demo();
+test('G3 contract: case rows carry verdict + app_outcome (default n/a)', () => {  const r = demo();
   for (const c of r.cases) assert.equal(c.app_outcome, 'n/a');
   const r2 = buildReport({
     runId: 'x', cases: [{ id: 'neg', verdict: 'PASS', app_outcome: 'rejected' }],
   });
   assert.equal(r2.cases[0].app_outcome, 'rejected');
+  assert.deepEqual(checkReport(r2), []);
+});
+
+test('N5 schema-gaps: 20-action enum validator accepts known, rejects unknown', () => {
+  assert.equal(ACTION_ENUM.length, 20);
+  for (const a of ACTION_ENUM) assert.equal(checkAction(a), null, `${a} known`);
+  assert.equal(checkAction('right_click'), null, 'L1 action covered');
+  assert.equal(checkAction('Right_Click'), null, 'case-insensitive');
+  assert.equal(checkAction('dance'), 'action:unknown:dance');
+  assert.equal(checkAction(''), 'action:missing');
+  assert.equal(checkAction(null), 'action:missing');
+});
+
+test('N5 schema-gaps: MCP tool-schema enum is the full 20-set (gap4 closed)', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../mcp/server.js'), 'utf8');
+  const m = src.match(/action: \{ type: 'string', enum: \[([^\]]*)\] \}/);
+  assert.ok(m, 'tool schema enum found');
+  const names = m[1].split(',').map((s) => s.trim().replace(/^'|'$/g, ''));
+  assert.deepEqual(names, ACTION_ENUM);
+});
+
+test('N5 schema-gaps: enum frozen shape (no done-terminal, unique)', () => {
+  assert.ok(!ACTION_ENUM.includes('done'), 'done is terminal, not actuation');
+  assert.deepEqual([...new Set(ACTION_ENUM)], ACTION_ENUM, 'unique');
+  assert.ok(ACTION_ENUM.filter((a) => a !== 'selectOption').every((a) => a === a.toLowerCase()), 'lowercase except canonical camelCase selectOption');
+});
+
+test('N4 blind-rule: Y only on empty-cwd+tools-off+JSON-only', () => {
+  assert.equal(blindStatus({ cwdEmpty: true, toolsOff: true, jsonOnly: true }), 'Y');
+  assert.equal(blindStatus({ cwdEmpty: true, toolsOff: true, jsonOnly: false }), 'AUTONOMY_NONBLIND');
+  assert.equal(blindStatus({ cwdEmpty: true, toolsOff: false, jsonOnly: true }), 'AUTONOMY_NONBLIND');
+  assert.equal(blindStatus(null), 'AUTONOMY_NONBLIND');
+});
+
+test('N4 blind-rule: never AUTONOMOUS unless blind; report carries brain block', () => {
+  assert.equal(resolveAutonomy({ requested: 'AUTONOMOUS', cwdEmpty: true, toolsOff: true, jsonOnly: true }), 'AUTONOMOUS');
+  assert.equal(resolveAutonomy({ requested: 'AUTONOMOUS' }), 'AUTONOMY_NONBLIND');
+  assert.equal(resolveAutonomy({ requested: 'ASSISTED' }), 'ASSISTED');
+  assert.equal(resolveAutonomy(null), 'AUTONOMY_NONBLIND');
+  const r = buildReport({ runId: 'n4', brain: { mode: 'mock', model: 'mock', cwdEmpty: true, toolsOff: true, jsonOnly: true } });
+  assert.deepEqual(r.brain, { mode: 'mock', model: 'mock', blind: 'Y' });
+  const r2 = buildReport({ runId: 'n4b' });
+  assert.equal(r2.brain, undefined, 'pre-N4 reports carry no brain block');
   assert.deepEqual(checkReport(r2), []);
 });

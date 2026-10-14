@@ -173,7 +173,15 @@ function extractJSON(rawText) {
 // Action parsing (coordinate-based, per report System 2)
 // ---------------------------------------------------------------------------
 
-const VALID_ACTIONS = new Set(['click', 'fill', 'navigate', 'scroll', 'done']);
+const VALID_ACTIONS = new Set(['click', 'fill', 'navigate', 'scroll', 'done',
+  // K1 action-extensions batch1 (vision-coords-only, one-per-step).
+  'key', 'submit', 'select', 'check', 'uncheck',
+  // K1 batch2.
+  'hover', 'dblclick', 'press', 'wait', 'focus',
+  // K1 batch3.
+  'clear', 'upload', 'drag', 'snapshot', 'selectOption',
+  // L1 right_click (implemented in executeAction by W3; accepted here).
+  'right_click']);
 
 function parseAction(llmResponse) {
   if (STUB_MODE) {
@@ -189,9 +197,11 @@ function parseAction(llmResponse) {
     return { action: 'unknown', reason: 'unparseable response' };
   }
 
-  const type = String(obj.action || '').toLowerCase();
+  const rawType = String(obj.action || '');
+  // K1: case-insensitive match returning the canonical member (selectOption).
+  const type = [...VALID_ACTIONS].find((a) => a.toLowerCase() === rawType.toLowerCase()) || rawType.toLowerCase();
   if (!VALID_ACTIONS.has(type)) {
-    return { action: 'unknown', reason: `unsupported action "${type}"` };
+    return { action: 'unknown', reason: `unsupported action "${rawType}"` };
   }
 
   return {
@@ -210,20 +220,45 @@ function parseAction(llmResponse) {
 // Coordinate-based Playwright execution
 // ---------------------------------------------------------------------------
 
+// K1: read the checked state of the checkbox/radio under (or near) a point.
+// Mirrors snapCheckToNativeInput resolution (executeTests.js): the point's
+// own control, its label control, else the nearest li's checkable input.
+// Returns true/false, or null when no checkable control resolves.
+async function readCheckState(page, x, y) {
+  const r = await page.evaluate(([px, py]) => {
+    const el = document.elementFromPoint(px, py);
+    if (!el) return null;
+    let ctrl = null;
+    if (el.tagName === 'INPUT' && /checkbox|radio/i.test(el.getAttribute('type') || '')) {
+      ctrl = el;
+    } else if (el.tagName === 'LABEL' && el.control) {
+      ctrl = el.control;
+    } else {
+      const scope = (el.closest && el.closest('li')) || document;
+      ctrl = scope.querySelector('input[type="checkbox"],input[type="radio"]');
+    }
+    if (!ctrl) return null;
+    return !!ctrl.checked;
+  }, [Math.round(x), Math.round(y)]);
+  return typeof r === 'boolean' ? r : null;
+}
+
+function needCoords(action, what) {
+  if (!Number.isFinite(action.x) || !Number.isFinite(action.y)) {
+    throw new Error(`executeAction: ${what} requires numeric x and y coordinates`);
+  }
+}
+
 async function executeAction(page, action) {
   switch (action.action) {
     case 'click': {
-      if (!Number.isFinite(action.x) || !Number.isFinite(action.y)) {
-        throw new Error('executeAction: click requires numeric x and y coordinates');
-      }
+      needCoords(action, 'click');
       await page.mouse.click(action.x, action.y);
       return;
     }
 
     case 'fill': {
-      if (!Number.isFinite(action.x) || !Number.isFinite(action.y)) {
-        throw new Error('executeAction: fill requires numeric x and y coordinates');
-      }
+      needCoords(action, 'fill');
       await page.mouse.click(action.x, action.y);
       await page.keyboard.press('Control+A').catch(() => {});
       await page.keyboard.type(action.value || 'test', { delay: 30 });
@@ -246,9 +281,161 @@ async function executeAction(page, action) {
     case 'done':
       return;
 
+    // K1 batch1: key presses a keyboard key (no coords needed).
+    case 'key': {
+      await page.keyboard.press(action.value || 'Enter');
+      return;
+    }
+
+    // K1 batch1: submit clicks the control then presses Enter (form submit).
+    case 'submit': {
+      needCoords(action, 'submit');
+      await page.mouse.click(action.x, action.y);
+      await page.keyboard.press('Enter');
+      return;
+    }
+
+    // K1 batch1: select opens the combobox, types the option, confirms.
+    case 'select': {
+      needCoords(action, 'select');
+      await page.mouse.click(action.x, action.y);
+      if (typeof action.value === 'string' && action.value) {
+        await page.keyboard.type(action.value, { delay: 30 });
+      }
+      await page.keyboard.press('Enter');
+      return;
+    }
+
+    // K1 batch1: check/uncheck click ONLY when the state differs (read first).
+    case 'check':
+    case 'uncheck': {
+      needCoords(action, action.action);
+      const want = action.action === 'check';
+      const state = await readCheckState(page, action.x, action.y).catch(() => null);
+      if (state === null || state !== want) {
+        await page.mouse.click(action.x, action.y);
+      }
+      return;
+    }
+
+    // K1 batch2: hover moves only; dblclick double-clicks at coords.
+    case 'hover': {
+      needCoords(action, 'hover');
+      await page.mouse.move(action.x, action.y);
+      return;
+    }
+
+    case 'dblclick': {
+      needCoords(action, 'dblclick');
+      await page.mouse.click(action.x, action.y, { clickCount: 2 });
+      return;
+    }
+
+    // L1 real right-click: context menu at coords (never click-mapped).
+    case 'right_click': {
+      needCoords(action, 'right_click');
+      await page.mouse.click(action.x, action.y, { button: 'right' });
+      return;
+    }
+
+    // K1 batch2: press sends any key string to the focused element
+    // (key is the canon Enter|Tab|Space lane; press is the open lane).
+    case 'press': {
+      await page.keyboard.press(action.value || 'Enter');
+      return;
+    }
+
+    // K1 batch2: wait sleeps value ms, capped (never hangs a run).
+    case 'wait': {
+      const ms = Math.min(Math.max(Number(action.value) || 1000, 0), 10000);
+      if (typeof page.waitForTimeout === 'function') await page.waitForTimeout(ms);
+      else await new Promise((r) => setTimeout(r, ms));
+      return;
+    }
+
+    // K1 batch2: focus clicks the point to focus (documented focus-via-click).
+    case 'focus': {
+      needCoords(action, 'focus');
+      await page.mouse.click(action.x, action.y);
+      return;
+    }
+
+    // K1 batch3: clear selects all + deletes (no coords-free path).
+    case 'clear': {
+      needCoords(action, 'clear');
+      await page.mouse.click(action.x, action.y);
+      await page.keyboard.press('Control+A').catch(() => {});
+      await page.keyboard.press('Backspace');
+      return;
+    }
+
+    // K1 batch3: upload sets files on the file input near the point.
+    case 'upload': {
+      needCoords(action, 'upload');
+      if (typeof action.value !== 'string' || !action.value) {
+        throw new Error('executeAction: upload requires a file path value');
+      }
+      const handle = await page.evaluateHandle(([px, py]) => {
+        const el = document.elementFromPoint(px, py);
+        if (!el) return null;
+        if (el.tagName === 'INPUT' && (el.getAttribute('type') || '').toLowerCase() === 'file') return el;
+        const scope = (el.closest && el.closest('form,li,div')) || document;
+        return scope.querySelector('input[type="file"]');
+      }, [Math.round(action.x), Math.round(action.y)]);
+      const input = handle && typeof handle.asElement === 'function' ? handle.asElement() : null;
+      if (!input || typeof input.setInputFiles !== 'function') {
+        throw new Error('executeAction: upload found no file input near coordinates');
+      }
+      await input.setInputFiles(action.value);
+      return;
+    }
+
+    // K1 batch3: drag from (x,y) to absolute "x2,y2" in value.
+    case 'drag': {
+      needCoords(action, 'drag');
+      const m = /^(\d+)\s*,\s*(\d+)$/.exec(String(action.value || ''));
+      if (!m) throw new Error('executeAction: drag requires value "x2,y2"');
+      const x2 = Number(m[1]); const y2 = Number(m[2]);
+      await page.mouse.move(action.x, action.y);
+      await page.mouse.down();
+      await page.mouse.move(x2, y2, { steps: 8 });
+      await page.mouse.up();
+      return;
+    }
+
+    // K1 batch3: snapshot captures a screenshot buffer (evidence layer files it).
+    case 'snapshot': {
+      await page.screenshot();
+      return;
+    }
+
+    // K1 batch3: selectOption sets a native <select> by option text/value.
+    case 'selectOption': {
+      needCoords(action, 'selectOption');
+      if (typeof action.value !== 'string' || !action.value) {
+        throw new Error('executeAction: selectOption requires an option value');
+      }
+      const ok = await page.evaluate(([px, py, want]) => {
+        const el = document.elementFromPoint(px, py);
+        if (!el) return false;
+        const sel = el.tagName === 'SELECT' ? el
+          : ((el.closest && el.closest('div,form,li')) || document).querySelector('select');
+        if (!sel) return false;
+        const opts = [...sel.options];
+        const hit = opts.find((o) => o.value === want || (o.text || '').trim() === String(want).trim());
+        if (!hit) return false;
+        sel.value = hit.value;
+        sel.dispatchEvent(new Event('input', { bubbles: true }));
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        return true;
+      }, [Math.round(action.x), Math.round(action.y), action.value]);
+      if (!ok) throw new Error('executeAction: selectOption found no matching option');
+      return;
+    }
+
     default:
       throw new Error(`Unsupported action: ${action.action}`);
   }
 }
 
-module.exports = { callLLM, extractJSON, extractLastJSON, parseAction, executeAction };
+module.exports = { callLLM, extractJSON, extractLastJSON, parseAction, executeAction, readCheckState };
