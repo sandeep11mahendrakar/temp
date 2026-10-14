@@ -18,6 +18,12 @@ const {
   buildRedetectPayload,
   submitKeyPress,
   snapCheckToNativeInput,
+  weakStepCount,
+  weakVerdict,
+  domAssistTag,
+  domAssistCount,
+  needsAfterShot,
+  ScreenMeter,
   DEFAULT_CONF,
   LOWCONF_RETRY_CONF,
 } = require('../src/executeTests');
@@ -209,5 +215,84 @@ test('M3 integration: crop_retry precedes lowconf; ocr_anchor tagged WEAK', () =
   );
   assert.match(executor, /ocr_anchor/);
   assert.match(executor, /OCR-anchor synth target \(WEAK verification\)/);
+});
+
+test('P3 weak-flag: m6-shape steps (1 ocr_anchor) -> PASS_WEAK(1); clean PASS stays PASS', () => {  const m6steps = [
+    { ok: true, resolution_via: 'text_match' },
+    { ok: true, resolution_via: 'text_match' },
+    { ok: true, resolution_via: 'text_match+ocr_anchor' },
+    { ok: true, resolution_via: 'check_bbox+domsnap' },
+  ];
+  assert.equal(weakStepCount(m6steps), 1);
+  assert.deepEqual(weakVerdict('PASS', m6steps), { weak_steps: 1, verdict: 'PASS_WEAK(1)' });
+  assert.deepEqual(
+    weakVerdict('PASS', [{ ok: true, resolution_via: 'text_match' }]),
+    { weak_steps: 0, verdict: 'PASS' }
+  );
+  assert.deepEqual(
+    weakVerdict('FAIL', m6steps),
+    { weak_steps: 1, verdict: 'FAIL' }
+  );
+  assert.equal(weakStepCount(null), 0);
+});
+
+// B1 dom-disclose: no DOM help -> null reason, click-by-vision Y (<=25ch label).
+test('B1 dom-disclose: vision-only click discloses null + boundary Y', () => {
+  assert.deepEqual(domAssistTag({}), { dom_assist: null, click_by_vision: 'Y' });
+  assert.deepEqual(domAssistTag(), { dom_assist: null, click_by_vision: 'Y' });
+  assert.ok('click-by-vision:Y'.length <= 25);
+  assert.equal(domAssistCount([{ ok: true, dom_assist: null }]), 0);
+});
+
+// B1 dom-disclose: domsnap (+focus-space) flips boundary to N with reason.
+test('B1 dom-disclose: snapped click discloses reason + boundary N', () => {
+  assert.deepEqual(
+    domAssistTag({ snapped: true }),
+    { dom_assist: 'domsnap', click_by_vision: 'N' });
+  assert.deepEqual(
+    domAssistTag({ snapped: true, focusSpaceUsed: true }),
+    { dom_assist: 'domsnap+focus-space', click_by_vision: 'N' });
+  assert.ok('click-by-vision:N'.length <= 25);
+});
+
+// B1 dom-disclose: summary counts only ok steps carrying a reason.
+test('B1 dom-disclose: domAssistCount counts ok assisted steps only', () => {
+  const steps = [
+    { ok: true, dom_assist: null },
+    { ok: true, dom_assist: 'domsnap' },
+    { ok: true, dom_assist: 'domsnap+focus-space' },
+    { ok: false, dom_assist: 'domsnap' },
+  ];
+  assert.equal(domAssistCount(steps), 2);
+  assert.equal(domAssistCount(null), 0);
+});
+
+test('B2 fewer-shots: gate captures click|navigate|scroll|modal|submit, never fill', () => {
+  for (const a of ['click', 'navigate', 'scroll', 'modal', 'submit', 'CLICK']) {
+    assert.equal(needsAfterShot(a), true, `${a} captures`);
+  }
+  for (const a of ['fill', 'key', 'unknown', '', null, undefined]) {
+    assert.equal(needsAfterShot(a), false, `${String(a)} skips`);
+  }
+});
+
+test('AUDIT submitKey: fill+Enter captures (submission), fill+Tab skips', () => {
+  assert.equal(needsAfterShot('fill', 'Enter'), true, 'fill+Enter captures');
+  assert.equal(needsAfterShot('fill', 'ENTER'), true, 'case-insensitive');
+  assert.equal(needsAfterShot('fill', 'Tab'), false, 'fill+Tab skips');
+  assert.equal(needsAfterShot('fill'), false, 'plain fill skips');
+  assert.equal(needsAfterShot('click', 'Enter'), true, 'click still captures');
+});
+
+test('B2 integration: fill-skip + stale-refresh + screens metric are wired', () => {
+  const source = fs.readFileSync(path.join(__dirname, '../src/executeTests.js'), 'utf8');
+  const executor = source.slice(source.indexOf('async function runTestCase'));
+  assert.match(executor, /needsAfterShot\(step\.action, submitKeyPressed\)/);
+  assert.match(executor, /ScreenMeter\.skipped \+= 1/);
+  assert.match(executor, /poolStaleAfterFill/);
+  assert.match(executor, /nextStateName\('refresh'\)/);
+  assert.match(executor, /screens_per_test/);
+  ScreenMeter.reset();
+  assert.deepEqual({ taken: ScreenMeter.taken, skipped: ScreenMeter.skipped }, { taken: 0, skipped: 0 });
 });
 

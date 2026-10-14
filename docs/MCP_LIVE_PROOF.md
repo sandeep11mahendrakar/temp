@@ -41,26 +41,40 @@ unassisted?
 
 | # | Tool call | Reasoning | Verification seen | Result |
 |---|---|---|---|---|
-| 0 | status | confirm services before opening browser | PENDING | PENDING |
-| 1 | perceive saucedemo | get fresh DOM + element ids | PENDING | PENDING |
-| 2 | act fill username | top input = username (positional rule, R4) | input_value | PENDING |
-| 3 | perceive (fresh DOM) | re-read after fill, never reuse coords | PENDING | PENDING |
-| 4 | act fill password | bottom input = password | input_value | PENDING |
-| 5 | perceive (fresh DOM) | confirm both fills before submit | PENDING | PENDING |
-| 6 | act click Login | target type+text preferred (stale-safe) | url_change to inventory | PENDING |
-| 7 | perceive (fresh DOM) | confirm inventory + Logout/Cart text | PENDING | PENDING |
-| 8 | evidence | collect screenshots + history | PENDING | PENDING |
-| 9 | reset | close session, free the slot | PENDING | PENDING |
+| 0 | status | confirm services before opening browser | services ok | PASS 16ms |
+| 1 | perceive saucedemo | get fresh DOM + element ids | 18 elements | PASS 2015ms |
+| 2 | act fill username | top input = username (positional rule, R4) | input_value | PASS 3136ms |
+| 4 | act fill password | bottom input = password (turn-1 coords, no mid-form perceive) | input_value + OCR user-persists=true | PASS 2984ms |
+| 5 | locate Login in turn-1 DOM | avoid extra perceive (see Deviations) | login-btn=true | PASS |
+| 6 | act click Login | target type+text (stale-safe, server re-detects) | url_change to inventory.html | PASS 2048ms |
+| 7 | perceive inventory URL | confirm inventory + Logout/Cart text | inventory+logout/products=true | PASS 1598ms |
+| 8 | evidence | collect screenshots + history | shots+history | PASS 16ms |
+| 9 | reset | close session, free the slot | session-closed | PASS 193ms |
+
+(Turn 3 + second turn-5 perceive from the pre-run plan were SKIPPED by
+design — see Deviations. Evidence: vision/storage/outputs/t10_loop.json.)
 
 ## Deviations
 
-None yet (pre-run).
+1. Runs 1-2 FAIL (honest, kept as evidence in git-untracked t10_loop.json
+   history): run 1 turn-2 fill-user FAIL transient warmup (retry recovered);
+   runs 1-3 initially submitted EMPTY fields ("Epic sadface: Username is
+   required" screenshot) because mid-form perceives NAVIGATE (page reload
+   wipes typed values). Fix was driving-only, no code change: perceive ONCE,
+   fill+fill+click back-to-back (server re-detects live per act), perceive
+   only the post-click URL. Run 4: full PASS.
+2. MCP fill input_value is SELF-REPORTED (moderate signal, builder-disclosed):
+   run-3 added an independent OCR check (username persists post-pass-fill =
+   true) before submit. Recommend a DOM read-back probe for act-fill as
+   follow-up (not this lane).
 
 ## Verdict
 
-PENDING live run. Criteria: inventory URL + Logout/Cart text observed with
+PASS live (run 4, 2026-10-14): inventory URL + Logout/Cart text observed with
 zero browser touches and zero assistance; every step logged above with its
-verification method.
+verification method. Criteria met: url_change to inventory.html (strong) +
+page-text Logout/products + input_value x2 + OCR cross-check + evidence +
+reset. api_calls=0 (Muse-brain local reasoning over MCP HTTP tools).
 
 ---
 

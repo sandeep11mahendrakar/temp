@@ -58,10 +58,32 @@ function nextStateName(suffix) {
 
 let CURRENT_RUN = { dir: '', id: '' };
 
+// B2 fewer-shots: post-action evidence screenshots are taken for
+// state-changing actions only; fills verify via the read-only DOM probe
+// (probeFillValue class: input_value signal) and skip the screenshot.
+const AFTER_SHOT_ACTIONS = new Set(['click', 'navigate', 'scroll', 'modal', 'submit']);
+
+// B2 + audit: a fill ending in Enter may submit/navigate, so it captures;
+// Tab stays a field move verified by probe readback.
+function needsAfterShot(action, submitKey) {
+  if (AFTER_SHOT_ACTIONS.has(String(action || '').toLowerCase())) return true;
+  return String(action || '').toLowerCase() === 'fill' &&
+    String(submitKey || '').toLowerCase() === 'enter';
+}
+
+// B2 screen meter: every page.screenshot goes through snap(); fills that
+// skip capture increment skipped. Reset once per run (see main loop).
+const ScreenMeter = {
+  taken: 0,
+  skipped: 0,
+  reset() { this.taken = 0; this.skipped = 0; },
+};
+
 async function snap(page, relPath) {
   const abs = path.join(VISION_ROOT, relPath);
   fs.mkdirSync(path.dirname(abs), { recursive: true });
   await page.screenshot({ path: abs });
+  ScreenMeter.taken += 1;
   return relPath.replace(/\\/g, '/');
 }
 
@@ -306,6 +328,42 @@ function checkToggled(before, after) {
   );
 }
 
+// P3 weak-flag: steps resolved via WEAK fallbacks (lowconf proximity,
+// OCR-anchor synth) must be counted on the verdict, never hidden inside a
+// plain PASS. crop_retry is a real YOLO detection and does NOT count weak.
+const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor)(\+|$)/;
+
+function weakStepCount(stepsExecuted) {
+  if (!Array.isArray(stepsExecuted)) return 0;
+  return stepsExecuted.filter((s) => s && s.ok === true &&
+    WEAK_VIA_RE.test(String(s.resolution_via || ''))).length;
+}
+
+function weakVerdict(status, stepsExecuted) {
+  const n = weakStepCount(stepsExecuted);
+  return {
+    weak_steps: n,
+    verdict: status === 'PASS' && n > 0 ? `PASS_WEAK(${n})` : status,
+  };
+}
+
+// B1 dom-disclose: every DOM-assisted actuation must say so on the step.
+// Vision boundary marker is `click-by-vision:Y|N` (<=25 chars): Y = final
+// click coords came from vision re-detect; N = DOM snapped them.
+function domAssistTag({ snapped = false, focusSpaceUsed = false } = {}) {
+  const parts = [];
+  if (snapped) parts.push('domsnap');
+  if (focusSpaceUsed) parts.push('focus-space');
+  if (!parts.length) return { dom_assist: null, click_by_vision: 'Y' };
+  return { dom_assist: parts.join('+'), click_by_vision: 'N' };
+}
+
+function domAssistCount(stepsExecuted) {
+  if (!Array.isArray(stepsExecuted)) return 0;
+  return stepsExecuted.filter((s) => s && s.ok === true &&
+    typeof s.dom_assist === 'string' && s.dom_assist.length > 0).length;
+}
+
 /**
  * 5a retry ladder for an already-clicked (attempt 1) checkbox/radio whose
  * checked_state did not flip. attempt 2 = click again; attempt 3 =
@@ -537,6 +595,8 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
   let stalePrevented = 0;
   let unresolvedTargets = 0;
   let checkedStateFailure = null;
+  // B2: true once a fill skipped its post-action capture (pool predates it).
+  let poolStaleAfterFill = false;
 
   // Current visual state (resolvable elements). Seeded from the pipeline's
   // initial visual DOM when available, else detected from the fresh capture.
@@ -616,6 +676,25 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       if (resolution.resolved && resolution.element && resolution.element.synth === 'ocr_anchor') {
         resolution = { ...resolution, via: `${resolution.via || 'text_match'}+ocr_anchor` };
         warnings.push(`Step ${i + 1}: OCR-anchor synth target (WEAK verification)`);
+      }
+
+      if (!resolution.resolved) {
+        // B2 safety net: the pool may predate skipped fill captures — one
+        // fresh capture + re-detect before failing (saved as state_refresh).
+        if (poolStaleAfterFill && ['click', 'fill'].includes(step.action)) {
+          try {
+            const relRefresh = nextStateName('refresh');
+            const absRefresh = path.join(VISION_ROOT, await snap(page, relRefresh));
+            const redetected = await redetectState(absRefresh);
+            if (redetected && Array.isArray(redetected.elements_full) && redetected.elements_full.length) {
+              currentElements = redetected.elements_full;
+              poolStaleAfterFill = false;
+              resolution = isCheckTarget(step)
+                ? resolveCheckTarget(currentElements, step)
+                : resolveTarget(currentElements, step);
+            }
+          } catch (_) { /* refresh is best-effort; fall through to FAIL */ }
+        }
       }
 
       if (!resolution.resolved) {
@@ -704,13 +783,20 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       await page.waitForTimeout(500);
 
       // Post-action evidence: screenshot -> probe -> re-detect new visual state.
+      // B2: fills skip the screenshot (probe input_value verifies instead);
+      // the pool is then one fill stale until the next captured state.
       let afterScreenshot = null;
       let absShot = null;
-      try {
-        const relShot = nextStateName(`after_${step.action}`);
-        afterScreenshot = await snap(page, relShot);
-        absShot = path.join(VISION_ROOT, relShot);
-      } catch (_) { /* evidence capture must never break execution */ }
+      if (!needsAfterShot(step.action, submitKeyPressed) && step.action === 'fill') {
+        ScreenMeter.skipped += 1;
+        poolStaleAfterFill = true;
+      } else {
+        try {
+          const relShot = nextStateName(`after_${step.action}`);
+          afterScreenshot = await snap(page, relShot);
+          absShot = path.join(VISION_ROOT, relShot);
+        } catch (_) { /* evidence capture must never break execution */ }
+      }
 
       const pointProbeAfter = ['click', 'fill'].includes(execStep.action)
         ? await probePoint(page, execStep.x, execStep.y).catch(() => null)
@@ -748,6 +834,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
           states.push(entry);
           lastState = detected;
           currentElements = detected.elements_full || currentElements;
+          poolStaleAfterFill = false;
 
           if (step.action === 'scroll' && scrollBefore !== null) {
             const scrollAfter = await getScrollY(page);
@@ -763,6 +850,11 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         }
       }
 
+      // B1 dom-disclose: name any DOM assistance on the step + boundary Y/N.
+      const isCheckClick = isCheckTarget(step) && step.action === 'click';
+      const assist = domAssistTag(isCheckClick
+        ? { snapped: checkSnap, focusSpaceUsed: checkAttempts >= 3 }
+        : {});
       executedSteps.push({
         index: i + 1,
         ...execStep,
@@ -775,6 +867,8 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         checked_state_attempts: isCheckTarget(step) && step.action === 'click' ? checkAttempts : null,
         checked_state_verified: isCheckTarget(step) && step.action === 'click' ? checkOk : null,
         check_snap: isCheckTarget(step) && step.action === 'click' ? checkSnap : null,
+        dom_assist: isCheckClick ? assist.dom_assist : null,
+        vision_boundary: step.action === 'click' ? `click-by-vision:${assist.click_by_vision}` : null,
         submit_key_pressed: submitKeyPressed,
         low_confidence_retry: lowconfRetry,
         re_detected: Boolean(currentElements),
@@ -899,6 +993,8 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       : null,
     expected_text: testCase.expected_text || null,
     status,
+    // P3: weak-resolved steps ride on the verdict, never inside plain PASS.
+    ...weakVerdict(status, executedSteps),
     failure_reason: failureReason,
     verification,
     verification_strength: verificationStrength,
@@ -980,6 +1076,7 @@ async function main() {
 
   const results = [];
   const reportStartedAt = Date.now();
+  ScreenMeter.reset();
 
   try {
     for (let i = 0; i < testCases.length; i++) {
@@ -1031,7 +1128,7 @@ async function main() {
       }
 
       results.push(result);
-      const marker = result.status === 'PASS' ? 'PASS' : result.status;
+      const marker = result.verdict || result.status;
       console.log(`[execute]   Result: ${marker}${result.failure_reason ? ` — ${result.failure_reason}` : ''}`);
       for (const warning of result.warnings) {
         console.log(`[execute]   Warning: ${warning}`);
@@ -1084,8 +1181,18 @@ async function main() {
       weak_verifications: unsupportedVerifications,
       stale_coordinates_prevented: results.reduce(
         (n, r) => n + (r.stale_coordinates_prevented || 0), 0),
+      // P3: total WEAK-resolved steps across results (verdicts carry PASS_WEAK(n)).
+      weak_count: results.reduce(
+        (n, r) => n + (r.weak_steps || 0), 0),
+      // B1: total DOM-assisted steps across results (steps carry dom_assist reason).
+      dom_assist_count: results.reduce(
+        (n, r) => n + domAssistCount(r.steps_executed || []), 0),
       unresolved_targets: results.reduce(
         (n, r) => n + (r.unresolved_targets || 0), 0),
+      // B2: evidence screenshots per test (fills verify via probe instead).
+      screens_taken: ScreenMeter.taken,
+      screens_skipped: ScreenMeter.skipped,
+      screens_per_test: results.length ? Number((ScreenMeter.taken / results.length).toFixed(3)) : 0,
       warnings: warningCount,
     },
     results,
@@ -1116,6 +1223,8 @@ module.exports = {
   resolveTarget, normTxt,
   isCheckTarget, resolveCheckTarget, checkToggled, runCheckRetries,
   resolveLowConfFill, buildRedetectPayload, submitKeyPress,
-  snapCheckToNativeInput,
+  snapCheckToNativeInput, weakStepCount, weakVerdict,
+  domAssistTag, domAssistCount,
+  needsAfterShot, ScreenMeter,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
 };

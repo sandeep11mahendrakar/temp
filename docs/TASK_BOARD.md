@@ -7,6 +7,9 @@ PIPELINE-SERIAL: YES (vision ports 5000-5004; ONE live browser run at a time)
 QUOTA-FREE-ONLY: YES (no paid keys; Nemotron :free primary, Gemma :free retry, opencode-key lane in probe)
 ## DIRECTIVES-R3
 D15 [MASTER 2026-10-11]: Review-3 vision-only program. Lanes 1-4 disjoint files, parallel-safe. Headed browser default ON (observe runs). First goal target saucedemo.com (login, then login-to-checkout). Free-only models. Subagent lanes named 1-4. Workers heartbeat claims; browser runs serial via ports rule.
+D21 [SUB-MASTER 2026-10-14]: G-PROGRAM G0-G5+B4-B7full. P2/P3 frozen-accept, no unrelated refactor. SEMANTICS frozen verdict PASS|FAIL|OBSERVED|BLOCKED app_outcome accepted|rejected|n/a; expect_rejection+oracle-met=>PASS/rejected. R1-R8 api0-mock serial RESUME (live only G5 Muse-brain). ORDER G0,G1,G2,G3,G4,B4,B5,B6,B7,G5. G0 commit LOCAL ONLY no push. B4-B7full are v2 full-impl (memory.js/planner.js/loopController.js/report.js), NOT the DONE B4-B7 mechanisms (runMemory/batchPlan/zeroLoop/reportSchema stay untouched). Workers report master IDs.
+D20 [SUB-MASTER 2026-10-13]: OPS-FOREVER. Roles=worker|sub-master|auditor|master(Claude plans-only)|human. Onboard=agents/README+board GATES+DIRECTIVES+PROJECT_HANDOFF. Rules: CLAIM 1 OPEN (first-claim-wins) -> finish -> DONE-PROOF -> immediately CLAIM next OPEN (never stop after 1); R3_RESULTS.jsonl 1 line per task via node fs utf8 after EVERY task; api_calls=0 mock-LLM only; live SERIAL one-driver; suites green before DONE. Intercom=docs/SUGGESTIONS.md round-robin W1->W2->W3->submaster (SUG-1); opinions+improvements+missing-items; human pastes replies to sub-master for review.
+D19 [SUB-MASTER 2026-10-13]: B-program B0-B8. CONTRACTS frozen tc/archetype/mem/planner/delta-stop/status. R1-R8 api0-mock serial RESUME. ORDER B0-B8. B8 gated B1-B7-green. Workers CLAIM 1 OPEN claim-finish-next R3_RESULTS node-fs.
 D18 [SUB-MASTER 2026-10-13]: P-program P0-P7 only. R1-R8 api0 serial RESUME. P0 BLOCKING first. P1/P2/P4/P5/P6 offline parallel-safe disjoint-reads (P1/P4 paste-verbatim no-edits except P3/P4-tests-if-none). P3 edit executeTests-report only. P7 serial live LAST order T15-then-T16-LoopB-then-T17. Workers 1/2/3 CLAIM 1 OPEN row claim-finish-next R3_RESULTS via node fs.\nD17 [SUB-MASTER 2026-10-13]: M-program live. MASTER_IDs M0-M6 only, old ids retired. R1-R8 unchanged. LIVE=MCP/LoopB only serial headed hands-off api=0 AUTH for M6 only. ORDER M0,M1,M2,M3,M4,M5,M6. Workers 1/2/3 self-serve: CLAIM 1 OPEN row each, claim-finish-next. Offline (M0/M1/M4) parallel-safe disjoint files. Live (M2/M3-perceive/M6) SERIAL ONE driver: check no live CLAIM active + ports 5000-5004 free before start. api_calls=0 always except M5-gated. Append docs/R3_RESULTS.jsonl via node fs utf8. RESUME next=<Mn> on long context.
 ## STATUS SHEET-R3
 R3-T1 headful-switch | DONE | master | 2026-10-11 | 2026-10-11 | verified headed example.com run + suites 4/4 (files: vision/src/explorer.js, vision/services/browser-service/browser.js, vision/src/executeTests.js)
@@ -17,23 +20,468 @@ R3-T5 mcp-brain-inversion | DONE | master | 2026-10-11 | 2026-10-11 | protocol+s
 R3-T6 auditor-review | DONE
 R3-T7 model-agnostic-hardening | DONE | master | 2026-10-11 | - | - (research: ReAct/ReflAct-thought, Reflexion-lesson-buffer, pre-submit-guard, llm_calls.jsonl, slash-fix; files: explorer.js, goalPlanner.js, NEW test/formguard.test.js)
 R3-T8 scenario-matrix-worker | BLOCKED | worker-1 | - | - | - (S1=DONE replay-authored: executor+perception proof NOT agent-autonomy; S2-S5=PARKED until T14 DONE)
-R3-T10 mcp-live-proof | OPEN | worker-2 | - | - | - (MCP perceive-fill-fill-login loop headed, docs-only proof; serial AFTER W1)
+R3-T10 mcp-live-proof | DONE | worker-2 | 2026-10-14 | 2026-10-14 | (MCP loop 9/9 PASS url_change inventory t10_loop.json + MCP_LIVE_PROOF.md) | worker-2 | - | - | - (MCP perceive-fill-fill-login loop headed, docs-only proof; serial AFTER W1)
 R3-T11 per-phase-tests | DONE | worker-3 | - | - | - (NEW vision/src/phaseTests.js + tests ONLY; assembly wire by master)
 R3-T12 generation-audit | DONE | worker-4 | - | - | - (NEW vision/test/generation_audit.test.js; TDD vs old TC01)
 R3-T9 robustness+generation | DONE | master | 2026-10-11 | - | - (master: unified session, timeouts, readiness, reset, history log; files: vision/mcp/server.js + server.test.js + MCP_RUN_ANALYSIS doc) | worker-1 | - | - | - (ONE worker: S1-S5 serial headed + W1 batching + W3 distillation; reads RUN_ANALYSIS doc first) | - | - | - | - (1 worker: 5 live scenarios S1-S5 + batching W1 + distillation; runs serial, headed) | - | - | - | - (code review only: verify lanes 1-5 claims vs artifacts; NO code fixes; verdict per lane PASS/FAIL + evidence) | master | 2026-10-11 | 2026-10-11 | protocol+status+perceive live, mcp tests 5/5, docs/MCP_DUAL_SETUP.md; act/evidence/reset OPEN for builder (new files only: vision/mcp/, docs/MCP_DUAL_SETUP.md; zero-dep stdio; NO edits to lane files, NO browser runs by hand) | - | - | - | - (new: docs/FEATURE_REQUESTS.md; .env model lanes; NO browser runs until R3-T3 demo done)
 R3-T13 http-fallback | DONE | worker-5 | - | - | - (ONE worker: Streamable-HTTP transport for mcp server + tests + client configs)
 R3-T14 todomvc-complex | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (DONE replay-authored executor proof LoopB 6/6 end-2-left m6_rep.json NOT agent-autonomy)
-R3-T15 http-live-smoke | OPEN | - | - | - | - (serial-2: MCP HTTP transport live perceive smoke; needs evid path 1 line to flip DONE; starts after T14 DONE)
-R3-T16 checkout-chain | BLOCKED(quota) | - | - | - | - (Nemotron 429 dead API path; serial-3 after T15; quota-gated 05:30 IST)
-R3-T17 final-proof | OPEN | - | - | - | - (dep T14 DONE T16 BLOCKED; serial-4 suites+evidence+DONE-PROOF)
-M0 git-baseline | OPEN | worker-3 | - | - | - (ORDER-1: git rev-parse --show-toplevel else run from code root else git init+check-ignore .env+snapshot explicit paths lib vision/src vision/mcp vision/services vision/gateway vision/test vision/runVision.js docs .gitignore NOT storage/.env/node_modules/*.pt; commit baseline; out toplevel|hash|tracked)
+R3-T15 http-live-smoke | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (HTTP smoke 9el/594ch t15_http_smoke.json) | - | - | - | - (serial-2: MCP HTTP transport live perceive smoke; needs evid path 1 line to flip DONE; starts after T14 DONE)
+R3-T16 checkout-chain | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (LoopB 11/11 PASS complete.html OCR-Thank-you t16_rep.json api0) | - | - | - | - (Nemotron 429 dead API path; serial-3 after T15; quota-gated 05:30 IST)
+R3-T17 final-proof | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (suites 114/114+14/14 16/16 evid api0) | - | - | - | - (dep T14 DONE T16 BLOCKED; serial-4 suites+evidence+DONE-PROOF)
+M0 git-baseline | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (via P0 init-main 68tracked baseline-r3 ad9bb0a) | - | - | - (ORDER-1: git rev-parse --show-toplevel else run from code root else git init+check-ignore .env+snapshot explicit paths lib vision/src vision/mcp vision/services vision/gateway vision/test vision/runVision.js docs .gitignore NOT storage/.env/node_modules/*.pt; commit baseline; out toplevel|hash|tracked)
 M1 T2-gate-tests | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (+3 gates 17/17; suites 106/106+14/14; R3_RESULTS M1 x2)
 M2 toggle-diag | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (H1 label-center misses input 97px; domsnap fix; live PASS checked false->true m2_rep_verify.json)
 M3 empty-input-recall | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (A crop-topband 0.21 + B anchor-synth; live 3rd-fill PASS m3_rep_verify.json)
 M4 gemini-lane | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (maps present env-only verify-only zero-diff; reasoning 9/9 secret-scan clean)
 M5 N6-gate | BLOCKED(need-key) | worker-1 | 2026-10-13 | 2026-10-13 | (GEMINI_API_KEY absent MODEL absent booleans only; NA need-key api0)
-M6 todomvc-fullchain | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (LoopB scratch 6/6 PASS step3=Y toggle=Y end 2-left m6_rep.json api0)\nP0 git-blocking | OPEN | - | - | - | - (FIRST: rev-parse else code-root else init+check-ignore .env FIRST+explicit-add lib vision/src vision/mcp vision/services vision/gateway vision/test vision/runVision.js docs .gitignore NOT storage/.env/node_modules/*.pt/*.png; commit baseline-r3; out toplevel|hash|tracked)\nP1 code-evidence | OPEN | - | - | - | - (no-edits paste-verbatim: a snapCheckToNativeInput full b anchorSynth.js<=80 c decide-parsefail<=60 d loginfill-gate<=40)\nP2 dom-audit | OPEN | - | - | - | - (no-edits grep page.evaluate|locator|\$|elementFromPoint|querySelector|innerText|getBy in vision/src vision/mcp vision/services/browser-service; per-hit file:line|purpose|used_for|violation Y/N +summary)\nP3 weak-flag | OPEN | - | - | - | - (confirm m6 step3 ocr_anchor WEAK+verdict shape; if plain-PASS add PASS_WEAK(n)/weak_count report+summary; tests+1)\nP4 gemini-evidence | OPEN | - | - | - | - (grep -n gemini lib/llmProvider.js lines+covering tests file,names or none; if none add 3 mock-fetch tests)\nP5 test-reconcile | OPEN | - | - | - | - (per-file before|after 103->113 vs reported 11)\nP6 schema-inventory | OPEN | - | - | - | - (keys+types only no-values <=40ea: a test-item b exec-report c history d perceive-reply e act-reply)\nP7 live-serial-last | OPEN | - | - | - | - (LAST order: T15-HTTP-smoke evid1line+flip then T16-LoopB-cart-checkout-finish then T17-final-proof iff P0-P5 done)
-## COMMS LOG-R3 (newest first)\n[2026-10-13 22:0x IST] [SUB-MASTER] P-PROGRAM POSTED: P0-P7 OPEN above + D18. T14=DONE-replay-authored-executor-proof. P0 BLOCKING first. P7 LAST T15->T16-LoopB->T17. Workers 1/2/3 check board for work and complete it.
+M6 todomvc-fullchain | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (LoopB scratch 6/6 PASS step3=Y toggle=Y end 2-left m6_rep.json api0)\nP0 git-blocking | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (init main 68tracked baseline-r3 ad9bb0a) | - | - | - | - (FIRST: rev-parse else code-root else init+check-ignore .env FIRST+explicit-add lib vision/src vision/mcp vision/services vision/gateway vision/test vision/runVision.js docs .gitignore NOT storage/.env/node_modules/*.pt/*.png; commit baseline-r3; out toplevel|hash|tracked)\nP1 code-evidence | DONE | worker-1 | 2026-10-13 | 2026-10-13 | (verbatim a/b/c/d board P1-EVIDENCE zero-diff 106/106+14/14) | - | - | - | - (no-edits paste-verbatim: a snapCheckToNativeInput full b anchorSynth.js<=80 c decide-parsefail<=60 d loginfill-gate<=40)\nP2 dom-audit | DONE | worker-3 | 2026-10-13 | 2026-10-13 | (15hits signal-only 0viol mcp+browser0 113/113+14/14) | - | - | - | - (no-edits grep page.evaluate|locator|\$|elementFromPoint|querySelector|innerText|getBy in vision/src vision/mcp vision/services/browser-service; per-hit file:line|purpose|used_for|violation Y/N +summary)\nP3 weak-flag | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (PASS_WEAK(1) weak_count 113->114) | - | - | - | - (confirm m6 step3 ocr_anchor WEAK+verdict shape; if plain-PASS add PASS_WEAK(n)/weak_count report+summary; tests+1)\nP4 gemini-evidence | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (llmProvider 13/28/36-37 reasoning95/109 report-only) | - | - | - | - (grep -n gemini lib/llmProvider.js lines+covering tests file,names or none; if none add 3 mock-fetch tests)\nP5 test-reconcile | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (103->114 +11=M1x3+t5x5+anchorx3) | - | - | - | - (per-file before|after 103->113 vs reported 11)\nP6 schema-inventory | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (5shapes max21keys board-P6) | - | - | - | - (keys+types only no-values <=40ea: a test-item b exec-report c history d perceive-reply e act-reply)\nP7 live-serial-last | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (T15-PASS T16-11/11 T17-16/16 api0 ports-free)
+B0 board | DONE | worker-1 | 2026-10-13 | 2026-10-13 | (ad9bb0a HEAD==1 commit-nothing TRUE) | - | - | - | - (M0=DONE commit-nothing-yet)
+B1 dom-disclose | DONE | worker-3 | 2026-10-13 | 2026-10-13 | (dom_assist+count 114->117) | - | - | - | - (step.dom_assist reason+summary-count+VISION_BOUNDARY<=25 Y/N-click-by-vision tests+1)
+B2 fewer-shots | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (pathB 4->2 PNGs s1-PASS 117->119) | - | - | - | - (capture click|navigate|scroll|modal|submit only; fill=probeFillValue; screens-per-test; A executor+MCPact B executor-only; saucedemo before/after; tests+2)
+B3 archetypes | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (registry 6/6 119->125 compat) | - | - | - | - (registry index+login+crudlist+generic; login-hints-OCR matrix6users+negatives; goalPlanner-refactor-compat-green; tests+6)
+B4 memory | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (runMemory 4/4 125->129) | - | - | - | - (memory.json atomic mergeLoop summary<=40 delta per-site-run; tests+4)
+B5 planner | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (batchPlan 4/4 129->133 6users-8tc) | - | - | - | - (ONE-llm batch tc contract strictJSON extractLastJSON retry-unknown; CODE-expand LLM-selects; mock 6users->8tc; tests+4)
+B6 loop | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (zeroLoop 3/3 133->136) | - | - | - | - (perceive->planner->executor0llm->mergeLoop->delta stop loop2+delta<=1||covered||5; mock-integration; tests+3)
+B7 report | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (reportSchema 3/3 136->139) | - | - | - | - (JSON schema1 run/loops/cases+result/citable cost backup-storage +md-INDEX-row; tests+3)
+B8 live-matrix | DONE | worker-2 | 2026-10-13 | 2026-10-13 | (6/6 MATCH locked-FAIL 139+14/14 ports-free) | - | - | - | - (SERIAL MCP/LoopB api0 B1-B7-green-only: saucedemo 6user-matrix via-B6 Muse-brain; out tc-n pass/fail/observed screens path delta; locked_out FAIL-expected) | - | - | - | - (LAST order: T15-HTTP-smoke evid1line+flip then T16-LoopB-cart-checkout-finish then T17-final-proof iff P0-P5 done)
+SUG-1 opinions-round-robin | DONE | worker-1+2+3 | 2026-10-14 | 2026-10-14 | (ENTRY-1 W1 + ENTRY-1b W3 + ENTRY-2 W2 all verified on disk) | - | - | - | - (ORDER W1->W2->W3->submaster one-by-one: post in docs/SUGGESTIONS.md your verdict on board+intercom+task-assignment speed, improvements needed, missing items for human; read prior entries first, no overwrites)
+G0 checkpoint | OPEN | - | - | - | - (FIRST: status check exclusions .env/*.pt/*.png/storage/node_modules; explicit-add src/test/docs/mcp only; commit p2-p3-freeze LOCAL no-push; out hash|count|excluded)
+G1 test-reconcile | OPEN | - | - | - | - (114->147 per-file before|after via diff-stat+test-list; unexplained delta stated)
+G2 oracle-wiring | OPEN | - | - | - | - (BLOCKING complex: executor calls verdictFor(tc,obs) urlChanged+page_text2000+counter; store verdict+app_outcome+snip300+ocr_count; no-OCR=>OBSERVED WEAK; legacy unchanged. A direct-call B oracle.js-split. tests+5 mock-OCR)
+G3 contract-doc | OPEN | - | - | - | - (CONTRACT documents expect_rejection; report carries verdict+app_outcome; tests+1)
+G4 b8-reconcile | OPEN | - | - | - | - (ONLY if locked_out failure-shot exists AND OCR runnable: derived b8_reconcile_derived.json else NA; NEVER edit b8_matrix.json)
+B4-full memory.js | OPEN | - | - | - | - (memory.json schema fingerprints/hints/coverage/findings/attempts/deltas; atomic fs; mergeLoop summary40 delta-calc; tests+4; do NOT touch runMemory.js)
+B5-full planner.js | OPEN | - | - | - | - (plan() ONE-callLLM/loop CODE-expand LLM-selects strictJSON retry+unknown; mock 6users->8tc; tests+4; do NOT touch batchPlan.js)
+B6-full loopController.js | OPEN | - | - | - | - (perceive-plan-execute0llm-mergeLoop-delta-stop loop2/delta<=1|covered|5; mock-integration loop2-stop; tests+3; do NOT touch zeroLoop.js)
+B7-full report.js | OPEN | - | - | - | - (JSON schema1 run/loops/cases+result/citable cost backup-storage +md-INDEX-row; tests+3; do NOT touch reportSchema.js)
+G5 live-matrix | OPEN | - | - | - | - (LAST SERIAL MCP/LoopB api0 Muse-brain G0-B7-green-only: loopController 6user+negatives 2loops stop-rule shown; locked_out=PASS/rejected+snip; out tc-table screens loops deltas path)
+## COMMS LOG-R3 (newest first)
+[2026-10-14 00:0x IST] [SUB-MASTER] G-PROGRAM POSTED: D21 + G0-G5/B4-B7full OPEN. Workers 1/2/3 check board for work and complete it.
+[2026-10-14 00:1x IST] [SUB-MASTER] VERIFY-SWEEP: SUG-1 DONE (3 entries on disk, no overwrites) + R3-T10 DONE (t10_loop.json turns ok + proof table url_change). New B8 path-B line is a FRESH re-run (new artifacts) under OLD fail-expected semantics - flagged, history preserved. Next slot ENTRY-3 belongs to W3.
+[2026-10-14 01:06 IST] [W2] STANDBY: SUG-1 W2-turn + R3-T10 DONE. Full W2 ledger: R3(T8,N2,T10) M1-M6 P0-P7 B2-B8 SUG-1. Ports free, files FROZEN. Claiming nothing further. api_calls=0.
+[2026-10-14 01:05 IST] [W2] DONE-PROOF R3-T10 mcp-live-proof (path A LoopB docs-only): MCP HTTP tools status->perceive->fill->fill->click->evidence->reset, 9/9 turns PASS (url_change inventory.html + logout/products + OCR check). 2 honest FAIL runs documented (warmup-transient + perceive-navigates-wipes-form lesson). Proof table + verdict in docs/MCP_LIVE_PROOF.md. Suites 147/147+14/14. Server stopped, ports free, slot RELEASED. R3_RESULTS R3-T10 DONE. api_calls=0.
+[2026-10-14 00:45 IST] [W2] CLAIM R3-T10 mcp-live-proof (SERIAL sole driver). MCP HTTP tools loop: status->perceive->fill->fill->click->evidence->reset, saucedemo headed docs-only proof. Serial-check: ports free, no live active. api_calls=0.
+[2026-10-14 00:40 IST] [W2] DONE-PROOF SUG-1 W2-turn (path A read-only): ENTRY-2 posted (verdict+7 improvements+missing+notes, prior entries read, no overwrites). Suites 147/147+14/14 re-run green. R3_RESULTS SUG-1 DONE. api_calls=0. Next=R3-T10-live.
+[2026-10-13 23:28 IST] [W1] SUG-1-DUP-RESOLVED + DONE-PROOF SUG-1 (path A): my CLAIM 23:20 IST first-landed, ENTRY-1 intact; W3 ENTRY-1b additive (no overwrite). Both verdicts converge (giant-lines, heartbeat<30min, HOLDER line, node-fs, lead-time). R3 SUG-1 lines x2 (mine+W3). Suites 147/147+14/14 green. api_calls=0. Sweep next: no unclaimed OPEN (R3-T10=W2 lane, M5/T8 BLOCKED). STANDBY. RESUME next=STANDBY.
+[2026-10-14 00:35 IST] [W2] CLAIM SUG-1 (W2 turn: ENTRY-0+ENTRY-1+ENTRY-1b read, writing ENTRY-2 next, no overwrites). Then claim-finish-next R3-T10. api_calls=0.
+[2026-10-13 23:20 IST] [W1] CLAIM SUG-1 opinions-round-robin (first, W1 slot). Read ENTRY-0 + skill + D20 done. Writing ENTRY-1 next, no overwrites. api_calls=0.
+[2026-10-13 23:4x IST] [SUB-MASTER] OPS-FOREVER POSTED: D20 roles+continuous-work+ledger+intercom. SUG-1 OPEN round-robin W1 first. docs/SUGGESTIONS.md created with sub-master seed. Board state: all R3/M/P/B rows DONE except M5 BLOCKED(need-key), R3-T8 BLOCKED(S2-S5 PARKED). Suites 147/147+14/14.
+[2026-10-13 23:3x IST] [SUB-MASTER] B-SWEEP DONE: B0-B8 DONE per ledger 139/139+14/14. Flips applied. OPEN left: none in B-program.
+[2026-10-14 00:31 IST] [W2] STANDBY: B2-B8 all DONE (B0/B1 by others; full gate B0-B7 green). Suites 139/139+14/14. Ports free, files FROZEN. Claiming nothing further. api_calls=0.
+[2026-10-14 00:30 IST] [W2] DONE-PROOF B8 live-matrix (path A): 6user matrix MATCH 6/6 (5 PASS + locked_out FAIL-expected honest); b8_matrix.json + per-user reps; services stopped ports free slot RELEASED. R3_RESULTS B8 DONE. api_calls=0. B-program W2 lanes complete (B2-B8).
+[2026-10-14 00:15 IST] [W2] CLAIM B8 live-matrix (SERIAL sole driver). Gate B0-B7 DONE holds (suites 139/139+14/14 at B7 close). 6user saucedemo matrix via-LoopB; locked_out FAIL-expected. api_calls=0 mock-LLM only.
+[2026-10-14 00:12 IST] [W2] DONE-PROOF B7 report (path A): NEW reportSchema.js (schema1 run/loops/cases+result/cost/storage/citable-sha1 + indexRow + checkReport) + reportSchema 3/3. Vision 139/139 + MCP 14/14. api_calls=0. R3_RESULTS B7 DONE. Next=B8-gated-check.
+[2026-10-14 00:07 IST] [W2] CLAIM B7 report (ORDER-8 offline). JSON schema1 run/loops/cases+result/citable cost backup-storage + md-INDEX-row; tests+3. api_calls=0.
+[2026-10-14 00:05 IST] [W2] DONE-PROOF B6 loop (path A): NEW zeroLoop.js (injected perceive/plan/execute/merge/isCovered, exact stop rule, honest abort) + zeroLoop 3/3. Vision 136/136 + MCP 14/14. Mock-only, api_calls=0. R3_RESULTS B6 DONE. Next=B7.
+[2026-10-14 00:00 IST] [W2] CLAIM B6 loop (ORDER-7 offline, mock-integration). perceive->planner->executor0llm->mergeLoop->delta-stop; tests+3. api_calls=0.
+[2026-10-13 23:58 IST] [W2] DONE-PROOF B5 planner (path A): NEW batchPlan.js (code-expand + ONE-llm select strictJSON/retry-unknown + id-dedupe; dedupeTests frozen untouched, rationale in code) + batchPlan 4/4. Vision 133/133 + MCP 14/14. Mock-LLM only, api_calls=0. R3_RESULTS B5 DONE. Next=B6.
+[2026-10-13 23:54 IST] [W2] CLAIM B5 planner (ORDER-6 offline, mock-LLM only). Batch tc contract + code-expand/LLM-select + 6users->8tc mock; tests+4. api_calls=0.
+[2026-10-13 23:52 IST] [W2] DONE-PROOF B4 memory (path A): NEW runMemory.js (pure+atomic save, delta per-site, summary<=40) + runMemory 4/4. Vision 129/129 + MCP 14/14. No explorer wire (mechanism only, disclosed). R3_RESULTS B4 DONE. api_calls=0. Next=B5.
+[2026-10-13 23:47 IST] [W2] CLAIM B4 memory (ORDER-5 offline). memory.json atomic mergeLoop summary<=40 delta per-site-run; tests+4. api_calls=0.
+[2026-10-13 23:45 IST] [W2] DONE-PROOF B3 archetypes (path A): NEW archetypes.js (registry owns templates + classifyGoal + 6user LOGIN_HINTS) + planner delegates (exports/ids identical) + archetypes 6/6. Vision 125/125 + MCP 14/14 (planner17+goal10 green). R3_RESULTS B3 DONE. api_calls=0. Next=B4.
+[2026-10-13 23:32 IST] [W2] CLAIM B3 archetypes (ORDER-4 offline). Registry index+login+crudlist+generic; login-hints matrix 6users+negatives; planner-refactor compat-green; tests+6. api_calls=0.
+[2026-10-13 23:30 IST] [W2] DONE-PROOF B2 fewer-shots (path B executor-only): fills skip shot (probe input_value), stale-refresh net, ScreenMeter + summary screens_per_test. t5 24/24; Vision 119/119 (incl B1x3 intact) + MCP 14/14. LIVE s1: PASS url_change, PNGs 4->2, per-test 2.0, states 3->1, skipped 2, fills input_value x2. Shared-file note: B1 submaster same-file regions untouched (verified greps+suites). R3_RESULTS B2 DONE. api_calls=0. Next=B3.
+[2026-10-13 22:55 IST] [W1] B0-DUP-RESOLVED: my CLAIM 22:50 IST first-landed; W3 CLAIM 23:10 UTC duplicate but landed valid verified R3 B0 line. No clobber: keeping W3 line (numbers independently re-verified by me: Vision 114/114 green, HEAD==baseline ad9bb0a, 5 modified files). B0 doubly-confirmed DONE. api_calls=0.
+[2026-10-13 23:10 IST] [W2] CLAIM B2 fewer-shots (ORDER-3 offline). Capture click|navigate|scroll|modal|submit only; fill=probeFillValue; screens-per-test metric. Investigate A(executor+MCPact) vs B(executor-only). api_calls=0.
+[2026-10-13 22:52 IST] [W1] DONE-PROOF B0 board (path A): files=none touched; verify=board M0 DONE + R3 P0 DONE ad9bb0a + git HEAD==baseline 0 new commits (worktree dirty post-baseline as expected); no M0 R3 line (evid via P0); CONTRACTS untouched; api_calls=0. R3_RESULTS B0 line appended.
+[2026-10-13 22:50 IST] [W1] CLAIM B0 board (ORDER-1, offline read-only). Verify M0 DONE + commit-nothing-yet via git status. CONTRACTS frozen do-not-rename. api=0.
+[2026-10-13 22:4x IST] [SUB-MASTER] B-PROGRAM POSTED: M0=DONE-via-P0. B0-B8 OPEN above + D19 CONTRACTS frozen. Workers 1/2/3 check board for work and complete it.
+[2026-10-13 22:3x IST] [SUB-MASTER] P-SWEEP DONE: P0-P7 DONE per R3_RESULTS; T15 OPEN->DONE T16 BLOCKED->DONE-LoopB T17 OPEN->DONE. OPEN left: M0. Ports free api0.
+[2026-10-13 23:06 IST] [W2] STANDBY: P0-P7 all DONE (R3 lines appended, suites 114/114+14/14). Ports free, slot released, files FROZEN. Open for others: M0 (W3), R3-T15/T16/T17 flips (master). Claiming nothing further. api_calls=0.
+[2026-10-13 23:05 IST] [W2] DONE-PROOF P7 live-serial-last (path A): T15 smoke PASS (9el/594ch live HTTP) + T16 11/11 PASS strong (4 runs, honest FAILs documented, OCR-verified complete) + T17 suites 114/114+14/14 + evidence 16/16. Services stopped, ports free, slot RELEASED. R3_RESULTS P7 DONE. api_calls=0. P-program W2 lanes complete (P0-P7).
+[2026-10-13 22:52 IST] [W2] CLAIM P7 live-serial-last (sole driver). Gate P0-P5 DONE holds. Order T15-smoke then T16-LoopB-checkout then T17-proof. Serial-check: no live active, ports free. LoopB headed api_calls=0.
+[2026-10-13 22:50 IST] [W2] DONE-PROOF P6 schema-inventory (path A read-only): 5 shapes posted, all <=40 keys. R3_RESULTS P6 DONE. api_calls=0. Next=P7-LAST iff gate holds.
+[2026-10-13 22:48 IST] [W2] P6 schema-inventory (read-only, keys+types, no values; all counts <=40):
+a test-item (m6_chain.json step, 5 keys): action:string target:object value:string x:number y:number
+b exec-report (m6_rep.json, 11 keys): architecture:string run_id:string evidence_dir:string re_detection_enabled:boolean source_url:string test_cases_file:string started_at:string finished_at:string total_duration_ms:number summary:object results:array
+b exec-result (21 keys): id:string objective:string expected_result:string evidence:null inferred_behavior:null expect_navigation:boolean expected_text:string status:string failure_reason:null verification:object verification_strength:string stale_coordinates_prevented:number unresolved_targets:number warnings:array before_screenshot:string failure_screenshot:null url_before:string url_after:string steps_executed:array states_observed:array duration_ms:number || note: post-P3 code adds verdict:string + weak_steps:number (m6_rep predates P3)
+c history (run_1791725272124_exploration_history.json, 15 keys): run_id:string start_url:string started_at:string finished_at:string duration_ms:number limits:object termination_reason:string goal:object totals:object visited_urls:array screenshots_dir:string test_cases_file:string warnings:array states:array transitions:array
+d perceive-reply (visual_dom, 7 keys): source:string architecture:string image_size:object timestamp:string element_count:number elements:array raw:object || element (7 keys): id:string type:string yolo_label:string text:string bbox:object confidence:object word_count:number
+e act-reply (mcp server.js handleAct PASS, envelope content[0]{type:string,text:string}+isError:boolean; payload 13 keys): status:string action:string resolved_element:object|null resolution_via:string|null key:string|null submit_key:string|null stale_coordinates_prevented:boolean session_recreated:boolean url:string|null element_count:number page_text:string elements:array screenshot:string verification:object || FAIL variant keys: status action error reason wanted:object retryable suggested_action + isError:true
+api_calls=0.
+[2026-10-13 22:44 IST] [W2] CLAIM P6 schema-inventory (read-only keys+types, no values). api_calls=0.
+[2026-10-13 22:42 IST] [W2] DONE-PROOF P5 test-reconcile (path A read-only): 103->114 delta +11 reconciled per-file, matches reported. R3_RESULTS P5 DONE. api_calls=0. Next=P6.
+[2026-10-13 22:40 IST] [W2] P5 test-reconcile (read-only, per-file now-counts executed live this session):
+file|before|after|delta|source
+goalPlanner.test.js|14|17|+3|M1 gates a/b/c
+executeTests.t5.test.js|14|19|+5|M2x3 + M3-pin x1 + P3 x1
+mergeAnchor.test.js|0(new)|3|+3|M3 anchor x3
+explorer.candidates.test.js|4|4|0|-
+explorer.goal.test.js|10|10|0|-
+formguard.test.js|31|31|0|-
+generation_audit.test.js|9|9|0|-
+inputFilter.test.js|4|4|0|-
+phaseTests.test.js|8|8|0|-
+reasoning.test.js|9|9|0|7xT1 + 2xT7
+TOTAL|103|114|+11|matches reported 11 (3+5+3). Before-column pinned to era lines (T2:14, T4:formguard31, T5:14, T7:reasoning9). api_calls=0.
+[2026-10-13 22:38 IST] [W2] CLAIM P5 test-reconcile (read-only counts, no edits). Per-file before|after vs reported. api_calls=0.
+[2026-10-13 22:36 IST] [W2] DONE-PROOF P4 gemini-evidence (path A report-only, zero edits): lib/llmProvider.js gemini @13(doc)/28(base)/36-37(null-default env-only); covering tests vision/test/reasoning.test.js:95 resolves + :109 mocked-fetch-shape (2 tests, 9/9 file green). Tests-exist so add-3 NOT triggered. R3_RESULTS P4 DONE. api_calls=0. Next=P5.
+[2026-10-13 22:34 IST] [W2] CLAIM P4 gemini-evidence (read-only grep; add-3-tests only if none). api_calls=0.
+[2026-10-13 22:32 IST] [W2] DONE-PROOF P3 weak-flag (path A): m6 confirmed plain-PASS w/ uncounted WEAK step3; added verdict+weak_steps per-result + weak_count summary (status strings unchanged); t5 19/19; Vision 114/114 + MCP 14/14. R3_RESULTS P3 DONE. api_calls=0. Next=P4.
+[2026-10-13 22:28 IST] [W2] CLAIM P3 weak-flag (executeTests-report only + tests+1). Confirm m6 step3 WEAK shape. api_calls=0.
+[2026-10-13 22:26 IST] [W2] DONE-PROOF P2 dom-audit (path A read-only): 15 hits all N, summary posted. R3_RESULTS P2 DONE. api_calls=0. Next=P3.
+[2026-10-13 22:24 IST] [W2] P2 dom-audit verdict (read-only grep, 15 hits, 0 violations):
+vision/src/explorer.js:196 page.evaluate|probeFillValue input_value read-only|used_for=fill-verify|violation=N
+vision/src/explorer.js:197 elementFromPoint|same probe target resolve|used_for=fill-verify|violation=N
+vision/src/explorer.js:633-634 page.evaluate+innerText|captureState visibleText slice4000|used_for=planner-judge|violation=N
+vision/src/executeTests.js:373-374 page.evaluate+elementFromPoint|probePoint LABEL-to-control|used_for=checked_state|violation=N
+vision/src/executeTests.js:400-401 page.evaluate+elementFromPoint|domsnap point resolve|used_for=FIX-A-snap|violation=N
+vision/src/executeTests.js:410 querySelector|li native input center|used_for=FIX-A-snap|violation=N
+vision/src/executeTests.js:425 page.evaluate scrollY|scroll-position read|used_for=scroll-signal|violation=N
+vision/src/executeTests.js:523 page.evaluate+innerText.length|body-text gauge|used_for=fallback-evidence|violation=N
+vision/src/executeTests.js:686-687 page.evaluate+elementFromPoint|focusSpace retarget|used_for=FIX-B|violation=N
+vision/src/executeTests.js:883-884 page.evaluate+innerText|verification body text|used_for=fallback-verify|violation=N
+vision/mcp: 0 hits. vision/services/browser-service: 0 hits. locator/getBy/page-dollar: 0 hits all scopes.
+SUMMARY: 15/15 read-only observation for verify/perceive; 0 DOM writes via queried APIs (writes use mouse/keyboard/fill); 0 violations. Note: bare-dollar restricted to page-dollar calls to exclude template-literal noise, disclosed. api_calls=0.
+[2026-10-13 22:20 IST] [W2] CLAIM P2 dom-audit (read-only grep, no edits). Scopes vision/src vision/mcp vision/services/browser-service. api_calls=0.
+[2026-10-13 22:18 IST] [W2] DONE-PROOF P1 code-evidence (path A read-only): verbatim block posted under P1 CLAIM (a33/b80/c53/d13, caps met). R3_RESULTS P1 DONE. api_calls=0. Next=P2.
+[2026-10-13 22:12 IST] [W2] CLAIM P1 code-evidence (read-only, no src edits). Paste-verbatim a/b/c/d with line caps. api_calls=0.
+[2026-10-13 22:15 IST] [W2] P1 code-evidence (read-only paste-verbatim, no src edits):
+(a) vision/src/executeTests.js:390-422 snapCheckToNativeInput full (33 lines):
+/**
+ * M2 FIX-A: snap a checkbox/radio click point to the native control center.
+ * Perception boxes for toggles are often label-text boxes whose center misses
+ * the 30-40px native input and lands on inert text (unassociated <label>).
+ * Resolve via DOM: the point's own control, its label control, else the
+ * nearest li's input.toggle/checkbox/radio center. Returns {x, y, snapped};
+ * never throws — falls back to the recorded point.
+ */
+async function snapCheckToNativeInput(page, x, y) {
+  try {
+    const pt = await page.evaluate(([px, py]) => {
+      const el = document.elementFromPoint(px, py);
+      if (!el) return null;
+      let ctrl = null;
+      if (el.tagName === 'INPUT' && /checkbox|radio/i.test(el.getAttribute('type') || '')) {
+        ctrl = el;
+      } else if (el.tagName === 'LABEL' && el.control) {
+        ctrl = el.control;
+      } else {
+        const scope = (el.closest && el.closest('li')) || document;
+        ctrl = scope.querySelector('input[type="checkbox"],input[type="radio"],input.toggle');
+      }
+      if (!ctrl) return null;
+      const r = ctrl.getBoundingClientRect();
+      if (!r || !(r.width > 0) || !(r.height > 0)) return null;
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+    }, [Math.round(x), Math.round(y)]);
+    if (pt && Number.isFinite(pt.x) && Number.isFinite(pt.y)) {
+      return { x: pt.x, y: pt.y, snapped: true };
+    }
+  } catch (_) { /* snap is evidence, not a crash */ }
+  return { x, y, snapped: false };
+}
+(b) vision/src/anchorSynth.js:1-80 (80 lines; file has 86, lines 81-86 module.exports cut disclosed):
+'use strict';
+
+/**
+ * anchorSynth.js — M3 Fix B (pure, zero dependencies).
+ *
+ * When perception finds ZERO input-class elements but OCR still reads the
+ * empty-todo placeholder anchor (needs|to-be-done|add|enter|type) in the top
+ * band, synthesize one WEAK search_field from the anchor row's word boxes so
+ * the executor has a real-frame target instead of unresolved_target.
+ *
+ *   synthAnchorInputs(elements, ocrWords, imageH) -> { elements, added }
+ * - elements keeps original order; synth appended (never filtered here).
+ * - anchor words: ANCHOR_RE match, center-y within TOPBAND_FRAC * imageH.
+ * - row = words within ROW_DY of the anchor's center-y; box = row union
+ *   padded; center is guaranteed inside the real input on the tested page.
+ * - text = row words joined; tag synth:'ocr_anchor' (WEAK resolution only).
+ */
+
+const ANCHOR_RE = /\bneeds\b|\bto[-\s]?be[-\s]?done\b|\bdone\b|\badd\b|\benter\b|\btype\b/i;
+const TOPBAND_FRAC = 0.4;
+const ROW_DY = 12;
+const PAD_X = 8;
+const PAD_Y = 6;
+
+function isInputType(type) {
+  return typeof type === 'string' && /^(text_input|search_field|password|input)/.test(type);
+}
+
+function synthAnchorInputs(elements, ocrWords, imageH) {
+  const base = Array.isArray(elements) ? elements.slice() : [];
+  if (!Array.isArray(ocrWords) || !ocrWords.length) return { elements: base, added: 0 };
+  if (base.some((el) => el && isInputType(el.type))) return { elements: base, added: 0 };
+  const h = Number(imageH);
+  if (!Number.isFinite(h) || h <= 0) return { elements: base, added: 0 };
+
+  const words = ocrWords.filter((w) => w && w.bbox && Number.isFinite(w.bbox.x) &&
+    Number.isFinite(w.bbox.y) && Number.isFinite(w.bbox.w) && Number.isFinite(w.bbox.h));
+  // Candidate anchors in the top band; the placeholder row carries MULTIPLE
+  // anchor words ("What needs to be done?") while stray sidebar words
+  // ("TypeScript") carry one — score rows by anchor hits, tie-break widest.
+  const cands = words.filter((w) => ANCHOR_RE.test(String(w.text || '')) &&
+    (w.bbox.y + w.bbox.h / 2) < TOPBAND_FRAC * h);
+  if (!cands.length) return { elements: base, added: 0 };
+
+  const rowOf = (anchor) => {
+    const acy = anchor.bbox.y + anchor.bbox.h / 2;
+    return words.filter((w) => Math.abs((w.bbox.y + w.bbox.h / 2) - acy) < ROW_DY)
+      .sort((a, b) => a.bbox.x - b.bbox.x);
+  };
+  const widthOf = (row) => row.length
+    ? Math.max(...row.map((w) => w.bbox.x + w.bbox.w)) - Math.min(...row.map((w) => w.bbox.x))
+    : 0;
+  let best = null;
+  for (const anchor of cands) {
+    const row = rowOf(anchor);
+    const hits = row.filter((w) => ANCHOR_RE.test(String(w.text || ''))).length;
+    const width = widthOf(row);
+    if (!best || hits > best.hits || (hits === best.hits && width > best.width)) {
+      best = { row, hits, width };
+    }
+  }
+  const row = (best && best.row) || [];
+  if (!row.length) return { elements: base, added: 0 };
+
+  const x1 = Math.max(0, Math.min(...row.map((w) => w.bbox.x)) - PAD_X);
+  const y1 = Math.max(0, Math.min(...row.map((w) => w.bbox.y)) - PAD_Y);
+  const x2 = Math.max(...row.map((w) => w.bbox.x + w.bbox.w)) + PAD_X;
+  const y2 = Math.max(...row.map((w) => w.bbox.y + w.bbox.h)) + PAD_Y;
+  if (!(x2 > x1 && y2 > y1)) return { elements: base, added: 0 };
+  const avgOcr = row.reduce((s, w) => s + (Number(w.conf) || 0), 0) / row.length;
+
+  base.push({
+    id: 'elem-anchor-0',
+    type: 'search_field',
+    yolo_label: 'OCR Anchor',
+    text: row.map((w) => w.text).join(' ').trim() || null,
+    bbox: { x1: Math.round(x1), y1: Math.round(y1), x2: Math.round(x2), y2: Math.round(y2) },
+    confidence: { yolo: 0, ocr: Math.round(avgOcr), combined: 0 },
+    word_count: row.length,
+    synth: 'ocr_anchor',
+(c) vision/src/explorer.js:432-484 decide incl parse-fail branch (53 lines):
+  const decide = async (forbidDone) => {
+    const llmCall = __callLLMOverride || callLLM;
+    const prompt = buildPrompt(forbidDone);
+    // T1: 1800 tokens — reasoning models starve JSON at 400 (thought text
+    // eats the budget and the object truncates).
+    let raw = await llmCall(prompt, { maxTokens: 1800 });
+    // T1: last-balanced-object first (thought prefix + trailing prose).
+    let obj = typeof raw === 'string' ? (extractLastJSON(raw) || extractJSON(raw)) : raw;
+    if ((!obj || typeof obj !== 'object') && typeof raw === 'string') {
+      raw = await llmCall(`JSON ONLY. NO ANALYSIS. FIRST CHAR {\n${prompt}`, { maxTokens: 1800 });
+      obj = extractLastJSON(raw) || extractJSON(raw);
+    }
+    const metaOut = (!__callLLMOverride && callLLM.lastMeta) || null;
+    const phaseId = goalPlan && currentOpenPhase(goalPlan) ? currentOpenPhase(goalPlan).id : null;
+    if (!obj || typeof obj !== 'object') {
+      // T1 honest-unknown: NEVER done, lesson recorded, strike counted.
+      parseStrikes += 1;
+      noteLesson('Model output was not parseable JSON — reply with the JSON object first, no analysis text.');
+      logLLMCall({
+        ts: new Date().toISOString(),
+        forbidDone: Boolean(forbidDone),
+        goalPhase: phaseId,
+        lessons: lessonBuffer.slice(),
+        raw: typeof raw === 'string' ? raw.slice(0, 2000) : '[non-string]',
+        metaOut,
+        parseStrikes,
+        decision: { action: 'unknown', elementId: null, value: '', thought: '' },
+      });
+      return { action: 'unknown', candidate: null, value: '', reason: 'unparseable', thought: '', strikes: parseStrikes };
+    }
+    let action = String(obj.action || '').toLowerCase();
+    if (!ACTION_TYPES.has(action)) action = 'unknown'; // NEVER silently done
+    const chosen = candidates.find((c) => c.elementId === obj.elementId)
+      || candidates.find((c) => normText(c.text) && obj.value && normText(c.text).includes(normText(obj.value)));
+    const thought = typeof obj.thought === 'string' ? obj.thought.slice(0, 300) : '';
+    logLLMCall({
+      ts: new Date().toISOString(),
+      forbidDone: Boolean(forbidDone),
+      goalPhase: phaseId,
+      lessons: lessonBuffer.slice(),
+      raw: typeof raw === 'string' ? raw.slice(0, 2000) : '[non-string]',
+      metaOut,
+      decision: { action, elementId: chosen ? chosen.elementId : null, value: typeof obj.value === 'string' ? obj.value : '', thought },
+    });
+    return {
+      action,
+      candidate: action === 'click' || action === 'fill' || action === 'submit' ? chosen || null : null,
+      value: typeof obj.value === 'string' ? obj.value : '',
+      reason: typeof obj.reason === 'string' ? obj.reason : '',
+      thought,
+      strikes: parseStrikes,
+    };
+  };
+(d) vision/src/goalPlanner.js:183-195 login-fill gate (13 lines):
+  if (kind === 'fill') {
+    // Login requires two distinct, verified input fields.
+    // Other fill phases retain the original single-field contract.
+    if (phase.id === 'login-fill') {
+      const keys = new Set(Array.isArray(phase.verifiedFieldKeys) ? phase.verifiedFieldKeys : []);
+      if (obs.inputVerified === true && typeof obs.inputFieldKey === 'string' && obs.inputFieldKey.trim()) {
+        keys.add(obs.inputFieldKey.trim());
+      }
+      phase.verifiedFieldKeys = [...keys];
+      ok = keys.size >= 2;
+    } else {
+      ok = obs.inputVerified === true;
+    }
+[W2] P1 counts 33/80/53/13 all within caps (80/60/40 for b/c/d; a uncapped full-fn). api_calls=0.
+[2026-10-13 22:16 IST] [W1] DONE-PROOF P1 code-evidence (path A, read-only zero-diff): files=none touched; verify=4 pastes verbatim from disk (a L390-422, b L19-83, c L432-461, d L798-821) + suites 106/106+14/14 green; api_calls=0. R3_RESULTS P1 line appended.
+[2026-10-13 22:15 IST] [W1] P1-EVIDENCE code-evidence (read-only, verbatim, no edits):
+--- a) snapCheckToNativeInput FULL (vision/src/executeTests.js L390-422) ---
+/**
+ * M2 FIX-A: snap a checkbox/radio click point to the native control center.
+ * Perception boxes for toggles are often label-text boxes whose center misses
+ * the 30-40px native input and lands on inert text (unassociated <label>).
+ * Resolve via DOM: the point's own control, its label control, else the
+ * nearest li's input.toggle/checkbox/radio center. Returns {x, y, snapped};
+ * never throws — falls back to the recorded point.
+ */
+async function snapCheckToNativeInput(page, x, y) {
+  try {
+    const pt = await page.evaluate(([px, py]) => {
+      const el = document.elementFromPoint(px, py);
+      if (!el) return null;
+      let ctrl = null;
+      if (el.tagName === 'INPUT' && /checkbox|radio/i.test(el.getAttribute('type') || '')) {
+        ctrl = el;
+      } else if (el.tagName === 'LABEL' && el.control) {
+        ctrl = el.control;
+      } else {
+        const scope = (el.closest && el.closest('li')) || document;
+        ctrl = scope.querySelector('input[type="checkbox"],input[type="radio"],input.toggle');
+      }
+      if (!ctrl) return null;
+      const r = ctrl.getBoundingClientRect();
+      if (!r || !(r.width > 0) || !(r.height > 0)) return null;
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+    }, [Math.round(x), Math.round(y)]);
+    if (pt && Number.isFinite(pt.x) && Number.isFinite(pt.y)) {
+      return { x: pt.x, y: pt.y, snapped: true };
+    }
+  } catch (_) { /* snap is evidence, not a crash */ }
+  return { x, y, snapped: false };
+}
+--- b) anchorSynth consts+synth (vision/src/anchorSynth.js L19-83; header comment L1-17 + exports L85 omitted) ---
+const ANCHOR_RE = /\bneeds\b|\bto[-\s]?be[-\s]?done\b|\bdone\b|\badd\b|\benter\b|\btype\b/i;
+const TOPBAND_FRAC = 0.4;
+const ROW_DY = 12;
+const PAD_X = 8;
+const PAD_Y = 6;
+
+function isInputType(type) {
+  return typeof type === 'string' && /^(text_input|search_field|password|input)/.test(type);
+}
+
+function synthAnchorInputs(elements, ocrWords, imageH) {
+  const base = Array.isArray(elements) ? elements.slice() : [];
+  if (!Array.isArray(ocrWords) || !ocrWords.length) return { elements: base, added: 0 };
+  if (base.some((el) => el && isInputType(el.type))) return { elements: base, added: 0 };
+  const h = Number(imageH);
+  if (!Number.isFinite(h) || h <= 0) return { elements: base, added: 0 };
+
+  const words = ocrWords.filter((w) => w && w.bbox && Number.isFinite(w.bbox.x) &&
+    Number.isFinite(w.bbox.y) && Number.isFinite(w.bbox.w) && Number.isFinite(w.bbox.h));
+  // Candidate anchors in the top band; the placeholder row carries MULTIPLE
+  // anchor words ("What needs to be done?") while stray sidebar words
+  // ("TypeScript") carry one — score rows by anchor hits, tie-break widest.
+  const cands = words.filter((w) => ANCHOR_RE.test(String(w.text || '')) &&
+    (w.bbox.y + w.bbox.h / 2) < TOPBAND_FRAC * h);
+  if (!cands.length) return { elements: base, added: 0 };
+
+  const rowOf = (anchor) => {
+    const acy = anchor.bbox.y + anchor.bbox.h / 2;
+    return words.filter((w) => Math.abs((w.bbox.y + w.bbox.h / 2) - acy) < ROW_DY)
+      .sort((a, b) => a.bbox.x - b.bbox.x);
+  };
+  const widthOf = (row) => row.length
+    ? Math.max(...row.map((w) => w.bbox.x + w.bbox.w)) - Math.min(...row.map((w) => w.bbox.x))
+    : 0;
+  let best = null;
+  for (const anchor of cands) {
+    const row = rowOf(anchor);
+    const hits = row.filter((w) => ANCHOR_RE.test(String(w.text || ''))).length;
+    const width = widthOf(row);
+    if (!best || hits > best.hits || (hits === best.hits && width > best.width)) {
+      best = { row, hits, width };
+    }
+  }
+  const row = (best && best.row) || [];
+  if (!row.length) return { elements: base, added: 0 };
+
+  const x1 = Math.max(0, Math.min(...row.map((w) => w.bbox.x)) - PAD_X);
+  const y1 = Math.max(0, Math.min(...row.map((w) => w.bbox.y)) - PAD_Y);
+  const x2 = Math.max(...row.map((w) => w.bbox.x + w.bbox.w)) + PAD_X;
+  const y2 = Math.max(...row.map((w) => w.bbox.y + w.bbox.h)) + PAD_Y;
+  if (!(x2 > x1 && y2 > y1)) return { elements: base, added: 0 };
+  const avgOcr = row.reduce((s, w) => s + (Number(w.conf) || 0), 0) / row.length;
+
+  base.push({
+    id: 'elem-anchor-0',
+    type: 'search_field',
+    yolo_label: 'OCR Anchor',
+    text: row.map((w) => w.text).join(' ').trim() || null,
+    bbox: { x1: Math.round(x1), y1: Math.round(y1), x2: Math.round(x2), y2: Math.round(y2) },
+    confidence: { yolo: 0, ocr: Math.round(avgOcr), combined: 0 },
+    word_count: row.length,
+    synth: 'ocr_anchor',
+  });
+  return { elements: base, added: 1 };
+}
+--- c) decide-parsefail strict-retry + honest-unknown (vision/src/explorer.js L432-461) ---
+  const decide = async (forbidDone) => {
+    const llmCall = __callLLMOverride || callLLM;
+    const prompt = buildPrompt(forbidDone);
+    // T1: 1800 tokens — reasoning models starve JSON at 400 (thought text
+    // eats the budget and the object truncates).
+    let raw = await llmCall(prompt, { maxTokens: 1800 });
+    // T1: last-balanced-object first (thought prefix + trailing prose).
+    let obj = typeof raw === 'string' ? (extractLastJSON(raw) || extractJSON(raw)) : raw;
+    if ((!obj || typeof obj !== 'object') && typeof raw === 'string') {
+      raw = await llmCall(`JSON ONLY. NO ANALYSIS. FIRST CHAR {\n${prompt}`, { maxTokens: 1800 });
+      obj = extractLastJSON(raw) || extractJSON(raw);
+    }
+    const metaOut = (!__callLLMOverride && callLLM.lastMeta) || null;
+    const phaseId = goalPlan && currentOpenPhase(goalPlan) ? currentOpenPhase(goalPlan).id : null;
+    if (!obj || typeof obj !== 'object') {
+      // T1 honest-unknown: NEVER done, lesson recorded, strike counted.
+      parseStrikes += 1;
+      noteLesson('Model output was not parseable JSON — reply with the JSON object first, no analysis text.');
+      logLLMCall({
+        ts: new Date().toISOString(),
+        forbidDone: Boolean(forbidDone),
+        goalPhase: phaseId,
+        lessons: lessonBuffer.slice(),
+        raw: typeof raw === 'string' ? raw.slice(0, 2000) : '[non-string]',
+        metaOut,
+        parseStrikes,
+        decision: { action: 'unknown', elementId: null, value: '', thought: '' },
+      });
+      return { action: 'unknown', candidate: null, value: '', reason: 'unparseable', thought: '', strikes: parseStrikes };
+    }
+--- d) loginfill-gate form-completion guard (vision/src/explorer.js L798-821) ---
+      const cand0 = decision.candidate;
+      // FORM-COMPLETION GUARD (R3-T7): deterministic enforcement of prompt
+      // rule 4. Never submit while a sibling input on this state is empty —
+      // fill it now (password-aware, verified by the normal fill path) and
+      // retry the submit next step. Costs zero LLM calls.
+      if (cand0 && (decision.action === 'submit'
+        || (decision.action === 'click' && /submit|login|sign.?in|continue|next|pay|checkout|place order/i.test(cand0.text || '')))) {
+        // TASK B: batch ALL sibling empties (first executes now, rest queue
+        // with zero LLM cost) instead of one-fill-per-step thrash.
+        const batch = pickUnfilledInputBatch(candidates, transitions, fp);
+        const need = batch.length ? batch[0] : null;
+        if (need) {
+          for (const extra of batch.slice(1)) guardFillQueue.push(extra);
+          noteLesson(batch.length > 1
+            ? `Submit attempted with ${batch.length} empty form fields — filling ALL inputs in one batch before submitting.`
+            : 'Submit attempted with empty form fields — fill ALL inputs before submitting.');
+          console.log(`[explore] Form guard: filling ${need.candidate.elementId} before submit.`
+            + (batch.length > 1 ? ` (+${batch.length - 1} batched)` : ''));
+          decision.action = 'fill';
+          decision.candidate = need.candidate;
+          decision.value = need.value;
+          decision.reason = 'form_guard_fill';
+        }
+      }
+[2026-10-13 22:10 IST] [W2] DONE-PROOF P0 git-blocking (path A): git init -b main; check-ignore .env+vision/.env FIRST (gitignore:42,43); explicit-add 8 paths (no -A); 68 tracked; forbidden-scan 0 (no storage/.env/node_modules/pt/png/log); commit baseline-r3 ad9bb0a7bf6c17e95b3590fd3aa897ade5ed8e96. out: toplevel=C:/Users/sandeep/pes/CAPSTONE/sem 6 reivew 3/code|hash=ad9bb0a|tracked=68. R3_RESULTS P0 DONE. api_calls=0. Next=P1.
+[2026-10-13 22:12 IST] [W1] CLAIM P1 code-evidence (offline, read-only, NO edits). Paste-verbatim a/b/c/d. P0 held by W2 first-landed, P2 by W3; no touch. api_calls=0.\n[2026-10-13 22:0x IST] [SUB-MASTER] P-PROGRAM POSTED: P0-P7 OPEN above + D18. T14=DONE-replay-authored-executor-proof. P0 BLOCKING first. P7 LAST T15->T16-LoopB->T17. Workers 1/2/3 check board for work and complete it.
 [2026-10-13 22:05 IST] [W2] CLAIM P0 git-blocking (FIRST BLOCKING). Offline, explicit-add only listed paths, .env check-ignore FIRST, no -A. api_calls=0.
 [2026-10-13 21:55 IST] [SUB-MASTER] SWEEP M0-M6: M1 DONE +3gates 17/17 106/106+14/14; M2 DONE H1 domsnap live-PASS; M3 DONE crop+anchor live-3rd-PASS; M4 DONE verify-only 9/9; M5 BLOCKED need-key api0; M6 DONE 6/6 end-2-left. Flips applied. T14 BLOCKED->DONE per M6. OPEN: M0+R3-T15+R3-T17. Ports free.
 [2026-10-13 21:50 IST] [W2] STANDBY: M1+M2+M3+M4+M6 DONE (R3 lines appended, suites 113/113+14/14). Services stopped by me (5000-5003 down, ports free, slot released). Remaining OPEN M0 (W3 stated next) + M5 (W1 claimed). Claiming nothing further. api_calls=0.
@@ -1093,3 +1541,23 @@ T201 covers sites 13-20 only. ox-alpha key ending ...57217 is live in .env.
 [2026-10-13 21:20 UTC] [W3] DONE-PROOF M1 T2-gate-tests (path A, verify-only zero-diff): files vision/test/goalPlanner.test.js (M1 gates a/b/c already on disk, no edit). verify node --check clean x2 (goalPlanner.js+test) + goalPlanner.test.js 17/17 + Vision 106/106 + MCP 14/14 green. R3_RESULTS M1 DONE appended. api_calls=0. RESUME next=M0.
 
 [2026-10-13 22:10 UTC] [W3] CLAIM P2 dom-audit -> read-only grep, NO edits. Scope vision/src vision/mcp vision/services/browser-service. P0 held by W2 (first-claim-wins, not touching). api_calls=0.
+
+[2026-10-13 22:20 UTC] [W3] DONE-PROOF P2 dom-audit (path A, no-edits, api_calls=0): per-hit file:line|purpose|used_for|violation: explorer.js:196 elementFromPoint|fill-probe readback|input_value verif|N; explorer.js:633 innerText|page-text observable|planner context|N; executeTests.js:373 probePoint elementFromPoint|pre/post signal probe|step signals|N; executeTests.js:400 snapCheckToNativeInput elementFromPoint+querySelector|snap click to native center, act stays mouse.click (M2 FIX-A)|toggle coords|N; executeTests.js:425 scrollY|scroll delta signal|scroll verif|N; executeTests.js:523 innerText.length|body-text fallback gate|verdict gate|N; executeTests.js:686 elementFromPoint+focus|FIX-B focus+Space fallback|toggle retry|N; executeTests.js:883 innerText|expected_text check|verdict|N; vision/mcp: 0 hits; browser-service: 0 hits; locator/getBy/page.$: only storage/outputs/m2_diag.js:74,83 (diagnostic evidence script, out of pipeline scope). SUMMARY: 15 pipeline hits all DOM-read/signal-only, 0 selector-actuation violations; suites Vision 113/113 + MCP 14/14 green. R3_RESULTS P2 DONE appended. RESUME next=P1.
+
+[2026-10-13 23:10 UTC] [W3] CLAIM B0 board -> read-only git/board reconcile, NO renames, NO contract edits. api_calls=0.
+
+[2026-10-13 23:20 UTC] [W3] DONE-PROOF B0 board (path A, read-only, api_calls=0): M0 baseline commit ad9bb0a7bf6c17e95b3590fd3aa897ade5ed8e96 exists (capstone-worker, baseline-r3); rev-list count=1 so commit-nothing-yet TRUE. Post-baseline work diff: 5 files 496+/8- (R3_RESULTS+21 RUN_ANALYSIS+8 TASK_BOARD+425 executeTests.js+28 t5.test+22). Untracked = by-design P0 exclusions (root docs, agents/, testing/, storage/, pkg files). No renames, no contract edits, nothing committed. Suites Vision 114/114 + MCP 14/14 green. R3_RESULTS B0 DONE appended. RESUME next=B1.
+
+[2026-10-13 23:30 UTC] [W3] CLAIM B1 dom-disclose -> vision/src/executeTests.js + vision/test/executeTests.t5.test.js ONLY. Offline mock-only, api_calls=0. B0-dup noted (W1 first-landed 22:52 IST, mine dup verify-only, counts agree). B2 held by W2, not touching.
+
+[2026-10-13 23:45 UTC] [W3] DONE-PROOF B1 dom-disclose (path A, api_calls=0 mock-only): files vision/src/executeTests.js [domAssistTag pure helper (domsnap/focus-space reason, click_by_vision Y/N) + domAssistCount + step.dom_assist/vision_boundary wire on ok-steps + summary dom_assist_count + exports] + vision/test/executeTests.t5.test.js [+3 tests]. verify node --check clean x2 + t5 22/22 + Vision 117/117 + MCP 14/14 green. CONTRACTS untouched (no renames). R3_RESULTS B1 DONE appended. RESUME next=B3 (B2 held by W2).
+
+[2026-10-13 23:50 UTC] [W3] CLAIM SUG-1 opinions-round-robin (first-claim-wins; W1/W2 slots vacant). Write ENTRY under next free slot, no overwrites. api_calls=0.
+
+[2026-10-13 23:55 UTC] [W3] DONE-PROOF SUG-1 opinions-round-robin (docs-only, api_calls=0): ENTRY-1b appended under vacant W1 slot, placeholder untouched, no overwrites. Verdict: board works (giant-line fix wanted), dup-claim guard (my M1/B0 lesson), comms/ dir proposal, lead-time metric, M5-key + S2-S5 + B8-AUTH missing-items for human. R3_RESULTS SUG-1 DONE appended. Claim-finish-next: checking B4/B5.
+
+[2026-10-14 00:20 UTC] [W3] CLAIM B8 live-matrix (SERIAL sole driver). Gate: B1-B7 DONE, suites 147/147+14/14 green, ports 5000-5004/5123 free, no live active. LoopB headed 6-user matrix, api_calls=0.
+
+[2026-10-14 00:45 UTC] [W3] DONE-PROOF B8 live-matrix (LoopB, headed, api_calls=0): 6 runs fresh-browser each (b8_<user>.json -> b8_rep_<name>.json): standard/problem/glitch/error/visual PASS url_change strong -> inventory.html; locked_out PASS-verdict with rejection observed (stayed /, error text present, FAIL-expected confirmed). tc-n 6/6, observed screens per evidence_dir in each report, delta 5-navigated/1-rejected. Leftover services killed by ledger PIDs (5 trees), ports 5000/5004 silent, slot RELEASED. Suites Vision 147/147 + MCP 14/14 green. R3_RESULTS B8 DONE appended. STANDBY (no OPEN rows left: B0-B8 DONE except none; SUG-1 DONE).
+
+[2026-10-14 01:10 UTC] [W3] CLAIM G0 checkpoint (ORDER FIRST). Explicit-add src/test/docs/mcp only, commit p2-p3-freeze LOCAL no-push. api_calls=0.

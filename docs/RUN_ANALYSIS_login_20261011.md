@@ -266,3 +266,15 @@ Live verify m3_rep_verify.json: steps 1-2 text_match; step3 text_match+ocr_ancho
 ## M6 todomvc-fullchain (W2, 2026-10-13, LoopB AUTH headed api0, 1 run)
 
 Chain m6_chain.json: add Buy milk + Read book + Write code (step3 via text_match+ocr_anchor, 1 WEAK warning) + toggle 2nd (domsnap, checked_state) + Active (#/active) + Clear completed. Result PASS url_change strong. OCR cross-checks: post-toggle 2items left + Clear present + Read struck; final 2items left + Clear gone + Buy milk/Write code shown. step3 Y, toggle Y, end_counter 2-items-left. Evidence m6_rep.json + exec_1791905680262 shots.
+
+## P7 live-serial-last (W2, 2026-10-13, LoopB headed api_calls=0, sole driver)
+
+T15 HTTP smoke (t15_http_smoke.json): live MCP --transport http on 5123 — health 45ms + init 5ms + tools/list 5 tools 14ms + status 30ms + perceive example.com 9 elements/594 chars in 8705ms. PASS. Evidence 1-liner for R3-T15 flip: 9el/594ch over live HTTP, api0.
+
+T16 checkout chain (t16_chain.json -> t16_rep.json, 4 runs): run1 FAIL step5 (link/""/coords, no proximity for links); run2 FAIL step6 (badge text "1" false-matched description TEXT score3 — single-char wantText over-eager, then Checkout textless button 129px from recorded point); run3 FAIL step8 (checkout underline inputs 0-detect at conf 0.05 twice-tested deterministic; anchor abstains honestly); run4 PASS 11/11: badge proxy {badge,""} proximity, Checkout proximity, form fills via placeholder-fragment targets {link Firs/Las ane/al} with input_value x3, Continue fuzzy_windowed_edit, Finish text_match. Verdict PASS weak0, url_change to checkout-complete.html strong, 0 warnings. OCR cross-check final shot: Thank you for your order TRUE + Complete TRUE. Probe run t16_probe.json (CSS locators): badge 1, cart 1 item, total $32.39, header Thank-you. P3 shape validated live (clean PASS stays PASS).
+
+T17 final proof: suites Vision 114/114 + MCP 14/14 green; evidence sweep 16/16 files on disk; services stopped by me (5000-5004+5123 free, slot released). api_calls=0 throughout P7 (all reasoning local, perception via gateway, driving via replay/scratch files).
+
+## B8 live-matrix (W2, 2026-10-14, LoopB headed api_calls=0, sole driver, 6 serial runs)
+
+Per hint user (LOGIN_HINTS): author login replay -> executor -> verdict vs expects -> mergeRun memory -> reportSchema INDEX. Results MATCH 6/6: standard/problem/error/visual/performance_glitch PASS (inventory.html, url_change); locked_out_user FAIL-expected (fills+click executed, stayed on login, url_change-expected detail — honest FAIL, no false-DONE). Matrix report b8_matrix.json with INDEX row (ref run-b8-matrix-*, pass_rate 1, cost 0, sha). Deltas per site-run recorded via B4 mergeRun. Services stopped after (ports free). api_calls=0 throughout (Muse-brain local reasoning, mock-LLM only, zero OpenRouter calls).

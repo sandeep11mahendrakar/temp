@@ -20,3 +20,50 @@
 {"t":"M6","path":"A","status":"DONE","files":["vision/storage/outputs/m6_chain.json","vision/storage/outputs/m6_rep.json"],"tests":"suites Vision 113/113 + MCP 14/14; live chain 6/6 PASS","evid":"m6_rep.json url_change #/active; OCR end_counter 2 items left, Clear completed gone","note":"add3+toggle2nd+Active+Clear PASS; step3 Y toggle Y counter 2-left; api0"}
 
 {"t":"M4","path":"A","status":"DONE","files":["lib/llmProvider.js","vision/test/reasoning.test.js"],"tests":"reasoning 9/9 incl 2 T7 gemini mock-fetch; full suites green","evid":"PROVIDER_BASE_URLS+null-default maps; secret scan 0 hits","note":"gemini maps present env-only no default; shape same OpenAI-compat; zero-diff verify"}
+
+{"t":"P0","path":"A","status":"DONE","files":[".gitignore"],"tests":"suites untouched (no code change)","evid":"toplevel+hash+tracked below; check-ignore .env FIRST","note":"git init main; explicit-add 8 paths; 68 tracked; 0 forbidden; baseline-r3 ad9bb0a"}
+{"t":"P2","path":"A","status":"DONE","files":[],"tests":"Vision 113/113 + MCP 14/14 (no edits, audit-only)","evid":"grep page.evaluate|elementFromPoint|querySelector|innerText|locator|getBy over vision/src+vision/mcp+vision/services/browser-service","note":"15 DOM-read hits all signal-only 0 violations; mcp+browser-svc 0 hits; api0"}
+
+{"t":"P1","path":"A","status":"DONE","files":[],"tests":"vision/test 106/106 + mcp 14/14 (unchanged, read-only)","evid":"TASK_BOARD P1-EVIDENCE block: snapCheck a-full, anchorSynth L19-83, decide L432-461, guard L798-821","note":"P1 read-only paste-verbatim a/b/c/d; zero diffs; api0"}
+
+{"t":"P1","path":"A","status":"DONE","files":[],"tests":"no code change; suites stand 113/113+14/14","evid":"board P1 block: execTests 390-422 + anchorSynth 1-80 + explorer 432-484 + goalPlanner 183-195","note":"paste-verbatim a33/b80/c53/d13 lines; read-only no edits"}
+
+{"t":"P2","path":"A","status":"DONE","files":[],"tests":"no code change; suites stand 113/113+14/14","evid":"board P2 block: 15 hits inventoried, 0 violations","note":"dom-audit read-only; 15/15 observation-only; mcp+browser-svc 0 hits"}
+
+{"t":"P3","path":"A","status":"DONE","files":["vision/src/executeTests.js","vision/test/executeTests.t5.test.js"],"tests":"t5 18->19 (P3 weak-flag); full Vision 113->114; MCP 14/14","evid":"weakVerdict+weak_count additive; m6 was plain-PASS now shapes PASS_WEAK(1)","note":"m6 step3 WEAK confirmed; verdict+weak_steps+weak_count added; status compat kept"}
+
+{"t":"P4","path":"A","status":"DONE","files":[],"tests":"covering tests exist (reasoning 9/9); none added","evid":"llmProvider 13/28/36-37; reasoning.test 95+109 T7 mock-fetch x2","note":"gemini-evidence report-only; tests present so add-3 branch not triggered"}
+
+{"t":"P5","path":"A","status":"DONE","files":[],"tests":"per-file live counts sum 114; others pinned 75","evid":"board P5 table: 103->114 delta +11 matches reported","note":"reconcile read-only; +11 = M1x3 + t5x5 + anchorx3; before pinned era lines"}
+
+{"t":"P6","path":"A","status":"DONE","files":[],"tests":"no code change; suites stand 114/114+14/14","evid":"board P6 block: 5 shapes inventoried keys+types, max 21 keys","note":"schema-inventory read-only; post-P3 verdict fields noted"}
+
+{"t":"P7","path":"A","status":"DONE","files":["vision/storage/outputs/t15_http_smoke.json","vision/storage/outputs/t16_chain.json","vision/storage/outputs/t16_rep.json","vision/storage/outputs/t16_probe.json"],"tests":"suites Vision 114/114 + MCP 14/14; T15 smoke PASS; T16 11/11 PASS strong","evid":"t15 9el/594ch; t16 url_change complete.html + OCR Thank-you; T17 16/16 files","note":"T15+T16+T17 serial done; services stopped ports free; api0 throughout"}
+
+{"t":"B0","path":"A","status":"DONE","files":[],"tests":"no code change; read-only git status/log + greps","evid":"board M0 DONE via P0 ad9bb0a; HEAD==baseline zero commits since","note":"B0 board-verify read-only; M0 DONE via P0 line; commit-nothing-yet holds; api0"}
+{"t":"B0","path":"A","status":"DONE","files":[],"tests":"Vision 114/114 + MCP 14/14 (re-run, no edits)","evid":"git rev-list --count HEAD=1 + git status/diff --stat","note":"baseline ad9bb0a exists; 5 files 496+/8- uncommitted; commit-nothing-yet TRUE; api0"}
+{"t":"B1","path":"A","status":"DONE","files":["vision/src/executeTests.js","vision/test/executeTests.t5.test.js"],"tests":"t5 19->22 (3 B1); Vision 114->117; MCP 14/14","evid":"node --check x2 clean + t5 22/22 + full suites","note":"dom_assist reason + dom_assist_count summary + click-by-vision Y/N boundary; api0 mock-only"}
+
+{"t":"B2","path":"B","status":"DONE","files":["vision/src/executeTests.js","vision/test/executeTests.t5.test.js"],"tests":"t5 22->24 (B2 x2); full Vision 117->119 w/ B1x3; MCP 14/14; live s1 PASS","evid":"b2_rep_s1.json: screens 4->2 PNGs, per-test 2.0, states 3->1, login url_change","note":"pathB executor-only; fills probe-verify+skip; stale-refresh net; B1 same-file intact"}
+
+{"t":"B3","path":"A","status":"DONE","files":["vision/src/archetypes.js","vision/src/goalPlanner.js","vision/test/archetypes.test.js"],"tests":"archetypes 6/6; full Vision 119->125; MCP 14/14; planner17+goal10 intact","evid":"registry owns TEMPLATES; planner delegates; outputs byte-identical","note":"4 archetypes + 6user hint matrix; refactor compat-green; contracts frozen kept"}
+
+{"t":"B4","path":"A","status":"DONE","files":["vision/src/runMemory.js","vision/test/runMemory.test.js"],"tests":"runMemory 4/4; full Vision 125->129; MCP 14/14","evid":"atomic tmp+rename; null-first delta; summary<=40; corrupt-safe load","note":"per-site run memory NEW (lessons were RAM-only); no explorer wire yet"}
+
+{"t":"B5","path":"A","status":"DONE","files":["vision/src/batchPlan.js","vision/test/batchPlan.test.js"],"tests":"batchPlan 4/4; full Vision 129->133; MCP 14/14; mock-only zero api","evid":"expand 8tc; llm-first/retry/fallback verified; dedupeTests untouched by design","note":"ONE-llm select strictJSON retry-unknown; 6users->8tc mock; contracts frozen kept"}
+
+{"t":"B6","path":"A","status":"DONE","files":["vision/src/zeroLoop.js","vision/test/zeroLoop.test.js"],"tests":"zeroLoop 3/3 mock-integration; full Vision 133->136; MCP 14/14","evid":"stop rule loop2+delta<=1|covered|5 verified all branches; collabs injected","note":"zero-LLM closed loop; delta-stop exact-spec; never throws, honest abort"}
+
+{"t":"B7","path":"A","status":"DONE","files":["vision/src/reportSchema.js","vision/test/reportSchema.test.js"],"tests":"reportSchema 3/3; full Vision 136->139; MCP 14/14","evid":"schema1+checker+INDEX-row; cost verbatim; sha stable","note":"citable run report + md INDEX row; usd null renders n/a never invented"}
+
+{"t":"B8","path":"A","status":"DONE","files":["vision/storage/outputs/b8_matrix.js","vision/storage/outputs/b8_matrix.json"],"tests":"matrix 6/6 live; suites stand 139/139+14/14 (no code change)","evid":"b8_rep_<user>.json x6 + b8_matrix.json INDEX row; locked_out honest FAIL","note":"6user matrix expectations-met 6/6; locked FAIL-expected; services stopped"}
+{"t":"P2-AUDIT","path":"A","status":"DONE","files":["vision/src/executeTests.js","vision/test/executeTests.t5.test.js","docs/VISION_BOUNDARY.md"],"tests":"t5 +1 submitKey; Vision 139->147; MCP 14/14","evid":"147/147+14/14 green; VISION_BOUNDARY.md 16 lines","note":"fill+Enter captures fix; 8 DOM uses disclosed; probes vs correction split"}
+{"t":"P3-AUDIT","path":"A","status":"DONE","files":["vision/src/archetypes.js","vision/test/archetypes.test.js"],"tests":"archetypes +7 contract/verdict; Vision 139->147; MCP 14/14","evid":"147/147+14/14 green; compat 6/6 intact","note":"detect/hints/expand/oracles+verdictFor added; compat untouched"}
+{"t":"SUG-1","path":"A","status":"DONE","files":["docs/SUGGESTIONS.md"],"tests":"no code touched; suites last green Vision 125/125 + MCP 14/14 (W2 B3)","evid":"docs/SUGGESTIONS.md ENTRY-1b","note":"W3 verdict+improvements+missing-items posted; W1 placeholder intact; api0"}
+
+{"t":"SUG-1","path":"A","status":"DONE","files":["docs/SUGGESTIONS.md"],"tests":"Vision 147/147 + MCP 14/14 green pre-DONE","evid":"docs/SUGGESTIONS.md ENTRY-1 (W1)","note":"SUG-1 W1 verdict posted; entries append-only; api0"}
+
+{"t":"SUG-1","path":"A","status":"DONE","files":["docs/SUGGESTIONS.md"],"tests":"Vision 147/147 + MCP 14/14 green pre-DONE (re-run)","evid":"docs/SUGGESTIONS.md ENTRY-2 (W2)","note":"SUG-1 W2 verdict posted; 7 improvements incl tz+regions; api0"}
+{"t":"B8","path":"B","status":"DONE","files":["vision/storage/outputs/b8_standard_user.json","vision/storage/outputs/b8_rep_standard.json","vision/storage/outputs/b8_rep_locked.json","vision/storage/outputs/b8_rep_problem.json","vision/storage/outputs/b8_rep_glitch.json","vision/storage/outputs/b8_rep_error.json","vision/storage/outputs/b8_rep_visual.json"],"tests":"tc 6/6 PASS; Vision 147/147 + MCP 14/14 green","evid":"5x url_change inventory.html strong; locked_out stayed / + error text, FAIL-expected confirmed","note":"6-user LoopB matrix headed api0; 5 navigated 1 rejected-as-expected; services stopped ports free"}
+
+{"t":"R3-T10","path":"A","status":"DONE","files":["docs/MCP_LIVE_PROOF.md"],"tests":"suites 147/147+14/14 green post-run; live loop 9/9 turns","evid":"docs/MCP_LIVE_PROOF.md step table + vision/storage/outputs/t10_loop.json","note":"MCP HTTP tools loop PASS: url_change inventory + logout text; 2 honest FAILs kept"}

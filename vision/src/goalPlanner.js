@@ -25,9 +25,14 @@
 
 const MAX_FAILURES = 3;
 
-function norm(s) {
-  return String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
-}
+// B3: templates/order/generic live in the archetype registry (single source);
+// this module keeps its exported contract byte-identical (compat-green).
+const {
+  TEMPLATES,
+  ORDER,
+  genericPhases,
+  normGoal,
+} = require('./archetypes');
 
 function stripUrl(u) {
   return String(u || '').trim().replace(/\/+$/, '').toLowerCase();
@@ -49,90 +54,13 @@ function containsAny(haystack, keywords) {
   return (keywords || []).some((k) => k && h.includes(String(k).toLowerCase()));
 }
 
-function mkPhase(id, name, kind, successSignals) {
-  return { id, name, kind, successSignals: successSignals || [], done: false, failCount: 0 };
-}
-
-// Templates: small ordered phase chains per intent. `kind` drives the judge:
-//   fill   -> done only when observation.inputVerified === true
-//   submit/action/navigate -> done on url change OR success-signal text
-//   verify -> done on success-signal text OR url change
-const TEMPLATES = {
-  login: {
-    test: (g) => /log\s?in|sign\s?in|signin/.test(g),
-    needInput: ['username', 'password'],
-    phases: () => [
-      mkPhase('login-fill', 'Fill login credentials', 'fill', []),
-      mkPhase('login-submit', 'Submit login form', 'submit', ['logout', 'inventory', 'products', 'welcome', 'dashboard', 'account']),
-      mkPhase('login-verify', 'Verify logged-in state', 'verify', ['logout', 'inventory', 'products', 'welcome', 'dashboard']),
-    ],
-  },
-  signup: {
-    test: (g) => /sign\s?up|signup|sign-up|register|create account/.test(g),
-    needInput: ['username', 'password', 'email'],
-    phases: () => [
-      mkPhase('signup-fill', 'Fill signup form', 'fill', []),
-      mkPhase('signup-submit', 'Submit signup form', 'submit', ['welcome', 'account created', 'success', 'logout', 'dashboard']),
-      mkPhase('signup-verify', 'Verify signup success', 'verify', ['welcome', 'account created', 'success', 'logout']),
-    ],
-  },
-  search: {
-    test: (g) => /search|find product|look\s?up|lookup|query/.test(g),
-    needInput: [],
-    phases: () => [
-      mkPhase('search-enter', 'Enter search query', 'fill', []),
-      mkPhase('search-submit', 'Submit search', 'submit', ['result', 'found', 'showing', 'search']),
-      mkPhase('search-verify', 'Verify search results', 'verify', ['result', 'found', 'showing']),
-    ],
-  },
-  addToCart: {
-    test: (g) => /add.?to.?(cart|basket)|add item|add to bag/.test(g),
-    needInput: [],
-    phases: () => [
-      mkPhase('cart-find', 'Find product to add', 'action', ['add to cart', 'add to basket', 'inventory', 'product']),
-      mkPhase('cart-add', 'Add product to cart', 'submit', ['cart', 'added', 'badge', '1 item', 'remove']),
-      mkPhase('cart-verify', 'Verify cart contents', 'verify', ['cart', 'your cart', '1 item', 'checkout', 'remove']),
-    ],
-  },
-  checkout: {
-    test: (g) => /checkout|check out|purchase|place order|complete order|buy now|payment/.test(g),
-    needInput: ['firstName', 'lastName', 'postalCode'],
-    phases: () => [
-      mkPhase('checkout-open', 'Open cart', 'action', ['your cart', 'cart', 'checkout']),
-      mkPhase('checkout-fill', 'Fill checkout information', 'fill', []),
-      mkPhase('checkout-complete', 'Complete purchase', 'submit', ['thank', 'confirm', 'complete', 'order', 'success', 'checkout: complete']),
-      mkPhase('checkout-verify', 'Verify order confirmation', 'verify', ['thank', 'thank you', 'order complete', 'confirmation', 'complete', 'success']),
-    ],
-  },
-  formSubmit: {
-    test: (g) => /\bform\b|submit|contact us|feedback|apply|subscribe/.test(g),
-    needInput: [],
-    phases: () => [
-      mkPhase('form-fill', 'Fill form fields', 'fill', []),
-      mkPhase('form-submit', 'Submit form', 'submit', ['thank', 'received', 'success', 'submitted', 'confirm']),
-      mkPhase('form-verify', 'Verify submission', 'verify', ['thank', 'received', 'success', 'submitted', 'confirm']),
-    ],
-  },
-};
-
-// Canonical order when a goal names several intents
-// (e.g. "login then add to cart and checkout" -> login + cart + checkout).
-const ORDER = ['login', 'signup', 'search', 'addToCart', 'checkout', 'formSubmit'];
-
-function genericPhases() {
-  return [
-    mkPhase('explore-observe', 'Observe site state', 'action', []),
-    mkPhase('explore-interact', 'Interact with a key element and verify change', 'verify', []),
-  ];
-}
-
 /**
  * Build a deterministic phase plan from a free-text goal.
  * Never returns an empty phase list (generic fallback).
  */
 function planGoal(goal) {
   const raw = typeof goal === 'string' ? goal : String(goal == null ? '' : goal);
-  const g = norm(raw);
+  const g = normGoal(raw);
   const phases = [];
   const needSet = [];
   for (const key of ORDER) {
