@@ -26,12 +26,45 @@ function isInputType(type) {
   return typeof type === 'string' && /^(text_input|search_field|password|input)/.test(type);
 }
 
-function synthAnchorInputs(elements, ocrWords, imageH) {
+function isButtonType(type) {
+  return typeof type === 'string' && /button/i.test(type);
+}
+
+function hasLabelText(el) {
+  return !!(el && el.text && String(el.text).trim());
+}
+
+// N7-option2 smallest-S (Q11): perceive-side label-drift proxy, behind
+// opts.driftFlag (default OFF = zero behavior change). When ON, button-class
+// elements with empty text get an informational WEAK-grade `drift` tag and
+// the counted metric returns as `drift` (these are exactly the elements that
+// force proximity-fallback clicks downstream). Resolve-side warning wiring
+// in executeTests.js is deferred to that region's owner; this module only
+// tags + counts. Never mutates caller-owned element objects.
+function flagLabelDrift(base, want) {
+  if (!want) return { elements: base, drift: 0 };
+  let drift = 0;
+  const out = base.map((el) => {
+    if (el && isButtonType(el.type) && !hasLabelText(el)) {
+      drift += 1;
+      return Object.assign({}, el, { drift: 'label_absent' });
+    }
+    return el;
+  });
+  return { elements: out, drift };
+}
+
+function finish(base, added, opts) {
+  const flagged = flagLabelDrift(base, !!(opts && opts.driftFlag));
+  return { elements: flagged.elements, added, drift: flagged.drift };
+}
+
+function synthAnchorInputs(elements, ocrWords, imageH, opts) {
   const base = Array.isArray(elements) ? elements.slice() : [];
-  if (!Array.isArray(ocrWords) || !ocrWords.length) return { elements: base, added: 0 };
-  if (base.some((el) => el && isInputType(el.type))) return { elements: base, added: 0 };
+  if (!Array.isArray(ocrWords) || !ocrWords.length) return finish(base, 0, opts);
+  if (base.some((el) => el && isInputType(el.type))) return finish(base, 0, opts);
   const h = Number(imageH);
-  if (!Number.isFinite(h) || h <= 0) return { elements: base, added: 0 };
+  if (!Number.isFinite(h) || h <= 0) return finish(base, 0, opts);
 
   const words = ocrWords.filter((w) => w && w.bbox && Number.isFinite(w.bbox.x) &&
     Number.isFinite(w.bbox.y) && Number.isFinite(w.bbox.w) && Number.isFinite(w.bbox.h));
@@ -40,7 +73,7 @@ function synthAnchorInputs(elements, ocrWords, imageH) {
   // ("TypeScript") carry one — score rows by anchor hits, tie-break widest.
   const cands = words.filter((w) => ANCHOR_RE.test(String(w.text || '')) &&
     (w.bbox.y + w.bbox.h / 2) < TOPBAND_FRAC * h);
-  if (!cands.length) return { elements: base, added: 0 };
+  if (!cands.length) return finish(base, 0, opts);
 
   const rowOf = (anchor) => {
     const acy = anchor.bbox.y + anchor.bbox.h / 2;
@@ -60,13 +93,13 @@ function synthAnchorInputs(elements, ocrWords, imageH) {
     }
   }
   const row = (best && best.row) || [];
-  if (!row.length) return { elements: base, added: 0 };
+  if (!row.length) return finish(base, 0, opts);
 
   const x1 = Math.max(0, Math.min(...row.map((w) => w.bbox.x)) - PAD_X);
   const y1 = Math.max(0, Math.min(...row.map((w) => w.bbox.y)) - PAD_Y);
   const x2 = Math.max(...row.map((w) => w.bbox.x + w.bbox.w)) + PAD_X;
   const y2 = Math.max(...row.map((w) => w.bbox.y + w.bbox.h)) + PAD_Y;
-  if (!(x2 > x1 && y2 > y1)) return { elements: base, added: 0 };
+  if (!(x2 > x1 && y2 > y1)) return finish(base, 0, opts);
   const avgOcr = row.reduce((s, w) => s + (Number(w.conf) || 0), 0) / row.length;
 
   base.push({
@@ -79,7 +112,7 @@ function synthAnchorInputs(elements, ocrWords, imageH) {
     word_count: row.length,
     synth: 'ocr_anchor',
   });
-  return { elements: base, added: 1 };
+  return finish(base, 1, opts);
 }
 
-module.exports = { synthAnchorInputs, ANCHOR_RE, TOPBAND_FRAC, ROW_DY };
+module.exports = { synthAnchorInputs, ANCHOR_RE, TOPBAND_FRAC, ROW_DY, isButtonType, hasLabelText };
