@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "vision run-report schema v1 (reportSchema.js)",
+  "type": "object",
+  "required": [
+    "schema",
+    "run",
+    "loops",
+    "cases",
+    "result",
+    "cost",
+    "storage",
+    "citable"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "id",
+        "ts",
+        "source"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "ts": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "loops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "n",
+          "delta",
+          "covered"
+        ]
+      }
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "verdict",
+          "weak_steps",
+          "app_outcome",
+          "evidence"
+        ]
+      }
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "verdict",
+        "pass_rate"
+      ]
+    },
+    "cost": {
+      "type": "object",
+      "required": [
+        "api_calls",
+        "tokens_in",
+        "tokens_out"
+      ]
+    },
+    "brain": {
+      "type": "object",
+      "required": [
+        "mode",
+        "model",
+        "blind"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "blind": {
+          "enum": [
+            "Y",
+            "AUTONOMY_NONBLIND"
+          ]
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "required": [
+        "paths"
+      ]
+    },
+    "citable": {
+      "type": "object",
+      "required": [
+        "ref",
+        "sha1"
+      ]
+    }
+  }
+}

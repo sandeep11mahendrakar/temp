@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "run": {
+    "id": "n6_sauce_sample",
+    "ts": "2026-10-14T10:07:36.958Z",
+    "source": "n6-sauce-file-mode"
+  },
+  "loops": [
+    {
+      "n": 1,
+      "delta": null,
+      "covered": false
+    },
+    {
+      "n": 2,
+      "delta": [],
+      "covered": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "login-standard_user",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "accepted",
+      "evidence": "vision/storage/outputs/n6_rep_login-standard_user.json"
+    },
+    {
+      "id": "login-problem_user",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "accepted",
+      "evidence": "vision/storage/outputs/n6_rep_login-problem_user.json"
+    },
+    {
+      "id": "login-performance_glitch_user",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "accepted",
+      "evidence": "vision/storage/outputs/n6_rep_login-performance_glitch_user.json"
+    },
+    {
+      "id": "login-error_user",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "accepted",
+      "evidence": "vision/storage/outputs/n6_rep_login-error_user.json"
+    },
+    {
+      "id": "login-visual_user",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "accepted",
+      "evidence": "vision/storage/outputs/n6_rep_login-visual_user.json"
+    },
+    {
+      "id": "login-negative-empty",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "rejected",
+      "evidence": "vision/storage/outputs/n6_rep_login-negative-empty.json"
+    },
+    {
+      "id": "login-locked_out_user",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "rejected",
+      "evidence": "vision/storage/outputs/n6_rep_login-locked_out_user.json"
+    },
+    {
+      "id": "checkout-full",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "app_outcome": "accepted",
+      "evidence": "vision/storage/outputs/n6_rep_checkout.json"
+    }
+  ],
+  "result": {
+    "verdict": "PASS",
+    "pass_rate": 1
+  },
+  "cost": {
+    "api_calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "usd_estimated": null
+  },
+  "brain": {
+    "mode": "file",
+    "model": "pre-authored-handshake",
+    "blind": "AUTONOMY_NONBLIND"
+  },
+  "storage": {
+    "paths": [
+      "vision/storage/outputs/n6_rep_login-standard_user.json",
+      "vision/storage/outputs/n6_rep_login-problem_user.json",
+      "vision/storage/outputs/n6_rep_login-performance_glitch_user.json",
+      "vision/storage/outputs/n6_rep_login-error_user.json",
+      "vision/storage/outputs/n6_rep_login-visual_user.json",
+      "vision/storage/outputs/n6_rep_login-negative-empty.json",
+      "vision/storage/outputs/n6_rep_login-locked_out_user.json",
+      "vision/storage/outputs/n6_rep_checkout.json"
+    ]
+  },
+  "citable": {
+    "ref": "run-n6_sauce_sample",
+    "sha1": "9ab499d105f288f0925507c357c4d693d789f01d"
+  }
+}

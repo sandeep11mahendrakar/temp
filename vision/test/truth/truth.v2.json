@@ -1,0 +1,303 @@
+{
+  "$schema": "demoqa-truth-v2",
+  "site": "https://demoqa.com",
+  "truth_source": "playwright-direct",
+  "note": "Q3d independent probe of the 21 seeded-circular rows. truth.json NEVER rewritten (byte-identical). ANCHORED=loaded+expect-in-text; LOADED-NOMATCH=loaded but expect absent (human-glance); UNANCHORED=load failed after 1 retry.",
+  "count": 21,
+  "items": [
+    {
+      "path": "/web-tables",
+      "oracle": {
+        "kind": "count_delta",
+        "expect": "+1 row after add"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 0,
+      "expect_in_text": false,
+      "observed_outcome": "UNANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/links",
+      "oracle": {
+        "kind": "new_page_url",
+        "expect": "demoqa.com"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 433,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/upload-download",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "\\.txt|uploaded|filename"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 288,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/dynamic-properties",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "This text has|enabled|visible"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 340,
+      "expect_in_text": true,
+      "observed_outcome": "ANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/alerts",
+      "oracle": {
+        "kind": "dialog_message",
+        "expect": "You (clicked|selected|entered)|alert|confirm|prompt"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 400,
+      "expect_in_text": true,
+      "observed_outcome": "ANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/browser-windows",
+      "oracle": {
+        "kind": "new_page_url",
+        "expect": "sample|demoqa.com"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 253,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/modal-dialogs",
+      "oracle": {
+        "kind": "text_absent",
+        "expect": "Small Modal|Large Modal"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 265,
+      "expect_in_text": true,
+      "observed_outcome": "ANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/accordian",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Lorem Ipsum|content"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 880,
+      "expect_in_text": true,
+      "observed_outcome": "ANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/auto-complete",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Red|Green|Blue|Black|White|Purple|Yellow"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 292,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/date-picker",
+      "oracle": {
+        "kind": "value",
+        "expect": "field holds picked date"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 267,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/slider",
+      "oracle": {
+        "kind": "state_diff",
+        "expect": "visible-state-changed"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 239,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/progress-bar",
+      "oracle": {
+        "kind": "value",
+        "expect": "progress value read back"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 264,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/tabs",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "What|Origin|Use"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 858,
+      "expect_in_text": true,
+      "observed_outcome": "ANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/tool-tips",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "tooltip|You hovered"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 1040,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/menu",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "SUB SUB|Sub Sub Item"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 270,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/select-menu",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Group|Mr\\.|Mrs\\.|Aqua|Black|Voilet"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 467,
+      "expect_in_text": true,
+      "observed_outcome": "ANCHORED",
+      "attempts": 1
+    },
+    {
+      "path": "/sortable",
+      "oracle": {
+        "kind": "bbox_delta",
+        "expect": "visible-state-changed"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 238,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/selectable",
+      "oracle": {
+        "kind": "state_diff",
+        "expect": "visible-state-changed"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 292,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/resizable",
+      "oracle": {
+        "kind": "bbox_delta",
+        "expect": "visible-state-changed"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 284,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/droppable",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Dropped!"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 272,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    },
+    {
+      "path": "/dragabble",
+      "oracle": {
+        "kind": "bbox_delta",
+        "expect": "visible-state-changed"
+      },
+      "truth_source": "playwright-direct",
+      "http_status": 200,
+      "title": "demosite",
+      "text_len": 266,
+      "expect_in_text": false,
+      "observed_outcome": "LOADED-NOMATCH",
+      "attempts": 1
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><title>zoo shadow dom</title></head>
+<body>
+<h1 id="page-title">Shadow lab</h1>
+<zoo-login id="zoo-login"></zoo-login>
+<p id="shadow-echo">outer: waiting</p>
+<script>
+class ZooLogin extends HTMLElement {
+  constructor() {
+    super();
+    var root = this.attachShadow({ mode: 'open' });
+    root.innerHTML = '<label for="shadow-user">User</label>' +
+      '<input id="shadow-user" type="text" value="">' +
+      '<button id="shadow-go" type="button">Go</button>';
+    var self = this;
+    root.getElementById('shadow-go').addEventListener('click', function () {
+      var v = root.getElementById('shadow-user').value;
+      document.getElementById('shadow-echo').textContent = v ? ('shadow says: ' + v) : 'outer: waiting';
+      self.setAttribute('data-done', v ? '1' : '');
+    });
+  }
+}
+customElements.define('zoo-login', ZooLogin);
+</script>
+</body></html>

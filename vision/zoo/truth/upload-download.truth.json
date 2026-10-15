@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-upload-download","steps":[{"action":"upload","target":"#file-input","value":"zoo-sample.txt"}],"expected":{"kind":"text_present","expect":"uploaded: zoo-sample.txt"}}

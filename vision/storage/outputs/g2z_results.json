@@ -1,0 +1,222 @@
+{
+  "ts": "2026-10-15T10:33:41.581Z",
+  "api_calls": 0,
+  "autonomy": "ASSISTED",
+  "brain": "none-seeded-steps",
+  "seeded_perception": "dom-derived visual_dom (conf.yolo=0.5, disclosed); vision weights absent",
+  "pass": "4/16",
+  "rows": [
+    {
+      "tc_id": "zoo-cart-checkout-wizard",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 3 (fill): target not found in current state (wanted ty",
+      "notes": [
+        "unseeded:#ship-name",
+        "unseeded:#to-review",
+        "unseeded:#place-order"
+      ],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-cookie-banner",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "accepted",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (68 chars)",
+      "notes": [],
+      "executor_status": "FAIL",
+      "oracle_verdict": "PASS"
+    },
+    {
+      "tc_id": "zoo-dbl-right-click",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (99 chars)",
+      "notes": [],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-dialogs",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (61 chars)",
+      "notes": [],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-drag-drop",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor-error:Step 1 (drag) failed: executeAction: drag requires numeric x and y coordinates",
+      "notes": [
+        "unseeded:#drag-src"
+      ],
+      "executor_status": "ERROR",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-form-validate",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": [],
+      "executor_status": "PASS",
+      "oracle_verdict": "PASS"
+    },
+    {
+      "tc_id": "zoo-hover-menu",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 2 (click): target not found in current state (wanted t",
+      "notes": [
+        "unseeded:#sub-widgets"
+      ],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-iframe",
+      "action_class": "system",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (32 chars)",
+      "notes": [
+        "read-text-dropped:observe-only"
+      ],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-infinite-scroll",
+      "action_class": "system",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (86 chars)",
+      "notes": [
+        "unseeded:#feed"
+      ],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-login-6users",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": [],
+      "executor_status": "PASS",
+      "oracle_verdict": "PASS"
+    },
+    {
+      "tc_id": "zoo-new-tab",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (24 chars)",
+      "notes": [],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-paginate-sort-filter-search",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": [],
+      "executor_status": "PASS",
+      "oracle_verdict": "PASS"
+    },
+    {
+      "tc_id": "zoo-select-check-radio",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": [],
+      "executor_status": "PASS",
+      "oracle_verdict": "PASS"
+    },
+    {
+      "tc_id": "zoo-shadow-dom",
+      "action_class": "value",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 1 (fill): no_elements_in_current_state. No stale coord",
+      "notes": [
+        "unseeded:#zoo-login>>>#shadow-user",
+        "unseeded:#zoo-login>>>#shadow-go"
+      ],
+      "executor_status": "FAIL",
+      "oracle_verdict": "FAIL"
+    },
+    {
+      "tc_id": "zoo-spinner-delayed",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "accepted",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (36 chars)",
+      "notes": [],
+      "executor_status": "FAIL",
+      "oracle_verdict": "PASS"
+    },
+    {
+      "tc_id": "zoo-upload-download",
+      "action_class": "value",
+      "verdict": "FAIL",
+      "app_outcome": "accepted",
+      "verification_strength": "none",
+      "failure_cause": "executor:No semantic signal and page body text too short (55 chars)",
+      "notes": [],
+      "executor_status": "FAIL",
+      "oracle_verdict": "PASS"
+    }
+  ],
+  "per_class": [
+    {
+      "action_class": "pointer",
+      "tcs": 8,
+      "pass": 0,
+      "pass_rate": 0
+    },
+    {
+      "action_class": "value",
+      "tcs": 6,
+      "pass": 4,
+      "pass_rate": 0.667
+    },
+    {
+      "action_class": "system",
+      "tcs": 2,
+      "pass": 0,
+      "pass_rate": 0
+    }
+  ],
+  "note": "classify-only: no page/truth/executor file was modified by this run"
+}

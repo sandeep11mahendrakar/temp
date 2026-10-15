@@ -1,0 +1,269 @@
+{
+  "$schema": "demoqa-truth-v1",
+  "site": "https://demoqa.com",
+  "source": "claude-memory-unverified",
+  "note": "Q3 truth-anchor: H=live K4 PASS observed; M=spec/probe-derived unverified. Mismatch vs targets => REPORT ONLY, never auto-edit this file.",
+  "count": 26,
+  "items": [
+    {
+      "path": "/text-box",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Name:|Email:|Current Address|Permanent Address"
+      },
+      "conf": "H",
+      "source": "claude-memory-unverified",
+      "evidence": "K4-B1-TEXTBOX PASS k4_summary.json+rep_b1"
+    },
+    {
+      "path": "/checkbox",
+      "oracle": {
+        "kind": "text_absent",
+        "expect": "You have selected"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "L2 retarget pin text_absent; no live K4 run"
+    },
+    {
+      "path": "/radio-button",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "You have selected"
+      },
+      "conf": "H",
+      "source": "claude-memory-unverified",
+      "evidence": "K4-B2-RADIO PASS k4_summary.json+rep_b2"
+    },
+    {
+      "path": "/web-tables",
+      "oracle": {
+        "kind": "count_delta",
+        "expect": "+1 row after add"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/buttons",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "You have done a right click"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "M2-run1 right_click dispatched+contextmenu fired live once; message text unconfirmed -> M"
+    },
+    {
+      "path": "/links",
+      "oracle": {
+        "kind": "new_page_url",
+        "expect": "demoqa.com"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/upload-download",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "\\.txt|uploaded|filename"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/dynamic-properties",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "This text has|enabled|visible"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/automation-practice-form",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Thanks for submitting the form|Student Registration Form"
+      },
+      "conf": "H",
+      "source": "claude-memory-unverified",
+      "evidence": "K4-B3-FORM PASS k4_summary.json+rep_b3"
+    },
+    {
+      "path": "/alerts",
+      "oracle": {
+        "kind": "dialog_message",
+        "expect": "You (clicked|selected|entered)|alert|confirm|prompt"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/browser-windows",
+      "oracle": {
+        "kind": "new_page_url",
+        "expect": "sample|demoqa.com"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/modal-dialogs",
+      "oracle": {
+        "kind": "text_absent",
+        "expect": "Small Modal|Large Modal"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/accordian",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Lorem Ipsum|content"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/auto-complete",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Red|Green|Blue|Black|White|Purple|Yellow"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/date-picker",
+      "oracle": {
+        "kind": "value",
+        "expect": "field holds picked date"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/slider",
+      "oracle": {
+        "kind": "state_diff",
+        "expect": "visible-state-changed"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/progress-bar",
+      "oracle": {
+        "kind": "value",
+        "expect": "progress value read back"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/tabs",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "What|Origin|Use"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/tool-tips",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "tooltip|You hovered"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/menu",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "SUB SUB|Sub Sub Item"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/select-menu",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Group|Mr\\.|Mrs\\.|Aqua|Black|Voilet"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/sortable",
+      "oracle": {
+        "kind": "bbox_delta",
+        "expect": "visible-state-changed"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/selectable",
+      "oracle": {
+        "kind": "state_diff",
+        "expect": "visible-state-changed"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/resizable",
+      "oracle": {
+        "kind": "bbox_delta",
+        "expect": "visible-state-changed"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/droppable",
+      "oracle": {
+        "kind": "text_present",
+        "expect": "Dropped!"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    },
+    {
+      "path": "/dragabble",
+      "oracle": {
+        "kind": "bbox_delta",
+        "expect": "visible-state-changed"
+      },
+      "conf": "M",
+      "source": "claude-memory-unverified",
+      "evidence": "demoqa.json intent+actions; no live run this program"
+    }
+  ]
+}

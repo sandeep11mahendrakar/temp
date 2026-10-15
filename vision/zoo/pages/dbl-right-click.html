@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><title>zoo dbl right click</title></head>
+<body>
+<h1 id="page-title">Click lab</h1>
+<button id="dbl-btn" type="button">Double-click me</button>
+<button id="right-btn" type="button">Right-click me</button>
+<p id="dbl-echo"></p>
+<p id="right-echo"></p>
+<script>
+document.getElementById('dbl-btn').addEventListener('dblclick', function () {
+  document.getElementById('dbl-echo').textContent = 'You have done a double click';
+});
+document.getElementById('right-btn').addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+  document.getElementById('right-echo').textContent = 'You have done a right click';
+});
+</script>
+</body></html>

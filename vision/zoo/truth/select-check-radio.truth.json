@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-select-check-radio","steps":[{"action":"select","target":"#color-select","value":"blue"},{"action":"check","target":"#news-check"},{"action":"click","target":"#plan-yearly"},{"action":"click","target":"#apply-btn"}],"expected":{"kind":"text_present","expect":"prefs saved: color=blue news=yes plan=yearly"}}

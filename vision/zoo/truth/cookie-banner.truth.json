@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-cookie-banner","steps":[{"action":"click","target":"#accept-cookies"}],"expected":{"kind":"text_present","expect":"banner: accepted"}}

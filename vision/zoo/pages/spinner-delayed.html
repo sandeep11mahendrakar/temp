@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><title>zoo spinner delayed</title></head>
+<body>
+<h1 id="page-title">Loader</h1>
+<button id="load-btn" type="button">Load data</button>
+<div id="spinner" hidden>loading...</div>
+<p id="data-echo"></p>
+<script>
+document.getElementById('load-btn').addEventListener('click', function () {
+  var sp = document.getElementById('spinner');
+  var echo = document.getElementById('data-echo');
+  echo.textContent = ''; sp.hidden = false;
+  window.setTimeout(function () {
+    sp.hidden = true;
+    echo.textContent = 'data ready: 3 rows';
+  }, 800);
+});
+</script>
+</body></html>

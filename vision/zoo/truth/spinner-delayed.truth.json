@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-spinner-delayed","steps":[{"action":"click","target":"#load-btn"}],"expected":{"kind":"text_present","expect":"data ready: 3 rows"}}

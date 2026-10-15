@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-infinite-scroll","steps":[{"action":"scroll","target":"#feed"}],"expected":{"kind":"text_present","expect":"items: 30 \\(end\\)"}}

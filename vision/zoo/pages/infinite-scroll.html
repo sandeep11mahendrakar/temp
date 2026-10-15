@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><title>zoo infinite scroll</title>
+<style>#feed{height:200px;overflow-y:scroll;border:1px solid #888;}</style>
+</head>
+<body>
+<h1 id="page-title">Feed</h1>
+<div id="feed"></div>
+<p id="feed-echo">items: 0</p>
+<script>
+var feed = document.getElementById('feed');
+var count = 0; var MAX = 30;
+function more() {
+  for (var i = 0; i < 10 && count < MAX; i += 1) {
+    count += 1;
+    var d = document.createElement('div');
+    d.className = 'feed-item'; d.textContent = 'item ' + count;
+    feed.appendChild(d);
+  }
+  document.getElementById('feed-echo').textContent = count >= MAX ? 'items: ' + count + ' (end)' : 'items: ' + count;
+}
+more();
+feed.addEventListener('scroll', function () {
+  if (feed.scrollTop + feed.clientHeight >= feed.scrollHeight - 5) more();
+});
+</script>
+</body></html>

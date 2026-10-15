@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-dbl-right-click","steps":[{"action":"dblclick","target":"#dbl-btn"},{"action":"right_click","target":"#right-btn"}],"expected":{"kind":"text_present","expect":"You have done a (double|right) click"}}

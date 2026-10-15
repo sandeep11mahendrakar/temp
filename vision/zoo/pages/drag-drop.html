@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><title>zoo drag drop</title>
+<style>#drag-src{width:120px;height:40px;background:#dde;}#drop-zone{width:200px;height:80px;border:2px dashed #888;}</style>
+</head>
+<body>
+<h1 id="page-title">Drag lab</h1>
+<div id="drag-src" draggable="true">drag me</div>
+<div id="drop-zone">drop here</div>
+<p id="drop-echo"></p>
+<script>
+var src = document.getElementById('drag-src');
+src.addEventListener('dragstart', function (e) { e.dataTransfer.setData('text/plain', 'widget'); });
+var zone = document.getElementById('drop-zone');
+zone.addEventListener('dragover', function (e) { e.preventDefault(); });
+zone.addEventListener('drop', function (e) {
+  e.preventDefault();
+  document.getElementById('drop-echo').textContent = 'Dropped: ' + e.dataTransfer.getData('text/plain');
+});
+</script>
+</body></html>

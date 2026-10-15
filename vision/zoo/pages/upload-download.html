@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>zoo upload download</title></head>
+<body>
+<h1 id="page-title">Files</h1>
+<label for="file-input">Upload</label><input id="file-input" type="file">
+<p id="upload-echo">no file yet</p>
+<a id="dl-link" href="data:text/plain,zoo-sample-payload" download="zoo-sample.txt">Download sample</a>
+<script>
+document.getElementById('file-input').addEventListener('change', function (e) {
+  var f = e.target.files && e.target.files[0];
+  document.getElementById('upload-echo').textContent = f ? ('uploaded: ' + f.name) : 'no file yet';
+});
+</script>
+</body></html>

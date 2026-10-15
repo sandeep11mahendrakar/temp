@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-dialogs","steps":[{"action":"click","target":"#alert-btn"},{"action":"click","target":"#confirm-btn"},{"action":"click","target":"#prompt-btn"}],"expected":{"kind":"dialog_message","expect":"zoo (alert|confirm|prompt)"}}

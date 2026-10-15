@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-paginate-sort-filter-search","steps":[{"action":"fill","target":"#q","value":"a"},{"action":"click","target":"#next-btn"}],"expected":{"kind":"text_present","expect":"page 2/2"}}

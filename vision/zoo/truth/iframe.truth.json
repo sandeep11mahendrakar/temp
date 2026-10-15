@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-iframe","steps":[{"action":"read-text","target":"#zoo-frame"}],"expected":{"kind":"text_present","expect":"frame says hello"}}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><title>zoo paginate sort filter search</title></head>
+<body>
+<h1 id="page-title">Catalog</h1>
+<label for="q">Search</label><input id="q" type="text" value="">
+<button id="sort-btn" type="button" data-dir="asc">Sort name asc</button>
+<table><tbody id="rows"></tbody></table>
+<button id="prev-btn" type="button">Prev</button>
+<span id="page-echo">page 1/2</span>
+<button id="next-btn" type="button">Next</button>
+<script>
+var DATA = ['apple','banana','cherry','date','fig','grape'];
+var page = 0; var PER = 3; var dir = 1; var q = '';
+function view() {
+  var rows = DATA.filter(function (n) { return n.indexOf(q) >= 0; });
+  rows.sort(function (a, b) { return dir * (a < b ? -1 : a > b ? 1 : 0); });
+  var pages = Math.max(1, Math.ceil(rows.length / PER));
+  page = Math.min(page, pages - 1);
+  var tb = document.getElementById('rows'); tb.innerHTML = '';
+  rows.slice(page * PER, page * PER + PER).forEach(function (n) {
+    var tr = document.createElement('tr'); tr.innerHTML = '<td>' + n + '</td>'; tb.appendChild(tr);
+  });
+  document.getElementById('page-echo').textContent = 'page ' + (page + 1) + '/' + pages;
+}
+document.getElementById('q').addEventListener('input', function (e) { q = e.target.value; page = 0; view(); });
+document.getElementById('sort-btn').addEventListener('click', function (e) {
+  dir = -dir; e.target.textContent = dir > 0 ? 'Sort name asc' : 'Sort name desc'; view();
+});
+document.getElementById('prev-btn').addEventListener('click', function () { if (page > 0) page -= 1; view(); });
+document.getElementById('next-btn').addEventListener('click', function () { page += 1; view(); });
+view();
+</script>
+</body></html>

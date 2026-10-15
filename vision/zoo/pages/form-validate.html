@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><title>zoo form validate</title></head>
+<body>
+<h1 id="page-title">Contact form</h1>
+<form id="contact-form" novalidate>
+<label for="f-name">Name</label><input id="f-name" name="name" type="text" value="">
+<label for="f-email">Email</label><input id="f-email" name="email" type="text" value="">
+<button id="submit-btn" type="submit">Send</button>
+</form>
+<p id="form-error" hidden>Error: name required, valid email required.</p>
+<div id="form-echo" hidden></div>
+<script>
+document.getElementById('contact-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var name = document.getElementById('f-name').value;
+  var email = document.getElementById('f-email').value;
+  var err = document.getElementById('form-error');
+  var echo = document.getElementById('form-echo');
+  if (!name || email.indexOf('@') < 0) { err.hidden = false; echo.hidden = true; return; }
+  err.hidden = true; echo.hidden = false;
+  echo.textContent = 'Thanks ' + name + ' <' + email + '>';
+});
+</script>
+</body></html>

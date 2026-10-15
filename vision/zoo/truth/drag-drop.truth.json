@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-drag-drop","steps":[{"action":"drag","target":"#drag-src","value":"drop-zone-center"}],"expected":{"kind":"text_present","expect":"Dropped:"}}

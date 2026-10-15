@@ -1,0 +1,1 @@
+zoo sample upload payload (deterministic fixture for G2z upload-download TC)
