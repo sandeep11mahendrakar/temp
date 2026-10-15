@@ -10,7 +10,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-const { createBrain, BRAIN_MODES, DEFAULT_CAP } = require('../src/brain');
+const { createBrain, BRAIN_MODES, DEFAULT_CAP, DEFAULT_CLI_MODEL, resolveCliModel } = require('../src/brain');
 
 const ACT = '{"thought":"t","action":"click","elementId":"e1"}';
 
@@ -128,4 +128,76 @@ test('N3 no-secret: key material never surfaces in text/meta/logs', async () => 
     assert.equal(DEFAULT_CAP, 40);
     assert.deepEqual(BRAIN_MODES, ['api', 'cli', 'file', 'mock']);
   } finally { global.fetch = realFetch; fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+// 10. Q8 resolve-order: opts.model beats env beats compiled default.
+test('Q8 resolve-order: opts > BRAIN_MODEL env > DEFAULT_CLI_MODEL', () => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'BRAIN_MODEL');
+  const prev = process.env.BRAIN_MODEL;
+  try {
+    delete process.env.BRAIN_MODEL;
+    assert.equal(resolveCliModel({}), DEFAULT_CLI_MODEL);
+    assert.equal(resolveCliModel(), DEFAULT_CLI_MODEL);
+    process.env.BRAIN_MODEL = '  env/model  ';
+    assert.equal(resolveCliModel({}), 'env/model');
+    assert.equal(resolveCliModel({ model: 'opts/model' }), 'opts/model');
+    assert.equal(typeof DEFAULT_CLI_MODEL, 'string');
+    assert.ok(DEFAULT_CLI_MODEL.length > 0);
+  } finally {
+    if (had) process.env.BRAIN_MODEL = prev;
+    else delete process.env.BRAIN_MODEL;
+  }
+});
+
+// 11. Q8 loud-missing: emptied sources throw, never silent-fallback.
+test('Q8 loud-missing: empty opts.model and empty BRAIN_MODEL both throw', async () => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'BRAIN_MODEL');
+  const prev = process.env.BRAIN_MODEL;
+  try {
+    delete process.env.BRAIN_MODEL;
+    assert.throws(() => resolveCliModel({ model: '' }), /refusing silent/);
+    assert.throws(() => resolveCliModel({ model: '   ' }), /refusing silent/);
+    process.env.BRAIN_MODEL = '   ';
+    assert.throws(() => resolveCliModel({}), /refusing silent/);
+    await assert.rejects(createBrain({ mode: 'cli' }).decide('x'), /refusing silent/);
+  } finally {
+    if (had) process.env.BRAIN_MODEL = prev;
+    else delete process.env.BRAIN_MODEL;
+  }
+});
+
+// 12. Q8 meta-model: cli decide reports the EFFECTIVE model + numeric attempts.
+test('Q8 meta-model: effective env model in meta with attempts===1 calls===1', async () => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'BRAIN_MODEL');
+  const prev = process.env.BRAIN_MODEL;
+  try {
+    process.env.BRAIN_MODEL = 'env/effective';
+    const br = createBrain({ mode: 'cli', runFn: async () => ACT });
+    const r = await br.decide('go');
+    assert.equal(r.meta.model, 'env/effective');
+    assert.equal(r.meta.mode, 'cli');
+    assert.equal(r.meta.attempts, 1);
+    assert.equal(br.stats.calls, 1);
+  } finally {
+    if (had) process.env.BRAIN_MODEL = prev;
+    else delete process.env.BRAIN_MODEL;
+  }
+});
+
+// 13. Q8 default-carry: unset-everything resolves the Q2b id, cap numeric intact.
+test('Q8 default-carry: no sources resolves Q2b id, decide spends exactly 1 call', async () => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'BRAIN_MODEL');
+  const prev = process.env.BRAIN_MODEL;
+  try {
+    delete process.env.BRAIN_MODEL;
+    const br = createBrain({ mode: 'cli', runFn: async () => ACT });
+    const r = await br.decide('go');
+    assert.equal(r.meta.model, DEFAULT_CLI_MODEL);
+    assert.equal(DEFAULT_CLI_MODEL, 'opencode/muse-spark-1.3-contributor-free');
+    assert.equal(br.stats.calls, 1);
+    assert.equal(r.meta.attempts, 1);
+  } finally {
+    if (had) process.env.BRAIN_MODEL = prev;
+    else delete process.env.BRAIN_MODEL;
+  }
 });

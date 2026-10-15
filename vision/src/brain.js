@@ -91,8 +91,28 @@ function lastJsonBlock(text) {
   return best;
 }
 
+// Q8: cli model resolution is explicit-never-silent. Order: opts.model,
+// then BRAIN_MODEL env, then the Q2b-verified default id. An explicitly
+// emptied source (opts.model === '' or BRAIN_MODEL set-but-empty) throws
+// instead of silently falling back; unset-everything takes the default.
+const DEFAULT_CLI_MODEL = 'opencode/muse-spark-1.3-contributor-free';
+
+function resolveCliModel(opts = {}) {
+  const o = (opts && typeof opts === 'object' ? opts : {});
+  const envSet = Object.prototype.hasOwnProperty.call(process.env, 'BRAIN_MODEL');
+  const fromEnv = typeof process.env.BRAIN_MODEL === 'string' ? process.env.BRAIN_MODEL.trim() : '';
+  if (typeof o.model === 'string') {
+    const m = o.model.trim();
+    if (m) return m;
+    throw new Error('brain/cli: opts.model is empty; refusing silent default (pass -m or set BRAIN_MODEL)');
+  }
+  if (fromEnv) return fromEnv;
+  if (envSet) throw new Error('brain/cli: BRAIN_MODEL is set but empty; refusing silent default (unset it or give a value)');
+  return DEFAULT_CLI_MODEL;
+}
+
 async function cliTransport(opts, prompt) {
-  const model = opts.model || 'opencode/muse-spark-1.3-contributor-free';
+  const model = resolveCliModel(opts);
   const runFn = opts.runFn || defaultCliRun;
   const path = require('path');
   const fs = require('fs');
@@ -182,7 +202,9 @@ function createBrain(opts = {}) {
     // unknown-never-done: only a parsed "done" is done; anything else
     // unparseable becomes unknown (callers must never treat it as done).
     const action = json ? String(json.action || 'unknown').toLowerCase() : 'unknown';
-    const meta = { mode, model: o.model || null, action, attempts, usage };
+    // Q8: cli reports the EFFECTIVE model (opts > BRAIN_MODEL env > default id),
+    // never a silent null when a resolution exists.
+    const meta = { mode, model: mode === 'cli' ? resolveCliModel(o) : (o.model || null), action, attempts, usage };
     logAttempt(logFile, {
       ts: new Date().toISOString(), mode, model: meta.model,
       action, attempts, usage: meta.usage,
@@ -198,6 +220,8 @@ module.exports = {
   BRAIN_MODES,
   DEFAULT_CAP,
   CLI_TIMEOUT_MS,
+  DEFAULT_CLI_MODEL,
+  resolveCliModel,
   // thin re-exports: future callers take these from brain, never the
   // underlying modules directly.
   resolveLLMConfig,
