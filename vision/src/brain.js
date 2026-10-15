@@ -378,6 +378,82 @@ function createBrain(opts = {}) {
   return { mode, cap, stats, decide, MODES: BRAIN_MODES.slice() };
 }
 
+// Q13: opt-in test-case generation behind GENERATE=on (default OFF =
+// byte-identical: decide() and all transports untouched; nothing calls this
+// unless a driver opts in; LIVE-GENERATE-ZOO wiring is DEFERRED-P22).
+// Trigger: an archetype detection score >= threshold owns the page, so
+// generation does NOT trigger; only undetected pages generate.
+const GENERATE_MAX_TCS = 6;
+const GENERATE_DEFAULT_THRESHOLD = 0.9;
+const GENERATE_CONTRACT = 'You are a test-case generator. Reply with strict JSON ONLY. First character must be {. Reply {"tcs":[...]} where each tc is {"id":"...","objective":"...","steps":[{"action":"click|fill","target":{"type":"...","text":"..."},"value":"..."}]}. No analysis, no prose, no markdown fences.';
+
+// compactVdom: id/type/text only — coordinates and values never leave the harness.
+function compactVdom(elements) {
+  const els = Array.isArray(elements) ? elements : [];
+  return els.map((e, i) => ({
+    id: `e${i}`,
+    type: String((e && e.type) || 'unknown').slice(0, 40),
+    text: String((e && e.text) || '').slice(0, 120),
+  }));
+}
+
+function validGeneratedTc(tc) {
+  if (!tc || typeof tc !== 'object' || Array.isArray(tc)) return false;
+  if (typeof tc.id !== 'string' || !tc.id) return false;
+  if (typeof tc.objective !== 'string' || !tc.objective) return false;
+  if (!Array.isArray(tc.steps) || !tc.steps.length) return false;
+  return tc.steps.every((s) => s && typeof s === 'object'
+    && typeof s.action === 'string' && s.action
+    && s.target && typeof s.target === 'object'
+    && typeof s.target.type === 'string' && s.target.type);
+}
+
+function parseGenerateTcs(raw) {
+  let o = null;
+  try { o = llm.extractLastJSON(raw) || llm.extractJSON(raw); } catch (_) { o = null; }
+  if (o && typeof o === 'object' && !Array.isArray(o) && Array.isArray(o.tcs)) return o.tcs;
+  if (Array.isArray(o)) return o;
+  return null;
+}
+
+async function brainGenerate(opts) {
+  const o = (opts && typeof opts === 'object' ? opts : {});
+  if (process.env.GENERATE !== 'on') {
+    return { ok: false, disabled: true, triggered: false, tcs: [], dropped: 0, attempts: 0, callsSpent: 0 };
+  }
+  const thr = Number.isFinite(o.threshold) ? o.threshold : GENERATE_DEFAULT_THRESHOLD;
+  const score = Number(o.archetypeScore);
+  if (Number.isFinite(score) && score >= thr) {
+    return { ok: true, disabled: false, triggered: false, reason: 'archetype-detected', tcs: [], dropped: 0, attempts: 0, callsSpent: 0 };
+  }
+  if (typeof o.llmCall !== 'function') throw new Error('brainGenerate: llmCall required');
+  const cap = Number.isFinite(o.cap) ? o.cap : DEFAULT_CAP;
+  let used = Number.isFinite(o.usedCalls) ? o.usedCalls : 0;
+  const compact = compactVdom(o.elements || o.vdom || []);
+  const memLine = typeof o.memDelta === 'string' ? o.memDelta : JSON.stringify(o.mem || null).slice(0, 300);
+  const prompt = `${GENERATE_CONTRACT}\nGOAL: ${String(o.goal || 'regression')}\nVDOM: ${JSON.stringify(compact)}\nMEM: ${memLine}`;
+  let attempts = 0;
+  let tcs = null;
+  for (let round = 0; round < 2 && tcs === null; round++) {
+    used += 1;
+    if (used > cap) throw new Error(`brain: LLM_CALL_CAP=${cap} exceeded`);
+    attempts += 1;
+    const raw = String(await o.llmCall(round ? `JSON ONLY. FIRST CHAR {\n${prompt}` : prompt));
+    tcs = parseGenerateTcs(raw);
+  }
+  // parse-fail-never-done: unparseable after one strict retry => empty, never done.
+  if (tcs === null) {
+    return { ok: false, disabled: false, triggered: true, parseFail: true, tcs: [], dropped: 0, attempts, callsSpent: attempts };
+  }
+  let dropped = 0;
+  const kept = [];
+  for (const tc of tcs) {
+    if (validGeneratedTc(tc)) kept.push(tc);
+    else dropped += 1;
+  }
+  return { ok: true, disabled: false, triggered: true, tcs: kept.slice(0, GENERATE_MAX_TCS), dropped, attempts, callsSpent: attempts };
+}
+
 module.exports = {
   createBrain,
   BRAIN_MODES,
@@ -405,4 +481,11 @@ module.exports = {
   parseAction: llm.parseAction,
   executeAction: llm.executeAction,
   callLLM: llm.callLLM,
+  // Q13 generation lane (opt-in, GENERATE=on; default OFF byte-identical).
+  GENERATE_MAX_TCS,
+  GENERATE_DEFAULT_THRESHOLD,
+  GENERATE_CONTRACT,
+  compactVdom,
+  validGeneratedTc,
+  brainGenerate,
 };
