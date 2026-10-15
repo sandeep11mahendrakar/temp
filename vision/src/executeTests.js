@@ -31,6 +31,8 @@ const { chromium } = require('playwright');
 const { executeAction } = require('./llm');
 // G2: value-oracle verdicts (pure oracle.js; P3 ladder untouched).
 const { verdictFor } = require('./oracle');
+// H1x: block-page verdicts (pure blockDetector.js; detection only, never evasion).
+const { classify: classifyBlockPage } = require('./blockDetector');
 
 const OUTPUT_DIR = path.join(__dirname, '..', 'storage', 'outputs');
 const SCREENSHOT_ROOT = path.join(__dirname, '..', 'storage', 'screenshots');
@@ -276,6 +278,20 @@ function resolveTarget(elements, step, proximityPx = 90) {
   }
 
   return { resolved: false, reason: `target not found in current state (wanted type="${wantType}" text="${wantText}")` };
+}
+
+// H1x block-wiring (pure, unit-tested): block verdict for the CURRENT page
+// from live observables. Never throws — detector failure yields null (no
+// verdict) rather than a misclassification. Callers attach the result to
+// unresolved-target steps so BLOCKED-cause (wall) vs perception-miss reads
+// straight off the step record.
+function blockVerdict({ title, url, bodyText } = {}) {
+  try {
+    const r = classifyBlockPage({ title, status: 200, ocrText: '', bodyText, url });
+    return { class: r.class, confidence: r.confidence };
+  } catch (_) {
+    return null;
+  }
 }
 
 /** Inspect whatever interactive element sits at viewport coordinates (x,y). */
@@ -764,12 +780,25 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
 
       if (!resolution.resolved) {
         unresolvedTargets += 1;
+        // H1x: classify the CURRENT page so a wall-block reads as
+        // BLOCKED-cause, not perception-miss. Best-effort probes only.
+        let block = null;
+        try {
+          const bt = await page.evaluate(() =>
+            (document.body ? document.body.innerText : '').slice(0, 4000)).catch(() => '');
+          const tt = (typeof page.title === 'function' ? await page.title().catch(() => '') : '');
+          block = blockVerdict({ title: tt, url: page.url(), bodyText: bt });
+          if (block && block.class !== 'ok') {
+            warnings.push(`Step ${i + 1}: page classifies as ${block.class} (BLOCKED-cause, not perception-miss)`);
+          }
+        } catch (_) { /* no verdict is honest; the unresolved_target stands */ }
         executedSteps.push({
           index: i + 1,
           ...step,
           ok: false,
           error: 'unresolved_target',
           reason: resolution.reason,
+          block,
           state_id: lastState?.state_id || null,
           duration_ms: Date.now() - stepStartedAt,
         });
@@ -1367,6 +1396,7 @@ module.exports = {
   isCheckTarget, resolveCheckTarget, checkToggled, runCheckRetries,
   resolveLowConfFill, buildRedetectPayload, submitKeyPress,
   snapCheckToNativeInput, weakStepCount, weakVerdict,
+  blockVerdict,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
