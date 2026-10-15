@@ -31,6 +31,7 @@ const path = require('path');
 const axios = require('axios');
 const { chromium } = require('playwright');
 const { callLLM, extractJSON, extractLastJSON } = require('./llm');
+const { classify: classifyBlockPage } = require('./blockDetector');
 
 const VISION_ROOT = path.join(__dirname, '..');
 const OUTPUT_DIR = path.join(VISION_ROOT, 'storage', 'outputs');
@@ -229,6 +230,18 @@ function hashStr(s) {
   return h.toString(36);
 }
 const normText = (t) => String(t || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+// H1x detector-hook (pure, unit-tested): post-perceive block verdict for a
+// state. Never throws — detector failure degrades to ok/0.6 (unknown) so
+// capture is never broken by the sidecar.
+function stateBlock({ title, url, visibleText } = {}) {
+  try {
+    const r = classifyBlockPage({ title, status: 200, ocrText: '', bodyText: visibleText, url });
+    return { class: r.class, confidence: r.confidence };
+  } catch (_) {
+    return { class: 'ok', confidence: 0.6 };
+  }
+}
 
 async function redetect(imagePath) {
   const res = await axios.post(
@@ -647,6 +660,7 @@ async function runExploration({ url, runId }) {
       .sort()
       .join('|');
     const fingerprint = `${page.url()}|${hashStr(normText(visibleText))}|${hashStr(elemSig)}`;
+    const pageTitle = await page.title().catch(() => '');
     const mergedB64 = await renderMergedEvidence(shotAbs, vdom.elements);
     if (mergedB64) {
       try { fs.writeFileSync(shotAbs.replace(/\.png$/, '_merged.png'), Buffer.from(mergedB64, 'base64')); } catch (_) {}
@@ -661,6 +675,7 @@ async function runExploration({ url, runId }) {
       ocr_words: vdom.raw?.ocr_words_found ?? null,
       element_count: vdom.element_count ?? null,
       fingerprint,
+      block: stateBlock({ title: pageTitle, url: page.url(), visibleText }),
       leading_action: leadingAction || null,
       timestamp: new Date().toISOString(),
     };
@@ -1139,4 +1154,5 @@ module.exports = {
   __setCallLLM,
   __resetParseStrikes,
   distillGoalSteps,
+  stateBlock,
 };
