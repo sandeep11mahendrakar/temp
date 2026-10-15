@@ -226,7 +226,7 @@ const normTxt = normalizeText;
  *    PROXIMITY_PX of the recorded coordinates
  * Never returns invented coordinates — only centers of detected elements.
  */
-function resolveTarget(elements, step, proximityPx = 90) {
+function resolveTarget(elements, step, proximityPx = 90, opts) {
   if (!Array.isArray(elements) || !elements.length) {
     return { resolved: false, reason: 'no_elements_in_current_state' };
   }
@@ -268,12 +268,20 @@ function resolveTarget(elements, step, proximityPx = 90) {
   }
 
   // Controlled re-localization attempt #2: proximity of same/any type.
+  // Q15 N7-option1 resolve-side (behind opts.driftFlag, default OFF =
+  // today's behavior): a proximity fallback landing on a label_absent
+  // (drift-tagged, OCR-anchored WEAK family) element resolves WEAK, mirroring
+  // the ocr_anchor treatment. text_match stays primary above: class never
+  // overrides a text hit.
   const near = elements
     .filter((el) => !wantType || normTxt(el.type) === wantType)
     .map((el) => ({ el, d: Math.hypot(el.cx - step.x, el.cy - step.y) }))
     .filter((x) => x.d <= proximityPx)
     .sort((a, b) => a.d - b.d)[0];
   if (near) {
+    if (opts && opts.driftFlag && near.el && near.el.drift === 'label_absent') {
+      return { resolved: true, via: 'proximity+label_drift', element: near.el };
+    }
     return { resolved: true, via: 'proximity', element: near.el };
   }
 
@@ -347,9 +355,10 @@ function checkToggled(before, after) {
 }
 
 // P3 weak-flag: steps resolved via WEAK fallbacks (lowconf proximity,
-// OCR-anchor synth) must be counted on the verdict, never hidden inside a
-// plain PASS. crop_retry is a real YOLO detection and does NOT count weak.
-const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor)(\+|$)/;
+// OCR-anchor synth, Q15 label-drift proximity) must be counted on the
+// verdict, never hidden inside a plain PASS. crop_retry is a real YOLO
+// detection and does NOT count weak.
+const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor|label_drift)(\+|$)/;
 
 function weakStepCount(stepsExecuted) {
   if (!Array.isArray(stepsExecuted)) return 0;
