@@ -1,0 +1,34 @@
+{
+  "schema": "sites-index-v1",
+  "generated_at": "2026-10-15T09:26:03.737Z",
+  "count": 3,
+  "sites": [
+    {
+      "id": "demoqa",
+      "url": "https://demoqa.com",
+      "access": "open",
+      "cred_env": null,
+      "truth_ref": "vision/test/truth/demoqa.truth.json",
+      "source": "vision/test/targets/demoqa.json",
+      "notes": null
+    },
+    {
+      "id": "saucedemo",
+      "url": "https://www.saucedemo.com",
+      "access": "credentialed",
+      "cred_env": null,
+      "truth_ref": null,
+      "source": "vision/saucedemo.regression.js",
+      "notes": "public demo creds in vision/src/archetypes.js LOGIN_HINTS; no credential env names in .env files (names-only rule)"
+    },
+    {
+      "id": "todomvc",
+      "url": "https://todomvc.com/examples/react/dist/#/active",
+      "access": "open",
+      "cred_env": null,
+      "truth_ref": null,
+      "source": "vision/test/runMemory.test.js",
+      "notes": null
+    }
+  ]
+}

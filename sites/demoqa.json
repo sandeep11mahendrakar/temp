@@ -1,0 +1,9 @@
+{
+  "id": "demoqa",
+  "url": "https://demoqa.com",
+  "access": "open",
+  "cred_env": null,
+  "truth_ref": "vision/test/truth/demoqa.truth.json",
+  "source": "vision/test/targets/demoqa.json",
+  "notes": null
+}

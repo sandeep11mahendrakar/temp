@@ -1,0 +1,9 @@
+{
+  "id": "saucedemo",
+  "url": "https://www.saucedemo.com",
+  "access": "credentialed",
+  "cred_env": null,
+  "truth_ref": null,
+  "source": "vision/saucedemo.regression.js",
+  "notes": "public demo creds in vision/src/archetypes.js LOGIN_HINTS; no credential env names in .env files (names-only rule)"
+}
