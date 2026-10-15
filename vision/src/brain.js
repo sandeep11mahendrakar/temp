@@ -40,6 +40,150 @@ async function apiTransport(apiConfig, prompt, maxTokens) {
   });
 }
 
+// Q12: native Gemini REST (generateContent) for provider=gemini.
+// Key ONLY from opts.apiKey (tests/stubs) or vision/.env GEMINI_API_KEY
+// (live); absent => throw, never silent. The key travels ONLY in the
+// x-goog-api-key header and is scrubbed from any error text before it can
+// reach logs, console, or the board.
+const GEMINI_REST_BASE = 'https://generativelanguage.googleapis.com/v1beta';
+const GEMINI_DEFAULT_MODEL = 'gemini-3.5-flash-lite';
+const GEMINI_MAX_OUTPUT_TOKENS = 2048;
+const GEMINI_STATIC_CONTRACT = 'You are a test-case planner. Reply with strict JSON ONLY. First character must be {. No analysis, no prose, no markdown fences.';
+
+function resolveGeminiKey(opts = {}) {
+  const o = (opts && typeof opts === 'object' ? opts : {});
+  if (typeof o.apiKey === 'string' && o.apiKey.trim()) return o.apiKey.trim();
+  const path = require('path');
+  const ef = o.envFile || path.join(__dirname, '..', '.env');
+  let txt = null;
+  try { txt = require('fs').readFileSync(ef, 'utf8'); } catch (_) { /* throw below */ }
+  if (txt === null) throw new Error('brain/api-gemini: missing key (no opts.apiKey; vision env unreadable); refusing silent no-auth');
+  const line = String(txt).split('\n').map((s) => s.trim()).find((s) => /^GEMINI_API_KEY\s*=/.test(s));
+  const v = line ? line.split('=').slice(1).join('=').trim() : '';
+  if (!v) throw new Error('brain/api-gemini: GEMINI_API_KEY absent/empty in vision env; refusing silent no-auth');
+  return v;
+}
+
+function resolveGeminiModel(opts = {}) {
+  const o = (opts && typeof opts === 'object' ? opts : {});
+  const fromOpts = typeof o.model === 'string' ? o.model.trim() : '';
+  if (fromOpts) return fromOpts;
+  const fromEnv = typeof process.env.BRAIN_MODEL === 'string' ? process.env.BRAIN_MODEL.trim() : '';
+  if (fromEnv) return fromEnv;
+  return GEMINI_DEFAULT_MODEL;
+}
+
+// RetryInfo retryDelay looks like "7s" / "7.5s" / "700ms". Unknown => 5000.
+function parseRetryDelay(text) {
+  const m = String(text || '').match(/(\d+(?:\.\d+)?)\s*(ms|s)\b/);
+  if (!m) return 5000;
+  const ms = m[2] === 'ms' ? parseFloat(m[1]) : parseFloat(m[1]) * 1000;
+  if (!Number.isFinite(ms) || ms < 0) return 5000;
+  return Math.min(Math.round(ms), 60000);
+}
+
+function buildGeminiBody(prompt, thinking) {
+  const body = {
+    system_instruction: { parts: [{ text: GEMINI_STATIC_CONTRACT }] },
+    contents: [{ role: 'user', parts: [{ text: String(prompt) }] }],
+    generationConfig: {
+      responseMimeType: 'application/json',
+      maxOutputTokens: GEMINI_MAX_OUTPUT_TOKENS,
+      temperature: 0,
+    },
+  };
+  // thinking-lowest-if-supported-else-omit: only an explicit 'lowest' adds
+  // thinkingConfig; live runs use 'omit' (support undetectable offline).
+  if (thinking === 'lowest') body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
+  return body;
+}
+
+function scrubKey(text, key) {
+  if (!key) return String(text);
+  return String(text).split(key).join('[REDACTED]');
+}
+
+async function geminiGenerate(g, prompt) {
+  const key = g.key;
+  const model = g.model;
+  const fetchImpl = g.fetchImpl || global.fetch;
+  if (typeof fetchImpl !== 'function') throw new Error('brain/api-gemini: no fetch implementation available');
+  const sleepFn = g.sleepMs || ((ms) => new Promise((r) => setTimeout(r, ms)));
+  const body = buildGeminiBody(prompt, g.thinking || 'omit');
+  const url = GEMINI_REST_BASE + '/models/' + encodeURIComponent(model) + ':generateContent';
+  let lastStatus = 0;
+  for (let t = 0; t <= 2; t += 1) {
+    let res;
+    try {
+      res = await fetchImpl(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+        body: JSON.stringify(body),
+      });
+    } catch (e) {
+      throw new Error('brain/api-gemini: transport error ' + scrubKey((e && e.message) || String(e), key).slice(0, 160));
+    }
+    lastStatus = res.status;
+    if (res.status === 429) {
+      let payload = '';
+      try { payload = JSON.stringify(await res.json()); } catch (_) { payload = ''; }
+      if (t >= 2) throw new Error('brain/api-gemini: quota exhausted after 3 attempts (429); THROW(quota)');
+      await sleepFn(parseRetryDelay(payload));
+      continue;
+    }
+    if (!res.ok) {
+      let eb = '';
+      try { eb = await res.text(); } catch (_) { eb = ''; }
+      throw new Error('brain/api-gemini: http ' + res.status + ' ' + scrubKey(eb, key).slice(0, 160));
+    }
+    const data = await res.json();
+    const cands = (data && Array.isArray(data.candidates)) ? data.candidates : [];
+    const parts = (cands[0] && cands[0].content && Array.isArray(cands[0].content.parts)) ? cands[0].content.parts : [];
+    const text = parts.map((pt) => (pt && typeof pt.text === 'string' ? pt.text : '')).join('');
+    const um = (data && data.usageMetadata) || {};
+    const num = (v) => (Number.isFinite(v) ? v : null);
+    return {
+      text,
+      finishReason: (cands[0] && cands[0].finishReason) || null,
+      usage: {
+        promptTokenCount: num(um.promptTokenCount),
+        candidatesTokenCount: num(um.candidatesTokenCount),
+        thoughtsTokenCount: num(um.thoughtsTokenCount),
+      },
+    };
+  }
+  throw new Error('brain/api-gemini: unreachable (status ' + lastStatus + ')');
+}
+
+async function geminiDecide(opts, prompt) {
+  const key = resolveGeminiKey(opts);
+  const model = resolveGeminiModel(opts);
+  const out = await geminiGenerate({
+    key, model,
+    fetchImpl: opts.fetchImpl, sleepMs: opts.sleepMs,
+    thinking: opts.geminiThinking || 'omit',
+  });
+  return { text: out.text, usage: out.usage, finishReason: out.finishReason, model };
+}
+
+async function listGeminiModels(opts = {}) {
+  const o = (opts && typeof opts === 'object' ? opts : {});
+  const key = resolveGeminiKey(o);
+  const fetchImpl = o.fetchImpl || global.fetch;
+  const res = await fetchImpl(GEMINI_REST_BASE + '/models?pageSize=100', {
+    method: 'GET', headers: { 'x-goog-api-key': key },
+  });
+  if (!res.ok) {
+    let eb = '';
+    try { eb = await res.text(); } catch (_) { eb = ''; }
+    throw new Error('brain/api-gemini: models http ' + res.status + ' ' + scrubKey(eb, key).slice(0, 160));
+  }
+  const data = await res.json();
+  return ((data && Array.isArray(data.models)) ? data.models : []).map((m) => ({
+    name: m.name, supportedGenerationMethods: m.supportedGenerationMethods || [],
+  }));
+}
+
 // CLI transport: spawn `opencode run --format json -m <model> <prompt>`,
 // prompt ALSO staged to a temp file (audit trail); 180s timeout kills.
 // runFn is injectable (tests); default uses child_process.spawn lazily so
@@ -175,8 +319,20 @@ function createBrain(opts = {}) {
   const cap = Number.isFinite(o.cap) ? o.cap : DEFAULT_CAP;
   const logFile = o.logFile || null;
   const stats = { calls: 0 };
+  // Q12: api branches on provider; gemini extras ride apiExtra (no shape
+  // change for other modes; usage stays counts-only, key never logged).
+  const apiExtra = {};
   const transports = {
-    api: (prompt, maxTokens) => apiTransport(o.apiConfig, prompt, maxTokens),
+    api: async (prompt, maxTokens) => {
+      if (o.provider === 'gemini') {
+        const g = await geminiDecide(o, prompt);
+        apiExtra.usage = g.usage; apiExtra.finishReason = g.finishReason; apiExtra.model = g.model;
+        return g.text;
+      }
+      const t = await apiTransport(o.apiConfig, prompt, maxTokens);
+      apiExtra.usage = chatCompletion.lastMeta || null; apiExtra.finishReason = null; apiExtra.model = o.model || null;
+      return t;
+    },
     cli: (prompt) => cliTransport(o, prompt),
     file: (prompt) => fileTransport(o, prompt),
     mock: (prompt) => mockTransport(o, prompt),
@@ -196,7 +352,9 @@ function createBrain(opts = {}) {
       raw = String(await transports[mode](prompt, maxTokens));
       // usage rides the api transport only, captured fresh per call —
       // mock/cli/file modes honestly report null (no provider metering).
-      usage = mode === 'api' ? (chatCompletion.lastMeta || null) : null;
+      // Q12: gemini usage (token counts) flows via apiExtra; legacy path
+      // keeps chatCompletion.lastMeta behavior through the same holder.
+      usage = mode === 'api' ? (apiExtra.usage !== undefined ? apiExtra.usage : null) : null;
       json = strictParse(raw);
     }
     // unknown-never-done: only a parsed "done" is done; anything else
@@ -204,7 +362,12 @@ function createBrain(opts = {}) {
     const action = json ? String(json.action || 'unknown').toLowerCase() : 'unknown';
     // Q8: cli reports the EFFECTIVE model (opts > BRAIN_MODEL env > default id),
     // never a silent null when a resolution exists.
-    const meta = { mode, model: mode === 'cli' ? resolveCliModel(o) : (o.model || null), action, attempts, usage };
+    // Q12: api reports the effective gemini model; finishReason rides meta
+    // (gemini only, null otherwise) for per-call records.
+    const metaModel = mode === 'cli' ? resolveCliModel(o)
+      : (mode === 'api' ? (apiExtra.model !== undefined ? apiExtra.model : (o.model || null)) : (o.model || null));
+    const metaFinish = mode === 'api' ? (apiExtra.finishReason !== undefined ? apiExtra.finishReason : null) : null;
+    const meta = { mode, model: metaModel, action, attempts, usage, finishReason: metaFinish };
     logAttempt(logFile, {
       ts: new Date().toISOString(), mode, model: meta.model,
       action, attempts, usage: meta.usage,
@@ -222,6 +385,17 @@ module.exports = {
   CLI_TIMEOUT_MS,
   DEFAULT_CLI_MODEL,
   resolveCliModel,
+  GEMINI_REST_BASE,
+  GEMINI_DEFAULT_MODEL,
+  GEMINI_MAX_OUTPUT_TOKENS,
+  GEMINI_STATIC_CONTRACT,
+  resolveGeminiKey,
+  resolveGeminiModel,
+  parseRetryDelay,
+  buildGeminiBody,
+  geminiGenerate,
+  geminiDecide,
+  listGeminiModels,
   // thin re-exports: future callers take these from brain, never the
   // underlying modules directly.
   resolveLLMConfig,
