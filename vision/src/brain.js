@@ -48,7 +48,7 @@ async function apiTransport(apiConfig, prompt, maxTokens) {
 const GEMINI_REST_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const GEMINI_DEFAULT_MODEL = 'gemini-3.5-flash-lite';
 const GEMINI_MAX_OUTPUT_TOKENS = 2048;
-const GEMINI_STATIC_CONTRACT = 'You are a test-case planner. Reply with strict JSON ONLY. First character must be {. No analysis, no prose, no markdown fences.';
+const GEMINI_STATIC_CONTRACT = 'You are a test-case planner. Reply with strict JSON ONLY. First character must be {. When selecting test cases reply {"action":"select","keep":[...],"note":"..."} including the action field. No analysis, no prose, no markdown fences.';
 
 function resolveGeminiKey(opts = {}) {
   const o = (opts && typeof opts === 'object' ? opts : {});

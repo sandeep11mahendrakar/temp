@@ -50,6 +50,7 @@ test('Q12 req-shape: native generateContent contract exact', async () => {
   assert.equal(seen[0].headers['x-goog-api-key'], FAKEKEY);
   const b = seen[0].body;
   assert.equal(b.system_instruction.parts[0].text, GEMINI_STATIC_CONTRACT);
+  assert.ok(/action/.test(GEMINI_STATIC_CONTRACT), 'contract mandates an action field (strictParse N1 contract)');
   assert.equal(b.contents[0].role, 'user');
   assert.equal(b.contents[0].parts[0].text, 'PROMPT-TEXT-SENTINEL', 'user prompt text is transmitted verbatim');
   assert.equal(b.generationConfig.responseMimeType, 'application/json');
