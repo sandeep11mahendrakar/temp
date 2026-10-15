@@ -42,7 +42,7 @@ function okFetch(seen, text, usage, finish) {
 // 1. req-shape: exact URL/method/header/body contract.
 test('Q12 req-shape: native generateContent contract exact', async () => {
   const seen = [];
-  const out = await geminiDecide({ apiKey: FAKEKEY, model: 'm-flash', fetchImpl: okFetch(seen, ACT) });
+  const out = await geminiDecide({ apiKey: FAKEKEY, model: 'm-flash', fetchImpl: okFetch(seen, ACT) }, 'PROMPT-TEXT-SENTINEL');
   assert.equal(seen.length, 1);
   assert.ok(seen[0].url.startsWith(GEMINI_REST_BASE + '/models/'), 'rest base');
   assert.ok(seen[0].url.endsWith('models/m-flash:generateContent'), 'model-bound endpoint');
@@ -51,6 +51,7 @@ test('Q12 req-shape: native generateContent contract exact', async () => {
   const b = seen[0].body;
   assert.equal(b.system_instruction.parts[0].text, GEMINI_STATIC_CONTRACT);
   assert.equal(b.contents[0].role, 'user');
+  assert.equal(b.contents[0].parts[0].text, 'PROMPT-TEXT-SENTINEL', 'user prompt text is transmitted verbatim');
   assert.equal(b.generationConfig.responseMimeType, 'application/json');
   assert.equal(b.generationConfig.maxOutputTokens, 2048);
   assert.equal(b.generationConfig.maxOutputTokens, GEMINI_MAX_OUTPUT_TOKENS);

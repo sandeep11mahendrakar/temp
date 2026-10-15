@@ -162,7 +162,7 @@ async function geminiDecide(opts, prompt) {
     key, model,
     fetchImpl: opts.fetchImpl, sleepMs: opts.sleepMs,
     thinking: opts.geminiThinking || 'omit',
-  });
+  }, prompt);
   return { text: out.text, usage: out.usage, finishReason: out.finishReason, model };
 }
 
