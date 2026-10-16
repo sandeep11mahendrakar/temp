@@ -667,9 +667,28 @@ async function getBodyTextLength(page) {
   return page.evaluate(() => (document.body ? document.body.innerText.length : 0));
 }
 
+// F-A shortbody-gate (pure, unit-tested): a PROVEN expected-text transition
+// (TC-has-expected_text AND absent-pre AND present-post) verifies MEDIUM as
+// text_present and bypasses the body-length gate. Every other shape returns
+// null and the legacy path owns the verdict — in particular pre-existing
+// text never bypasses (no trivial pass).
+function textPresentVerify(expectedText, bodyPre, bodyPost) {
+  const exp = typeof expectedText === 'string' ? expectedText.trim().toLowerCase() : '';
+  if (!exp) return null;
+  const pre = String(bodyPre || '').toLowerCase();
+  const post = String(bodyPost || '').toLowerCase();
+  if (!pre.includes(exp) && post.includes(exp)) {
+    return { method: 'text_present', baseline_chars: post.length };
+  }
+  return null;
+}
+
 async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialState) {
   const startedAt = Date.now();
   const urlBefore = page.url();
+  // F-A: pre-action body text for the expected-text transition check.
+  const bodyPreText = await page.evaluate(() =>
+    (document.body ? document.body.innerText : '').slice(0, 2000)).catch(() => '');
   const executedSteps = [];
   const signals = [];
   const states = [];
@@ -1093,6 +1112,18 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       verification = { method: best.method, detail: best.detail };
       verificationStrength = rank[best.method] >= 3 ? 'strong' : 'moderate';
     } else {
+      // F-A shortbody-gate: proven expected-text transition verifies MEDIUM
+      // and bypasses the length gate below; else legacy owns the verdict.
+      const postText = await page.evaluate(() =>
+        (document.body ? document.body.innerText : '').slice(0, 2000)).catch(() => '');
+      const tp = textPresentVerify(testCase.expected_text, bodyPreText, postText);
+      if (tp) {
+        verification = {
+          method: 'text_present',
+          detail: `expected text appeared post-action (baseline ${tp.baseline_chars} chars)`,
+        };
+        verificationStrength = 'moderate';
+      } else {
       // Weak fallback only as a last resort — flagged, never silent.
       const textLength = await getBodyTextLength(page);
       if (textLength <= BODY_TEXT_MIN_LENGTH) {
@@ -1115,6 +1146,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
           verificationStrength = 'weak';
           warnings.push('Verification used weak body-text fallback (no semantic signal)');
         }
+      }
       }
     }
   }
@@ -1405,7 +1437,7 @@ module.exports = {
   isCheckTarget, resolveCheckTarget, checkToggled, runCheckRetries,
   resolveLowConfFill, buildRedetectPayload, submitKeyPress,
   snapCheckToNativeInput, weakStepCount, weakVerdict,
-  blockVerdict,
+  blockVerdict, textPresentVerify,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
