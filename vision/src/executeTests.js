@@ -683,6 +683,21 @@ function textPresentVerify(expectedText, bodyPre, bodyPost) {
   return null;
 }
 
+// F-B compose (pure, unit-tested): final status from ladder status + oracle
+// verdict + actuation baseline. Oracle can only hold or fail a PASS, never
+// promote; a PASS with zero executed steps fails (baseline mandatory).
+function composeFinalStatus({ ladderStatus, oracleVerdict, stepsExecuted } = {}) {
+  const steps = Array.isArray(stepsExecuted) ? stepsExecuted : [];
+  if (ladderStatus !== 'PASS') return { status: ladderStatus, forced: false, reason: null };
+  if (!steps.length) {
+    return { status: 'FAIL', forced: true, reason: 'no baseline actuation: zero steps executed' };
+  }
+  if (oracleVerdict === 'FAIL') {
+    return { status: 'FAIL', forced: true, reason: 'oracle unsatisfied' };
+  }
+  return { status: 'PASS', forced: false, reason: null };
+}
+
 async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialState) {
   const startedAt = Date.now();
   const urlBefore = page.url();
@@ -1191,6 +1206,19 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     expectedNav: typeof testCase.expect_navigation === 'boolean' ? testCase.expect_navigation : null,
     expectedText: testCase.expected_text,
   });
+  // F-B compose: oracle-unsat fails a ladder PASS; zero-step PASS fails
+  // (baseline mandatory, no trivial pass). Oracle never promotes a verdict;
+  // OBSERVED is untouched (D21 frozen semantics).
+  const composed = composeFinalStatus({
+    ladderStatus: status,
+    oracleVerdict: oracle && oracle.verdict,
+    stepsExecuted: executedSteps,
+  });
+  if (composed.status !== status) {
+    status = composed.status;
+    failureReason = composed.reason;
+    warnings.push(`F-B compose: ladder PASS overridden (${composed.reason})`);
+  }
 
   // G2: oracle shape (verdict/app_outcome/snip300/ocr_count); legacy kept.
   return {
@@ -1437,7 +1465,7 @@ module.exports = {
   isCheckTarget, resolveCheckTarget, checkToggled, runCheckRetries,
   resolveLowConfFill, buildRedetectPayload, submitKeyPress,
   snapCheckToNativeInput, weakStepCount, weakVerdict,
-  blockVerdict, textPresentVerify,
+  blockVerdict, textPresentVerify, composeFinalStatus,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
