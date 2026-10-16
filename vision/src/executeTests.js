@@ -395,13 +395,89 @@ function staleFillRecovery(queue, probeLens, alreadyRefilled) {
   return alreadyRefilled ? 'abort' : 'refill';
 }
 
+// F-E shadow-pierce (pure, unit-tested): truth targets may carry
+// >>>-piercing selectors (#host>>>#inner) for shadow-DOM content. The vision
+// pool stays PRIMARY: pierce is assist-only, attempted solely when pool
+// resolution is unresolved, and pierced steps are dom_assist-tagged
+// (click-by-vision:N) so the DOM assist is never silent.
+function splitPierce(sel) {
+  if (typeof sel !== 'string') return null;
+  const segs = sel.split('>>>').map((s) => s.trim()).filter(Boolean);
+  return segs.length >= 2 ? segs : null;
+}
+
+// Duck-typed shadow walk (real DOM or test fakes): descend querySelector +
+// shadowRoot per segment; the final segment returns the element itself.
+function pierceQueryNode(root, segments) {
+  let node = root;
+  for (let k = 0; k < segments.length; k++) {
+    if (!node || typeof node.querySelector !== 'function') return null;
+    const el = node.querySelector(segments[k]);
+    if (!el) return null;
+    if (k === segments.length - 1) return el;
+    node = el.shadowRoot || null;
+  }
+  return null;
+}
+
+function rectCenter(el) {
+  const r = el && typeof el.getBoundingClientRect === 'function' ? el.getBoundingClientRect() : null;
+  if (!r || !(r.width > 0) || !(r.height > 0)) return null;
+  return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+}
+
+// Runs inside page.evaluate (real DOM only): pierce + center readback.
+function pierceWalkFn(segments) {
+  let node = document;
+  for (let k = 0; k < segments.length; k++) {
+    if (!node || typeof node.querySelector !== 'function') return null;
+    const el = node.querySelector(segments[k]);
+    if (!el) return null;
+    if (k === segments.length - 1) {
+      const r = el.getBoundingClientRect ? el.getBoundingClientRect() : null;
+      if (!r || !(r.width > 0) || !(r.height > 0)) return null;
+      return {
+        x: r.x + r.width / 2, y: r.y + r.height / 2,
+        tag: el.tagName || '', text: (el.innerText || '').slice(0, 80),
+      };
+    }
+    node = el.shadowRoot || null;
+  }
+  return null;
+}
+
+// Selector candidate from a step: explicit >>> text wins (G2z unseeded
+// fallback carries the raw selector in target.text).
+function pierceCandidate(step) {
+  const t = step && step.target && typeof step.target.text === 'string' ? step.target.text : '';
+  if (t.includes('>>>')) return t;
+  const v = step && typeof step.value === 'string' ? step.value : '';
+  if (v.includes('>>>')) return v;
+  return null;
+}
+
+// evaluatePierce = async (segments) => hit|null (production: page.evaluate
+// wrapper; tests: stub). Returns coords-hit or null. Never throws.
+async function tryShadowPierce(evaluatePierce, step) {
+  try {
+    const segs = splitPierce(pierceCandidate(step));
+    if (!segs || typeof evaluatePierce !== 'function') return null;
+    const hit = await evaluatePierce(segs);
+    if (!hit || !Number.isFinite(hit.x) || !Number.isFinite(hit.y)) return null;
+    return hit;
+  } catch (_) {
+    return null;
+  }
+}
+
 // B1 dom-disclose: every DOM-assisted actuation must say so on the step.
 // Vision boundary marker is `click-by-vision:Y|N` (<=25 chars): Y = final
 // click coords came from vision re-detect; N = DOM snapped them.
-function domAssistTag({ snapped = false, focusSpaceUsed = false } = {}) {
+function domAssistTag({ snapped = false, focusSpaceUsed = false, pierced = false } = {}) {
   const parts = [];
   if (snapped) parts.push('domsnap');
   if (focusSpaceUsed) parts.push('focus-space');
+  if (pierced) parts.push('shadow-pierce');
   if (!parts.length) return { dom_assist: null, click_by_vision: 'Y' };
   return { dom_assist: parts.join('+'), click_by_vision: 'N' };
 }
@@ -803,6 +879,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     let checkOk = true;
     let checkSnap = false;
     let contextMenuSeen = null;
+    let pierceAssist = false;
 
     if (REDETECT_ENABLED && ['click', 'fill', 'dblclick', 'right_click'].includes(step.action)) {
       if (!currentElements) {
@@ -876,6 +953,34 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
                 : resolveTarget(currentElements, step);
             }
           } catch (_) { /* refresh is best-effort; fall through to FAIL */ }
+        }
+      }
+
+      // F-E shadow-pierce assist (vision-primary): pool resolution above stays
+      // primary; ONLY when still unresolved AND the step carries a >>>
+      // selector, read back pierced DOM coords. The existing pre-action
+      // probePoint below then readback-confirms the point before acting.
+      if (!resolution.resolved && ['click', 'fill'].includes(step.action)) {
+        const pierced = await tryShadowPierce(
+          (segs) => page.evaluate(pierceWalkFn, segs).catch(() => null),
+          step
+        ).catch(() => null);
+        if (pierced) {
+          resolution = {
+            resolved: true,
+            via: 'shadow-pierce',
+            element: {
+              id: `pierced-${i + 1}`,
+              type: (step.target && step.target.type) || 'unknown',
+              text: (step.target && step.target.text) || '',
+              conf: null,
+              synth: null,
+              cx: pierced.x,
+              cy: pierced.y,
+            },
+          };
+          pierceAssist = true;
+          warnings.push(`Step ${i + 1}: shadow-pierce DOM assist (vision pool unresolved; coords DOM-read, click-by-vision:N)`);
         }
       }
 
@@ -1101,10 +1206,11 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       }
 
       // B1 dom-disclose: name any DOM assistance on the step + boundary Y/N.
+      // F-E: pierced resolutions tag shadow-pierce even on non-check steps.
       const isCheckClick = isCheckTarget(step) && step.action === 'click';
       const assist = domAssistTag(isCheckClick
         ? { snapped: checkSnap, focusSpaceUsed: checkAttempts >= 3 }
-        : {});
+        : (pierceAssist ? { pierced: true } : {}));
       executedSteps.push({
         index: i + 1,
         ...execStep,
@@ -1118,7 +1224,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         checked_state_verified: isCheckTarget(step) && step.action === 'click' ? checkOk : null,
         check_snap: isCheckTarget(step) && step.action === 'click' ? checkSnap : null,
         contextmenu_observed: step.action === 'right_click' ? contextMenuSeen : null,
-        dom_assist: isCheckClick ? assist.dom_assist : null,
+        dom_assist: (isCheckClick || pierceAssist) ? assist.dom_assist : null,
         vision_boundary: step.action === 'click' ? `click-by-vision:${assist.click_by_vision}` : null,
         submit_key_pressed: submitKeyPressed,
         low_confidence_retry: lowconfRetry,
@@ -1537,6 +1643,7 @@ module.exports = {
   snapCheckToNativeInput, weakStepCount, weakVerdict,
   blockVerdict, textPresentVerify, composeFinalStatus,
   dialogSignal, newPageSignal, SIGNAL_RANKS,
+  splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
