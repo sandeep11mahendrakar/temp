@@ -360,6 +360,14 @@ function checkToggled(before, after) {
 // detection and does NOT count weak.
 const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor|label_drift)(\+|$)/;
 
+// F-C: ranked signal methods. dialog_message (2, moderate interaction
+// evidence) and new_page_url (3, real navigation-grade URL) close the
+// missing-signal gap; everything else frozen.
+const SIGNAL_RANKS = {
+  input_value: 3, checked_state: 3, new_page_url: 3,
+  scroll_position: 2, visual_state_change: 2, dialog_message: 2,
+};
+
 function weakStepCount(stepsExecuted) {
   if (!Array.isArray(stepsExecuted)) return 0;
   return stepsExecuted.filter((s) => s && s.ok === true &&
@@ -680,7 +688,32 @@ function textPresentVerify(expectedText, bodyPre, bodyPost) {
   if (!pre.includes(exp) && post.includes(exp)) {
     return { method: 'text_present', baseline_chars: post.length };
   }
+  // F-C mapping-limit: expects carrying regex syntax get one bounded RegExp
+  // attempt (120 chars, oracle.js precedent). Absent-pre still mandatory;
+  // invalid patterns fall through to legacy. Never throws.
+  if (/[.*+?^${}()|[\]\\]/.test(exp)) {
+    try {
+      const re = new RegExp(exp.slice(0, 120), 'i');
+      if (!re.test(pre) && re.test(post)) {
+        return { method: 'text_present', baseline_chars: post.length };
+      }
+    } catch (_) { /* invalid regex => legacy owns the verdict */ }
+  }
   return null;
+}
+
+// F-C missing-signals (pure): dialog + new-tab signal builders. Empty
+// inputs yield null (a missing signal stays missing, honestly).
+function dialogSignal(type, message) {
+  const msg = typeof message === 'string' ? message.slice(0, 200).trim() : '';
+  if (!msg) return null;
+  return { method: 'dialog_message', detail: `${String(type || 'dialog')}: ${msg}` };
+}
+
+function newPageSignal(url) {
+  const u = typeof url === 'string' ? url.trim() : '';
+  if (!u || u === 'about:blank') return null;
+  return { method: 'new_page_url', detail: u.slice(0, 300) };
 }
 
 // F-B compose (pure, unit-tested): final status from ladder status + oracle
@@ -704,6 +737,31 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
   // F-A: pre-action body text for the expected-text transition check.
   const bodyPreText = await page.evaluate(() =>
     (document.body ? document.body.innerText : '').slice(0, 2000)).catch(() => '');
+  // F-C: dialog + popup collectors (best-effort; auto-dismiss so an
+  // unhandled dialog can never hang the run; detached before return).
+  const seenDialogs = [];
+  const dialogHandler = (d) => {
+    try {
+      seenDialogs.push({
+        type: typeof d.type === 'function' ? d.type() : 'dialog',
+        message: String(d.message ? d.message() : '').slice(0, 200),
+      });
+      if (d && typeof d.dismiss === 'function') d.dismiss().catch(() => {});
+    } catch (_) { /* collector never breaks the run */ }
+  };
+  try { page.on('dialog', dialogHandler); } catch (_) {}
+  const seenPages = [];
+  const pageHandler = (p) => {
+    try {
+      const u = p && typeof p.url === 'function' ? p.url() : '';
+      if (u && u !== 'about:blank') seenPages.push(String(u).slice(0, 300));
+    } catch (_) {}
+  };
+  let runCtx = null;
+  try {
+    runCtx = typeof page.context === 'function' ? page.context() : null;
+    if (runCtx && typeof runCtx.on === 'function') runCtx.on('page', pageHandler);
+  } catch (_) { runCtx = null; }
   const executedSteps = [];
   const signals = [];
   const states = [];
@@ -1118,7 +1176,16 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     if (urlChanged && !needUrlChange) {
       warnings.push(`Unexpected navigation to ${urlAfter}`);
     }
-    const rank = { input_value: 3, checked_state: 3, scroll_position: 2, visual_state_change: 2 };
+    // F-C: fold collected dialog + popup evidence into ranked signals.
+    for (const dg of seenDialogs) {
+      const s = dialogSignal(dg.type, dg.message);
+      if (s) signals.push({ step: 'dialog', ...s });
+    }
+    for (const u of seenPages) {
+      const s = newPageSignal(u);
+      if (s) { signals.push({ step: 'newtab', ...s }); break; }
+    }
+    const rank = SIGNAL_RANKS;
     const best = signals
       .filter((s) => rank[s.method])
       .sort((a, b) => rank[b.method] - rank[a.method])[0] || null;
@@ -1206,6 +1273,9 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     expectedNav: typeof testCase.expect_navigation === 'boolean' ? testCase.expect_navigation : null,
     expectedText: testCase.expected_text,
   });
+  // F-C: detach collectors (best-effort; the run owns its listeners).
+  try { page.removeListener('dialog', dialogHandler); } catch (_) {}
+  try { if (runCtx && typeof runCtx.removeListener === 'function') runCtx.removeListener('page', pageHandler); } catch (_) {}
   // F-B compose: oracle-unsat fails a ladder PASS; zero-step PASS fails
   // (baseline mandatory, no trivial pass). Oracle never promotes a verdict;
   // OBSERVED is untouched (D21 frozen semantics).
@@ -1466,6 +1536,7 @@ module.exports = {
   resolveLowConfFill, buildRedetectPayload, submitKeyPress,
   snapCheckToNativeInput, weakStepCount, weakVerdict,
   blockVerdict, textPresentVerify, composeFinalStatus,
+  dialogSignal, newPageSignal, SIGNAL_RANKS,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
