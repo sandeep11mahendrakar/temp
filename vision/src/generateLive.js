@@ -107,6 +107,7 @@ async function runGenerateLive(opts = {}) {
   const key = resolveGeminiKey(o); // throws if absent; never logged
 
   const runStart = Date.now(); // for stale-report guard (never score a report not produced by this run)
+  const runId = `${runStart}_${Math.random().toString(36).slice(2, 8)}`;
 
   const boot = (typeof o.bootZoo === 'function') ? o.bootZoo : bootZoo;
   const { proc, port: p } = await boot(port);
@@ -160,8 +161,8 @@ async function runGenerateLive(opts = {}) {
       // match generated TCs to the truth (page-scoped) for oracle judging.
       const tcs = gen.tcs || [];
       const matched = tcs.map((tc) => (truth && matchRule(tc, truth)) ? tc.id : null);
-      const caseFile = path.join(OUT, `gl1_case_${slug}.json`);
-      const repFile = path.join(OUT, `gl1_rep_${slug}.json`);
+      const caseFile = path.join(OUT, `gl1_case_${slug}_${runId}.json`);
+      const repFile = path.join(OUT, `gl1_rep_${slug}_${runId}.json`);
       const cases = tcs.map((tc) => {
         const hit = truth && matchRule(tc, truth);
         return {

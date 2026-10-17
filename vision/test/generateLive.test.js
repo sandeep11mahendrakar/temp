@@ -101,3 +101,49 @@ test('GL1 audit: invalid-key (401) records sanitized evidence, sets blocked=inva
     if (had) process.env.GENERATE = prev; else delete process.env.GENERATE;
   }
 });
+
+// GL1 final hardening: a stale report at the legacy fixed path can never be scored.
+test('GL1 hardening: stale report at legacy path is never scored', async () => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'GENERATE');
+  const prev = process.env.GENERATE;
+  process.env.GENERATE = 'on';
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const legacyRep = path.join(__dirname, '..', '..', 'vision', 'storage', 'outputs', 'gl1_rep_form-validate.json');
+  // Pre-create a stale report with a FUTURE timestamp and a sentinel verdict.
+  const stale = { results: [{ id: 'STALE-SENTINEL', status: 'PASS', oracle: { verdict: 'PASS', app_outcome: 'accepted' }, steps_executed: [] }] };
+  fs.writeFileSync(legacyRep, JSON.stringify(stale));
+  const future = new Date(Date.now() + 60000);
+  fs.utimesSync(legacyRep, future, future);
+  const fakePage = {
+    _url: 'https://example.com/',
+    url() { return this._url; },
+    async goto(u) { this._url = u; },
+    async waitForTimeout() {},
+    async evaluate() { return { elements: [{ id: 'b', type: 'button', text: 'Go' }], bodyText: 'hello' }; },
+  };
+  const fakeBrowser = { newPage: async () => fakePage, close: async () => {} };
+  try {
+    const result = await runGenerateLive({
+      pages: ['form-validate'],
+      model: 'gemini-3.5-flash-lite',
+      cap: 15,
+      port: 5010,
+      bootZoo: async () => ({ proc: { kill: () => {} }, port: 5010 }),
+      browserFactory: async () => fakeBrowser,
+      geminiGenerate: async () => { throw new Error('brain/api-gemini: http 401 API key not valid'); },
+    });
+    // The run is blocked on invalid key; the stale legacy report must NOT be scored.
+    assert.equal(result.blocked, 'invalid-key');
+    assert.equal(result.pages.length, 1);
+    // The stale sentinel must never appear in the result.
+    const serialized = JSON.stringify(result);
+    assert.ok(!serialized.includes('STALE-SENTINEL'), 'stale sentinel never scored');
+    assert.ok(!serialized.includes('"PASS"'), 'no PASS verdict from stale report');
+    // calls recorded only from this run
+    assert.equal(result.calls.length, 1);
+  } finally {
+    if (had) process.env.GENERATE = prev; else delete process.env.GENERATE;
+    try { fs.unlinkSync(legacyRep); } catch (_) {}
+  }
+});
