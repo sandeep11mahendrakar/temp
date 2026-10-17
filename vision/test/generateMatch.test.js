@@ -154,6 +154,14 @@ test('GL0 audit: matchRule requires per-pair action-class compatibility', () => 
   assert.equal(matchRule(gen2, truth2), true);
 });
 
+test('GL0 audit: two unknown actions (both null) cannot match each other', () => {
+  const gen = { id: 'g', steps: [{ action: 'frobulate', target: { type: 'button', text: 'Go' } }] };
+  const truth = { tc_id: 't', steps: [{ action: 'zorp', target: { type: 'button', text: 'Go' } }] };
+  assert.equal(actionClass('frobulate'), null);
+  assert.equal(actionClass('zorp'), null);
+  assert.equal(matchRule(gen, truth), false);
+});
+
 test('GL0 audit: unknown actions do not default to the system class', () => {
   assert.equal(actionClass('foo'), null);
   assert.equal(actionClass(''), null);
