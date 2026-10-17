@@ -32,3 +32,7 @@
 {"row":"R-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"reportSummary+siteSummary added; smoke passed; suites 496/496; commit 9c4c9b6","evid":"git show --stat 9c4c9b6 + smoke_r2 output","ts":"2026-10-18T00:00:00+05:30"}
 {"row":"V-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"flag-gated OCR_SYNTH default off; WEAK-tagged; 3 tests; suites 499/499; AIza 0","evid":"vision/src/ocrSynth.js","ts":"2026-10-17"}
 {"row":"R-6","aud":"ACCEPT","gates":"G1-G5 pass","check":"offline replay+summary; 3 tests; suites 504/505 (1 pre-existing metricsCalc failure from W3 in-flight, unrelated); AIza 0","evid":"vision/src/demoReplay.js","ts":"2026-10-17"}
+{"row":"R-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"metricsCalc created+3 tests; suites 505/505; commit d107b4b","evid":"git show --stat d107b4b + vision/test/metricsCalc.test.js","ts":"2026-10-18T00:15:00+05:30"}
+{"row":"R-5","aud":"ACCEPT","gates":"G1-G5 pass","check":"docs/CLAIMS_MATRIX.md 15 claims+non-claims; commit d0f45f3","evid":"git show --stat d0f45f3 + docs/CLAIMS_MATRIX.md","ts":"2026-10-18T00:40:00+05:30"}
+{"row":"Q-4","aud":"ACCEPT","gates":"G1-G5 pass","check":"docs/LIMITATIONS.md 10 limitations + roadmap; commit 291cd8b","evid":"git show --stat 291cd8b + docs/LIMITATIONS.md","ts":"2026-10-18T01:00:00+05:30"}
+{"row":"R-4","aud":"ACCEPT","gates":"G1-G5 pass","check":"mock leg only, live leg BLOCKED-honest; 2 tests; suites 510/510; AIza 0","evid":"docs/MODEL_ABLATION.md","ts":"2026-10-17"}
