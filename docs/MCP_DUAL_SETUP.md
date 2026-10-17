@@ -57,12 +57,16 @@ cd "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\vision"
 node mcp\server.js
 ```
 
-Tools (final contract, all live since R3-T5 builder landing, verified 8/8):
+Tools (frozen contract, M-1 freeze; 11 tools, MCP suite 41/41):
 `status` (service health, no browser), `perceive` (url → compact visual
-DOM, SAME shape as API path + `navigated` bool), `act` (one grounded action
-in the persistent headed session with live re-detect; stale targets FAIL
-explicitly, never clicked), `evidence` (screenshots + history), `reset`
-(close session, services stay up).
+DOM, SAME shape as API path + `navigated` bool; accepts `block` for
+blockDetector preflight), `act` (one grounded action in the persistent
+headed session with live re-detect + read-back of `input_value`; stale
+targets FAIL explicitly, never clicked), `assert` (oracle eval from client
+args, no browser), `evidence` (screenshots + history), `reset` (close
+session, services stay up), `memory_get`/`memory_put` (local lesson store),
+`report_emit` (emit a report JSON), `library_list`/`library_get` (read-only
+site library access). No raw key/secret in any reply.
 
 Never-perceive-mid-form (H1): `perceive` navigates ONLY when the session is
 blank, the URL differs, or `navigate:true` is passed — perceiving the already
@@ -167,5 +171,5 @@ POST /mcp (except GET /health) returns `404`. The HTTP listener binds
 | LLM 404 "unavailable for free" | That `:free` variant was withdrawn; use a documented lane |
 | Ports 5000-5004 busy | Only one live run at a time; taskkill stray node/python, re-run |
 | YOLO UnpicklingError | `screenparser_best.pt` is an LFS pointer; download the real ~153 MB file |
-| MCP client sees no tools | `node --check vision\mcp\server.js`, then `node --test "mcp/*.test.js"` in `vision/` (8 tests, offline) |
+| MCP client sees no tools | `node --check vision\mcp\server.js`, then `node --test "mcp/*.test.js"` in `vision/` (11 tools, 41 tests, offline) |
 | `FreeTierError` (opencode key) | Free oc keys work ONLY inside OpenCode sessions — use the MCP way instead |
