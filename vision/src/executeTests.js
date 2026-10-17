@@ -322,6 +322,40 @@ function resolveDragDestination(elements, step) {
   return { ok: false, reason: 'no drag destination (missing to{} and value "x2,y2")' };
 }
 
+// D1b drag mechanism (guarded, best-effort): actuate a native drag-to via
+// HTML5 DnD events so pages that listen for dragstart/dragover/drop (the zoo
+// drag lab) actually fire. Returns true when the dispatch ran, false otherwise
+// (caller then falls back to the legacy mouse drag). Never throws.
+async function dispatchHtml5Drag(page, sx, sy, tx, ty) {
+  if (!page || typeof page.evaluate !== 'function') return false;
+  try {
+    await page.evaluate(([ax, ay, bx, by]) => {
+      const src = document.elementFromPoint(ax, ay);
+      const tgt = document.elementFromPoint(bx, by);
+      if (!src || !tgt) return;
+      let dt;
+      try { dt = new DataTransfer(); } catch (_) { dt = undefined; }
+      const mk = (type, x, y) => {
+        try {
+          return new DragEvent(type, {
+            bubbles: true, cancelable: true, clientX: x, clientY: y, dataTransfer: dt,
+          });
+        } catch (_) {
+          return new Event(type, { bubbles: true, cancelable: true });
+        }
+      };
+      src.dispatchEvent(mk('dragstart', ax, ay));
+      tgt.dispatchEvent(mk('dragenter', bx, by));
+      tgt.dispatchEvent(mk('dragover', bx, by));
+      tgt.dispatchEvent(mk('drop', bx, by));
+      src.dispatchEvent(mk('dragend', ax, ay));
+    }, [sx, sy, tx, ty]);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 // H1x block-wiring (pure, unit-tested): block verdict for the CURRENT page
 // from live observables. Never throws — detector failure yields null (no
 // verdict) rather than a misclassification. Callers attach the result to
@@ -915,6 +949,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     let contextMenuSeen = null;
     let pierceAssist = false;
     let dragDestVia = null;
+    let dragNative = false;
 
     if (REDETECT_ENABLED && ['click', 'fill', 'dblclick', 'right_click'].includes(step.action)) {
       if (!currentElements) {
@@ -1089,6 +1124,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
       }
       execStep.value = dest.value;
       dragDestVia = dest.via;
+      dragNative = dest.via !== 'legacy_value';
     }
 
     // M2 FIX-A: snap checkbox/radio clicks to the native control center so
@@ -1152,7 +1188,20 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
 
     try {
       const stepUrlBefore = page.url();
-      await executeAction(page, execStep);
+      if (step.action === 'drag' && dragNative) {
+        // D1b: a native drag-to actuates via HTML5 DnD events (draggable +
+        // drop listeners); the legacy mouse drag is the fallback.
+        const mm = /^(\d+)\s*,\s*(\d+)$/.exec(String(execStep.value || ''));
+        const dndOk = mm
+          ? await dispatchHtml5Drag(page, execStep.x, execStep.y, Number(mm[1]), Number(mm[2]))
+          : false;
+        if (!dndOk) {
+          warnings.push(`Step ${i + 1}: HTML5 DnD dispatch unavailable — legacy mouse drag fallback`);
+          await executeAction(page, execStep);
+        }
+      } else {
+        await executeAction(page, execStep);
+      }
       // L1: read back the armed contextmenu point (null = no menu observed).
       if (step.action === 'right_click') {
         contextMenuSeen = await readContextMenuProbe(page);
@@ -1284,6 +1333,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         check_snap: isCheckTarget(step) && step.action === 'click' ? checkSnap : null,
         contextmenu_observed: step.action === 'right_click' ? contextMenuSeen : null,
         drag_to_via: step.action === 'drag' ? dragDestVia : null,
+        drag_mechanism: step.action === 'drag' ? (dragNative ? 'html5_dnd' : 'mouse') : null,
         dom_assist: (isCheckClick || pierceAssist) ? assist.dom_assist : null,
         vision_boundary: step.action === 'click' ? `click-by-vision:${assist.click_by_vision}` : null,
         submit_key_pressed: submitKeyPressed,
@@ -1709,6 +1759,7 @@ module.exports = {
   blockVerdict, textPresentVerify, composeFinalStatus,
   dialogSignal, newPageSignal, SIGNAL_RANKS,
   resolveDragDestination,
+  dispatchHtml5Drag,
   splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,

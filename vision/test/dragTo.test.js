@@ -11,7 +11,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { resolveDragDestination } = require('../src/executeTests');
+const { resolveDragDestination, dispatchHtml5Drag } = require('../src/executeTests');
 
 const POOL = [
   { type: 'button', text: 'Drag Me', cx: 40, cy: 60 },
@@ -69,3 +69,52 @@ test('D1 expect+1 pin: drag-drop truth carries native to{} contract', () => {
   const r = resolveDragDestination(POOL, step);
   assert.equal(r.ok, true);
 });
+
+// --- D1b: HTML5 DnD mechanism (draggable + drop listeners) ---
+
+function fakePage({ evaluateThrows = false, noEvaluate = false } = {}) {
+  const calls = [];
+  const events = [];
+  const stub = {
+    calls, events,
+    evaluate: async (fn, arg) => {
+      if (evaluateThrows) throw new Error('evaluate unavailable');
+      calls.push(arg);
+      const prevDoc = global.document;
+      const prevDT = global.DataTransfer;
+      const prevDE = global.DragEvent;
+      global.document = {
+        elementFromPoint: () => ({ dispatchEvent: (ev) => { events.push(ev.type); return true; } }),
+      };
+      global.DataTransfer = function DataTransfer() { return {}; };
+      global.DragEvent = class DragEvent {
+        constructor(type, init) { this.type = type; Object.assign(this, init || {}); }
+      };
+      try { fn(arg); } finally {
+        global.document = prevDoc; global.DataTransfer = prevDT; global.DragEvent = prevDE;
+      }
+    },
+  };
+  if (noEvaluate) delete stub.evaluate;
+  return stub;
+}
+
+test('D1b dispatchHtml5Drag fires dragstart/dragenter/dragover/drop/dragend at coords', async () => {
+  const p = fakePage();
+  const ok = await dispatchHtml5Drag(p, 10, 20, 300, 200);
+  assert.equal(ok, true);
+  assert.deepEqual(p.calls[0], [10, 20, 300, 200]);
+  assert.deepEqual(p.events, ['dragstart', 'dragenter', 'dragover', 'drop', 'dragend']);
+});
+
+test('D1b CONTROL page without evaluate => false (caller uses legacy mouse)', async () => {
+  const p = fakePage({ noEvaluate: true });
+  assert.equal(await dispatchHtml5Drag(p, 1, 2, 3, 4), false);
+});
+
+test('D1b CONTROL evaluate throwing => false, never throws', async () => {
+  const p = fakePage({ evaluateThrows: true });
+  await assert.doesNotReject(() => dispatchHtml5Drag(p, 1, 2, 3, 4));
+  assert.equal(await dispatchHtml5Drag(p, 1, 2, 3, 4), false);
+});
+
