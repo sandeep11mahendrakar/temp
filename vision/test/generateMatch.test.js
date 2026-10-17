@@ -9,7 +9,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { actionClass, textOverlap, matchRule, scoreGenerated, MATCH_OVERLAP } = require('../src/generateMatch');
+const { actionClass, textOverlap, matchRule, scoreGenerated, MATCH_OVERLAP, targetTextOf } = require('../src/generateMatch');
 const { brainGenerate } = require('../src/brain');
 
 const FIX_DIR = path.join(__dirname, 'fixtures', 'zoo-vdom');
@@ -134,4 +134,30 @@ test('GL0 CONTROL: invalid shapes lower schema_validity only', () => {
   assert.equal(row.schema_validity, 0.5);
   assert.equal(row.truth_coverage, 0);
   assert.equal(row.false_pass, 0);
+});
+
+// GL0 audit (independent) regression tests:
+test('GL0 audit: type is not mixed into target text (no false match by control type)', () => {
+  assert.equal(targetTextOf({ target: { type: 'button', text: 'Next' } }), 'Next');
+  assert.equal(targetTextOf({ target: { type: 'button', text: '' } }), '');
+  // unrelated controls sharing only a type token no longer match on type
+  assert.equal(textOverlap('Next', 'Submit'), 0);
+});
+
+test('GL0 audit: matchRule requires per-pair action-class compatibility', () => {
+  const gen = { id: 'g', steps: [{ action: 'click', target: { type: 'button', text: 'Go' } }] };
+  const truth = { tc_id: 't', steps: [{ action: 'scroll', target: { type: 'button', text: 'Go' } }] };
+  assert.equal(matchRule(gen, truth), false);
+  // compatible class + matching text still matches
+  const gen2 = { id: 'g2', steps: [{ action: 'click', target: { type: 'button', text: 'Go' } }] };
+  const truth2 = { tc_id: 't2', steps: [{ action: 'click', target: { type: 'button', text: 'Go' } }] };
+  assert.equal(matchRule(gen2, truth2), true);
+});
+
+test('GL0 audit: unknown actions do not default to the system class', () => {
+  assert.equal(actionClass('foo'), null);
+  assert.equal(actionClass(''), null);
+  assert.equal(actionClass(null), null);
+  assert.equal(actionClass('scroll'), 'system');
+  assert.equal(actionClass('click'), 'pointer');
 });

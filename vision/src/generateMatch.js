@@ -15,7 +15,8 @@ const ACTION_CLASS = {
 const MATCH_OVERLAP = 0.5;
 
 function actionClass(action) {
-  return ACTION_CLASS[String(action == null ? '' : action).toLowerCase()] || 'system';
+  const k = String(action == null ? '' : action).toLowerCase();
+  return Object.prototype.hasOwnProperty.call(ACTION_CLASS, k) ? ACTION_CLASS[k] : null;
 }
 
 function tokens(s) {
@@ -26,7 +27,7 @@ function norm(s) { return tokens(s).join(''); }
 function targetTextOf(step) {
   const t = step && step.target;
   if (typeof t === 'string') return t;
-  if (t && typeof t === 'object') return [t.text, t.type].filter((x) => typeof x === 'string' && x).join(' ');
+  if (t && typeof t === 'object' && typeof t.text === 'string') return t.text;
   return '';
 }
 
@@ -45,18 +46,22 @@ function textOverlap(a, b) {
   return hit / B.size;
 }
 
-// match-rule: (page-scoped by caller) AND action-class intersects AND the best
-// step-pair target-text-overlap >= 0.5.
+// match-rule: (page-scoped by caller) AND a compatible action-class for the
+// matching step pair AND the best step-pair target-text-overlap >= 0.5.
+// Class compatibility is checked PER STEP PAIR (not globally) so a generated
+// click can never be credited against a truth scroll that merely shares text.
 function matchRule(generatedTc, truth) {
   const gSteps = (generatedTc && generatedTc.steps) || [];
   const tSteps = (truth && truth.steps) || [];
-  const gClasses = new Set(gSteps.map((s) => actionClass(s && s.action)));
-  const tClasses = new Set(tSteps.map((s) => actionClass(s && s.action)));
-  const classOk = [...tClasses].some((c) => gClasses.has(c));
-  if (!classOk) return false;
   let best = 0;
   for (const gs of gSteps) {
-    for (const ts of tSteps) best = Math.max(best, textOverlap(targetTextOf(gs), targetTextOf(ts)));
+    const gc = actionClass(gs && gs.action);
+    if (!gc) continue; // unknown action never matches
+    for (const ts of tSteps) {
+      const tc = actionClass(ts && ts.action);
+      if (!tc || tc !== gc) continue; // per-pair class compatibility
+      best = Math.max(best, textOverlap(targetTextOf(gs), targetTextOf(ts)));
+    }
   }
   return best >= MATCH_OVERLAP;
 }
