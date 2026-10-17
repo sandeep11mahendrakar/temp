@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-keyboard-only","steps":[{"action":"key","target":{"type":"button","text":"Activate"},"value":"Tab"},{"action":"key","target":{"type":"button","text":"Activate"},"value":"Enter"}],"expected":{"kind":"text_present","expect":"keyboard: activated"}}

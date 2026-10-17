@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><title>zoo toast</title>
+<style>#toast{margin-top:8px;padding:6px 10px;background:#efe;border:1px solid #8a8;max-width:220px;}</style>
+</head>
+<body>
+<h1 id="page-title">Notifications</h1>
+<button id="show-toast" type="button">Show toast</button>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<script>
+document.getElementById('show-toast').addEventListener('click', function () {
+  var t = document.getElementById('toast');
+  t.textContent = 'Saved!';
+  t.hidden = false;
+});
+</script>
+</body></html>

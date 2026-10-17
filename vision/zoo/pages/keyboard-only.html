@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><title>zoo keyboard only</title></head>
+<body>
+<h1 id="page-title">Keyboard only</h1>
+<button id="kb-activate" type="button">Activate</button>
+<p id="kb-status">keyboard: idle</p>
+<script>
+document.getElementById('kb-activate').addEventListener('click', function () {
+  document.getElementById('kb-status').textContent = 'keyboard: activated';
+});
+</script>
+</body></html>
