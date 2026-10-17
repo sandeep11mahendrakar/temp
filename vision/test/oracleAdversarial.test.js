@@ -90,6 +90,23 @@ test('V-6 expect_rejection without rejection text and no change => not PASS', ()
   assert.notEqual(r.verdict, 'PASS');
 });
 
+test('V-6 url_change kind: timer-driven urlChanged => PASS (by-design, URL changed)', () => {
+  const r = V({ oracle: { kind: 'url_change', expect: 'x' } }, { urlChanged: true, ocrWords: 1, pageText: 'x' });
+  assert.equal(r.verdict, 'PASS');
+});
+
+test('V-6 url_change kind: no urlChanged and no text => not PASS', () => {
+  const r = V({ oracle: { kind: 'url_change', expect: 'x' } }, { urlChanged: false, ocrWords: 1, pageText: 'other' });
+  assert.notEqual(r.verdict, 'PASS');
+});
+
+test('V-6 non-KIND_EVAL known kinds (value/bbox_delta/state_diff/observed) never false-PASS on absent evidence', () => {
+  for (const k of ['value', 'bbox_delta', 'state_diff', 'observed']) {
+    const r = V({ oracle: { kind: k, expect: 'x' } }, { urlChanged: false, ocrWords: 1, pageText: 'other' });
+    assert.notEqual(r.verdict, 'PASS', k);
+  }
+});
+
 test('V-6 KIND_EVAL and KNOWN_KINDS consistent (contract integrity)', () => {
   for (const k of KIND_EVAL) assert.ok(KNOWN_KINDS.has(k), 'KIND_EVAL subset of KNOWN_KINDS: ' + k);
 });
