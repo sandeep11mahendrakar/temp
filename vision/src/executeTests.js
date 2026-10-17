@@ -432,7 +432,7 @@ const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor|label_drift)(\+|$)/;
 // evidence) and new_page_url (3, real navigation-grade URL) close the
 // missing-signal gap; everything else frozen.
 const SIGNAL_RANKS = {
-  input_value: 3, checked_state: 3, new_page_url: 3,
+  input_value: 3, checked_state: 3, new_page_url: 3, count_delta: 3,
   scroll_position: 2, visual_state_change: 2, dialog_message: 2,
 };
 
@@ -875,6 +875,53 @@ function composeFinalStatus({ ladderStatus, oracleVerdict, stepsExecuted } = {})
   return { status: 'PASS', forced: false, reason: null };
 }
 
+// X-F2 scroll-86ch (guarded, bounded): scroll the TARGET element (inner scroll
+// containers like the zoo feed) AND the window, repeating until content stops
+// growing (bounded rounds), so lazy-loaded items actually appear. Returns
+// evidence signals: scroll_position (moved) and count_delta (element count
+// grew). No movement => [] (the caller owns the verdict). Never throws.
+async function deepScroll(page, step, opts = {}) {
+  const rounds = Number.isFinite(opts.maxRounds) ? opts.maxRounds : 8;
+  const want = String((step && step.target && (step.target.text || step.target.type)) || '').toLowerCase();
+  const stepFn = (w) => {
+    const norm = (s) => String(s || '').toLowerCase().trim();
+    const all = [...document.querySelectorAll('*')];
+    const scrollable = (el) => el && el.scrollHeight > el.clientHeight + 4;
+    let t = all.find((el) => scrollable(el) && (norm(el.id) === w || norm(el.getAttribute('aria-label')) === w));
+    if (!t && w) t = all.find((el) => scrollable(el) && norm(el.textContent).includes(w));
+    if (!t) t = all.find(scrollable) || null;
+    const before = { y: window.scrollY, top: t ? t.scrollTop : 0, count: all.length };
+    if (t) t.scrollTop = t.scrollHeight;
+    window.scrollTo(0, document.body.scrollHeight);
+    const after = { y: window.scrollY, top: t ? t.scrollTop : 0, count: document.querySelectorAll('*').length };
+    return { before, after };
+  };
+  let first = null;
+  let last = null;
+  try {
+    for (let r = 0; r < rounds; r += 1) {
+      const m = await page.evaluate(stepFn, want);
+      if (!m || !m.before || !m.after) break;
+      if (!first) first = m.before;
+      last = m.after;
+      const progressed = m.before.y !== m.after.y
+        || m.before.top !== m.after.top
+        || m.before.count !== m.after.count;
+      if (!progressed) break;
+      if (typeof page.waitForTimeout === 'function') await page.waitForTimeout(60);
+    }
+  } catch (_) { return []; }
+  if (!first || !last) return [];
+  const out = [];
+  if (last.y !== first.y || last.top !== first.top) {
+    out.push({ method: 'scroll_position', detail: `scrollY ${first.y}->${last.y}; innerTop ${first.top}->${last.top}` });
+  }
+  if (last.count > first.count) {
+    out.push({ method: 'count_delta', detail: `elements ${first.count}->${last.count}` });
+  }
+  return out;
+}
+
 // X-F1 iframe-32ch (guarded, bounded): frame-aware visible-text capture for
 // the text_present path — the top document PLUS each child frame's innerText,
 // so an expectation living INSIDE an iframe is seen (a top-frame-only capture
@@ -1213,7 +1260,17 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
 
     try {
       const stepUrlBefore = page.url();
-      if (step.action === 'drag' && dragNative) {
+      if (step.action === 'scroll') {
+        // X-F2: target-aware repeated scroll (inner containers) so lazy
+        // content loads; evidence signals pushed pre-verify, else legacy.
+        const scrollSignals = await deepScroll(page, execStep, { maxRounds: 8 });
+        if (scrollSignals.length) {
+          for (const s of scrollSignals) signals.push({ step: i + 1, ...s });
+          scrollBefore = null; // deepScroll owns the scroll evidence
+        } else {
+          await executeAction(page, execStep);
+        }
+      } else if (step.action === 'drag' && dragNative) {
         // D1b: a native drag-to actuates via HTML5 DnD events (draggable +
         // drop listeners); the legacy mouse drag is the fallback.
         const mm = /^(\d+)\s*,\s*(\d+)$/.exec(String(execStep.value || ''));
@@ -1786,6 +1843,7 @@ module.exports = {
   resolveDragDestination,
   dispatchHtml5Drag,
   frameAwareText,
+  deepScroll,
   splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,

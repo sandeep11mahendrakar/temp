@@ -30,7 +30,7 @@ test('F-C newPageSignal blanks stay null; URL passes through capped', () => {
 
 test('F-C SIGNAL_RANKS pins new methods; legacy ranks frozen', () => {
   assert.deepEqual(SIGNAL_RANKS, {
-    input_value: 3, checked_state: 3, new_page_url: 3,
+    input_value: 3, checked_state: 3, new_page_url: 3, count_delta: 3,
     scroll_position: 2, visual_state_change: 2, dialog_message: 2,
   });
 });
