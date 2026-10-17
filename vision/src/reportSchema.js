@@ -104,6 +104,12 @@ function buildReport(input) {
     // pre-oracle results; additive, existing rows unaffected).
     app_outcome: c && typeof c.app_outcome === 'string' ? c.app_outcome : 'n/a',
     evidence: String((c && c.evidence) || ''),
+    // R-1: provenance + autonomy label + evidence paths + block info per case.
+    tc_source: String((c && c.tc_source) || 'unknown'),
+    label: String((c && c.label) || 'n/a'),
+    evid_paths: Array.isArray(c && c.evid_paths) ? (c.evid_paths).map(String)
+      : ((c && c.evidence) ? [String(c.evidence)] : []),
+    block: (c && (c.block === null || typeof c.block === 'string')) ? (c.block || null) : null,
   })) : [];
   const costIn = (src.cost && typeof src.cost === 'object') ? src.cost : {};
   const passed = cases.filter((c) => c.verdict === 'PASS' || c.verdict.startsWith('PASS_WEAK')).length;
@@ -135,9 +141,20 @@ function buildReport(input) {
       brain: {
         mode: String(brainIn.mode || 'unknown'),
         model: String(brainIn.model || 'unknown'),
+        // R-1: role is optional (additive); only carried when supplied so
+        // pre-R-1 reports stay byte-identical.
+        ...(brainIn.role !== undefined && brainIn.role !== null
+          ? { role: String(brainIn.role) } : {}),
         blind: blindStatus(brainIn),
       },
     } : {}),
+    // R-1: block info at run level (block class + confidence) when supplied.
+    block: (src.block && typeof src.block === 'object') ? {
+      class: String(src.block.class || 'ok'),
+      confidence: (typeof src.block.confidence === 'number') ? src.block.confidence : null,
+    } : null,
+    // R-1: evid_paths alias of storage.paths for report consumers.
+    evid_paths: Array.isArray(src.storagePaths) ? src.storagePaths.map(String) : [],
     storage: {
       paths: Array.isArray(src.storagePaths) ? src.storagePaths.map(String) : [],
     },
@@ -168,6 +185,19 @@ function checkReport(report) {
   }
   if (report.run && typeof report.run.id !== 'string') bad.push('run.id:not-string');
   if (report.cases && !Array.isArray(report.cases)) bad.push('cases:not-array');
+  if (Array.isArray(report.cases)) {
+    for (let i = 0; i < report.cases.length; i++) {
+      const c = report.cases[i];
+      if (c && typeof c === 'object') {
+        if ('tc_source' in c && (typeof c.tc_source !== 'string' || !c.tc_source)) bad.push(`cases[${i}].tc_source:not-string`);
+        if ('label' in c && (typeof c.label !== 'string' || !c.label)) bad.push(`cases[${i}].label:not-string`);
+        if ('evid_paths' in c && !Array.isArray(c.evid_paths)) bad.push(`cases[${i}].evid_paths:not-array`);
+        if ('block' in c && c.block !== null && typeof c.block !== 'string') bad.push(`cases[${i}].block:bad`);
+      }
+    }
+  }
+  if ('evid_paths' in report && !Array.isArray(report.evid_paths)) bad.push('evid_paths:not-array');
+  if ('block' in report && report.block !== null && (typeof report.block !== 'object' || Array.isArray(report.block))) bad.push('block:bad');
   if (report.cost && typeof report.cost.api_calls !== 'number') bad.push('cost.api_calls:not-number');
   if (report.citable && typeof report.citable.sha1 !== 'string') bad.push('citable.sha1:not-string');
   // Q10 Savan-handoff: validate the brain block WHEN present (absent block =
@@ -179,6 +209,7 @@ function checkReport(report) {
     else {
       if (typeof b.mode !== 'string' || !b.mode) bad.push('brain.mode:not-string');
       if (typeof b.model !== 'string' || !b.model) bad.push('brain.model:not-string');
+      if ('role' in b && (typeof b.role !== 'string' || !b.role)) bad.push('brain.role:not-string');
       if (b.blind !== 'Y' && b.blind !== 'AUTONOMY_NONBLIND') bad.push(`brain.blind:bad:${String(b.blind).slice(0, 30)}`);
     }
   }

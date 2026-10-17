@@ -1,0 +1,64 @@
+{
+  "samples": [
+    {
+      "label_type": "AUTONOMOUS",
+      "report": {
+        "schema": 1,
+        "run": { "id": "sample-autonomous", "ts": "2026-10-17T00:00:00.000Z", "source": "vision-loopB" },
+        "loops": [{ "n": 1, "delta": null, "covered": true }],
+        "cases": [{ "id": "S1", "verdict": "PASS", "weak_steps": 0, "tc_source": "brain", "label": "AUTONOMOUS", "app_outcome": "accepted", "evidence": "s1_rep.json", "evid_paths": ["storage/outputs/s1_rep.json"], "block": null }],
+        "result": { "verdict": "PASS", "pass_rate": 1 },
+        "cost": { "api_calls": 2, "tokens_in": 100, "tokens_out": 20, "usd_estimated": null },
+        "brain": { "mode": "api", "model": "gemini-3.5-flash-lite", "role": "planner", "blind": "Y" },
+        "block": null,
+        "evid_paths": ["storage/outputs/s1_rep.json"],
+        "storage": { "paths": ["storage/outputs/s1_rep.json"], "evid_paths": ["storage/outputs/s1_rep.json"] },
+        "citable": { "ref": "run-sample-autonomous", "sha1": "0000000000000000000000000000000000000000" }
+      }
+    },
+    {
+      "label_type": "AUTONOMY_NONBLIND",
+      "report": {
+        "schema": 1,
+        "run": { "id": "sample-nonblind", "ts": "2026-10-17T00:00:00.000Z", "source": "vision-loopB" },
+        "loops": [{ "n": 1, "delta": null, "covered": true }],
+        "cases": [{ "id": "S2", "verdict": "PASS", "weak_steps": 0, "tc_source": "archetype", "label": "AUTONOMY_NONBLIND", "app_outcome": "accepted", "evidence": "s2_rep.json", "evid_paths": ["storage/outputs/s2_rep.json"], "block": "ok" }],
+        "result": { "verdict": "PASS", "pass_rate": 1 },
+        "cost": { "api_calls": 0, "tokens_in": 0, "tokens_out": 0, "usd_estimated": null },
+        "brain": { "mode": "cli", "model": "opencode", "role": "executor", "blind": "AUTONOMY_NONBLIND" },
+        "block": { "class": "ok", "confidence": 0.6 },
+        "evid_paths": ["storage/outputs/s2_rep.json"],
+        "storage": { "paths": ["storage/outputs/s2_rep.json"], "evid_paths": ["storage/outputs/s2_rep.json"] },
+        "citable": { "ref": "run-sample-nonblind", "sha1": "0000000000000000000000000000000000000000" }
+      }
+    },
+    {
+      "label_type": "ASSISTED",
+      "report": {
+        "schema": 1,
+        "run": { "id": "sample-assisted", "ts": "2026-10-17T00:00:00.000Z", "source": "vision-loopB" },
+        "loops": [{ "n": 1, "delta": null, "covered": true }],
+        "cases": [{ "id": "S3", "verdict": "PASS", "weak_steps": 0, "tc_source": "file", "label": "ASSISTED", "app_outcome": "accepted", "evidence": "s3_rep.json", "evid_paths": ["storage/outputs/s3_rep.json"], "block": null }],
+        "result": { "verdict": "PASS", "pass_rate": 1 },
+        "cost": { "api_calls": 0, "tokens_in": 0, "tokens_out": 0, "usd_estimated": null },
+        "storage": { "paths": ["storage/outputs/s3_rep.json"], "evid_paths": ["storage/outputs/s3_rep.json"] },
+        "citable": { "ref": "run-sample-assisted", "sha1": "0000000000000000000000000000000000000000" }
+      }
+    },
+    {
+      "label_type": "BLOCKED",
+      "report": {
+        "schema": 1,
+        "run": { "id": "sample-blocked", "ts": "2026-10-17T00:00:00.000Z", "source": "vision-loopB" },
+        "loops": [{ "n": 0, "delta": null, "covered": false }],
+        "cases": [{ "id": "S4", "verdict": "BLOCKED", "weak_steps": 0, "tc_source": "perception", "label": "BLOCKED", "app_outcome": "n/a", "evidence": "s4_rep.json", "evid_paths": ["storage/outputs/s4_rep.json"], "block": "bot_challenge" }],
+        "result": { "verdict": "BLOCKED", "pass_rate": 0 },
+        "cost": { "api_calls": 0, "tokens_in": 0, "tokens_out": 0, "usd_estimated": null },
+        "block": { "class": "bot_challenge", "confidence": 0.85 },
+        "evid_paths": ["storage/outputs/s4_rep.json"],
+        "storage": { "paths": ["storage/outputs/s4_rep.json"], "evid_paths": ["storage/outputs/s4_rep.json"] },
+        "citable": { "ref": "run-sample-blocked", "sha1": "0000000000000000000000000000000000000000" }
+      }
+    }
+  ]
+}
