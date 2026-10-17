@@ -12,7 +12,7 @@ occurrences in pinned fixtures / reported runs, not exhaustive over all sites.
 | 2 | white-on-colour buttons | button text rendered white on a coloured fill is dropped by OCR threshold; YOLO box present but no text | vision/src/anchorSynth.js (OCR-anchored synthesis path exists for this); vision test fixtures | class documented; fixture count n/a offline | reported |
 | 3 | button text missing (YOLO omits) | YOLO ScreenParser omits button text entirely; OCR sees it separately but not bound to the box | memory (review3-program): "YOLO omits demoqa button text (OCR sees it)" | 1 site family (demoqa) | reported |
 | 4 | tiny icons | icon-only controls below OCR resolution; no text anchor, box too small | vision/test/robustness.minis.test.js (R7: zero inputs in view stays honestly unresolved); executeTests.js unresolved_target handling | class documented | reported |
-| 5 | overlay-covered | consent/modal/cookie overlay intercepts the target; perception sees overlay, not underlying control | V-3 row (overlay-ladder) scope; executeTests.js block/wall handling; RUN_ANALYSIS (overlay intercept notes) | class documented | reported (V-3 owns fix) |
+| 5 | overlay-covered | consent/modal/cookie overlay intercepts the target; perception sees overlay, not underlying control | V-3 row (overlay-ladder) scope; executeTests.js block/wall handling; RUN_ANALYSIS (overlay intercept notes) | class documented | implemented (V-3: vision/src/overlayLadder.js detectOverlay + dismissCandidates standard-affordance ladder; never evasion; tests vision/test/overlayLadder.test.js 9/9 green) |
 
 ## Detection-path notes
 
