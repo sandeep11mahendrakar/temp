@@ -25,7 +25,7 @@ const PAGES = [
   'new-tab',
   'iframe',
   'cart-checkout-wizard',
-  // Z1 batch2 (batch3 tabs/accordion/modal/toast/keyboard DO-NOT-START).
+  // Z1 batch2; batch3 (tabs/accordion/modal/toast/keyboard-only) registered below.
   'drag-drop',
   'upload-download',
   'shadow-dom',
@@ -34,6 +34,14 @@ const PAGES = [
   'login-6users',
   'cookie-banner',
   'spinner-delayed',
+  // batch3 held-out (authored before any live run; scored once = HOLDOUT).
+  // W2: tabs/accordion/modal ; W3: toast/keyboard-only. Registered here by
+  // the single-writer (W2) per D36/D37 B3-R.
+  'tabs',
+  'accordion',
+  'modal',
+  'toast',
+  'keyboard-only',
 ];
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8', '.css': 'text/css; charset=utf-8' };
