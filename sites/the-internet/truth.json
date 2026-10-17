@@ -1,0 +1,53 @@
+{
+  "$schema": "the-internet-truth-v1",
+  "site": "https://the-internet.herokuapp.com/",
+  "tier": "playwright-direct",
+  "source": "playwright-direct-probe",
+  "probed_at": "2026-10-17T16:39:01.831Z",
+  "probe_method": "playwright chromium headless; blockDetector.classify on title/status/body; interactions executed and observed",
+  "access_gate": {
+    "status": 200,
+    "block_class": "ok",
+    "confidence": 0.6
+  },
+  "facts": [
+    {
+      "path": "/",
+      "observed_title": "The Internet",
+      "http_status": 200,
+      "block_class": "ok",
+      "block_confidence": 0.6,
+      "body_excerpt": "Welcome to the-internet\nAvailable Examples\nA/B Testing\nAdd/Remove Elements\nBasic Auth (user and pass: admin)\nBroken Images\nCanvas\nChallenging DOM\nCheckboxes\nContext Menu\nDigest Authentication (user and pass: admin)\nDisappearing Elements\nDrag and Drop\nDropdown\nDynamic Content\nDynamic Controls\nDynamic",
+      "top_links": [
+        {
+          "text": "",
+          "href": "https://github.com/saucelabs/the-internet"
+        },
+        {
+          "text": "A/B Testing",
+          "href": "https://the-internet.herokuapp.com/abtest"
+        },
+        {
+          "text": "Add/Remove Elements",
+          "href": "https://the-internet.herokuapp.com/add_remove_elements/"
+        },
+        {
+          "text": "Basic Auth",
+          "href": "https://the-internet.herokuapp.com/basic_auth"
+        },
+        {
+          "text": "Broken Images",
+          "href": "https://the-internet.herokuapp.com/broken_images"
+        }
+      ]
+    },
+    {
+      "interaction": {
+        "action": "click Form Authentication",
+        "urlAfter": "https://the-internet.herokuapp.com/login",
+        "titleAfter": "The Internet"
+      }
+    }
+  ],
+  "notes": "facts probed not asserted from memory; no vision/executor/brain involved; read-only probe"
+}

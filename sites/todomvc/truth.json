@@ -1,0 +1,54 @@
+{
+  "$schema": "todomvc-truth-v1",
+  "site": "https://todomvc.com/examples/react/dist/#/",
+  "tier": "playwright-direct",
+  "source": "playwright-direct-probe",
+  "probed_at": "2026-10-17T16:39:01.831Z",
+  "probe_method": "playwright chromium headless; blockDetector.classify on title/status/body; interactions executed and observed",
+  "access_gate": {
+    "status": 200,
+    "block_class": "ok",
+    "confidence": 0.6
+  },
+  "facts": [
+    {
+      "path": "/",
+      "observed_title": "TodoMVC: React",
+      "http_status": 200,
+      "block_class": "ok",
+      "block_confidence": 0.6,
+      "body_excerpt": "React\nReact\nSource\nTypeScript + React\nDemo, Source\n\nReact is a JavaScript library for building user interfaces. You compose UI from function components and describe state with hooks; React handles the rendering and keeps the UI in sync as state changes. The modern ecosystem (createRoot, Suspense, Se",
+      "top_links": [
+        {
+          "text": "Source",
+          "href": "https://github.com/tastejs/todomvc/tree/gh-pages/examples/react"
+        },
+        {
+          "text": "Demo",
+          "href": "https://todomvc.com/examples/typescript-react"
+        },
+        {
+          "text": "Source",
+          "href": "https://github.com/tastejs/todomvc/tree/gh-pages/examples/typescript-react"
+        },
+        {
+          "text": "React",
+          "href": "http://facebook.github.io/react"
+        },
+        {
+          "text": "Quick Start",
+          "href": "https://react.dev/learn"
+        }
+      ]
+    },
+    {
+      "interaction": {
+        "action": "add todo",
+        "items": [
+          "probe todo"
+        ]
+      }
+    }
+  ],
+  "notes": "facts probed not asserted from memory; no vision/executor/brain involved; read-only probe"
+}

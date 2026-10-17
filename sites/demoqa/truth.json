@@ -1,0 +1,53 @@
+{
+  "$schema": "demoqa-truth-v1",
+  "site": "https://demoqa.com/",
+  "tier": "playwright-direct",
+  "source": "playwright-direct-probe",
+  "probed_at": "2026-10-17T16:39:01.831Z",
+  "probe_method": "playwright chromium headless; blockDetector.classify on title/status/body; interactions executed and observed",
+  "access_gate": {
+    "status": 200,
+    "block_class": "ok",
+    "confidence": 0.6
+  },
+  "facts": [
+    {
+      "path": "/",
+      "observed_title": "demosite",
+      "http_status": 200,
+      "block_class": "ok",
+      "block_confidence": 0.6,
+      "body_excerpt": "Elements\nForms\nAlerts, Frame & Windows\nWidgets\nInteractions\nBook Store Application\n© 2013-2026 TOOLSQA.COM | ALL RIGHTS RESERVED.",
+      "top_links": [
+        {
+          "text": "",
+          "href": "https://demoqa.com/"
+        },
+        {
+          "text": "",
+          "href": "https://www.toolsqa.com/selenium-training/"
+        },
+        {
+          "text": "Elements",
+          "href": "https://demoqa.com/elements"
+        },
+        {
+          "text": "Forms",
+          "href": "https://demoqa.com/forms"
+        },
+        {
+          "text": "Alerts, Frame & Windows",
+          "href": "https://demoqa.com/alertsWindows"
+        }
+      ]
+    },
+    {
+      "interaction": {
+        "action": "click Elements card",
+        "urlAfter": "https://demoqa.com/elements",
+        "titleAfter": "demosite"
+      }
+    }
+  ],
+  "notes": "facts probed not asserted from memory; no vision/executor/brain involved; read-only probe"
+}

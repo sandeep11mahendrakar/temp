@@ -1,0 +1,53 @@
+{
+  "$schema": "automationexercise-truth-v1",
+  "site": "https://automationexercise.com/",
+  "tier": "playwright-direct",
+  "source": "playwright-direct-probe",
+  "probed_at": "2026-10-17T16:39:01.831Z",
+  "probe_method": "playwright chromium headless; blockDetector.classify on title/status/body; interactions executed and observed",
+  "access_gate": {
+    "status": 200,
+    "block_class": "ok",
+    "confidence": 0.6
+  },
+  "facts": [
+    {
+      "path": "/",
+      "observed_title": "Automation Exercise",
+      "http_status": 200,
+      "block_class": "ok",
+      "block_confidence": 0.6,
+      "body_excerpt": " Home\n Products\n Cart\n Signup / Login\n Test Cases\n API Testing\n Video Tutorials\n Contact us\n  \nAutomationExercise\nFull-Fledged practice website for Automation Engineers\n\nAll QA engineers can use this website for automation practice and API testing either they are at beginner or advance level. This ",
+      "top_links": [
+        {
+          "text": "",
+          "href": "https://automationexercise.com/"
+        },
+        {
+          "text": "Home",
+          "href": "https://automationexercise.com/"
+        },
+        {
+          "text": " Products",
+          "href": "https://automationexercise.com/products"
+        },
+        {
+          "text": "Cart",
+          "href": "https://automationexercise.com/view_cart"
+        },
+        {
+          "text": "Signup / Login",
+          "href": "https://automationexercise.com/login"
+        }
+      ]
+    },
+    {
+      "interaction": {
+        "action": "click Products",
+        "urlAfter": "https://automationexercise.com/products",
+        "titleAfter": "Automation Exercise - All Products"
+      }
+    }
+  ],
+  "notes": "facts probed not asserted from memory; no vision/executor/brain involved; read-only probe"
+}

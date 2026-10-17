@@ -1,0 +1,54 @@
+{
+  "$schema": "books-toscrape-truth-v1",
+  "site": "https://books.toscrape.com/",
+  "tier": "playwright-direct",
+  "source": "playwright-direct-probe",
+  "probed_at": "2026-10-17T16:39:01.831Z",
+  "probe_method": "playwright chromium headless; blockDetector.classify on title/status/body; interactions executed and observed",
+  "access_gate": {
+    "status": 200,
+    "block_class": "ok",
+    "confidence": 0.6
+  },
+  "facts": [
+    {
+      "path": "/",
+      "observed_title": "All products | Books to Scrape - Sandbox",
+      "http_status": 200,
+      "block_class": "ok",
+      "block_confidence": 0.6,
+      "body_excerpt": "Books to Scrape We love being scraped!\nHome All products\nBooks\nTravel\nMystery\nHistorical Fiction\nSequential Art\nClassics\nPhilosophy\nRomance\nWomens Fiction\nFiction\nChildrens\nReligion\nNonfiction\nMusic\nDefault\nScience Fiction\nSports and Games\nAdd a comment\nFantasy\nNew Adult\nYoung Adult\nScience\nPoetry\nP",
+      "top_links": [
+        {
+          "text": "Books to Scrape",
+          "href": "https://books.toscrape.com/index.html"
+        },
+        {
+          "text": "Home",
+          "href": "https://books.toscrape.com/index.html"
+        },
+        {
+          "text": "Books",
+          "href": "https://books.toscrape.com/catalogue/category/books_1/index.html"
+        },
+        {
+          "text": "Travel",
+          "href": "https://books.toscrape.com/catalogue/category/books/travel_2/index.html"
+        },
+        {
+          "text": "Mystery",
+          "href": "https://books.toscrape.com/catalogue/category/books/mystery_3/index.html"
+        }
+      ]
+    },
+    {
+      "interaction": {
+        "action": "click first book",
+        "title": "A Light in the ...",
+        "urlAfter": "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html",
+        "titleAfter": "A Light in the Attic | Books to Scrape - Sandbox"
+      }
+    }
+  ],
+  "notes": "facts probed not asserted from memory; no vision/executor/brain involved; read-only probe"
+}

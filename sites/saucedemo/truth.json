@@ -1,0 +1,32 @@
+{
+  "$schema": "saucedemo-truth-v1",
+  "site": "https://www.saucedemo.com/",
+  "tier": "playwright-direct",
+  "source": "playwright-direct-probe",
+  "probed_at": "2026-10-17T16:39:01.831Z",
+  "probe_method": "playwright chromium headless; blockDetector.classify on title/status/body; interactions executed and observed",
+  "access_gate": {
+    "status": 200,
+    "block_class": "ok",
+    "confidence": 0.6
+  },
+  "facts": [
+    {
+      "path": "/",
+      "observed_title": "Swag Labs",
+      "http_status": 200,
+      "block_class": "ok",
+      "block_confidence": 0.6,
+      "body_excerpt": "Swag Labs\nAccepted usernames are:\nstandard_user\nlocked_out_user\nproblem_user\nperformance_glitch_user\nerror_user\nvisual_user\n\nPassword for all users:\nsecret_sauce",
+      "top_links": []
+    },
+    {
+      "interaction": {
+        "action": "login standard_user",
+        "urlAfter": "https://www.saucedemo.com/inventory.html",
+        "titleAfter": "Swag Labs"
+      }
+    }
+  ],
+  "notes": "facts probed not asserted from memory; no vision/executor/brain involved; read-only probe"
+}
