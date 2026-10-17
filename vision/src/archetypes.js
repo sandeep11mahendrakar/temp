@@ -458,18 +458,21 @@ function hintsListpage(vdom) {
   const els = elsOf(vdom);
   const search = els.find((e) => /search_field|text_input/i.test(String(e.type || '')));
   const sortBtn = els.find((e) => /button/i.test(String(e.type || '')) && /sort/i.test(String(e.text || '')));
+  const filterBtn = els.find((e) => /button/i.test(String(e.type || '')) && /filter/i.test(String(e.text || '')));
   const nextBtn = els.find((e) => /button/i.test(String(e.type || '')) && /next/i.test(String(e.text || '')));
   const prevBtn = els.find((e) => /button/i.test(String(e.type || '')) && /prev/i.test(String(e.text || '')));
-  return { search: search ? String(search.text || '') : '', sort: sortBtn ? String(sortBtn.text || '') : 'Sort', next: nextBtn ? String(nextBtn.text || '') : 'Next', prev: prevBtn ? String(prevBtn.text || '') : 'Prev' };
+  return { search: search ? String(search.text || '') : '', sort: sortBtn ? String(sortBtn.text || '') : 'Sort', filter: filterBtn ? String(filterBtn.text || '') : 'Filter', next: nextBtn ? String(nextBtn.text || '') : 'Next', prev: prevBtn ? String(prevBtn.text || '') : 'Prev' };
 }
 function expandListpage(hints, goal) {
   const h = hints && typeof hints === 'object' ? hints : {};
   const mk = (id, steps, oracle, tags) => ({ id, archetype: 'listpage', params: { goal: String(goal || '') }, steps, oracle, tags });
-  return [
+  const out = [
     mk('list-search', [{ action: 'fill', target: { type: 'search_field', text: h.search || '' }, value: 'a' }], { ...ORACLES.stateDiff }, ['list', 'search']),
     mk('list-sort', [{ action: 'click', target: { type: 'button', text: h.sort || 'Sort' } }], { ...ORACLES.stateDiff }, ['list', 'sort']),
-    mk('list-next', [{ action: 'click', target: { type: 'button', text: h.next || 'Next' } }], { ...ORACLES.text_present, expect: 'page 2' }, ['list', 'paginate']),
   ];
+  if (h.filter) out.push(mk('list-filter', [{ action: 'click', target: { type: 'button', text: h.filter } }], { ...ORACLES.stateDiff }, ['list', 'filter']));
+  out.push(mk('list-next', [{ action: 'click', target: { type: 'button', text: h.next || 'Next' } }], { ...ORACLES.text_present, expect: 'page 2' }, ['list', 'paginate']));
+  return out;
 }
 
 function detectCart(vdom) {
