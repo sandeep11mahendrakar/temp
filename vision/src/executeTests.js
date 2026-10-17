@@ -1378,6 +1378,11 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     expectRejection: testCase.expect_rejection === true,
     expectedNav: typeof testCase.expect_navigation === 'boolean' ? testCase.expect_navigation : null,
     expectedText: testCase.expected_text,
+    // O2 (X-LOCK): F-C collector evidence wired into the oracle obs. Pure
+    // carriage — every verdict rule lives in oracle.js (O1); nothing here
+    // changes verdict semantics. dialogs[]={type,message}, popups[]=url.
+    dialogs: seenDialogs,
+    popups: seenPages,
   });
   // F-C: detach collectors (best-effort; the run owns its listeners).
   try { page.removeListener('dialog', dialogHandler); } catch (_) {}
