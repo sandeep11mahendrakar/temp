@@ -20,6 +20,8 @@
 const path = require('path');
 const { ensureVisionServices, shutdownVisionServices } = require('../src/serviceManager');
 const { classify: classifyBlock } = require('../src/blockDetector');
+const { verdictFor } = require('../src/oracle');
+const fs = require('fs');
 
 const SERVER_NAME = 'vision-test';
 const SERVER_VERSION = '0.1.0';
@@ -369,15 +371,23 @@ async function handlePerceive(url, opts = {}) {
   const pageText = ((vdom.raw && vdom.raw.full_text) || '').slice(0, 800);
   let pageTitle = '';
   try { if (page && typeof page.title === 'function') pageTitle = await page.title(); } catch (_) { pageTitle = ''; }
+  const pagingOpts = { limit: opts && opts.limit, offset: opts && opts.offset };
+  const paging = perceivePaging(vdom, pagingOpts);
+  const elements = compactElements(vdom, pagingOpts);
   const compact = {
     url: compactUrl,
     element_count: vdom.element_count ?? (vdom.elements || []).length,
+    total_elements: paging.total,
+    returned: paging.returned,
+    offset: paging.offset,
+    limit: paging.limit,
     page_text: pageText,
-    elements: compactElements(vdom),
+    elements,
     screenshot: shotAbs,
     navigated,
     block: blockField({ title: pageTitle, url: compactUrl, bodyText: pageText }),
   };
+  compact.bytes = Buffer.byteLength(JSON.stringify(compact), 'utf8');
   appendHistory({ tool: 'perceive', url: compact.url, screenshot: shotAbs, at: new Date().toISOString() });
   session.lastDom = compact; session.lastScreenshot = shotAbs; session.lastUrl = compact.url;
   return textResult(compact);
@@ -715,8 +725,15 @@ async function postJSON(url, body, timeoutMs = 120000) {
   return r.json();
 }
 
-function compactElements(vdom) {
-  return (vdom.elements || []).slice(0, 60).map((el) => ({
+const PERCEIVE_DEFAULT_LIMIT = 60;
+const PERCEIVE_MAX_LIMIT = 200;
+
+function compactElements(vdom, opts) {
+  const o = (opts && typeof opts === 'object') ? opts : {};
+  const offset = Math.max(0, Math.floor(Number(o.offset) || 0));
+  const requested = Number.isFinite(o.limit) ? Math.floor(o.limit) : PERCEIVE_DEFAULT_LIMIT;
+  const limit = Math.min(Math.max(1, requested), PERCEIVE_MAX_LIMIT);
+  return (vdom.elements || []).slice(offset, offset + limit).map((el) => ({
     id: el.id,
     type: el.type,
     text: (el.text || '').slice(0, 80),
@@ -726,6 +743,15 @@ function compactElements(vdom) {
     },
     conf: typeof el.confidence?.yolo === 'number' ? Number(el.confidence.yolo.toFixed(2)) : null,
   }));
+}
+
+function perceivePaging(vdom, opts) {
+  const o = (opts && typeof opts === 'object') ? opts : {};
+  const total = (vdom.elements || []).length;
+  const offset = Math.max(0, Math.floor(Number(o.offset) || 0));
+  const requested = Number.isFinite(o.limit) ? Math.floor(o.limit) : PERCEIVE_DEFAULT_LIMIT;
+  const limit = Math.min(Math.max(1, requested), PERCEIVE_MAX_LIMIT);
+  return { total, offset, limit, returned: Math.min(limit, Math.max(0, total - offset)) };
 }
 
 // ---------------------------------------------------------------------------
@@ -745,6 +771,8 @@ const TOOLS = [
       properties: {
         url: { type: 'string', description: 'http(s) URL to perceive' },
         navigate: { type: 'boolean', description: 'force navigation even when the URL is already loaded' },
+        limit: { type: 'integer', description: 'max elements to return (default 60, max 200)' },
+        offset: { type: 'integer', description: 'element offset for paging (default 0)' },
       },
       required: ['url'],
     },
@@ -778,6 +806,45 @@ const TOOLS = [
     description: 'Close the persistent session (browser + history). Services stay up.',
     inputSchema: { type: 'object', properties: {} },
   },
+  {
+    name: 'assert',
+    description: 'Evaluate an oracle/verdict from client-supplied args (kind, expect, evidence). Returns verdict + app_outcome. No browser.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        kind: { type: 'string' },
+        expect: {},
+        evidence: { type: 'object' },
+        expect_rejection: { type: 'boolean' },
+      },
+      required: ['kind'],
+    },
+  },
+  {
+    name: 'memory_get',
+    description: 'Read a value from the MCP memory store by key.',
+    inputSchema: { type: 'object', properties: { key: { type: 'string' } }, required: ['key'] },
+  },
+  {
+    name: 'memory_put',
+    description: 'Write a value to the MCP memory store by key.',
+    inputSchema: { type: 'object', properties: { key: { type: 'string' }, value: {} }, required: ['key', 'value'] },
+  },
+  {
+    name: 'report_emit',
+    description: 'Append a report entry (JSON) to storage/outputs/mcp_reports.jsonl.',
+    inputSchema: { type: 'object', properties: { entry: { type: 'object' } }, required: ['entry'] },
+  },
+  {
+    name: 'library_list',
+    description: 'List available site-library entries under sites/ (read-only).',
+    inputSchema: { type: 'object', properties: {} },
+  },
+  {
+    name: 'library_get',
+    description: 'Read a site-library entry by name (read-only).',
+    inputSchema: { type: 'object', properties: { name: { type: 'string' } }, required: ['name'] },
+  },
 ];
 
 function textResult(obj) {
@@ -804,7 +871,7 @@ async function callTool(name, args = {}) {
     const url = args.url;
     if (!url || !/^https?:\/\//.test(url)) return toolError('perceive needs {url} starting with http(s)', 'caller');
     try {
-      return await withTimeout(handlePerceive(url, { navigate: args.navigate === true }), 240000, 'perceive');
+      return await withTimeout(handlePerceive(url, { navigate: args.navigate === true, limit: args.limit, offset: args.offset }), 240000, 'perceive');
     } catch (e) {
       return String(e && e.message).startsWith('timeout:') ? timeoutResult('perceive') : toolError(e.message || 'perceive failed', 'local-services');
     }
@@ -818,6 +885,46 @@ async function callTool(name, args = {}) {
   }
   if (name === 'evidence') return handleEvidence();
   if (name === 'reset') return handleReset();
+  if (name === 'assert') {
+    const tc = { oracle: { kind: args.kind, expect: args.expect } };
+    if (args.expect_rejection) tc.expect_rejection = true;
+    const obs = (args.evidence && typeof args.evidence === 'object') ? args.evidence : {};
+    const v = verdictFor(tc, obs);
+    return textResult(v);
+  }
+  if (name === 'memory_get') {
+    const file = path.join(__dirname, '..', 'storage', 'mcp_memory.json');
+    let store = {};
+    try { store = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_) { store = {}; }
+    return textResult({ key: args.key, value: Object.prototype.hasOwnProperty.call(store, args.key) ? store[args.key] : null });
+  }
+  if (name === 'memory_put') {
+    const file = path.join(__dirname, '..', 'storage', 'mcp_memory.json');
+    let store = {};
+    try { store = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_) { store = {}; }
+    store[args.key] = args.value;
+    try { fs.mkdirSync(path.dirname(file), { recursive: true }); } catch (_) {}
+    fs.writeFileSync(file, JSON.stringify(store, null, 2), 'utf8');
+    return textResult({ ok: true, key: args.key });
+  }
+  if (name === 'report_emit') {
+    const dir = path.join(__dirname, '..', 'storage', 'outputs');
+    try { fs.mkdirSync(dir, { recursive: true }); } catch (_) {}
+    const file = path.join(dir, 'mcp_reports.jsonl');
+    fs.appendFileSync(file, JSON.stringify(args.entry || {}) + '\\n', 'utf8');
+    return textResult({ ok: true, path: file });
+  }
+  if (name === 'library_list') {
+    const dir = path.join(__dirname, '..', '..', 'sites');
+    let names = [];
+    try { names = fs.readdirSync(dir).filter((f) => f.endsWith('.json')); } catch (_) { names = []; }
+    return textResult({ files: names });
+  }
+  if (name === 'library_get') {
+    const name = String(args.name || '').replace(/[^a-zA-Z0-9._-]/g, '');
+    const file = path.join(__dirname, '..', '..', 'sites', name.endsWith('.json') ? name : name + '.json');
+    try { return textResult(JSON.parse(fs.readFileSync(file, 'utf8'))); } catch (e) { return toolError('not found: ' + name, 'caller'); }
+  }
   const e = new Error(`Unknown tool: ${name}`);
   e.code = -32601;
   throw e;
