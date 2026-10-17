@@ -8,13 +8,14 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const conf = require('../zoo/conformance');
 
-test('G2z pure: actionClass covers all truth actions, batch3 absent', () => {
+test('G2z pure: actionClass covers all truth actions (batch1-3)', () => {
   const truths = conf.loadTruths();
-  assert.equal(truths.length, 16, 'batch1 8 + batch2 8 truth files');
+  assert.ok(truths.length >= 16, 'batch1 8 + batch2 8 (+batch3 5) truth files, got ' + truths.length);
   const actions = new Set();
   for (const t of truths) for (const s of t.steps) actions.add(s.action);
   for (const a of actions) assert.notEqual(conf.actionClass(a), 'other', 'mapped class: ' + a);
-  assert.ok(!actions.has('tab') && !actions.has('toast'), 'batch3 actions absent');
+  const ids = truths.map((t) => t.tc_id);
+  assert.equal(new Set(ids).size, ids.length, 'tc_ids unique');
 });
 
 test('G2z pure: class map pointer/value/key/nav/system sane', () => {

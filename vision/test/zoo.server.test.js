@@ -28,6 +28,12 @@ const MARKERS = {
   'login-6users': 'id="login-btn"',
   'cookie-banner': 'id="cookie-banner"',
   'spinner-delayed': 'id="spinner"',
+  // batch3 holdout (authored before any live run; scored once).
+  'tabs': 'id="tab-b"',
+  'accordion': 'id="acc-1"',
+  'modal': 'id="open-modal"',
+  'toast': 'id="toast"',
+  'keyboard-only': 'id="kb-activate"',
 };
 
 function get(port, p) {
@@ -40,28 +46,31 @@ function get(port, p) {
   });
 }
 
-test('Z0 zoo: server boots on 5010 (or next-free) + index lists 16 pages', async () => {
+test('Z0 zoo: server boots on 5010 (or next-free) + index lists all pages', async () => {
   const { server, port, pages } = await zoo.start({ port: 5010, nextFree: true });
   try {
     assert.ok(port >= 5010 && port < 5030, 'port in zoo range, got ' + port);
-    assert.equal(pages.length, 16, 'batch1 8 + batch2 8 pages');
+    assert.equal(pages.length, zoo.PAGES.length, 'PAGES registry count');
+    assert.ok(pages.length >= 16, 'at least batch1+batch2');
     const idx = await get(port, '/');
     assert.equal(idx.status, 200);
     for (const p of pages) assert.ok(idx.body.includes(`/` + p), 'index links ' + p);
   } finally { server.close(); }
 });
 
-test('Z0 zoo: each of the 16 pages returns 200 with its static marker', async () => {
+test('Z0 zoo: each registered page returns 200 with its static marker', async () => {
   const { server, port } = await zoo.start({ port: 5010, nextFree: true });
   try {
     let n = 0;
-    for (const [page, marker] of Object.entries(MARKERS)) {
+    for (const page of zoo.PAGES) {
+      const marker = MARKERS[page];
+      assert.ok(marker, page + ' has a declared static marker');
       const r = await get(port, '/' + page);
       assert.equal(r.status, 200, page + ' status');
       assert.ok(r.body.includes(marker), page + ' marker present (MCP-perceivable static id)');
       n += 1;
     }
-    assert.equal(n, 16, 'all 16 pages fetched');
+    assert.equal(n, zoo.PAGES.length, 'all registered pages fetched');
   } finally { server.close(); }
 });
 
@@ -77,7 +86,7 @@ test('Z0 zoo: each truth.json returns 200 and passes truth-schema validation', a
       assert.ok(doc.expected && typeof doc.expected.kind === 'string');
       n += 1;
     }
-    assert.equal(n, 16, 'all 16 truth files served+valid');
+    assert.equal(n, zoo.PAGES.length, 'all registered truth files served+valid');
   } finally { server.close(); }
 });
 

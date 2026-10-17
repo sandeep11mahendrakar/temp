@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><title>zoo accordion</title>
+<style>.accbody{display:none;}</style>
+</head>
+<body>
+<h1 id="page-title">Accordion</h1>
+<button id="acc-1" type="button">Section One</button>
+<div class="accbody" id="acc-1-body">Accordion one body</div>
+<button id="acc-2" type="button">Section Two</button>
+<div class="accbody" id="acc-2-body">Accordion two body</div>
+<script>
+document.getElementById('acc-1').addEventListener('click', function () {
+  document.getElementById('acc-1-body').style.display = 'block';
+});
+document.getElementById('acc-2').addEventListener('click', function () {
+  document.getElementById('acc-2-body').style.display = 'block';
+});
+</script>
+</body></html>

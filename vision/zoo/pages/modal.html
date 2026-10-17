@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><title>zoo modal</title>
+<style>#modal{display:none;}#modal.open{display:block;}</style>
+</head>
+<body>
+<h1 id="page-title">Modal</h1>
+<button id="open-modal" type="button">Open modal</button>
+<div id="modal" role="dialog" aria-modal="true">
+<p id="modal-text">Modal dialog open</p>
+<button id="close-modal" type="button">Close</button>
+</div>
+<script>
+document.getElementById('open-modal').addEventListener('click', function () {
+  document.getElementById('modal').classList.add('open');
+});
+document.getElementById('close-modal').addEventListener('click', function () {
+  document.getElementById('modal').classList.remove('open');
+});
+</script>
+</body></html>

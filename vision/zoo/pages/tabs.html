@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><title>zoo tabs</title>
+<style>.tabpanel{display:none;}.tabpanel.active{display:block;}</style>
+</head>
+<body>
+<h1 id="page-title">Tabs</h1>
+<div id="tabs" role="tablist">
+<button id="tab-a" type="button">Alpha</button>
+<button id="tab-b" type="button">Beta</button>
+<button id="tab-c" type="button">Gamma</button>
+</div>
+<div class="tabpanel active" id="panel-a">Panel Alpha content</div>
+<div class="tabpanel" id="panel-b">Panel Beta content</div>
+<div class="tabpanel" id="panel-c">Panel Gamma content</div>
+<script>
+function showTab(id) {
+  ['a', 'b', 'c'].forEach(function (k) {
+    document.getElementById('panel-' + k).className = 'tabpanel' + (k === id ? ' active' : '');
+  });
+}
+document.getElementById('tab-a').addEventListener('click', function () { showTab('a'); });
+document.getElementById('tab-b').addEventListener('click', function () { showTab('b'); });
+document.getElementById('tab-c').addEventListener('click', function () { showTab('c'); });
+</script>
+</body></html>

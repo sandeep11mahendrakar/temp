@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-modal","steps":[{"action":"click","target":{"type":"button","text":"Open modal"}}],"expected":{"kind":"text_present","expect":"Modal dialog open"}}

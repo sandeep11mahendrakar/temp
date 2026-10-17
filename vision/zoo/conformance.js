@@ -1,9 +1,10 @@
 'use strict';
 
 // vision/zoo/conformance.js — G2z zoo conformance (classify-only, DO-NOT-fix).
-// Loads vision/zoo/truth/*.truth.json (16), drives each TC through the REAL
-// executor CLI (node src/executeTests.js — the file W3 froze is never edited,
-// runTestCase is not imported) with SEEDED steps and DOM-seeded perception:
+// Loads vision/zoo/truth/*.truth.json (batch1 8 + batch2 8 + batch3 5 = 21)
+// and drives each TC through the REAL executor CLI (node src/executeTests.js —
+// the file W3 froze is never edited, runTestCase is not imported) with SEEDED
+// steps and DOM-seeded perception:
 // vision YOLO weights are absent, so <runId>_visual_dom.json is built from
 // the live DOM (conf.yolo=0.5, disclosed) and every strength is read from
 // the executor's own result.oracle/verification_strength — never invented.
@@ -223,7 +224,7 @@ async function main() {
   if (variantArg && !variantDir) throw new Error(`unknown variant ${variantArg}`);
   const pw = require('../node_modules/playwright');
   const truths = loadTruths();
-  if (truths.length !== 16) throw new Error(`G2z needs 16 truth files, found ${truths.length}`);
+  if (truths.length < 16) throw new Error(`G2z needs >=16 truth files, found ${truths.length}`);
   const { server, port } = await new Promise((resolve, reject) => {
     // Zoo runs in its OWN process: the executor CLI below blocks on
     // execSync, which would starve an in-process server (single-threaded

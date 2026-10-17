@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-accordion","steps":[{"action":"click","target":{"type":"button","text":"Section One"}}],"expected":{"kind":"text_present","expect":"Accordion one body"}}
