@@ -59,3 +59,33 @@ test('X-F2 count_delta is a STRONG-ranked signal', () => {
   assert.equal(SIGNAL_RANKS.count_delta, 3);
   assert.equal(SIGNAL_RANKS.scroll_position, 2);
 });
+
+test('X-F2b mechanism: scrolls the target AND dispatches a scroll event', async () => {
+  const events = [];
+  const target = {
+    id: 'feed', scrollTop: 0, scrollHeight: 500, clientHeight: 200, textContent: '',
+    getAttribute: () => null, dispatchEvent: (ev) => { events.push(ev.type); return true; },
+  };
+  const stub = {
+    document: {
+      getElementById: (id) => (id === 'feed' ? target : null),
+      querySelectorAll: () => [target],
+      scrollingElement: target,
+      body: { scrollHeight: 1000 },
+    },
+    window: { scrollY: 0, scrollTo: () => {} },
+    Event: class { constructor(type) { this.type = type; } },
+  };
+  const page = {
+    evaluate: async (fn, arg) => {
+      const prev = { document: global.document, window: global.window, Event: global.Event };
+      Object.assign(global, stub);
+      try { return fn(arg); } finally { Object.assign(global, prev); }
+    },
+    waitForTimeout: async () => {},
+  };
+  const sig = await deepScroll(page, { action: 'scroll', target: { type: 'input', text: 'feed' } });
+  assert.ok(events.includes('scroll'), 'a scroll event was dispatched on the target');
+  assert.equal(target.scrollTop, 500, 'target scrolled to its scrollHeight');
+  assert.deepEqual(sig.map((s) => s.method), ['scroll_position']);
+});

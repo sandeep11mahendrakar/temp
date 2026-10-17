@@ -929,14 +929,15 @@ async function deepScroll(page, step, opts = {}) {
   const stepFn = (w) => {
     const norm = (s) => String(s || '').toLowerCase().trim();
     const all = [...document.querySelectorAll('*')];
-    const scrollable = (el) => el && el.scrollHeight > el.clientHeight + 4;
-    let t = all.find((el) => scrollable(el) && (norm(el.id) === w || norm(el.getAttribute('aria-label')) === w));
-    if (!t && w) t = all.find((el) => scrollable(el) && norm(el.textContent).includes(w));
-    if (!t) t = all.find(scrollable) || null;
-    const before = { y: window.scrollY, top: t ? t.scrollTop : 0, count: all.length };
-    if (t) t.scrollTop = t.scrollHeight;
-    window.scrollTo(0, document.body.scrollHeight);
-    const after = { y: window.scrollY, top: t ? t.scrollTop : 0, count: document.querySelectorAll('*').length };
+    const byId = w ? document.getElementById(w) : null;
+    const byLabel = w ? all.find((el) => norm(el.id) === w || (el.getAttribute && norm(el.getAttribute('aria-label')) === w)) : null;
+    const byText = (w && !byId && !byLabel) ? all.find((el) => norm(el.textContent).includes(w)) : null;
+    const scroller = byId || byLabel || byText || document.scrollingElement || document.body;
+    const before = { y: window.scrollY, top: scroller.scrollTop, count: all.length };
+    try { scroller.scrollTop = scroller.scrollHeight; } catch (_) { /* non-scrollable */ }
+    try { window.scrollTo(0, document.body.scrollHeight); } catch (_) { /* ignore */ }
+    try { scroller.dispatchEvent(new Event('scroll', { bubbles: true })); } catch (_) { /* ignore */ }
+    const after = { y: window.scrollY, top: scroller.scrollTop, count: document.querySelectorAll('*').length };
     return { before, after };
   };
   let first = null;
@@ -947,9 +948,7 @@ async function deepScroll(page, step, opts = {}) {
       if (!m || !m.before || !m.after) break;
       if (!first) first = m.before;
       last = m.after;
-      const progressed = m.before.y !== m.after.y
-        || m.before.top !== m.after.top
-        || m.before.count !== m.after.count;
+      const progressed = m.before.y !== m.after.y || m.before.top !== m.after.top || m.before.count !== m.after.count;
       if (!progressed) break;
       if (typeof page.waitForTimeout === 'function') await page.waitForTimeout(60);
     }
