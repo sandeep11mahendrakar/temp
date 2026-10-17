@@ -55,3 +55,29 @@ test('B7-full pipeline: atomic persist + INDEX row; invalid report refused', () 
   assert.deepEqual(JSON.parse(fs.readFileSync(file, 'utf8')).citable, r.citable);
   assert.throws(() => writeReportFile({ schema: 2 }, file + '.bad'), /refusing to persist/);
 });
+test('V-7 meterLoop: real tokens carried, null when unknown (never estimated)', () => {
+  const { meterLoop } = require('../src/report');
+  const m = meterLoop({ cost: { llm_calls: 2, tokens_in: 10, tokens_out: 5, screens: 3, time_ms: 42 } });
+  assert.deepEqual(m, { llm_calls: 2, tokens: 15, screens: 3, time_ms: 42 });
+  const n = meterLoop({ loop: 1, delta: null, covered: false });
+  assert.equal(n.tokens, null);
+  assert.equal(n.time_ms, null);
+  assert.equal(n.llm_calls, 0);
+  const z = meterLoop({ cost: { llm_calls: 0, tokens: 0 } });
+  assert.equal(z.tokens, 0); // real 0 stays 0, not null
+});
+
+test('V-7 buildLoopReport attaches per-loop cost only when supplied', () => {
+  const r = buildLoopReport({
+    runId: 'meter-1',
+    histories: [
+      { loop: 1, delta: null, covered: true, cost: { llm_calls: 1, tokens: 7, screens: 2, time_ms: 10 } },
+      { loop: 2, delta: null, covered: false },
+    ],
+    results: [],
+    cost: { api_calls: 1 },
+  });
+  assert.equal(r.loops[0].cost.llm_calls, 1);
+  assert.equal(r.loops[0].cost.tokens, 7);
+  assert.equal(r.loops[1].cost, undefined);
+});

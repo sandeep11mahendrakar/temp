@@ -19,6 +19,30 @@ const path = require('node:path');
 
 const { buildReport, indexRow, checkReport } = require('./reportSchema');
 
+// V-7 cost metering: per-loop cost (llm_calls, tokens real|null, screens,
+// time_ms). tokens is null when unknown — never estimated (0 is a real
+// value only when an actual count of 0 is supplied).
+function meterLoop(history) {
+  const h = (history && typeof history === 'object') ? history : {};
+  const c = (h.cost && typeof h.cost === 'object') ? h.cost : {};
+  const hasTokens = c.tokens !== undefined || c.tokens_in !== undefined || c.tokens_out !== undefined;
+  let tokens = null;
+  if (hasTokens) {
+    if (Number.isFinite(c.tokens)) tokens = c.tokens;
+    else tokens = (Number.isFinite(c.tokens_in) ? c.tokens_in : 0)
+      + (Number.isFinite(c.tokens_out) ? c.tokens_out : 0);
+  }
+  return {
+    llm_calls: Number.isFinite(c.llm_calls) ? c.llm_calls
+      : (Number.isFinite(c.api_calls) ? c.api_calls : 0),
+    tokens: tokens,
+    screens: Number.isFinite(c.screens) ? c.screens
+      : (Number.isFinite(h.screens) ? h.screens : 0),
+    time_ms: Number.isFinite(c.time_ms) ? c.time_ms
+      : (Number.isFinite(h.time_ms) ? h.time_ms : null),
+  };
+}
+
 function summarizeLoops(histories) {
   if (!Array.isArray(histories)) return [];
   return histories
@@ -48,11 +72,16 @@ function buildLoopReport(input) {
   const cases = Array.isArray(src.results)
     ? src.results.map((r) => caseFromResult(r && r.tcId, r && r.exec, r && r.oracle))
     : [];
+  const loops = summarizeLoops(src.histories).map((l, i) => {
+    const h = (Array.isArray(src.histories) ? src.histories[i] : null);
+    if (h && h.cost && typeof h.cost === 'object') return { ...l, cost: meterLoop(h) };
+    return l;
+  });
   return buildReport({
     runId: src.runId,
     ts: src.ts,
     source: src.source || 'vision-loopB-v2',
-    loops: summarizeLoops(src.histories),
+    loops,
     cases,
     cost: src.cost,
     storagePaths: src.storagePaths,
@@ -74,6 +103,7 @@ function writeReportFile(report, backupPath) {
 
 module.exports = {
   summarizeLoops,
+  meterLoop,
   caseFromResult,
   buildLoopReport,
   writeReportFile,

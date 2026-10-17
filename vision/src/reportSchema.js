@@ -95,6 +95,9 @@ function buildReport(input) {
     n: num(l && l.n),
     delta: Array.isArray(l && l.delta) ? l.delta : (l && l.delta === null ? null : []),
     covered: Boolean(l && l.covered),
+    // V-7 cost metering per loop (additive, optional): llm_calls, tokens
+    // (real or null), screens, time_ms. Absent when no cost data supplied.
+    ...(l && l.cost && typeof l.cost === 'object' ? { cost: l.cost } : {}),
   })) : [];
   const cases = Array.isArray(src.cases) ? src.cases.map((c) => ({
     id: String((c && c.id) || ''),
