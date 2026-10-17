@@ -176,7 +176,8 @@ async function runGenerateLive(opts = {}) {
       if (cases.length) {
         try { fs.unlinkSync(repFile); } catch (_) { /* no stale report */ }
         try {
-          execSync(`node src/executeTests.js "${caseFile}" ${base}/${slug} "${repFile}"`, {
+          const execFn = (typeof o.execSyncImpl === 'function') ? o.execSyncImpl : execSync;
+          execFn(`node src/executeTests.js "${caseFile}" ${base}/${slug} "${repFile}"`, {
             cwd: VISION, timeout: 180000, stdio: 'pipe',
             env: { ...process.env, VISION_HEADED: 'false' },
           });

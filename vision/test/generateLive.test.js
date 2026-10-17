@@ -1,8 +1,5 @@
 'use strict';
 
-// GL1 (D37) offline tests: live-driver pure helpers + runAuto --generate wiring.
-// No browser, no network, no LLM.
-
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
@@ -48,10 +45,9 @@ test('GL1 runAuto wiring: --generate on|off parses; on needs no url/goal; bad re
   assert.throws(() => parseArgs(['u']), /usage:/);
 });
 
-// GL1 audit (independent) regression tests:
 test('GL1 causeClassOf: auth-invalid classified when auth flag set', () => {
   assert.equal(causeClassOf({ auth: true }), 'auth-invalid');
-  assert.equal(causeClassOf({ auth: true, status: 'PASS' }), 'auth-invalid'); // auth wins
+  assert.equal(causeClassOf({ auth: true, status: 'PASS' }), 'auth-invalid');
   assert.equal(causeClassOf({ parseFail: true }), 'parse-fail');
 });
 
@@ -67,7 +63,6 @@ test('GL1 perCallRow: error field present only on failure (success deepEqual pre
   assert.equal(Object.prototype.hasOwnProperty.call(noErr, 'error'), false);
 });
 
-// GL1 audit: offline invalid-key (401) -> blocked=invalid-key, evidence recorded, no further probes.
 test('GL1 audit: invalid-key (401) records sanitized evidence, sets blocked=invalid-key, stops probing', async () => {
   const had = Object.prototype.hasOwnProperty.call(process.env, 'GENERATE');
   const prev = process.env.GENERATE;
@@ -102,19 +97,19 @@ test('GL1 audit: invalid-key (401) records sanitized evidence, sets blocked=inva
   }
 });
 
-// GL1 final hardening: a stale report at the legacy fixed path can never be scored.
-test('GL1 hardening: stale report at legacy path is never scored', async () => {
+test('GL1 hardening: stale legacy report never scored; executor gets unique path', async () => {
   const had = Object.prototype.hasOwnProperty.call(process.env, 'GENERATE');
   const prev = process.env.GENERATE;
   process.env.GENERATE = 'on';
   const fs = require('node:fs');
   const path = require('node:path');
   const legacyRep = path.join(__dirname, '..', '..', 'vision', 'storage', 'outputs', 'gl1_rep_form-validate.json');
-  // Pre-create a stale report with a FUTURE timestamp and a sentinel verdict.
   const stale = { results: [{ id: 'STALE-SENTINEL', status: 'PASS', oracle: { verdict: 'PASS', app_outcome: 'accepted' }, steps_executed: [] }] };
   fs.writeFileSync(legacyRep, JSON.stringify(stale));
   const future = new Date(Date.now() + 60000);
   fs.utimesSync(legacyRep, future, future);
+
+  const capturedCmds = [];
   const fakePage = {
     _url: 'https://example.com/',
     url() { return this._url; },
@@ -131,17 +126,15 @@ test('GL1 hardening: stale report at legacy path is never scored', async () => {
       port: 5010,
       bootZoo: async () => ({ proc: { kill: () => {} }, port: 5010 }),
       browserFactory: async () => fakeBrowser,
-      geminiGenerate: async () => { throw new Error('brain/api-gemini: http 401 API key not valid'); },
+      geminiGenerate: async () => ({ text: JSON.stringify({ tcs: [{ id: 'g1', objective: 'o', steps: [{ action: 'click', target: { type: 'button', text: 'Go' } }] }] }), usage: { promptTokenCount: 10, candidatesTokenCount: 5 }, finishReason: 'STOP' }),
+      execSyncImpl: (cmd) => { capturedCmds.push(cmd); throw new Error('exec failed'); },
     });
-    // The run is blocked on invalid key; the stale legacy report must NOT be scored.
-    assert.equal(result.blocked, 'invalid-key');
-    assert.equal(result.pages.length, 1);
-    // The stale sentinel must never appear in the result.
     const serialized = JSON.stringify(result);
     assert.ok(!serialized.includes('STALE-SENTINEL'), 'stale sentinel never scored');
-    assert.ok(!serialized.includes('"PASS"'), 'no PASS verdict from stale report');
-    // calls recorded only from this run
-    assert.equal(result.calls.length, 1);
+    assert.ok(!serialized.includes('"PASS"'), 'no false PASS from stale report');
+    assert.equal(capturedCmds.length, 1, 'executor invoked once');
+    assert.ok(!capturedCmds[0].includes('gl1_rep_form-validate.json'), 'executor did not receive the legacy path');
+    assert.ok(/gl1_rep_form-validate_[0-9]+_[a-z0-9]+\.json/.test(capturedCmds[0]), 'executor received the unique per-run path');
   } finally {
     if (had) process.env.GENERATE = prev; else delete process.env.GENERATE;
     try { fs.unlinkSync(legacyRep); } catch (_) {}
