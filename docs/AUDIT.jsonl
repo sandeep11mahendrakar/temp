@@ -29,3 +29,5 @@
 {"row":"E-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"top-3 retrieval + flag-gated augment; 5 tests; suites 487/487; AIza 0","evid":"vision/src/lessonRetrieval.js","ts":"2026-10-17"}
 {"row":"E-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"proposal file auto_edit false; 3 tests; suites 490/490; AIza 0","evid":"vision/src/archetypeProposals.js","ts":"2026-10-17"}
 {"row":"V-4","aud":"ACCEPT","gates":"G1-G5 pass","check":"retry/timeout/stale helpers; 6 tests; suites 496/496; AIza 0","evid":"vision/src/executorRobustness.js","ts":"2026-10-17"}
+{"row":"R-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"reportSummary+siteSummary added; smoke passed; suites 496/496; commit 9c4c9b6","evid":"git show --stat 9c4c9b6 + smoke_r2 output","ts":"2026-10-18T00:00:00+05:30"}
+{"row":"V-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"flag-gated OCR_SYNTH default off; WEAK-tagged; 3 tests; suites 499/499; AIza 0","evid":"vision/src/ocrSynth.js","ts":"2026-10-17"}
