@@ -242,7 +242,7 @@ M-5 mcp-docs | VERIFY | W4 | 2026-10-17 | 2026-10-17 | (14ef411 +6/-6 lines; too
 # TRACK EXPERIENCE MEMORY (PROMPT27) - rows below, claim per D39
 E-1 lesson-store | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (665edf0; vision/src/lessonStore.js + test +7; suites 442/442; AIza 0; gate STRONG/MED+run_id) | {pattern,action,outcome,lesson,confidence,count,run_ids[]}; write only from reliable oracles (STRONG/MED, citable runs))
 E-2 memory-planner | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (7c1a4f4; top-3 retrieval + flag-gated augment; 5 tests; suites 487/487; AIza 0) |
-E-3 archetype-proposals | OPEN | - | - | - | - (deps E-1 | S | offline | promotion proposal: pattern seen on >=3 sites => archetype hint proposal file (never auto-edit archetypes))
+E-3 archetype-proposals | CLAIMED | W1 | - | - | - (deps E-1 | S | offline | promotion proposal: pattern seen on >=3 sites => archetype hint proposal file (never auto-edit archetypes))
 E-4 memory-ablation | OPEN | - | - | - | - (deps E-2,A-8 | M | live(mock+api if USER-KEY) | ablation with/without memory; metrics vs truth; honest if no gain)
 # TRACK REPORTING (PROMPT27) - rows below, claim per D39
 R-1 report-v1 | VERIFY | W3 | 2026-10-17 | 2026-10-17 | (report JSON v1 finalized: brain.role, tc_source, cost, label, citable, evid_paths, block info; validator extended; docs/report.schema.json synced; sample per label type docs/report_sample_v1.json; commit 91ec957; suites 476/476) (deps none | M | files reportSchema+docs | finalize report JSON v1: brain.role, tc_source, cost, label, citable, evid_paths, block info; validator; one sample per label type; docs/report.schema.json synced | PV)
