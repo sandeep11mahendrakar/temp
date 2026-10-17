@@ -875,12 +875,37 @@ function composeFinalStatus({ ladderStatus, oracleVerdict, stepsExecuted } = {})
   return { status: 'PASS', forced: false, reason: null };
 }
 
+// X-F1 iframe-32ch (guarded, bounded): frame-aware visible-text capture for
+// the text_present path — the top document PLUS each child frame's innerText,
+// so an expectation living INSIDE an iframe is seen (a top-frame-only capture
+// misreads such a page as "too short"). Never throws; an unreadable frame
+// contributes nothing; the joined length is capped.
+async function frameAwareText(page, opts = {}) {
+  const cap = Number.isFinite(opts.cap) ? opts.cap : 4000;
+  const maxFrames = Number.isFinite(opts.maxFrames) ? opts.maxFrames : 8;
+  if (!page) return '';
+  const parts = [];
+  const readOne = async (ctx) => {
+    try {
+      const t = await ctx.evaluate(() => (document.body ? document.body.innerText : ''));
+      if (typeof t === 'string' && t.trim()) parts.push(t);
+    } catch (_) { /* unreadable frame: contributes nothing */ }
+  };
+  try {
+    if (typeof page.frames === 'function') {
+      for (const fr of page.frames().slice(0, maxFrames)) await readOne(fr);
+    } else {
+      await readOne(page);
+    }
+  } catch (_) { /* never throws */ }
+  return parts.join('\n').slice(0, cap);
+}
+
 async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialState) {
   const startedAt = Date.now();
   const urlBefore = page.url();
-  // F-A: pre-action body text for the expected-text transition check.
-  const bodyPreText = await page.evaluate(() =>
-    (document.body ? document.body.innerText : '').slice(0, 2000)).catch(() => '');
+  // F-A + X-F1: pre-action frame-aware text (top document + child frames).
+  const bodyPreText = await frameAwareText(page, { cap: 2000 });
   // F-C: dialog + popup collectors (best-effort; auto-dismiss so an
   // unhandled dialog can never hang the run; detached before return).
   const seenDialogs = [];
@@ -1412,8 +1437,8 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     } else {
       // F-A shortbody-gate: proven expected-text transition verifies MEDIUM
       // and bypasses the length gate below; else legacy owns the verdict.
-      const postText = await page.evaluate(() =>
-        (document.body ? document.body.innerText : '').slice(0, 2000)).catch(() => '');
+      // F-A + X-F1: frame-aware post text (child-frame innerText included).
+      const postText = await frameAwareText(page, { cap: 2000 });
       const tp = textPresentVerify(testCase.expected_text, bodyPreText, postText);
       if (tp) {
         verification = {
@@ -1760,6 +1785,7 @@ module.exports = {
   dialogSignal, newPageSignal, SIGNAL_RANKS,
   resolveDragDestination,
   dispatchHtml5Drag,
+  frameAwareText,
   splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
