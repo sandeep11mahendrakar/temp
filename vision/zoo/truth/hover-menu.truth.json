@@ -1,1 +1,1 @@
-{"$schema":"zoo-truth-v1","tc_id":"zoo-hover-menu","steps":[{"action":"hover","target":"#menu-btn"},{"action":"click","target":"#sub-widgets"}],"expected":{"kind":"text_present","expect":"menu picked: Widgets"}}
+{"$schema":"zoo-truth-v1","tc_id":"zoo-hover-menu","steps":[{"action":"hover","target":{"type":"button","text":"Products"}},{"action":"click","target":{"type":"link","text":"Widgets"}}],"expected":{"kind":"text_present","expect":"menu picked: Widgets"}}

@@ -118,16 +118,43 @@ async function seedPage(pw, base, slug, runId) {
 function translateSteps(truth, byKey) {
   const steps = [];
   const notes = [];
+  const pool = Object.values(byKey || {});
+  const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  // F-S per-contract: resolve a {type,text} target (or legacy '#selector')
+  // to a DOM center for needCoords actions + pool text_match.
+  const resolve = (t) => {
+    if (t && typeof t === 'object' && t.text) {
+      const want = norm(t.text);
+      const hit = pool.find((e) => { const et = norm(e.text); return et && (et.includes(want) || want.includes(et)); });
+      if (hit) return { type: t.type || hit.type, text: hit.text, x: Math.round((hit.x1 + hit.x2) / 2), y: Math.round((hit.y1 + hit.y2) / 2), via: 'text' };
+      return { type: t.type || 'input', text: t.text, via: 'target-only' };
+    }
+    const sel = String(t || '');
+    const hit = (byKey || {})[sel];
+    if (!hit) return null;
+    return { type: hit.type, text: hit.text, x: Math.round((hit.x1 + hit.x2) / 2), y: Math.round((hit.y1 + hit.y2) / 2), via: 'selector' };
+  };
   for (const s of truth.steps) {
     if (s.action === 'read-text') { notes.push('read-text-dropped:observe-only'); continue; }
-    const sel = String(s.target || '');
-    const hit = byKey[sel];
-    if (!hit) { steps.push({ action: s.action, target: { type: 'input', text: sel.replace(/^#/, '') }, value: s.value }); notes.push(`unseeded:${sel}`); continue; }
-    const st = { action: s.action, target: { type: hit.type, text: hit.text }, value: s.value, x: Math.round((hit.x1 + hit.x2) / 2), y: Math.round((hit.y1 + hit.y2) / 2) };
+    if (s.target && typeof s.target === 'object' && s.target.text && String(s.target.text).includes('>>>')) {
+      steps.push({ action: s.action, target: { type: 'input', text: 'shadow-user' }, value: s.value });
+      notes.push('shadow:target-unresolvable');
+      continue;
+    }
+    const r = resolve(s.target);
+    if (!r) { steps.push({ action: s.action, target: { type: 'input', text: String(s.target).replace(/^#/, '') }, value: s.value }); notes.push(`unseeded:${s.target}`); continue; }
+    const st = { action: s.action, target: { type: r.type, text: r.text }, value: s.value };
+    if (r.x !== undefined) { st.x = r.x; st.y = r.y; }
+    if (r.via === 'target-only') notes.push(`target-only:${s.target && s.target.text ? s.target.text : s.target}`);
     if (s.action === 'drag') {
-      const dz = byKey['#drop-zone'];
-      st.value = dz ? `${Math.round((dz.x1 + dz.x2) / 2)},${Math.round((dz.y1 + dz.y2) / 2)}` : s.value;
-      st.translated = 'drag-value->dropzone-x2y2';
+      // Executor has NO native `to` (filed to W3, no edit here): the harness
+      // translates to:{type,text} to absolute x2,y2, disclosed per step.
+      const to = (s.to && typeof s.to === 'object' && s.to.text) ? resolve(s.to) : null;
+      const dz = to && to.x !== undefined ? to : null;
+      const legacy = (byKey || {})['#drop-zone'];
+      if (dz) { st.value = `${dz.x},${dz.y}`; st.translated = 'drag-to->x2y2'; }
+      else if (legacy) { st.value = `${Math.round((legacy.x1 + legacy.x2) / 2)},${Math.round((legacy.y1 + legacy.y2) / 2)}`; st.translated = 'drag-value->dropzone-x2y2'; }
+      else { st.value = s.value; st.translated = 'drag-untranslated:executor-needs-x2y2'; }
     }
     if (s.action === 'upload') { st.value = FIXTURE; st.translated = 'upload-value->fixture-abs-path'; }
     steps.push(st);
@@ -155,6 +182,10 @@ function classifyResult(truth, rep, notes) {
 }
 
 async function main() {
+  const variantArg = (process.argv.find((a) => a.startsWith('--variant=')) || '').split('=')[1] || null;
+  const variantDir = variantArg === 'real' ? path.join(ROOT, 'vision', 'zoo-variant-real') : null;
+  const resultsName = variantArg === 'real' ? 'g2z_results_real.json' : 'g2z_results.json';
+  if (variantArg && !variantDir) throw new Error(`unknown variant ${variantArg}`);
   const pw = require('../node_modules/playwright');
   const truths = loadTruths();
   if (truths.length !== 16) throw new Error(`G2z needs 16 truth files, found ${truths.length}`);
@@ -164,7 +195,7 @@ async function main() {
     // event loop) and time out every page.goto. No new windows: plain
     // headless HTTP server process, killed in finally.
     const { spawn } = require('node:child_process');
-    const zooProc = spawn('node', [path.join(ZOO, 'serve.js'), '5010'], { cwd: ROOT });
+    const zooProc = spawn('node', [path.join(ZOO, 'serve.js'), '5010'], { cwd: ROOT, env: { ...process.env, ...(variantDir ? { ZOO_ROOT: variantDir } : {}) } });
     const timer = setTimeout(() => { try { zooProc.kill(); } catch (_) {} reject(new Error('zoo serve.js did not print READY')); }, 15000);
     let buf = '';
     zooProc.stdout.on('data', (d) => {
@@ -216,14 +247,63 @@ async function main() {
     pass: `${pass}/${rows.length}`, rows, per_class: agg,
     note: 'classify-only: no page/truth/executor file was modified by this run',
   };
-  const outPath = path.join(OUT, 'g2z_results.json');
+  const outPath = path.join(OUT, resultsName);
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
   console.log(`G2Z ${pass}/${rows.length} results=${outPath}`);
   return out;
 }
 
 if (require.main === module) {
-  main().then(() => process.exit(0)).catch((e) => { console.error('G2Z-FAIL ' + e.message); process.exit(1); });
+  if (process.argv.includes('--control')) {
+    controlMain().then(() => process.exit(0)).catch((e) => { console.error('CONTROL-FAIL ' + e.message); process.exit(1); });
+  } else {
+    main().then(() => process.exit(0)).catch((e) => { console.error('G2Z-FAIL ' + e.message); process.exit(1); });
+  }
 }
 
-module.exports = { actionClass, aggregateRows, expectHit, loadTruths, CLASS_OF };
+// C1 control run: skip-action observe-only. Loads each truth page, performs
+// ZERO actions, checks the expect against the untouched page text.
+// Expectation: NOT-pass all 16 (a control PASS means the truth expect is
+// satisfiable without acting => zoo-truth/oracle-fix required, reported
+// never silent-fixed here).
+async function controlMain() {
+  const zoo = require('./server');
+  const pw = require('../node_modules/playwright');
+  const truths = loadTruths();
+  const { server, port } = await new Promise((resolve, reject) => {
+    const { spawn } = require('node:child_process');
+    const zooProc = spawn('node', [path.join(ZOO, 'serve.js'), '5010'], { cwd: ROOT });
+    const timer = setTimeout(() => { try { zooProc.kill(); } catch (_) {} reject(new Error('zoo serve.js did not print READY')); }, 15000);
+    let buf = '';
+    zooProc.stdout.on('data', (d) => {
+      buf += String(d);
+      const m = /READY (\d+)/.exec(buf);
+      if (m) { clearTimeout(timer); resolve({ server: zooProc, port: Number(m[1]) }); }
+    });
+    zooProc.on('error', (e) => { clearTimeout(timer); reject(e); });
+    zooProc.on('exit', (c) => { clearTimeout(timer); reject(new Error(`zoo serve.js exited ${c}`)); });
+  });
+  const base = `http://127.0.0.1:${port}`;
+  const browser = await pw.chromium.launch({ headless: true });
+  const rows = [];
+  try {
+    const page = await browser.newPage();
+    for (const truth of truths) {
+      const slug = truth.tc_id.replace(/^zoo-/, '');
+      let text = '';
+      try {
+        await page.goto(`${base}/${slug}`, { waitUntil: 'domcontentloaded', timeout: 15000 });
+        await page.waitForTimeout(600);
+        text = await page.evaluate(() => (document.body ? document.body.innerText.slice(0, 2000) : ''));
+      } catch (e) { rows.push({ tc_id: truth.tc_id, control_result: 'LOAD-FAIL' }); continue; }
+      rows.push({ tc_id: truth.tc_id, control_result: expectHit(truth.expected.expect, text) ? 'PASS' : 'NOT-pass' });
+    }
+  } finally { await browser.close().catch(() => {}); try { server.kill(); } catch (_) {} }
+  const pass = rows.filter((r) => r.control_result === 'PASS').length;
+  console.log(`CONTROL ${rows.length - pass}/${rows.length} NOT-pass (expect 16/16)`);
+  for (const r of rows) console.log(`${r.tc_id}: control_result=${r.control_result}`);
+  if (pass > 0) console.log('CONTROL-PASS-FOUND => zoo-truth/oracle-fix required for: ' + rows.filter((r) => r.control_result === 'PASS').map((r) => r.tc_id).join(' '));
+  return rows;
+}
+
+module.exports = { actionClass, aggregateRows, expectHit, loadTruths, CLASS_OF, translateSteps };

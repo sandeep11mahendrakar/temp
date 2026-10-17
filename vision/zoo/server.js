@@ -12,7 +12,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ZOO_DIR = __dirname;
-const PAGES_DIR = path.join(ZOO_DIR, 'pages');
+const VARIANT_ROOT = process.env.ZOO_ROOT || null;
+const PAGES_DIR = VARIANT_ROOT ? path.join(VARIANT_ROOT, 'pages') : path.join(ZOO_DIR, 'pages');
 const TRUTH_DIR = path.join(ZOO_DIR, 'truth');
 
 const PAGES = [
@@ -35,7 +36,7 @@ const PAGES = [
   'spinner-delayed',
 ];
 
-const MIME = { '.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8', '.css': 'text/css; charset=utf-8' };
 
 function truthFor(page) {
   const file = path.join(TRUTH_DIR, `${page}.truth.json`);
@@ -44,11 +45,28 @@ function truthFor(page) {
 
 // Pure: validate one truth doc shape ({tc_id, steps[], expected{kind,expect}}).
 // Returns violation strings (empty = valid). No I/O, no network.
+// F-S per-contract steps: step.target is a '#selector' string OR
+// {type,text}; step.to (drag only) is {type,text}. Executor has no native
+// `to` (filed to W3); the harness translates it, disclosed per step.
+function targetShape(t) {
+  if (typeof t === 'string' && t) return null;
+  if (t && typeof t === 'object' && typeof t.type === 'string' && t.type && typeof t.text === 'string' && t.text) return null;
+  return 'bad-target';
+}
 function validateTruth(doc) {
   const bad = [];
   if (!doc || typeof doc !== 'object') return ['not-an-object'];
   if (typeof doc.tc_id !== 'string' || !doc.tc_id) bad.push('tc_id:missing');
   if (!Array.isArray(doc.steps) || doc.steps.length === 0) bad.push('steps:empty');
+  else doc.steps.forEach((st, i) => {
+    if (!st || typeof st.action !== 'string' || !st.action) { bad.push(`steps[${i}].action:missing`); return; }
+    const tv = targetShape(st.target);
+    if (tv) bad.push(`steps[${i}].${tv}`);
+    if (st.to !== undefined) {
+      if (st.action !== 'drag') bad.push(`steps[${i}].to:drag-only`);
+      else if (targetShape(st.to)) bad.push(`steps[${i}].to-bad-target`);
+    }
+  });
   const e = doc.expected;
   if (!e || typeof e !== 'object') bad.push('expected:missing');
   else {
@@ -104,6 +122,14 @@ function handler(req, res) {
     res.writeHead(200, { 'Content-Type': MIME['.html'] });
     res.end('<!doctype html><html><head><title>zoo sample tab</title></head><body><h1 id="sample-title">sample tab ready</h1></body></html>');
     return;
+  }
+  if (name === 'real.css' && VARIANT_ROOT) {
+    const file = path.join(VARIANT_ROOT, 'real.css');
+    if (fs.existsSync(file)) {
+      res.writeHead(200, { 'Content-Type': MIME['.css'] });
+      fs.createReadStream(file).pipe(res);
+      return;
+    }
   }
   if (PAGES.includes(name) && !url.pathname.endsWith('.truth.json')) {
     const file = path.join(PAGES_DIR, `${name}.html`);
