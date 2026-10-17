@@ -219,6 +219,60 @@ function checkReport(report) {
   return bad;
 }
 
+
+// R-2: markdown summary per run, generated from a report JSON.
+function reportSummary(report) {
+  const r = (report && typeof report === 'object') ? report : {};
+  const lines = [];
+  lines.push('## Run summary: ' + ((r.run && r.run.id) || 'unknown'));
+  lines.push('');
+  lines.push('- Verdict: ' + ((r.result && r.result.verdict) || 'n/a') + ' (pass_rate ' + ((r.result && r.result.pass_rate) + '') + ')');
+  lines.push('- Source: ' + ((r.run && r.run.source) || 'n/a') + ' @ ' + ((r.run && r.run.ts) || 'n/a'));
+  if (r.brain) lines.push('- Brain: ' + (r.brain.mode || 'n/a') + ' / ' + (r.brain.model || 'n/a') + ' / blind=' + (r.brain.blind || 'n/a') + (r.brain.role ? ' (role ' + r.brain.role + ')' : ''));
+  if (r.label) lines.push('- Label: ' + r.label);
+  lines.push('- Cost: api_calls=' + ((r.cost && r.cost.api_calls) || 0) + ', tokens_in=' + ((r.cost && r.cost.tokens_in) || 0) + ', tokens_out=' + ((r.cost && r.cost.tokens_out) || 0));
+  lines.push('- Loops: ' + (Array.isArray(r.loops) ? r.loops.length : 0));
+  if (Array.isArray(r.cases) && r.cases.length) {
+    lines.push('');
+    lines.push('| case | verdict | weak | label | tc_source | app_outcome |');
+    lines.push('|---|---|---|---|---|---|');
+    for (const c of r.cases) {
+      lines.push('| ' + (c.id || '') + ' | ' + (c.verdict || '') + ' | ' + (c.weak_steps || 0) + ' | ' + (c.label || 'n/a') + ' | ' + (c.tc_source || 'unknown') + ' | ' + (c.app_outcome || 'n/a') + ' |');
+    }
+  }
+  const paths = (r.storage && Array.isArray(r.storage.paths)) ? r.storage.paths : (Array.isArray(r.evid_paths) ? r.evid_paths : []);
+  if (paths.length) { lines.push(''); lines.push('Evidence: ' + paths.join(', ')); }
+  lines.push('');
+  return lines.join('\n');
+}
+
+// R-2: per-site aggregate summary from an array of report JSONs.
+function siteSummary(siteId, reports) {
+  const rs = Array.isArray(reports) ? reports : [];
+  const lines = [];
+  lines.push('# Site summary: ' + (siteId || 'unknown'));
+  lines.push('');
+  lines.push('Runs: ' + rs.length);
+  if (!rs.length) return lines.join('\n') + '\n';
+  const verdicts = {};
+  let pass = 0, total = 0, api = 0, tokIn = 0, tokOut = 0;
+  for (const r of rs) {
+    const v = (r && r.result && r.result.verdict) || 'UNKNOWN';
+    verdicts[v] = (verdicts[v] || 0) + 1;
+    const cs = (r && Array.isArray(r.cases)) ? r.cases : [];
+    pass += cs.filter((c) => c.verdict === 'PASS' || String(c.verdict || '').startsWith('PASS_WEAK')).length;
+    total += cs.length;
+    api += (r && r.cost && typeof r.cost.api_calls === 'number') ? r.cost.api_calls : 0;
+    tokIn += (r && r.cost && typeof r.cost.tokens_in === 'number') ? r.cost.tokens_in : 0;
+    tokOut += (r && r.cost && typeof r.cost.tokens_out === 'number') ? r.cost.tokens_out : 0;
+  }
+  lines.push('Cases: ' + pass + '/' + total + ' pass');
+  lines.push('Verdict mix: ' + Object.entries(verdicts).map(([k,v]) => k + '=' + v).join(', '));
+  lines.push('Cost: api_calls=' + api + ', tokens_in=' + tokIn + ', tokens_out=' + tokOut);
+  lines.push('');
+  return lines.join('\n');
+}
+
 module.exports = {
   SCHEMA_VERSION,
   ACTION_ENUM,
@@ -230,4 +284,6 @@ module.exports = {
   checkReport,
   blindStatus,
   resolveAutonomy,
+  reportSummary,
+  siteSummary,
 };
