@@ -1,0 +1,27 @@
+{
+  "page": "zoo-login-6users",
+  "source": "pinned-zoo-html-static",
+  "element_count": 4,
+  "elements": [
+    {
+      "id": "page-title",
+      "type": "text",
+      "text": "Login"
+    },
+    {
+      "id": "u",
+      "type": "text_input",
+      "text": "User"
+    },
+    {
+      "id": "p",
+      "type": "password_input",
+      "text": "Pass"
+    },
+    {
+      "id": "login-btn",
+      "type": "button",
+      "text": "Login"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "page": "zoo-dialogs",
+  "source": "pinned-zoo-html-static",
+  "element_count": 4,
+  "elements": [
+    {
+      "id": "page-title",
+      "type": "text",
+      "text": "Dialogs"
+    },
+    {
+      "id": "alert-btn",
+      "type": "button",
+      "text": "Show alert"
+    },
+    {
+      "id": "confirm-btn",
+      "type": "button",
+      "text": "Show confirm"
+    },
+    {
+      "id": "prompt-btn",
+      "type": "button",
+      "text": "Show prompt"
+    }
+  ]
+}

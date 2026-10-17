@@ -1,0 +1,27 @@
+{
+  "page": "zoo-form-validate",
+  "source": "pinned-zoo-html-static",
+  "element_count": 4,
+  "elements": [
+    {
+      "id": "page-title",
+      "type": "text",
+      "text": "Contact form"
+    },
+    {
+      "id": "f-name",
+      "type": "text_input",
+      "text": "Name"
+    },
+    {
+      "id": "f-email",
+      "type": "text_input",
+      "text": "Email"
+    },
+    {
+      "id": "submit-btn",
+      "type": "button",
+      "text": "Send"
+    }
+  ]
+}

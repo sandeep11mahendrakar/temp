@@ -1,0 +1,32 @@
+{
+  "page": "zoo-paginate-sort-filter-search",
+  "source": "pinned-zoo-html-static",
+  "element_count": 5,
+  "elements": [
+    {
+      "id": "page-title",
+      "type": "text",
+      "text": "Catalog"
+    },
+    {
+      "id": "q",
+      "type": "text_input",
+      "text": "Search"
+    },
+    {
+      "id": "sort-btn",
+      "type": "button",
+      "text": "Sort name asc"
+    },
+    {
+      "id": "prev-btn",
+      "type": "button",
+      "text": "Prev"
+    },
+    {
+      "id": "next-btn",
+      "type": "button",
+      "text": "Next"
+    }
+  ]
+}

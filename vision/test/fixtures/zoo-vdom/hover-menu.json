@@ -1,0 +1,27 @@
+{
+  "page": "zoo-hover-menu",
+  "source": "pinned-zoo-html-static",
+  "element_count": 4,
+  "elements": [
+    {
+      "id": "page-title",
+      "type": "text",
+      "text": "Menu"
+    },
+    {
+      "id": "menu-btn",
+      "type": "button",
+      "text": "Products"
+    },
+    {
+      "id": "sub-widgets",
+      "type": "link",
+      "text": "Widgets"
+    },
+    {
+      "id": "sub-gadgets",
+      "type": "link",
+      "text": "Gadgets"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "page": "zoo-select-check-radio",
+  "source": "pinned-zoo-html-static",
+  "element_count": 6,
+  "elements": [
+    {
+      "id": "page-title",
+      "type": "text",
+      "text": "Preferences"
+    },
+    {
+      "id": "color-select",
+      "type": "select",
+      "text": "Color"
+    },
+    {
+      "id": "news-check",
+      "type": "checkbox",
+      "text": "Newsletter"
+    },
+    {
+      "id": "plan-monthly",
+      "type": "radio",
+      "text": "Monthly"
+    },
+    {
+      "id": "plan-yearly",
+      "type": "radio",
+      "text": "Yearly"
+    },
+    {
+      "id": "apply-btn",
+      "type": "button",
+      "text": "Apply"
+    }
+  ]
+}
