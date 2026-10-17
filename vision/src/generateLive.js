@@ -106,17 +106,22 @@ async function runGenerateLive(opts = {}) {
   const port = Number.isFinite(o.port) ? o.port : 5010;
   const key = resolveGeminiKey(o); // throws if absent; never logged
 
-  const { proc, port: p } = await bootZoo(port);
+  const boot = (typeof o.bootZoo === 'function') ? o.bootZoo : bootZoo;
+  const { proc, port: p } = await boot(port);
   const base = `http://127.0.0.1:${p}`;
-  const pw = require(path.join(VISION, 'node_modules', 'playwright'));
+  const browserFactory = (typeof o.browserFactory === 'function') ? o.browserFactory : async () => {
+    const pw = require(path.join(VISION, 'node_modules', 'playwright'));
+    return pw.chromium.launch({ headless: true });
+  };
   let browser = null;
-  browser = await pw.chromium.launch({ headless: true });
+  browser = await browserFactory();
   const calls = [];
   let usedCalls = 0;
   let blocked = null;
   const pageRows = [];
   try {
-    const bpage = await browser.newPage();
+    const genImpl = (typeof o.geminiGenerate === 'function') ? o.geminiGenerate : geminiGenerate;
+  const bpage = await browser.newPage();
     for (const slug of pages) {
       const truth = truthOf(slug);
       let cap0 = null;
@@ -132,7 +137,7 @@ async function runGenerateLive(opts = {}) {
           llmCall: async (prompt) => {
             usedCalls += 1;
             try {
-              const out = await geminiGenerate({ key, model, thinking: 'omit' }, prompt);
+              const out = await genImpl({ key, model, thinking: 'omit' }, prompt);
               calls.push(perCallRow({ page: slug, model, usage: out.usage, finishReason: out.finishReason }));
               return out.text;
             } catch (e) {
@@ -144,7 +149,7 @@ async function runGenerateLive(opts = {}) {
         });
       } catch (e) {
         const msg = String((e && e.message) || e);
-        if (/401|invalid.*api.*key|unauthorized|API key not valid/i.test(msg)) { blocked = 'invalid-key'; break; }
+        if (/401|invalid.*api.*key|unauthorized|API key not valid/i.test(msg)) { pageRows.push({ slug, blocked: 'invalid-key', error: msg.slice(0, 120) }); blocked = 'invalid-key'; break; }
         if (/429|quota/i.test(msg)) { blocked = 'quota'; break; }
         if (/LLM_CALL_CAP/.test(msg)) { blocked = 'cap'; break; }
         pageRows.push({ slug, blocked: 'error', error: msg.slice(0, 120) });

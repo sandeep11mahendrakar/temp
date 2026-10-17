@@ -6,7 +6,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { perCallRow, autonomyGenerateLabel, causeClassOf, PAGES, GEN_CAP } = require('../src/generateLive');
+const { perCallRow, autonomyGenerateLabel, causeClassOf, PAGES, GEN_CAP, runGenerateLive } = require('../src/generateLive');
 const { parseArgs } = require('../runAuto');
 
 test('GL1 perCallRow: carries thoughtsTokenCount; missing usage => nulls', () => {
@@ -65,4 +65,39 @@ test('GL1 perCallRow: error field present only on failure (success deepEqual pre
   assert.equal(withErr.promptTokenCount, null);
   const noErr = perCallRow({ page: 'p', model: 'm', usage: null, finishReason: 'ERROR' });
   assert.equal(Object.prototype.hasOwnProperty.call(noErr, 'error'), false);
+});
+
+// GL1 audit: offline invalid-key (401) -> blocked=invalid-key, evidence recorded, no further probes.
+test('GL1 audit: invalid-key (401) records sanitized evidence, sets blocked=invalid-key, stops probing', async () => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'GENERATE');
+  const prev = process.env.GENERATE;
+  process.env.GENERATE = 'on';
+  const fakePage = {
+    _url: 'https://example.com/',
+    url() { return this._url; },
+    async goto(u) { this._url = u; },
+    async waitForTimeout() {},
+    async evaluate() { return { elements: [{ id: 'b', type: 'button', text: 'Go' }], bodyText: 'hello' }; },
+  };
+  const fakeBrowser = { newPage: async () => fakePage, close: async () => {} };
+  try {
+    const result = await runGenerateLive({
+      pages: ['form-validate', 'dialogs'],
+      model: 'gemini-3.5-flash-lite',
+      cap: 15,
+      port: 5010,
+      bootZoo: async () => ({ proc: { kill: () => {} }, port: 5010 }),
+      browserFactory: async () => fakeBrowser,
+      geminiGenerate: async () => { throw new Error('brain/api-gemini: http 401 {"error":{"code":401,"message":"API key not valid. Please pass a valid API key"}}'); },
+    });
+    assert.equal(result.blocked, 'invalid-key');
+    assert.equal(result.pages.length, 1, 'only the first page was probed');
+    assert.equal(result.pages[0].blocked, 'invalid-key');
+    assert.ok(result.pages[0].error && /401/.test(result.pages[0].error), 'scrubbed 401 evidence recorded');
+    assert.equal(result.calls.length, 1, 'one failed call recorded, no further probes');
+    assert.ok(result.calls[0].error && /401/.test(result.calls[0].error), 'sanitized failure evidence on the call');
+    assert.ok(!JSON.stringify(result).includes('SECRET'), 'no secret leaked');
+  } finally {
+    if (had) process.env.GENERATE = prev; else delete process.env.GENERATE;
+  }
 });
