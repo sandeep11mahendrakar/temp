@@ -237,7 +237,7 @@ V-8 service-boot-ux | OPEN | - | - | - | - (deps none | M | serviceManager.js | 
 M-1 mcp-freeze-carry | VERIFY | W3 | - | - | - (deps none | M | lock S | CARRY M1: freeze tools perceive(+block), act(+readback), assert, memory_get/put, report_emit, library_list/library_get; no secrets in replies; MCP suite numeric | carries M1 mcp-front-freeze OPEN W3)
 M-2 agent-prompt-carry | VERIFY | W3 | - | - | - (deps M-1 | S | docs | CARRY M2: docs/MCP_AGENT_PROMPT.md client prompt <=40 lines (loop, tools, NONBLIND label, BLOCKED handling, honest verdicts) | carries M2 MCP_AGENT_PROMPT OPEN W3)
 M-3 mcp-live-zoo | OPEN | - | - | - | - (deps M-2,Z-1 | M | live | client-driven run via opencode MCP on zoo (4 pages) ; label NONBLIND/ASSISTED; per-call table; fail => BLOCKED(reason)+raw)
-M-4 perceive-compact | OPEN | - | - | - | - (deps M-1 | M | lock S | token-minimal perceive reply (compact vdom, paging, size budget) ; before/after bytes)
+M-4 perceive-compact | CLAIMED | W1 | - | - | - (deps M-1 | M | lock S | token-minimal perceive reply (compact vdom, paging, size budget) ; before/after bytes)
 M-5 mcp-docs | OPEN | - | - | - | - (deps M-1 | S | docs | update MCP_DUAL_SETUP.md + tool reference)
 # TRACK EXPERIENCE MEMORY (PROMPT27) - rows below, claim per D39
 E-1 lesson-store | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (665edf0; vision/src/lessonStore.js + test +7; suites 442/442; AIza 0; gate STRONG/MED+run_id) | {pattern,action,outcome,lesson,confidence,count,run_ids[]}; write only from reliable oracles (STRONG/MED, citable runs))
