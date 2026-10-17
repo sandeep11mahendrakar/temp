@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-captcha","steps":[{"action":"click","target":{"type":"button","text":"I'm not a robot"}}],"expected":{"kind":"text_present","expect":"BLOCKED: captcha detected"}}

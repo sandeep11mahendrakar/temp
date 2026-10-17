@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><title>zoo tooltip</title></head>
+<body>
+<h1 id="page-title">Tooltip</h1>
+<button id="tip-trigger" type="button" title="Helpful tooltip text">Hover me</button>
+<div id="tip-content" style="display:none;">Helpful tooltip text</div>
+<script>
+document.getElementById('tip-trigger').addEventListener('mouseenter', function(){
+  document.getElementById('tip-content').style.display = 'block';
+});
+</script>
+</body></html>

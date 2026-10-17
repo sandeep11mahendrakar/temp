@@ -1,0 +1,17 @@
+<!doctype html>
+<html><head><title>zoo slider</title></head>
+<body>
+<h1 id="page-title">Slider</h1>
+<input id="range-input" type="range" min="0" max="100" value="50" />
+<span id="range-val">50</span>
+<button id="range-submit" type="button">Submit</button>
+<div id="range-result"></div>
+<script>
+document.getElementById('range-input').addEventListener('input', function(){
+  document.getElementById('range-val').textContent = this.value;
+});
+document.getElementById('range-submit').addEventListener('click', function(){
+  document.getElementById('range-result').textContent = 'Value: ' + document.getElementById('range-input').value;
+});
+</script>
+</body></html>

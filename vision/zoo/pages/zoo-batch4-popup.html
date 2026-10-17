@@ -1,0 +1,15 @@
+<!doctype html>
+<html><head><title>zoo popup</title></head>
+<body>
+<h1 id="page-title">Popup</h1>
+<button id="open-popup" type="button">Open popup</button>
+<div id="popup" style="display:none;"><span id="popup-text">Popup content here</span> <button id="close-popup" type="button">Close</button></div>
+<script>
+document.getElementById('open-popup').addEventListener('click', function(){
+  document.getElementById('popup').style.display = 'block';
+});
+document.getElementById('close-popup').addEventListener('click', function(){
+  document.getElementById('popup').style.display = 'none';
+});
+</script>
+</body></html>

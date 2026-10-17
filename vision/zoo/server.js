@@ -42,6 +42,23 @@ const PAGES = [
   'modal',
   'toast',
   'keyboard-only',
+  // batch4 (author-only, Z-2): 16 pages + truth-by-construction, no live.
+  'zoo-batch4-backforward',
+  'zoo-batch4-captcha',
+  'zoo-batch4-combobox',
+  'zoo-batch4-contenteditable',
+  'zoo-batch4-contextmenu',
+  'zoo-batch4-cookievariant',
+  'zoo-batch4-datepicker',
+  'zoo-batch4-filedownload',
+  'zoo-batch4-longform',
+  'zoo-batch4-nestediframe',
+  'zoo-batch4-popup',
+  'zoo-batch4-slider',
+  'zoo-batch4-sortable',
+  'zoo-batch4-sticky',
+  'zoo-batch4-tooltip',
+  'zoo-batch4-viewport',
 ];
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.json': 'application/json; charset=utf-8', '.css': 'text/css; charset=utf-8' };

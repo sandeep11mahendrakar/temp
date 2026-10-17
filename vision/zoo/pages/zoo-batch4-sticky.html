@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>zoo sticky</title></head>
+<body>
+<h1 id="page-title">Sticky Overlay</h1>
+<div id="overlay" style="position:fixed;top:0;left:0;width:100%;height:60px;background:rgba(0,0,0,0.5);color:#fff;z-index:999;">Cookie consent banner</div>
+<button id="accept-cookies" type="button" style="position:relative;z-index:1000;">Accept</button>
+<div id="after-accept" style="display:none;">Cookies accepted</div>
+<script>
+document.getElementById('accept-cookies').addEventListener('click', function(){
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('after-accept').style.display = 'block';
+});
+</script>
+</body></html>

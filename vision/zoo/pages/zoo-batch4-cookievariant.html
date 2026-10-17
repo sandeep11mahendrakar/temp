@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><title>zoo cookie variant</title></head>
+<body>
+<h1 id="page-title">Cookie Banner Variant</h1>
+<div id="cookie-banner" style="position:fixed;bottom:0;width:100%;background:#333;color:#fff;padding:10px;">We use cookies. <button id="reject-cookies" type="button">Reject</button> <button id="accept-cookies2" type="button">Accept all</button></div>
+<div id="cookie-result" style="display:none;">Cookie choice recorded</div>
+<script>
+document.getElementById('reject-cookies').addEventListener('click', function(){
+  document.getElementById('cookie-banner').style.display = 'none';
+  document.getElementById('cookie-result').style.display = 'block';
+  document.getElementById('cookie-result').textContent = 'Rejected cookies';
+});
+document.getElementById('accept-cookies2').addEventListener('click', function(){
+  document.getElementById('cookie-banner').style.display = 'none';
+  document.getElementById('cookie-result').style.display = 'block';
+  document.getElementById('cookie-result').textContent = 'Accepted cookies';
+});
+</script>
+</body></html>

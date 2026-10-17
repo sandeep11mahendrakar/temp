@@ -1,0 +1,13 @@
+<!doctype html>
+<html><head><title>zoo contenteditable</title></head>
+<body>
+<h1 id="page-title">Content Editable</h1>
+<div id="editor" contenteditable="true" style="border:1px solid #000;min-height:40px;">Type here</div>
+<button id="save-btn" type="button">Save</button>
+<div id="save-result"></div>
+<script>
+document.getElementById('save-btn').addEventListener('click', function(){
+  document.getElementById('save-result').textContent = 'Saved: ' + document.getElementById('editor').innerText;
+});
+</script>
+</body></html>

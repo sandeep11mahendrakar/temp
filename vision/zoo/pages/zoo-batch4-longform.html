@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><title>zoo longform</title></head>
+<body>
+<h1 id="page-title">Long Form</h1>
+<form id="long-form">
+  <input id="lf-name" type="text" placeholder="Name" required />
+  <input id="lf-email" type="email" placeholder="Email" required />
+  <input id="lf-age" type="number" placeholder="Age" />
+  <select id="lf-country"><option value="us">US</option><option value="uk">UK</option></select>
+  <textarea id="lf-bio" placeholder="Bio"></textarea>
+  <button id="lf-submit" type="button">Submit</button>
+</form>
+<div id="lf-result"></div>
+<div id="lf-errors"></div>
+<script>
+document.getElementById('lf-submit').addEventListener('click', function(){
+  var name = document.getElementById('lf-name').value;
+  var email = document.getElementById('lf-email').value;
+  if(!name || !email){ document.getElementById('lf-errors').textContent = 'Error: name and email required'; return; }
+  document.getElementById('lf-result').textContent = 'Submitted: ' + name + ' ' + email;
+});
+</script>
+</body></html>

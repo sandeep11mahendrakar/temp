@@ -240,7 +240,7 @@ M-3 mcp-live-zoo | OPEN | - | - | - | - (deps M-2,Z-1 | M | live | client-driven
 M-4 perceive-compact | OPEN | - | - | - | - (deps M-1 | M | lock S | token-minimal perceive reply (compact vdom, paging, size budget) ; before/after bytes)
 M-5 mcp-docs | OPEN | - | - | - | - (deps M-1 | S | docs | update MCP_DUAL_SETUP.md + tool reference)
 # TRACK EXPERIENCE MEMORY (PROMPT27) - rows below, claim per D39
-E-1 lesson-store | CLAIMED | W1 | - | - | - (deps none | M | offline | lesson schema+store (local JSON) {pattern,action,outcome,lesson,confidence,count,run_ids[]}; write only from reliable oracles (STRONG/MED, citable runs))
+E-1 lesson-store | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (665edf0; vision/src/lessonStore.js + test +7; suites 442/442; AIza 0; gate STRONG/MED+run_id) | {pattern,action,outcome,lesson,confidence,count,run_ids[]}; write only from reliable oracles (STRONG/MED, citable runs))
 E-2 memory-planner | OPEN | - | - | - | - (deps E-1 | M | lock B | retrieval top-3 into planner prompt, flag OFF default byte-identical; tests)
 E-3 archetype-proposals | OPEN | - | - | - | - (deps E-1 | S | offline | promotion proposal: pattern seen on >=3 sites => archetype hint proposal file (never auto-edit archetypes))
 E-4 memory-ablation | OPEN | - | - | - | - (deps E-2,A-8 | M | live(mock+api if USER-KEY) | ablation with/without memory; metrics vs truth; honest if no gain)

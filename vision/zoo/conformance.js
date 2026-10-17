@@ -1,7 +1,7 @@
 'use strict';
 
 // vision/zoo/conformance.js — G2z zoo conformance (classify-only, DO-NOT-fix).
-// Loads vision/zoo/truth/*.truth.json (batch1 8 + batch2 8 + batch3 5 = 21)
+// Loads vision/zoo/truth/*.truth.json (batch1 8 + batch2 8 + batch3 5 + batch4 16 = 37)
 // and drives each TC through the REAL executor CLI (node src/executeTests.js —
 // the file W3 froze is never edited, runTestCase is not imported) with SEEDED
 // steps and DOM-seeded perception:

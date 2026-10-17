@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-combobox","steps":[{"action":"fill","target":{"type":"text_input","text":"Type to search"},"value":"Banana"},{"action":"click","target":{"type":"button","text":"Select"}}],"expected":{"kind":"text_present","expect":"Selected: Banana"}}

@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-slider","steps":[{"action":"fill","target":{"type":"text_input","text":"range-input"},"value":"75"},{"action":"click","target":{"type":"button","text":"Submit"}}],"expected":{"kind":"text_present","expect":"Value: 75"}}

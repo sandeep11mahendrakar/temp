@@ -7,3 +7,4 @@
 {"row":"Z2","aud":"ACCEPT","gates":"G1-G5 pass","check":"8 pages + 8 truth files validateTruth OK; HOLDOUT not registered in PAGES; AIza scan 0; commit fd39316 only own files","evid":"vision/zoo/pages/zoo-shop-*.html + truth/*","ts":"2026-10-17"}
 {"row":"M-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"docs/MCP_AGENT_PROMPT.md 37 lines <=40","evid":"wc+content review","ts":"2026-10-17T20:52:00+05:30"}
 {"row":"V-1","aud":"ACCEPT","gates":"G1-G5 pass","check":"5 gap classes table with counts; suites 435/435+41/41; AIza scan 0; commit 0620b72","evid":"docs/PERCEPTION_GAPS.md","ts":"2026-10-17"}
+{"row":"E-1","aud":"ACCEPT","gates":"G1-G5 pass","check":"schema+store+gate STRONG/MED+run_id; dedup count/run_ids; load/save roundtrip; 7 tests; suites 442/442; AIza 0","evid":"vision/src/lessonStore.js","ts":"2026-10-17"}

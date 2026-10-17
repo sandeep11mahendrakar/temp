@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-sticky","steps":[{"action":"click","target":{"type":"button","text":"Accept"}}],"expected":{"kind":"text_present","expect":"Cookies accepted"}}

@@ -34,6 +34,23 @@ const MARKERS = {
   'modal': 'id="open-modal"',
   'toast': 'id="toast"',
   'keyboard-only': 'id="kb-activate"',
+  // batch4 (Z-2): author-only pages + truth-by-construction.
+  'zoo-batch4-backforward': 'id="go-page2"',
+  'zoo-batch4-captcha': 'id="captcha-widget"',
+  'zoo-batch4-combobox': 'id="combo-input"',
+  'zoo-batch4-contenteditable': 'id="editor"',
+  'zoo-batch4-contextmenu': 'id="ctx-target"',
+  'zoo-batch4-cookievariant': 'id="cookie-banner"',
+  'zoo-batch4-datepicker': 'id="date-input"',
+  'zoo-batch4-filedownload': 'id="dl-link"',
+  'zoo-batch4-longform': 'id="long-form"',
+  'zoo-batch4-nestediframe': 'id="outer-frame"',
+  'zoo-batch4-popup': 'id="open-popup"',
+  'zoo-batch4-slider': 'id="range-input"',
+  'zoo-batch4-sortable': 'id="sort-table"',
+  'zoo-batch4-sticky': 'id="overlay"',
+  'zoo-batch4-tooltip': 'id="tip-trigger"',
+  'zoo-batch4-viewport': 'id="viewport-info"',
 };
 
 function get(port, p) {

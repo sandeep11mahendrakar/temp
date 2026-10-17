@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-viewport","steps":[{"action":"click","target":{"type":"button","text":"Resize to mobile"}}],"expected":{"kind":"text_present","expect":"Viewport set to mobile (375px)"}}

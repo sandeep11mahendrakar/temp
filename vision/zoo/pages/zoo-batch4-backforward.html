@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><title>zoo backforward</title></head>
+<body>
+<h1 id="page-title">Back/Forward State</h1>
+<a id="go-page2" href="#page2">Go to page 2</a>
+<div id="page1-content">Page 1 content</div>
+<div id="page2-content" style="display:none;">Page 2 content</div>
+<script>
+document.getElementById('go-page2').addEventListener('click', function(e){
+  e.preventDefault();
+  document.getElementById('page1-content').style.display = 'none';
+  document.getElementById('page2-content').style.display = 'block';
+  history.pushState({page:2}, '', '#page2');
+});
+window.addEventListener('popstate', function(e){
+  if(e.state && e.state.page === 2){
+    document.getElementById('page1-content').style.display = 'none';
+    document.getElementById('page2-content').style.display = 'block';
+  } else {
+    document.getElementById('page1-content').style.display = 'block';
+    document.getElementById('page2-content').style.display = 'none';
+  }
+});
+</script>
+</body></html>

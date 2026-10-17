@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><title>zoo combobox</title></head>
+<body>
+<h1 id="page-title">Combobox</h1>
+<input id="combo-input" type="text" placeholder="Type to search" list="combo-opts" />
+<datalist id="combo-opts">
+  <option value="Apple">
+  <option value="Banana">
+  <option value="Cherry">
+</datalist>
+<button id="combo-select" type="button">Select</button>
+<div id="combo-result"></div>
+<script>
+document.getElementById('combo-select').addEventListener('click', function(){
+  var v = document.getElementById('combo-input').value;
+  document.getElementById('combo-result').textContent = 'Selected: ' + v;
+});
+</script>
+</body></html>

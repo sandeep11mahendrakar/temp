@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>zoo viewport</title></head>
+<body>
+<h1 id="page-title">Viewport Resize</h1>
+<div id="viewport-info">Width: 0</div>
+<button id="resize-btn" type="button">Resize to mobile</button>
+<div id="resize-result"></div>
+<script>
+document.getElementById('resize-btn').addEventListener('click', function(){
+  document.getElementById('viewport-info').textContent = 'Width: 375';
+  document.getElementById('resize-result').textContent = 'Viewport set to mobile (375px)';
+});
+</script>
+</body></html>

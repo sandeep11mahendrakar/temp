@@ -1,0 +1,13 @@
+<!doctype html>
+<html><head><title>zoo datepicker</title></head>
+<body>
+<h1 id="page-title">Datepicker</h1>
+<input id="date-input" type="date" />
+<button id="date-submit" type="button">Submit</button>
+<div id="date-result"></div>
+<script>
+document.getElementById('date-submit').addEventListener('click', function(){
+  document.getElementById('date-result').textContent = 'Date: ' + document.getElementById('date-input').value;
+});
+</script>
+</body></html>

@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-longform","steps":[{"action":"fill","target":{"type":"text_input","text":"Name"},"value":"Ada"},{"action":"fill","target":{"type":"text_input","text":"Email"},"value":"ada@example.com"},{"action":"click","target":{"type":"button","text":"Submit"}}],"expected":{"kind":"text_present","expect":"Submitted: Ada ada@example.com"}}

@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><title>zoo filedownload</title></head>
+<body>
+<h1 id="page-title">File Download</h1>
+<a id="dl-link" href="data:text/plain;base64,SGVsbG8gV29ybGQ=" download="hello.txt">Download file</a>
+<div id="dl-status">Not downloaded</div>
+<script>
+document.getElementById('dl-link').addEventListener('click', function(){
+  document.getElementById('dl-status').textContent = 'Downloaded: hello.txt';
+});
+</script>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><title>zoo sortable</title></head>
+<body>
+<h1 id="page-title">Sortable Table</h1>
+<table id="sort-table">
+  <thead><tr><th id="sort-name">Name</th><th id="sort-score">Score</th></tr></thead>
+  <tbody id="sort-body">
+    <tr><td>Beta</td><td>20</td></tr>
+    <tr><td>Alpha</td><td>10</td></tr>
+  </tbody>
+</table>
+<button id="sort-btn" type="button">Sort by name</button>
+<div id="sort-result"></div>
+<script>
+document.getElementById('sort-btn').addEventListener('click', function(){
+  var rows = Array.from(document.querySelectorAll('#sort-body tr'));
+  rows.sort(function(a,b){ return a.cells[0].textContent.localeCompare(b.cells[0].textContent); });
+  var body = document.getElementById('sort-body');
+  rows.forEach(function(r){ body.appendChild(r); });
+  document.getElementById('sort-result').textContent = 'Sorted: Alpha, Beta';
+});
+</script>
+</body></html>

@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-batch4-backforward","steps":[{"action":"click","target":{"type":"link","text":"Go to page 2"}}],"expected":{"kind":"text_present","expect":"Page 2 content"}}
