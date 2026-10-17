@@ -51,15 +51,18 @@ function killTree(proc) {
  * Returns { ok, started, alreadyRunning } — call shutdownVisionServices()
  * with the returned object when done.
  */
-async function ensureVisionServices({ startupTimeoutMs = 120000 } = {}) {
+async function ensureVisionServices({ startupTimeoutMs = 120000, onProgress = null } = {}) {
+  const progress = (msg) => { try { if (typeof onProgress === 'function') onProgress(msg); } catch (_) {} };
   const started = [];
   let alreadyRunning = 0;
 
   const spawnIfDown = async (def) => {
     if (await isHealthy(def.health)) {
       alreadyRunning += 1;
+      progress(`${def.name}: already healthy`);
       return null;
     }
+    progress(`${def.name}: starting`);
     const child = spawn(def.cmd, [def.file], {
       cwd: path.join(VISION_ROOT, ...def.cwd),
       stdio: ['ignore', 'ignore', 'ignore'],
@@ -102,4 +105,51 @@ async function shutdownVisionServices(handle) {
   await sleep(800);
 }
 
-module.exports = { ensureVisionServices, shutdownVisionServices };
+/**
+ * Build a health table for all defined services (gateway + downstream).
+ * Returns an array of { name, url, healthy } (never throws).
+ */
+async function getServiceHealth() {
+  const defs = [...SERVICE_DEFS, GATEWAY_DEF];
+  const out = [];
+  for (const def of defs) {
+    let healthy = false;
+    try { healthy = await isHealthy(def.health); } catch (_) { healthy = false; }
+    out.push({ name: def.name, url: def.health, healthy });
+  }
+  return out;
+}
+
+/**
+ * Read the PID registry file (best-effort; missing/corrupt -> []).
+ */
+function readPidRegistry() {
+  try {
+    const fs = require('fs');
+    const ledger = path.join(VISION_ROOT, 'storage', 'service_pids.jsonl');
+    const raw = fs.readFileSync(ledger, 'utf8');
+    return raw.split('\\n').filter(Boolean).map((l) => {
+      try { return JSON.parse(l); } catch (_) { return null; }
+    }).filter(Boolean);
+  } catch (_) {
+    return [];
+  }
+}
+
+/**
+ * Safe teardown alias: only kills processes this manager started.
+ */
+async function safeTeardown(handle) {
+  return shutdownVisionServices(handle);
+}
+
+module.exports = {
+  ensureVisionServices,
+  shutdownVisionServices,
+  safeTeardown,
+  getServiceHealth,
+  readPidRegistry,
+  SERVICE_DEFS,
+  GATEWAY_DEF,
+  killTree,
+};
