@@ -426,7 +426,7 @@ function checkToggled(before, after) {
 // OCR-anchor synth, Q15 label-drift proximity) must be counted on the
 // verdict, never hidden inside a plain PASS. crop_retry is a real YOLO
 // detection and does NOT count weak.
-const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor|label_drift)(\+|$)/;
+const WEAK_VIA_RE = /(^|\+)(lowconf_retry|ocr_anchor|label_drift|dom_reindex)(\+|$)/;
 
 // F-C: ranked signal methods. dialog_message (2, moderate interaction
 // evidence) and new_page_url (3, real navigation-grade URL) close the
@@ -875,6 +875,49 @@ function composeFinalStatus({ ladderStatus, oracleVerdict, stepsExecuted } = {})
   return { status: 'PASS', forced: false, reason: null };
 }
 
+// X-F3 wizard-step3 (guarded, WEAK, bounded): when the vision pool is stale
+// after a DOM-changing action (a target revealed later is absent because it was
+// hidden at seed/capture time), re-index the LIVE DOM once and resolve against
+// it. Tagged dom_reindex (WEAK) so a stale-pool recovery never reads as a
+// strong vision hit. Never throws; an empty pool yields null (caller FAILs).
+async function domReindexResolve(page, step) {
+  if (!page || typeof page.evaluate !== 'function') return null;
+  let pool = null;
+  try {
+    pool = await page.evaluate(() => {
+      const mapType = (el) => {
+        const tag = (el.tagName || '').toUpperCase();
+        if (tag === 'INPUT') {
+          const t = String(el.getAttribute('type') || 'text').toLowerCase();
+          if (t === 'checkbox') return 'checkbox';
+          if (t === 'radio') return 'radiobox';
+          if (t === 'file') return 'file';
+          if (t === 'password') return 'password';
+          return 'text_input';
+        }
+        return ({ BUTTON: 'button', A: 'link', SELECT: 'select', TEXTAREA: 'text_input' })[tag] || 'button';
+      };
+      const labelOf = (el) => {
+        const id = el.getAttribute('id');
+        if (id) { const lb = document.querySelector('label[for="' + id + '"]'); if (lb && lb.innerText.trim()) return lb.innerText.trim(); }
+        if (el.innerText && el.innerText.trim()) return el.innerText.trim().slice(0, 80);
+        return el.getAttribute('aria-label') || el.getAttribute('placeholder') || el.getAttribute('name') || el.getAttribute('id') || el.tagName;
+      };
+      const out = [];
+      for (const el of document.querySelectorAll('button,a,input,select,textarea,[role="button"]')) {
+        const r = el.getBoundingClientRect();
+        if (!r || r.width <= 0 || r.height <= 0) continue;
+        out.push({ id: 'domidx-' + out.length, type: mapType(el), text: labelOf(el), conf: null, synth: null, cx: r.x + r.width / 2, cy: r.y + r.height / 2 });
+      }
+      return out;
+    });
+  } catch (_) { return null; }
+  if (!Array.isArray(pool) || !pool.length) return null;
+  const hit = resolveTarget(pool, step);
+  if (!hit || !hit.resolved) return null;
+  return { ...hit, via: 'dom_reindex', pool };
+}
+
 // X-F2 scroll-86ch (guarded, bounded): scroll the TARGET element (inner scroll
 // containers like the zoo feed) AND the window, repeating until content stops
 // growing (bounded rounds), so lazy-loaded items actually appear. Returns
@@ -1022,6 +1065,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     let pierceAssist = false;
     let dragDestVia = null;
     let dragNative = false;
+    let domReindex = false;
 
     if (REDETECT_ENABLED && ['click', 'fill', 'dblclick', 'right_click'].includes(step.action)) {
       if (!currentElements) {
@@ -1123,6 +1167,18 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
           };
           pierceAssist = true;
           warnings.push(`Step ${i + 1}: shadow-pierce DOM assist (vision pool unresolved; coords DOM-read, click-by-vision:N)`);
+        }
+      }
+
+      // X-F3 wizard-step3: stale-pool recovery — one guarded live-DOM re-index
+      // resolves a target hidden when the pool was captured. WEAK (counted).
+      if (!resolution.resolved && ['click', 'fill'].includes(step.action)) {
+        const re = await domReindexResolve(page, step).catch(() => null);
+        if (re && re.element) {
+          resolution = { resolved: true, via: 'dom_reindex', element: re.element };
+          currentElements = re.pool;
+          domReindex = true;
+          warnings.push(`Step ${i + 1}: DOM re-index resolution (WEAK verification; pool predated the reveal)`);
         }
       }
 
@@ -1844,6 +1900,7 @@ module.exports = {
   dispatchHtml5Drag,
   frameAwareText,
   deepScroll,
+  domReindexResolve,
   splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
