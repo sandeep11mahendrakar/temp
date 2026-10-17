@@ -409,6 +409,158 @@ function expandTable(hints, goal) {
   ];
 }
 
+// ---- A0 dev-set archetypes (search, list/filter/sort/paginate, cart/checkout,
+// nav/menu, modal/tabs, wizard). Additive; registered in CONTRACT_ARCHETYPES.
+function detectSearch(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  const hasSearchInput = els.some((e) => /search_field/i.test(String(e.type || '')) || (/text_input/i.test(String(e.type || '')) && /search/i.test(String(e.text || ''))));
+  const hasSearchBtn = els.some((e) => /button/i.test(String(e.type || '')) && /search|find|go/i.test(String(e.text || '')));
+  if (hasSearchInput && hasSearchBtn) return 0.9;
+  if (hasSearchInput) return 0.6;
+  if (/search/i.test(txt)) return 0.4;
+  return 0.1;
+}
+function hintsSearch(vdom) {
+  const els = elsOf(vdom);
+  const input = els.find((e) => /search_field/i.test(String(e.type || '')) || (/text_input/i.test(String(e.type || '')) && /search/i.test(String(e.text || ''))));
+  const btn = els.find((e) => /button/i.test(String(e.type || '')) && /search|find|go/i.test(String(e.text || '')));
+  return { query: 'a', input: input ? String(input.text || '') : '', button: btn ? String(btn.text || '') : 'Search' };
+}
+function expandSearch(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const q = (h.query || 'a');
+  const btn = h.button || 'Search';
+  const mk = (id, steps, oracle, tags) => ({ id, archetype: 'search', params: { goal: String(goal || '') }, steps, oracle, tags });
+  return [
+    mk('search-enter', [{ action: 'fill', target: { type: 'search_field', text: h.input || '' }, value: q }], { ...ORACLES.stateDiff }, ['search', 'enter']),
+    mk('search-submit', [{ action: 'click', target: { type: 'button', text: btn } }], { ...ORACLES.stateDiff }, ['search', 'submit']),
+    mk('search-verify', [], { ...ORACLES.observed }, ['search', 'verify']),
+  ];
+}
+
+function detectListpage(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  const hasSearch = els.some((e) => /search_field|text_input/i.test(String(e.type || '')));
+  const hasSort = /sort/i.test(txt);
+  const hasPaginate = /prev|next/i.test(txt);
+  const hasFilter = /filter/i.test(txt);
+  let score = 0.1;
+  if (hasSearch) score = 0.5;
+  if (hasSort || hasPaginate || hasFilter) score = Math.max(score, 0.7);
+  if (hasSearch && (hasSort || hasPaginate)) score = 0.9;
+  return score;
+}
+function hintsListpage(vdom) {
+  const els = elsOf(vdom);
+  const search = els.find((e) => /search_field|text_input/i.test(String(e.type || '')));
+  const sortBtn = els.find((e) => /button/i.test(String(e.type || '')) && /sort/i.test(String(e.text || '')));
+  const nextBtn = els.find((e) => /button/i.test(String(e.type || '')) && /next/i.test(String(e.text || '')));
+  const prevBtn = els.find((e) => /button/i.test(String(e.type || '')) && /prev/i.test(String(e.text || '')));
+  return { search: search ? String(search.text || '') : '', sort: sortBtn ? String(sortBtn.text || '') : 'Sort', next: nextBtn ? String(nextBtn.text || '') : 'Next', prev: prevBtn ? String(prevBtn.text || '') : 'Prev' };
+}
+function expandListpage(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const mk = (id, steps, oracle, tags) => ({ id, archetype: 'listpage', params: { goal: String(goal || '') }, steps, oracle, tags });
+  return [
+    mk('list-search', [{ action: 'fill', target: { type: 'search_field', text: h.search || '' }, value: 'a' }], { ...ORACLES.stateDiff }, ['list', 'search']),
+    mk('list-sort', [{ action: 'click', target: { type: 'button', text: h.sort || 'Sort' } }], { ...ORACLES.stateDiff }, ['list', 'sort']),
+    mk('list-next', [{ action: 'click', target: { type: 'button', text: h.next || 'Next' } }], { ...ORACLES.text_present, expect: 'page 2' }, ['list', 'paginate']),
+  ];
+}
+
+function detectCart(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  if (/add .*cart|checkout|place order|review order/i.test(txt)) return 0.9;
+  if (/cart|checkout/i.test(txt)) return 0.6;
+  return 0.1;
+}
+function hintsCart(vdom) {
+  const els = elsOf(vdom);
+  const addBtn = els.find((e) => /button/i.test(String(e.type || '')) && /add/i.test(String(e.text || '')));
+  const continueBtn = els.find((e) => /button/i.test(String(e.type || '')) && /continue/i.test(String(e.text || '')));
+  const reviewBtn = els.find((e) => /button/i.test(String(e.type || '')) && /review/i.test(String(e.text || '')));
+  const placeBtn = els.find((e) => /button/i.test(String(e.type || '')) && /place order/i.test(String(e.text || '')));
+  const shipInput = els.find((e) => /text_input/i.test(String(e.type || '')));
+  return { add: addBtn ? String(addBtn.text || '') : 'Add', continue: continueBtn ? String(continueBtn.text || '') : 'Continue', review: reviewBtn ? String(reviewBtn.text || '') : 'Review order', place: placeBtn ? String(placeBtn.text || '') : 'Place order', ship: shipInput ? String(shipInput.text || '') : 'Ship to' };
+}
+function expandCart(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const mk = (id, steps, oracle, tags) => ({ id, archetype: 'cart', params: { goal: String(goal || '') }, steps, oracle, tags });
+  return [
+    mk('cart-add', [{ action: 'click', target: { type: 'button', text: h.add || 'Add' } }], { ...ORACLES.stateDiff }, ['cart', 'add']),
+    mk('cart-continue', [{ action: 'click', target: { type: 'button', text: h.continue || 'Continue' } }], { ...ORACLES.stateDiff }, ['cart', 'continue']),
+    mk('cart-ship', [{ action: 'fill', target: { type: 'text_input', text: h.ship || 'Ship to' }, value: 'Ada' }], { ...ORACLES.stateDiff }, ['cart', 'ship']),
+    mk('cart-review', [{ action: 'click', target: { type: 'button', text: h.review || 'Review order' } }], { ...ORACLES.stateDiff }, ['cart', 'review']),
+    mk('cart-place', [{ action: 'click', target: { type: 'button', text: h.place || 'Place order' } }], { ...ORACLES.text_present, expect: 'Thank you' }, ['cart', 'place']),
+  ];
+}
+
+function detectNavmenu(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  const hasMenuBtn = els.some((e) => /button/i.test(String(e.type || '')) && /menu|products|nav/i.test(String(e.text || '')));
+  const hasSubLinks = els.filter((e) => /link/i.test(String(e.type || ''))).length >= 1;
+  if (hasMenuBtn && hasSubLinks) return 0.9;
+  if (hasSubLinks) return 0.6;
+  if (/menu/i.test(txt)) return 0.4;
+  return 0.1;
+}
+function hintsNavmenu(vdom) {
+  const els = elsOf(vdom);
+  const menuBtn = els.find((e) => /button/i.test(String(e.type || '')) && /menu|products|nav/i.test(String(e.text || '')));
+  const subs = els.filter((e) => /link/i.test(String(e.type || ''))).map((e) => String(e.text || '')).slice(0, 6);
+  return { menu: menuBtn ? String(menuBtn.text || '') : 'Products', subs };
+}
+function expandNavmenu(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const mk = (id, steps, oracle, tags) => ({ id, archetype: 'navmenu', params: { goal: String(goal || '') }, steps, oracle, tags });
+  const subs = (Array.isArray(h.subs) && h.subs.length) ? h.subs : ['Widgets'];
+  return [
+    mk('nav-open', [{ action: 'click', target: { type: 'button', text: h.menu || 'Products' } }], { ...ORACLES.stateDiff }, ['nav', 'open']),
+    ...subs.slice(0, 2).map((s, i) => mk(`nav-pick-${i + 1}`, [{ action: 'click', target: { type: 'link', text: s } }], { ...ORACLES.stateDiff }, ['nav', 'pick'])),
+  ];
+}
+
+function detectModal(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  if (/show alert|show confirm|show prompt|modal|dialog|tab/i.test(txt)) return 0.9;
+  if (/alert|confirm|prompt/i.test(txt)) return 0.6;
+  return 0.1;
+}
+function hintsModal(vdom) {
+  const els = elsOf(vdom);
+  const btns = els.filter((e) => /button/i.test(String(e.type || '')) && /show|modal|tab/i.test(String(e.text || '')))
+    .map((e) => String(e.text || '')).slice(0, 6);
+  return { buttons: btns.length ? btns : ['Show alert', 'Show confirm', 'Show prompt'] };
+}
+function expandModal(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const btns = (Array.isArray(h.buttons) && h.buttons.length) ? h.buttons : ['Show alert'];
+  const mk = (id, steps, oracle, tags) => ({ id, archetype: 'modal', params: { goal: String(goal || '') }, steps, oracle, tags });
+  return btns.slice(0, 3).map((b, i) => mk(`modal-${i + 1}`, [{ action: 'click', target: { type: 'button', text: b } }], { ...ORACLES.observed }, ['modal', 'trigger']));
+}
+
+function detectWizard(vdom) {
+  const els = elsOf(vdom);
+  const txt = els.map((e) => String(e.text || '').toLowerCase()).join(' ');
+  if (/continue|step|wizard|next step/i.test(txt) && /review|finish|done/i.test(txt)) return 0.9;
+  if (/continue|wizard/i.test(txt)) return 0.6;
+  return 0.1;
+}
+function hintsWizard(vdom) { return hintsCart(vdom); }
+function expandWizard(hints, goal) {
+  const h = hints && typeof hints === 'object' ? hints : {};
+  const mk = (id, steps, oracle, tags) => ({ id, archetype: 'wizard', params: { goal: String(goal || '') }, steps, oracle, tags });
+  return [
+    mk('wizard-step1', [{ action: 'click', target: { type: 'button', text: h.continue || 'Continue' } }], { ...ORACLES.stateDiff }, ['wizard', 'step1']),
+    mk('wizard-finish', [{ action: 'click', target: { type: 'button', text: h.place || 'Finish' } }], { ...ORACLES.text_present, expect: 'done|complete' }, ['wizard', 'finish']),
+  ];
+}
+
 // Expected-rejection semantics: a satisfied negative oracle is app-rejected,
 // test-PASS — never a test FAIL. obs={urlChanged,pageText}.
 function verdictFor(tc, obs) {
@@ -435,6 +587,12 @@ const CONTRACT_ARCHETYPES = {
   crudlist: { name: 'crudlist', detect: detectCrudlist, hints: hintsCrudlist, expand: expandCrudlist, oracles: ORACLES },
   form: { name: 'form', detect: detectForm, hints: hintsForm, expand: expandForm, oracles: ORACLES },
   table: { name: 'table', detect: detectTable, hints: hintsTable, expand: expandTable, oracles: ORACLES },
+  search: { name: 'search', detect: detectSearch, hints: hintsSearch, expand: expandSearch, oracles: ORACLES },
+  listpage: { name: 'listpage', detect: detectListpage, hints: hintsListpage, expand: expandListpage, oracles: ORACLES },
+  cart: { name: 'cart', detect: detectCart, hints: hintsCart, expand: expandCart, oracles: ORACLES },
+  navmenu: { name: 'navmenu', detect: detectNavmenu, hints: hintsNavmenu, expand: expandNavmenu, oracles: ORACLES },
+  modal: { name: 'modal', detect: detectModal, hints: hintsModal, expand: expandModal, oracles: ORACLES },
+  wizard: { name: 'wizard', detect: detectWizard, hints: hintsWizard, expand: expandWizard, oracles: ORACLES },
   index: { name: 'index', detect: detectIndex, hints: hintsGeneric, expand: expandGeneric, oracles: ORACLES },
   generic: { name: 'generic', detect: detectGeneric, hints: hintsGeneric, expand: expandGeneric, oracles: ORACLES },
 };
