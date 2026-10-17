@@ -106,6 +106,8 @@ async function runGenerateLive(opts = {}) {
   const port = Number.isFinite(o.port) ? o.port : 5010;
   const key = resolveGeminiKey(o); // throws if absent; never logged
 
+  const runStart = Date.now(); // for stale-report guard (never score a report not produced by this run)
+
   const boot = (typeof o.bootZoo === 'function') ? o.bootZoo : bootZoo;
   const { proc, port: p } = await boot(port);
   const base = `http://127.0.0.1:${p}`;
@@ -180,7 +182,10 @@ async function runGenerateLive(opts = {}) {
         } catch (_) { /* rep lands FAIL/ERROR */ }
       }
       let rep = null;
-      try { rep = JSON.parse(fs.readFileSync(repFile, 'utf8')); } catch (_) { rep = null; }
+      try {
+        const st = fs.statSync(repFile);
+        if (st.mtimeMs >= runStart) rep = JSON.parse(fs.readFileSync(repFile, 'utf8'));
+      } catch (_) { rep = null; }
       const results = {};
       const rows = [];
       for (const r of (rep && rep.results) || []) {
