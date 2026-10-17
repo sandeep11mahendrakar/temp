@@ -196,10 +196,12 @@ function hasInput(els, re) {
 function detectLogin(vdom) {
   const els = elsOf(vdom);
   const pass = els.some((e) => /password/i.test(String(e.type || '')));
+  const loginBtn = els.some((e) => /log\s?in|sign\s?in/i.test(String(e.text || '')));
   const fill = hasInput(els, /text_input|search_field|password|input/i);
-  const btn = els.some((e) => /button|submit/i.test(String(e.type || '')) || /log\s?in|sign\s?in/i.test(String(e.text || '')));
-  if ((pass || fill) && btn) return 0.9;
-  if (fill) return 0.5;
+  const btn = els.some((e) => /button|submit/i.test(String(e.type || '')));
+  if ((pass || loginBtn) && btn) return 0.9;
+  if (fill && btn) return 0.3;
+  if (fill) return 0.2;
   return 0.1;
 }
 
@@ -489,13 +491,16 @@ function hintsCart(vdom) {
 function expandCart(hints, goal) {
   const h = hints && typeof hints === 'object' ? hints : {};
   const mk = (id, steps, oracle, tags) => ({ id, archetype: 'cart', params: { goal: String(goal || '') }, steps, oracle, tags });
-  return [
+  const out = [
     mk('cart-add', [{ action: 'click', target: { type: 'button', text: h.add || 'Add' } }], { ...ORACLES.stateDiff }, ['cart', 'add']),
     mk('cart-continue', [{ action: 'click', target: { type: 'button', text: h.continue || 'Continue' } }], { ...ORACLES.stateDiff }, ['cart', 'continue']),
     mk('cart-ship', [{ action: 'fill', target: { type: 'text_input', text: h.ship || 'Ship to' }, value: 'Ada' }], { ...ORACLES.stateDiff }, ['cart', 'ship']),
     mk('cart-review', [{ action: 'click', target: { type: 'button', text: h.review || 'Review order' } }], { ...ORACLES.stateDiff }, ['cart', 'review']),
     mk('cart-place', [{ action: 'click', target: { type: 'button', text: h.place || 'Place order' } }], { ...ORACLES.text_present, expect: 'Thank you' }, ['cart', 'place']),
   ];
+  // Optional Remove-TC (amended fix): cart page truth tests Remove -> Total: $0.
+  out.push(mk('cart-remove', [{ action: 'click', target: { type: 'button', text: 'Remove' } }], { ...ORACLES.text_present, expect: 'Total: $0' }, ['cart', 'remove']));
+  return out;
 }
 
 function detectNavmenu(vdom) {
@@ -613,7 +618,13 @@ function expandAll(goal, vdom, ocrText, mem) {
   const ranked = detectAll(vdom, mem);
   const name = goalHit || (ranked[0] || {}).name || 'generic';
   const arch = CONTRACT_ARCHETYPES[name] || CONTRACT_ARCHETYPES.generic;
-  return arch.expand(arch.hints(vdom, ocrText), goal);
+  const tcs = arch.expand(arch.hints(vdom, ocrText), goal);
+  for (const tc of (Array.isArray(tcs) ? tcs : [])) {
+    if (tc && typeof tc === 'object' && (tc.objective == null || tc.objective === '')) {
+      tc.objective = String(tc.id || arch.name || 'archetype task');
+    }
+  }
+  return tcs;
 }
 
 module.exports = {
