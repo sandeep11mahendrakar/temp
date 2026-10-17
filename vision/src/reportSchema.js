@@ -66,6 +66,21 @@ function blindStatus(flags) {
 }
 
 function resolveAutonomy(input) {
+  const f = (input && typeof input === 'object' ? input : {});
+  // Q1 provenance rule: pre-authored/replay/file-brain runs are ASSISTED
+  // (N6 file-mode handshake is pre-authored by definition). Originals
+  // untouched; this is a derived label only.
+  const prov = String(f.provenance || f.source || '').toLowerCase();
+  const mode = String(f.mode || (f.brain && f.brain.mode) || '').toLowerCase();
+  if (prov === 'file' || prov === 'pre-authored' || prov === 'preauthored' || prov === 'replay') return 'ASSISTED';
+  if (mode === 'file') return 'ASSISTED';
+  // Q1 cli rule: cli spawns with tools present, so blind=Y is unreachable;
+  // max label is AUTONOMY_NONBLIND (documented in docs/BRAIN.md).
+  if (mode === 'cli') {
+    const req = typeof f.requested === 'string' ? f.requested : '';
+    if (req === 'ASSISTED') return 'ASSISTED';
+    return 'AUTONOMY_NONBLIND';
+  }
   const blind = blindStatus(input);
   const req = input && typeof input.requested === 'string' ? input.requested : '';
   if (req === 'AUTONOMOUS') return blind === 'Y' ? 'AUTONOMOUS' : 'AUTONOMY_NONBLIND';
@@ -155,6 +170,18 @@ function checkReport(report) {
   if (report.cases && !Array.isArray(report.cases)) bad.push('cases:not-array');
   if (report.cost && typeof report.cost.api_calls !== 'number') bad.push('cost.api_calls:not-number');
   if (report.citable && typeof report.citable.sha1 !== 'string') bad.push('citable.sha1:not-string');
+  // Q10 Savan-handoff: validate the brain block WHEN present (absent block =
+  // pre-N4 report, still valid). mode/model must be non-empty strings;
+  // blind must be a blindStatus value (Y | AUTONOMY_NONBLIND).
+  if ('brain' in report) {
+    const b = report.brain;
+    if (!b || typeof b !== 'object') bad.push('brain:not-object');
+    else {
+      if (typeof b.mode !== 'string' || !b.mode) bad.push('brain.mode:not-string');
+      if (typeof b.model !== 'string' || !b.model) bad.push('brain.model:not-string');
+      if (b.blind !== 'Y' && b.blind !== 'AUTONOMY_NONBLIND') bad.push(`brain.blind:bad:${String(b.blind).slice(0, 30)}`);
+    }
+  }
   return bad;
 }
 

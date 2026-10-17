@@ -220,6 +220,33 @@ async function formStateLens(page) {
   }
 }
 
+// Q5 probe-readback: read the ACTUAL field value at (x,y) after a fill.
+// Returns {tag, value} from the live DOM, or null when unreadable.
+// Verification must quote THIS, never the requested string (self-report ban).
+async function readInputValue(page, x, y) {
+  if (!page || typeof page.evaluate !== 'function') return null;
+  try {
+    const r = await page.evaluate(([px, py]) => {
+      const el = document.elementFromPoint(Math.round(px), Math.round(py));
+      if (!el) return null;
+      const tag = (el.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea') {
+        const type = String((el.getAttribute && el.getAttribute('type')) || '').toLowerCase();
+        if (type === 'checkbox' || type === 'radio' || type === 'button' || type === 'submit' || type === 'hidden' || type === 'file') return null;
+        return { tag, value: typeof el.value === 'string' ? el.value : null };
+      }
+      if (tag === 'select') return { tag, value: typeof el.value === 'string' ? el.value : null };
+      const edit = el.closest && el.closest('[contenteditable="true"]');
+      if (edit) return { tag: 'contenteditable', value: edit.innerText || null };
+      return null;
+    }, [x, y]);
+    if (!r || typeof r.value !== 'string') return null;
+    return r;
+  } catch (_) {
+    return null;
+  }
+}
+
 function canonKeyName(v, allowed) {
   const t = String(v || '').trim().toLowerCase();
   return (allowed || []).find((k) => k.toLowerCase() === t) || null;
@@ -582,7 +609,12 @@ async function handleAct(args = {}) {
   if (compact.url && urlBefore && compact.url !== urlBefore) {
     verification = { method: 'url_change', detail: `navigated to ${compact.url}` };
   } else if (action === 'fill') {
-    verification = { method: 'input_value', detail: `filled "${String(typeof args.value === 'string' ? args.value : 'test').slice(0, 40)}"` };
+    // Q5: input_value MUST be a DOM probe-readback, never the requested echo.
+    const want = typeof args.value === 'string' ? args.value : 'test';
+    const probed = await readInputValue(page, execX, execY).catch(() => null);
+    verification = probed
+      ? { method: 'input_value', readback: probed.value, matched: probed.value === want, detail: `field holds "${String(probed.value).slice(0, 40)}" (wanted "${want.slice(0, 40)}")` }
+      : { method: 'input_value', readback: null, matched: null, detail: 'fill typed but value unreadable (no DOM probe)' };
   } else if ((action === 'check' || action === 'uncheck') && typeof checkSeen === 'boolean') {
     verification = { method: 'checked_stateDesired', detail: `checkbox/radio read ${checkSeen}, want ${action === 'check'} (clicked=${checkSeen !== (action === 'check')})` };
   } else {
@@ -929,4 +961,4 @@ if (require.main === module) {
   process.on('SIGTERM', shutdown);
 }
 
-module.exports = { SERVER_NAME, SERVER_VERSION, TOOLS, callTool, session, resolveMcpTarget, toFullElements, dispatchMessage, summarizeFormState, formStateLens };
+module.exports = { SERVER_NAME, SERVER_VERSION, TOOLS, callTool, session, resolveMcpTarget, toFullElements, dispatchMessage, summarizeFormState, formStateLens, readInputValue };

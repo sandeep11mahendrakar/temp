@@ -930,3 +930,88 @@ describe('L1 right_click (injected fakes, no browser, no ports)', () => {
     }
   });
 });
+
+describe('Q5 fill probe-readback (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  function fakeVdom() {
+    return {
+      source_url: 'https://example.com/',
+      element_count: 1,
+      raw: { full_text: 'Username' },
+      elements: [
+        { id: 'e1', type: 'input', text: 'Username', bbox: { x1: 80, y1: 280, x2: 220, y2: 310 }, confidence: { yolo: 0.8 } },
+      ],
+    };
+  }
+
+  function parse(res) { return JSON.parse(res.content[0].text); }
+
+  // Fake page whose DOM probe returns a canned field value (or null).
+  function setupProbe(probeResult) {
+    const page = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async screenshot() {},
+      mouse: { async click() {}, async wheel() {} },
+      keyboard: { async press() {}, async type() {} },
+      async evaluate() { return probeResult; },
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+      async close() {},
+    };
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = page;
+    srv.__testProcess = async () => fakeVdom();
+    srv.__testShotPath = '/tmp/mcp-fake-q5.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  function teardown() {
+    delete srv.__testEnsure; delete srv.__testPage;
+    delete srv.__testProcess; delete srv.__testShotPath;
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+  }
+
+  it('fill reports the probed value with matched=true (never the requested echo)', async () => {
+    setupProbe({ tag: 'input', value: 'hello' });
+    try {
+      const body = parse(await srv.callTool('act', { action: 'fill', x: 5, y: 5, value: 'hello', target: { type: 'input', text: 'Username' } }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(body.verification.method, 'input_value');
+      assert.equal(body.verification.readback, 'hello');
+      assert.equal(body.verification.matched, true);
+      assert.ok(body.verification.detail.includes('hello'), 'detail quotes the observed value');
+    } finally { teardown(); }
+  });
+
+  it('fill with divergent probe reports matched=false (silent mis-fill caught)', async () => {
+    setupProbe({ tag: 'input', value: 'stale-text' });
+    try {
+      const body = parse(await srv.callTool('act', { action: 'fill', x: 5, y: 5, value: 'hello', target: { type: 'input', text: 'Username' } }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(body.verification.method, 'input_value');
+      assert.equal(body.verification.readback, 'stale-text');
+      assert.equal(body.verification.matched, false);
+      assert.ok(!body.verification.detail.startsWith('filled "hello"'), 'no self-reported echo');
+    } finally { teardown(); }
+  });
+
+  it('fill with no probe stays honest: readback null, never claims the echo', async () => {
+    setupProbe(null);
+    try {
+      const body = parse(await srv.callTool('act', { action: 'fill', x: 5, y: 5, value: 'hello', target: { type: 'input', text: 'Username' } }));
+      assert.equal(body.status, 'PASS');
+      assert.equal(body.verification.method, 'input_value');
+      assert.equal(body.verification.readback, null);
+      assert.equal(body.verification.matched, null);
+      assert.ok(body.verification.detail.includes('unreadable'), 'honest unreadable detail');
+      assert.ok(!body.verification.detail.includes('"hello"'), 'requested value never quoted as observation');
+    } finally { teardown(); }
+  });
+});

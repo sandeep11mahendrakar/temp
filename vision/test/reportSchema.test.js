@@ -115,3 +115,38 @@ test('N4 blind-rule: never AUTONOMOUS unless blind; report carries brain block',
   assert.equal(r2.brain, undefined, 'pre-N4 reports carry no brain block');
   assert.deepEqual(checkReport(r2), []);
 });
+
+test('Q1 labels: file|pre-authored|replay provenance => ASSISTED', () => {
+  assert.equal(resolveAutonomy({ provenance: 'file' }), 'ASSISTED');
+  assert.equal(resolveAutonomy({ provenance: 'pre-authored' }), 'ASSISTED');
+  assert.equal(resolveAutonomy({ provenance: 'replay' }), 'ASSISTED');
+  assert.equal(resolveAutonomy({ mode: 'file' }), 'ASSISTED');
+  assert.equal(resolveAutonomy({ brain: { mode: 'file' } }), 'ASSISTED');
+});
+
+test('Q1 labels: cli => AUTONOMY_NONBLIND max (blind unreachable)', () => {
+  assert.equal(resolveAutonomy({ mode: 'cli', cwdEmpty: true, toolsOff: true, jsonOnly: true }), 'AUTONOMY_NONBLIND');
+  assert.equal(resolveAutonomy({ mode: 'cli', requested: 'AUTONOMOUS' }), 'AUTONOMY_NONBLIND');
+  assert.equal(resolveAutonomy({ mode: 'cli', requested: 'ASSISTED' }), 'ASSISTED');
+});
+
+test('Q10 validator: brain block valid when well-formed, absent stays valid', () => {
+  const { buildReport } = require('../src/reportSchema');
+  const good = buildReport({ runId: 'q10', brain: { mode: 'file', model: 'pre-authored-handshake' } });
+  assert.deepEqual(good.brain, { mode: 'file', model: 'pre-authored-handshake', blind: 'AUTONOMY_NONBLIND' });
+  assert.deepEqual(checkReport(good), []);
+  const legacy = buildReport({ runId: 'q10b' });
+  assert.equal(legacy.brain, undefined);
+  assert.deepEqual(checkReport(legacy), []);
+});
+
+test('Q10 validator: malformed brain block fails with named violations', () => {
+  const { buildReport } = require('../src/reportSchema');
+  const base = buildReport({ runId: 'q10c', brain: { mode: 'file', model: 'm' } });
+  const badBlind = { ...base, brain: { mode: 'file', model: 'm', blind: 'AUTONOMOUS' } };
+  assert.ok(checkReport(badBlind).some((v) => v.startsWith('brain.blind:bad')));
+  const badMode = { ...base, brain: { mode: '', model: 'm', blind: 'Y' } };
+  assert.ok(checkReport(badMode).includes('brain.mode:not-string'));
+  const notObj = { ...base, brain: 'file' };
+  assert.ok(checkReport(notObj).includes('brain:not-object'));
+});
