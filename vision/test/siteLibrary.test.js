@@ -120,3 +120,30 @@ test('S0 seeds: saucedemo/demoqa/todomvc urls + null unknowns', () => {
   assert.equal(get('saucedemo').truth_ref, null);
   assert.equal(get('saucedemo').cred_env, null);
 });
+// S-1 pinFixture: pinned copy only, no overwrite, path-safe.
+test('S-1 pinFixture: refuses overwrite of existing dest', () => {
+  const root = lib.repoRoot();
+  const scratch = path.join(root, '_S1_SCRATCH');
+  fs.mkdirSync(scratch, { recursive: true });
+  const srcRel = path.relative(root, path.join(scratch, 'a.txt'));
+  const destRel = path.relative(root, path.join(scratch, 'b.txt'));
+  fs.writeFileSync(path.join(scratch, 'a.txt'), 'x', 'utf8');
+  const r1 = lib.pinFixture(root, srcRel, destRel);
+  assert.equal(r1.ok, true);
+  const r2 = lib.pinFixture(root, srcRel, destRel);
+  assert.equal(r2.ok, false);
+  assert.equal(r2.pinned, true);
+  fs.rmSync(scratch, { recursive: true, force: true });
+});
+
+test('S-1 pinFixture: rejects paths escaping repo root', () => {
+  const root = lib.repoRoot();
+  const r = lib.pinFixture(root, '../outside.txt', 'inside.txt');
+  assert.equal(r.ok, false);
+});
+
+test('S-1 pinFixture: missing src returns error', () => {
+  const root = lib.repoRoot();
+  const r = lib.pinFixture(root, 'definitely/missing/file.txt', 'also/missing/out.txt');
+  assert.equal(r.ok, false);
+});

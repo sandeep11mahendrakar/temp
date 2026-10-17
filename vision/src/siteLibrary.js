@@ -193,6 +193,69 @@ function linkRun(root, dir, opts) {
   return { ok: true, record };
 }
 
+// pinFixture: copy src -> dest ONLY if dest does not already exist (pinned
+// copies only; never overwrite an existing pinned fixture). Paths are
+// repo-relative; both must stay inside root. CI-style validate entry point
+// lives in the CLI block below.
+function pinFixture(root, srcRel, destRel) {
+  const r = root || repoRoot();
+  if (typeof srcRel !== 'string' || !srcRel) return { ok: false, error: 'src required' };
+  if (typeof destRel !== 'string' || !destRel) return { ok: false, error: 'dest required' };
+  const src = path.resolve(r, srcRel);
+  const dest = path.resolve(r, destRel);
+  const relSrc = path.relative(r, src);
+  const relDest = path.relative(r, dest);
+  if (relSrc.startsWith('..') || path.isAbsolute(relSrc)) return { ok: false, error: 'src must stay inside repo' };
+  if (relDest.startsWith('..') || path.isAbsolute(relDest)) return { ok: false, error: 'dest must stay inside repo' };
+  if (!fs.existsSync(src)) return { ok: false, error: `src missing on disk: ${srcRel}` };
+  if (fs.existsSync(dest)) return { ok: false, pinned: true, error: `pinned: destination already exists, no overwrite: ${destRel}` };
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.copyFileSync(src, dest);
+  return { ok: true, src: srcRel, dest: destRel, pinned: true };
+}
+
+// CLI (CI-style): node siteLibrary.js <cmd> ...
+//   validate [dir]            -> validate all sites; exit 0 if all valid
+//   link-run --site X --runId Y [--evid Z] [--permitted]
+//   pin-fixture <src> <dest>  -> pinned copy (no overwrite)
+if (require.main === module) {
+  const argv = process.argv.slice(2);
+  const cmd = argv[0];
+  const root = repoRoot();
+  const sitesDir = path.join(root, 'sites');
+  if (cmd === 'validate') {
+    const dir = argv[1] ? path.resolve(argv[1]) : sitesDir;
+    const res = validateAll(root, dir);
+    let bad = 0;
+    for (const r of res) {
+      if (r.ok) console.log(`OK   ${r.id}`);
+      else { bad += 1; console.log(`FAIL ${r.id}: ${r.errors.join('; ')}`); }
+    }
+    console.log(`validate: ${res.length - bad}/${res.length} valid`);
+    process.exit(bad === 0 ? 0 : 1);
+  } else if (cmd === 'link-run') {
+    const get = (flag) => { const i = argv.indexOf(flag); return i >= 0 ? argv[i + 1] : null; };
+    const site = get('--site');
+    const runId = get('--runId');
+    const evid = get('--evid');
+    const permitted = argv.includes('--permitted');
+    if (!site || !runId) { console.error('usage: link-run --site <id> --runId <id> [--evid <path>] [--permitted]'); process.exit(2); }
+    const r = linkRun(root, sitesDir, { site, runId, evid, permitted });
+    console.log(JSON.stringify(r, null, 2));
+    process.exit(r.ok ? 0 : 1);
+  } else if (cmd === 'pin-fixture') {
+    const src = argv[1];
+    const dest = argv[2];
+    if (!src || !dest) { console.error('usage: pin-fixture <src> <dest>'); process.exit(2); }
+    const r = pinFixture(root, src, dest);
+    console.log(JSON.stringify(r, null, 2));
+    process.exit(r.ok ? 0 : 1);
+  } else {
+    console.error('usage: siteLibrary.js validate [dir] | link-run --site X --runId Y [--evid Z] [--permitted] | pin-fixture <src> <dest>');
+    process.exit(2);
+  }
+}
+
 module.exports = {
   ACCESS,
   repoRoot,
@@ -205,4 +268,5 @@ module.exports = {
   addSite,
   canLaunch,
   linkRun,
+  pinFixture,
 };
