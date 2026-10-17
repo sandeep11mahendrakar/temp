@@ -288,6 +288,40 @@ function resolveTarget(elements, step, proximityPx = 90, opts) {
   return { resolved: false, reason: `target not found in current state (wanted type="${wantType}" text="${wantText}")` };
 }
 
+// D1 drag-to (pure, unit-tested): native destination resolution for a drag
+// step. Priority: explicit to{x,y} coords -> to{type,text} resolved against
+// the current element pool -> legacy value "x2,y2". No destination at all
+// => ok:false so the caller FAILs; a drag is never fired blind (W2-filed row).
+function resolveDragDestination(elements, step) {
+  const to = step && step.to;
+  if (to && typeof to === 'object') {
+    const x = Number(to.x);
+    const y = Number(to.y);
+    if (Number.isFinite(x) && Number.isFinite(y)) {
+      return { ok: true, value: `${Math.round(x)},${Math.round(y)}`, via: 'to_coords', element: null };
+    }
+    if (to.text && Array.isArray(elements) && elements.length) {
+      const r = resolveTarget(elements, { target: to });
+      if (r && r.resolved && r.element) {
+        return {
+          ok: true,
+          value: `${Math.round(r.element.cx)},${Math.round(r.element.cy)}`,
+          via: `to_${r.via}`,
+          element: r.element,
+        };
+      }
+      return {
+        ok: false,
+        reason: `drag destination not found (type="${to.type || ''}" text="${to.text}")`,
+      };
+    }
+  }
+  if (/^\d+\s*,\s*\d+$/.test(String((step && step.value) || ''))) {
+    return { ok: true, value: String(step.value), via: 'legacy_value', element: null };
+  }
+  return { ok: false, reason: 'no drag destination (missing to{} and value "x2,y2")' };
+}
+
 // H1x block-wiring (pure, unit-tested): block verdict for the CURRENT page
 // from live observables. Never throws — detector failure yields null (no
 // verdict) rather than a misclassification. Callers attach the result to
@@ -880,6 +914,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     let checkSnap = false;
     let contextMenuSeen = null;
     let pierceAssist = false;
+    let dragDestVia = null;
 
     if (REDETECT_ENABLED && ['click', 'fill', 'dblclick', 'right_click'].includes(step.action)) {
       if (!currentElements) {
@@ -1030,6 +1065,30 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         stalePrevented += 1;
         stalePreventedThisStep = true;
       }
+    }
+
+    // D1: native drag destination (to{type,text} or legacy value "x2,y2").
+    // The executor owns drag-to; a drag with no resolvable destination FAILs
+    // here (never fired blind at a stale/absent point).
+    if (step.action === 'drag') {
+      const dest = resolveDragDestination(currentElements, step);
+      if (!dest.ok) {
+        status = 'FAIL';
+        failureReason = `Step ${i + 1} (drag): ${dest.reason}`;
+        console.warn(`[execute]   ${failureReason}`);
+        executedSteps.push({
+          index: i + 1,
+          ...execStep,
+          ok: false,
+          error: 'drag_no_destination',
+          reason: dest.reason,
+          state_id: lastState?.state_id || null,
+          duration_ms: Date.now() - stepStartedAt,
+        });
+        break;
+      }
+      execStep.value = dest.value;
+      dragDestVia = dest.via;
     }
 
     // M2 FIX-A: snap checkbox/radio clicks to the native control center so
@@ -1224,6 +1283,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         checked_state_verified: isCheckTarget(step) && step.action === 'click' ? checkOk : null,
         check_snap: isCheckTarget(step) && step.action === 'click' ? checkSnap : null,
         contextmenu_observed: step.action === 'right_click' ? contextMenuSeen : null,
+        drag_to_via: step.action === 'drag' ? dragDestVia : null,
         dom_assist: (isCheckClick || pierceAssist) ? assist.dom_assist : null,
         vision_boundary: step.action === 'click' ? `click-by-vision:${assist.click_by_vision}` : null,
         submit_key_pressed: submitKeyPressed,
@@ -1648,6 +1708,7 @@ module.exports = {
   snapCheckToNativeInput, weakStepCount, weakVerdict,
   blockVerdict, textPresentVerify, composeFinalStatus,
   dialogSignal, newPageSignal, SIGNAL_RANKS,
+  resolveDragDestination,
   splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
