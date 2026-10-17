@@ -241,7 +241,7 @@ M-4 perceive-compact | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (dd03084; paging 
 M-5 mcp-docs | VERIFY | W4 | 2026-10-17 | 2026-10-17 | (14ef411 +6/-6 lines; tools 5->11 (status,perceive,act,assert,evidence,reset,memory_get,put,report_emit,library_list,get); suites 446/446+41/41; api0; AIza 0) | (deps M-1 | S | docs | update MCP_DUAL_SETUP.md + tool reference)
 # TRACK EXPERIENCE MEMORY (PROMPT27) - rows below, claim per D39
 E-1 lesson-store | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (665edf0; vision/src/lessonStore.js + test +7; suites 442/442; AIza 0; gate STRONG/MED+run_id) | {pattern,action,outcome,lesson,confidence,count,run_ids[]}; write only from reliable oracles (STRONG/MED, citable runs))
-E-2 memory-planner | OPEN | - | - | - | - (deps E-1 | M | lock B | retrieval top-3 into planner prompt, flag OFF default byte-identical; tests)
+E-2 memory-planner | CLAIMED | W1 | - | - | - (deps E-1 | M | lock B | retrieval top-3 into planner prompt, flag OFF default byte-identical; tests)
 E-3 archetype-proposals | OPEN | - | - | - | - (deps E-1 | S | offline | promotion proposal: pattern seen on >=3 sites => archetype hint proposal file (never auto-edit archetypes))
 E-4 memory-ablation | OPEN | - | - | - | - (deps E-2,A-8 | M | live(mock+api if USER-KEY) | ablation with/without memory; metrics vs truth; honest if no gain)
 # TRACK REPORTING (PROMPT27) - rows below, claim per D39
