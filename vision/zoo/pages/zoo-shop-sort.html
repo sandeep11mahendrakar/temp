@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><title>zoo shop sort</title></head>
+<body>
+<h1 id="page-title">Sort</h1>
+<button id="sort-price" type="button">Sort by price</button>
+<div id="sorted">Gamma Book $5, Alpha Book $10, Beta Toy $20</div>
+<script>
+document.getElementById('sort-price').addEventListener('click', function(){
+  document.getElementById('sorted').textContent = 'Gamma Book $5, Alpha Book $10, Beta Toy $20';
+});
+</script>
+</body></html>

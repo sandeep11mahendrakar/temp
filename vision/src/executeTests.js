@@ -1471,7 +1471,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         contextmenu_observed: step.action === 'right_click' ? contextMenuSeen : null,
         drag_to_via: step.action === 'drag' ? dragDestVia : null,
         drag_mechanism: step.action === 'drag' ? (dragNative ? 'html5_dnd' : 'mouse') : null,
-        dom_assist: (isCheckClick || pierceAssist) ? assist.dom_assist : null,
+        dom_assist: (isCheckClick || pierceAssist) ? assist.dom_assist : (step.action === 'drag' && (dragDestVia === 'to_coords' || dragDestVia === 'to_container') ? 'drag-destination-harness-coords' : null),
         vision_boundary: step.action === 'click' ? `click-by-vision:${assist.click_by_vision}` : null,
         submit_key_pressed: submitKeyPressed,
         low_confidence_retry: lowconfRetry,

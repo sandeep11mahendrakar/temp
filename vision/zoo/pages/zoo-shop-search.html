@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>zoo shop search</title></head>
+<body>
+<h1 id="page-title">Search</h1>
+<input id="q" type="text" placeholder="Query" />
+<button id="go" type="button">Go</button>
+<div id="search-results">Alpha Book</div>
+<script>
+document.getElementById('go').addEventListener('click', function(){
+  var q = document.getElementById('q').value;
+  document.getElementById('search-results').textContent = q === 'alpha' ? 'Alpha Book' : 'No results';
+});
+</script>
+</body></html>

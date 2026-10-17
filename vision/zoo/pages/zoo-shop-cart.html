@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><title>zoo shop cart</title></head>
+<body>
+<h1 id="page-title">Cart</h1>
+<div id="cart-items">
+  <div class="cart-item" data-id="p1"><span class="cname">Alpha Book</span> <span class="cprice">$10</span> <button class="remove-btn" type="button">Remove</button></div>
+</div>
+<div id="cart-total">Total: $10</div>
+<a id="checkout-link" href="/zoo-shop-checkout">Checkout</a>
+<script>
+document.querySelectorAll('.remove-btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    b.parentElement.remove();
+    document.getElementById('cart-total').textContent = 'Total: $0';
+  });
+});
+</script>
+</body></html>

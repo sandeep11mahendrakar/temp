@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-shop-login","steps":[{"action":"fill","target":{"type":"text_input","text":"Username"},"value":"alice"},{"action":"fill","target":{"type":"text_input","text":"Password"},"value":"secret"},{"action":"click","target":{"type":"button","text":"Login"}}],"expected":{"kind":"text_present","expect":"Welcome alice"}}

@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>zoo shop checkout</title></head>
+<body>
+<h1 id="page-title">Checkout</h1>
+<input id="ship-name" type="text" placeholder="Ship to" />
+<button id="place-order" type="button">Place order</button>
+<div id="order-result"></div>
+<script>
+document.getElementById('place-order').addEventListener('click', function(){
+  var name = document.getElementById('ship-name').value;
+  document.getElementById('order-result').textContent = 'Thank you! order placed: ZOO-SHOP-0001 for ' + name;
+});
+</script>
+</body></html>

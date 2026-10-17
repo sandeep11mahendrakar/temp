@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><title>zoo shop list</title>
+<style>.product{border:1px solid #ccc;padding:8px;margin:4px;}.hidden{display:none;}</style>
+</head>
+<body>
+<h1 id="page-title">Shop</h1>
+<input id="search-box" type="text" placeholder="Search products" />
+<button id="search-btn" type="button">Search</button>
+<select id="sort-select">
+  <option value="name">Name</option>
+  <option value="price">Price</option>
+</select>
+<button id="sort-btn" type="button">Sort</button>
+<select id="filter-cat">
+  <option value="all">All</option>
+  <option value="books">Books</option>
+  <option value="toys">Toys</option>
+</select>
+<button id="filter-btn" type="button">Filter</button>
+<div id="product-list">
+  <div class="product" data-id="p1" data-cat="books" data-price="10"><span class="pname">Alpha Book</span> <span class="pprice">$10</span> <a href="/zoo-shop-detail?id=p1" id="detail-p1">Details</a> <button id="add-p1" type="button">Add to cart</button></div>
+  <div class="product" data-id="p2" data-cat="toys" data-price="20"><span class="pname">Beta Toy</span> <span class="pprice">$20</span> <a href="/zoo-shop-detail?id=p2" id="detail-p2">Details</a> <button id="add-p2" type="button">Add to cart</button></div>
+  <div class="product" data-id="p3" data-cat="books" data-price="5"><span class="pname">Gamma Book</span> <span class="pprice">$5</span> <a href="/zoo-shop-detail?id=p3" id="detail-p3">Details</a> <button id="add-p3" type="button">Add to cart</button></div>
+</div>
+<div id="pagination">
+  <button id="page-next" type="button">Next</button>
+  <span id="page-info">Page 1 of 2</span>
+</div>
+<script>
+document.getElementById('search-btn').addEventListener('click', function() {
+  var q = document.getElementById('search-box').value.toLowerCase();
+  document.querySelectorAll('.product').forEach(function(el){
+    var name = el.querySelector('.pname').textContent.toLowerCase();
+    el.style.display = name.indexOf(q) >= 0 ? '' : 'none';
+  });
+});
+document.getElementById('sort-btn').addEventListener('click', function() {
+  var v = document.getElementById('sort-select').value;
+  var list = document.getElementById('product-list');
+  var items = Array.from(list.querySelectorAll('.product'));
+  items.sort(function(a,b){
+    if(v==='price') return Number(a.dataset.price)-Number(b.dataset.price);
+    return a.querySelector('.pname').textContent.localeCompare(b.querySelector('.pname').textContent);
+  });
+  items.forEach(function(i){ list.appendChild(i); });
+});
+document.getElementById('filter-btn').addEventListener('click', function() {
+  var cat = document.getElementById('filter-cat').value;
+  document.querySelectorAll('.product').forEach(function(el){
+    el.style.display = (cat==='all' || el.dataset.cat===cat) ? '' : 'none';
+  });
+});
+document.getElementById('page-next').addEventListener('click', function() {
+  document.getElementById('page-info').textContent = 'Page 2 of 2';
+});
+</script>
+</body></html>

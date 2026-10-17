@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-shop-cart","steps":[{"action":"click","target":{"type":"button","text":"Remove"}}],"expected":{"kind":"text_present","expect":"Total: $0"}}

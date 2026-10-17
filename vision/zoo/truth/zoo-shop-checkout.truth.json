@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-shop-checkout","steps":[{"action":"fill","target":{"type":"text_input","text":"Ship to"},"value":"Ada"},{"action":"click","target":{"type":"button","text":"Place order"}}],"expected":{"kind":"text_present","expect":"Thank you! order placed: ZOO-SHOP-0001 for Ada"}}

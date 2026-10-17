@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><title>zoo shop detail</title></head>
+<body>
+<h1 id="page-title">Product Detail</h1>
+<div id="product-info">
+  <span id="product-name">Alpha Book</span>
+  <span id="product-price">$10</span>
+  <span id="product-desc">A great book</span>
+</div>
+<button id="add-to-cart" type="button">Add to cart</button>
+<a id="back-to-list" href="/zoo-shop-list">Back to list</a>
+<div id="cart-count">Cart: 0</div>
+<script>
+document.getElementById('add-to-cart').addEventListener('click', function(){
+  document.getElementById('cart-count').textContent = 'Cart: 1';
+});
+</script>
+</body></html>

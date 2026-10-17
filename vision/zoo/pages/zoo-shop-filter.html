@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>zoo shop filter</title></head>
+<body>
+<h1 id="page-title">Filter</h1>
+<select id="cat-filter"><option value="all">All</option><option value="books">Books</option></select>
+<button id="apply-filter" type="button">Apply</button>
+<div id="results">Alpha Book; Gamma Book</div>
+<script>
+document.getElementById('apply-filter').addEventListener('click', function(){
+  var v = document.getElementById('cat-filter').value;
+  document.getElementById('results').textContent = v==='books' ? 'Alpha Book; Gamma Book' : 'Alpha Book; Beta Toy; Gamma Book';
+});
+</script>
+</body></html>

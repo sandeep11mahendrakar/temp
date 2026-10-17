@@ -1,0 +1,1 @@
+{"$schema":"zoo-truth-v1","tc_id":"zoo-shop-list","steps":[{"action":"click","target":{"type":"button","text":"Search"}}],"expected":{"kind":"text_present","expect":"Alpha Book"}}
