@@ -385,16 +385,30 @@ function createBrain(opts = {}) {
 // generation does NOT trigger; only undetected pages generate.
 const GENERATE_MAX_TCS = 6;
 const GENERATE_DEFAULT_THRESHOLD = 0.9;
-const GENERATE_CONTRACT = 'You are a test-case generator. Reply with strict JSON ONLY. First character must be {. Reply {"tcs":[...]} where each tc is {"id":"...","objective":"...","steps":[{"action":"click|fill","target":{"type":"...","text":"..."},"value":"..."}]}. No analysis, no prose, no markdown fences.';
+// Size budget: keep the prompt compact (tokens) — cap elements and text length.
+const GENERATE_VDOM_MAX_ELS = 40;
+const GENERATE_VDOM_TEXT_CAP = 80;
+const GENERATE_VDOM_TYPE_CAP = 30;
+const GENERATE_CONTRACT = 'You are a test-case generator. Reply with strict JSON ONLY. First character must be {. Reply {"tcs":[...]} where each tc is {"id":"...","objective":"...","steps":[{"action":"click|fill","target":{"type":"...","text":"..."},"value":"..."}]}. No analysis, no prose, no markdown fences. Targets must reference an element id from the supplied VDOM; actions limited to click|fill|select|check|submit.';
 
 // compactVdom: id/type/text only — coordinates and values never leave the harness.
-function compactVdom(elements) {
+// opts.maxEls / opts.textCap / opts.typeCap override the defaults (size budget).
+function compactVdom(elements, opts) {
+  const o = (opts && typeof opts === 'object') ? opts : {};
+  const maxEls = Number.isFinite(o.maxEls) ? o.maxEls : GENERATE_VDOM_MAX_ELS;
+  const textCap = Number.isFinite(o.textCap) ? o.textCap : GENERATE_VDOM_TEXT_CAP;
+  const typeCap = Number.isFinite(o.typeCap) ? o.typeCap : GENERATE_VDOM_TYPE_CAP;
   const els = Array.isArray(elements) ? elements : [];
-  return els.map((e, i) => ({
-    id: `e${i}`,
-    type: String((e && e.type) || 'unknown').slice(0, 40),
-    text: String((e && e.text) || '').slice(0, 120),
-  }));
+  const out = [];
+  for (let i = 0; i < els.length && out.length < maxEls; i += 1) {
+    const e = els[i];
+    out.push({
+      id: `e${i}`,
+      type: String((e && e.type) || 'unknown').slice(0, typeCap),
+      text: String((e && e.text) || '').slice(0, textCap),
+    });
+  }
+  return out;
 }
 
 function validGeneratedTc(tc) {
@@ -446,12 +460,18 @@ async function brainGenerate(opts) {
     return { ok: false, disabled: false, triggered: true, parseFail: true, tcs: [], dropped: 0, attempts, callsSpent: attempts };
   }
   let dropped = 0;
+  const droppedReasons = { empty_id: 0, empty_objective: 0, no_steps: 0, bad_step: 0, other: 0 };
   const kept = [];
   for (const tc of tcs) {
-    if (validGeneratedTc(tc)) kept.push(tc);
-    else dropped += 1;
+    if (validGeneratedTc(tc)) { kept.push(tc); continue; }
+    dropped += 1;
+    if (!tc || typeof tc !== 'object') { droppedReasons.other += 1; continue; }
+    if (typeof tc.id !== 'string' || !tc.id) droppedReasons.empty_id += 1;
+    else if (typeof tc.objective !== 'string' || !tc.objective) droppedReasons.empty_objective += 1;
+    else if (!Array.isArray(tc.steps) || !tc.steps.length) droppedReasons.no_steps += 1;
+    else droppedReasons.bad_step += 1;
   }
-  return { ok: true, disabled: false, triggered: true, tcs: kept.slice(0, GENERATE_MAX_TCS), dropped, attempts, callsSpent: attempts };
+  return { ok: true, disabled: false, triggered: true, tcs: kept.slice(0, GENERATE_MAX_TCS), dropped, droppedReasons, attempts, callsSpent: attempts };
 }
 
 module.exports = {
@@ -484,6 +504,9 @@ module.exports = {
   // Q13 generation lane (opt-in, GENERATE=on; default OFF byte-identical).
   GENERATE_MAX_TCS,
   GENERATE_DEFAULT_THRESHOLD,
+  GENERATE_VDOM_MAX_ELS,
+  GENERATE_VDOM_TEXT_CAP,
+  GENERATE_VDOM_TYPE_CAP,
   GENERATE_CONTRACT,
   compactVdom,
   validGeneratedTc,
