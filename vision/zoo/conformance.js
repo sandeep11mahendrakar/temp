@@ -88,6 +88,27 @@ const SEED_JS = `(() => {
   return out;
 })()`;
 
+// Containers (W3 ENTRY-8): the seed pool above covers only native controls, so
+// drag sources/targets that are plain <div>s (#drag-src / #drop-zone) are
+// absent. This SECOND index captures non-control elements (by id / draggable)
+// for DRAG-STEP resolution ONLY; the main pool (els/vdom/byKey) is unchanged
+// => zero regression for the other 15 TCs.
+const CONTAINERS_JS = `(() => {
+  const MAIN = new Set(['BUTTON','A','INPUT','SELECT','TEXTAREA']);
+  const out = [];
+  for (const el of document.querySelectorAll('[id],[draggable="true"]')) {
+    if (MAIN.has(el.tagName.toUpperCase())) continue;
+    if (el.getAttribute('role') === 'button') continue;
+    const r = el.getBoundingClientRect();
+    if (!r || r.width <= 0 || r.height <= 0) continue;
+    const t = (el.innerText || el.textContent || '').trim().slice(0, 80);
+    if (!t) continue;
+    out.push({ key: el.getAttribute('id') ? '#' + el.getAttribute('id') : null, type: 'container', text: t,
+      x1: r.x, y1: r.y, x2: r.x + r.width, y2: r.y + r.height });
+  }
+  return out;
+})()`;
+
 // Seed one page: query DOM (headless), write <runId>_visual_dom.json,
 // return selector-keyed centers+labels for step translation.
 async function seedPage(pw, base, slug, runId) {
@@ -111,15 +132,26 @@ async function seedPage(pw, base, slug, runId) {
     fs.writeFileSync(path.join(OUT, `${runId}_visual_dom.json`), JSON.stringify(vdom));
     const byKey = {};
     for (const e of els) if (e.key) byKey[e.key] = e;
-    return byKey;
+    let containers = [];
+    try { containers = await page.evaluate(CONTAINERS_JS); } catch (_) { containers = []; }
+    return { byKey, containers };
   } finally { await browser.close().catch(() => {}); }
 }
 
-function translateSteps(truth, byKey) {
+function translateSteps(truth, byKey, containers) {
   const steps = [];
   const notes = [];
   const pool = Object.values(byKey || {});
+  const cont = Array.isArray(containers) ? containers : [];
   const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  // DRAG-ONLY container fallback (main pool untouched => no regression).
+  const resolveInContainers = (t) => {
+    if (!t || typeof t !== 'object' || !t.text) return null;
+    const want = norm(t.text);
+    const hit = cont.find((e) => { const et = norm(e.text); return et && (et.includes(want) || want.includes(et)); });
+    if (!hit) return null;
+    return { type: t.type || 'container', text: hit.text, x: Math.round((hit.x1 + hit.x2) / 2), y: Math.round((hit.y1 + hit.y2) / 2), via: 'container' };
+  };
   // F-S per-contract: resolve a {type,text} target (or legacy '#selector')
   // to a DOM center for needCoords actions + pool text_match.
   const resolve = (t) => {
@@ -141,20 +173,23 @@ function translateSteps(truth, byKey) {
       notes.push('shadow:target-unresolvable');
       continue;
     }
-    const r = resolve(s.target);
+    let r = resolve(s.target);
+    if (s.action === 'drag' && (!r || r.x === undefined)) { const rc = resolveInContainers(s.target); if (rc) r = rc; }
     if (!r) { steps.push({ action: s.action, target: { type: 'input', text: String(s.target).replace(/^#/, '') }, value: s.value }); notes.push(`unseeded:${s.target}`); continue; }
     const st = { action: s.action, target: { type: r.type, text: r.text }, value: s.value };
     if (r.x !== undefined) { st.x = r.x; st.y = r.y; }
     if (r.via === 'target-only') notes.push(`target-only:${s.target && s.target.text ? s.target.text : s.target}`);
     if (s.action === 'drag') {
-      // Executor has NO native `to` (filed to W3, no edit here): the harness
-      // translates to:{type,text} to absolute x2,y2, disclosed per step.
-      const to = (s.to && typeof s.to === 'object' && s.to.text) ? resolve(s.to) : null;
-      const dz = to && to.x !== undefined ? to : null;
-      const legacy = (byKey || {})['#drop-zone'];
-      if (dz) { st.value = `${dz.x},${dz.y}`; st.translated = 'drag-to->x2y2'; }
-      else if (legacy) { st.value = `${Math.round((legacy.x1 + legacy.x2) / 2)},${Math.round((legacy.y1 + legacy.y2) / 2)}`; st.translated = 'drag-value->dropzone-x2y2'; }
-      else { st.value = s.value; st.translated = 'drag-untranslated:executor-needs-x2y2'; }
+      // D1 (W3) added native drag destinations. Forward the destination
+      // natively: to{x,y} coords (D1 priority #1) when resolvable, else
+      // to{type,text} for D1 to resolve against its pool. Container index
+      // (CONTAINERS_JS) covers div sources/targets the main pool misses.
+      // Legacy value "x2,y2" kept as back-compat fallback.
+      let to = (s.to && typeof s.to === 'object' && s.to.text) ? resolve(s.to) : null;
+      if (to && to.x === undefined) { const tc = resolveInContainers(s.to); if (tc) to = tc; }
+      if (to && to.x !== undefined) { st.to = { x: to.x, y: to.y }; st.value = `${to.x},${to.y}`; st.translated = 'drag-to->x2y2'; }
+      else if (s.to && typeof s.to === 'object' && s.to.text) { st.to = { type: s.to.type, text: s.to.text }; st.translated = 'drag-to->native-text'; }
+      else { st.translated = 'drag-untranslated:executor-needs-x2y2'; }
     }
     if (s.action === 'upload') { st.value = FIXTURE; st.translated = 'upload-value->fixture-abs-path'; }
     steps.push(st);
@@ -214,12 +249,13 @@ async function main() {
       const ts = Date.now();
       const runId = `run_${ts}`;
       let byKey = {};
-      try { byKey = await seedPage(pw, base, slug, runId); }
+      let containers = [];
+      try { const seeded = await seedPage(pw, base, slug, runId); byKey = seeded.byKey; containers = seeded.containers; }
       catch (e) {
         rows.push({ tc_id: truth.tc_id, action_class: actionClass(truth.steps[0] && truth.steps[0].action), verdict: 'PENDING', app_outcome: 'n/a', verification_strength: 'NONE', failure_cause: `page-2x:seed-failed:${String(e.message).slice(0, 60)}` });
         continue;
       }
-      const { steps, notes } = translateSteps(truth, byKey);
+      const { steps, notes } = translateSteps(truth, byKey, containers);
       const caseFile = path.join(OUT, `g2z_${slug}_${runId}.json`);
       const repFile = path.join(OUT, `g2z_rep_${slug}_${runId}.json`);
       fs.writeFileSync(caseFile, JSON.stringify([{ id: truth.tc_id, objective: `G2z ${truth.tc_id} (seeded, no brain)`, expected_text: truth.expected.expect, steps }]));

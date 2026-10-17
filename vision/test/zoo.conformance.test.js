@@ -77,7 +77,7 @@ test('F-S contract steps: object target/to validate, strings stay valid', () => 
   assert.ok(zoo.validateTruth(badTarget).some((v) => v.includes('bad-target')));
 });
 
-test('F-S drag-pending: to{type,text} resolves to numeric x2,y2 (else drag-pending note)', () => {
+test('F-S/D1 drag: resolvable to -> native to{x,y}+value; unresolvable -> native to{type,text}', () => {
   const byKey = {
     '#drag-src': { type: 'button', text: 'drag me', x1: 0, y1: 0, x2: 120, y2: 40 },
     '#drop-zone': { type: 'button', text: 'drop here', x1: 200, y1: 100, x2: 400, y2: 180 },
@@ -85,9 +85,25 @@ test('F-S drag-pending: to{type,text} resolves to numeric x2,y2 (else drag-pendi
   const truth = { tc_id: 'zoo-drag-drop', steps: [{ action: 'drag', target: { type: 'button', text: 'drag me' }, to: { type: 'container', text: 'drop here' } }], expected: { kind: 'text_present', expect: 'Dropped:' } };
   const { steps, notes } = conf.translateSteps(truth, byKey);
   assert.equal(steps.length, 1);
-  assert.ok(/^(\d+),(\d+)$/.test(steps[0].value), 'to resolved to numeric x2,y2, got ' + steps[0].value);
+  assert.ok(/^(\d+),(\d+)$/.test(steps[0].value), 'resolved to numeric x2,y2, got ' + steps[0].value);
   assert.equal(steps[0].translated, 'drag-to->x2y2');
-  const missing = conf.translateSteps({ tc_id: 'z', steps: [{ action: 'drag', target: { type: 'button', text: 'ghost' }, to: { type: 'container', text: 'nowhere' } }], expected: truth.expected }, {});
-  assert.ok(String(missing.steps[0].value).includes('untranslated') || missing.steps[0].translated === 'drag-untranslated:executor-needs-x2y2', 'unresolvable to stays drag-pending, got ' + JSON.stringify(missing.steps[0]));
+  assert.ok(Number.isFinite(steps[0].to && steps[0].to.x) && Number.isFinite(steps[0].to && steps[0].to.y), 'native to{x,y} forwarded for D1');
+  // unresolvable destination text => forwarded natively as to{type,text} (D1 owns
+  // resolution against its pool), NEVER silently dropped.
+  const native = conf.translateSteps({ tc_id: 'z', steps: [{ action: 'drag', target: { type: 'button', text: 'ghost' }, to: { type: 'container', text: 'nowhere' } }], expected: truth.expected }, {});
+  assert.deepEqual(native.steps[0].to, { type: 'container', text: 'nowhere' }, 'to{} forwarded natively, got ' + JSON.stringify(native.steps[0].to));
+  assert.equal(native.steps[0].translated, 'drag-to->native-text');
   assert.deepEqual(notes, []);
+});
+
+test('D1 container fallback: div drag source/target resolve via containers (main pool untouched)', () => {
+  const containers = [
+    { key: '#drag-src', type: 'container', text: 'drag me', x1: 0, y1: 0, x2: 120, y2: 40 },
+    { key: '#drop-zone', type: 'container', text: 'drop here', x1: 200, y1: 100, x2: 400, y2: 180 },
+  ];
+  const truth = { tc_id: 'zoo-drag-drop', steps: [{ action: 'drag', target: { type: 'button', text: 'drag me' }, to: { type: 'container', text: 'drop here' } }], expected: { kind: 'text_present', expect: 'Dropped:' } };
+  const { steps } = conf.translateSteps(truth, {}, containers);
+  assert.ok(Number.isFinite(steps[0].x) && Number.isFinite(steps[0].y), 'source coords from containers, got ' + JSON.stringify({ x: steps[0].x, y: steps[0].y }));
+  assert.ok(Number.isFinite(steps[0].to && steps[0].to.x) && Number.isFinite(steps[0].to && steps[0].to.y), 'dest coords from containers');
+  assert.equal(steps[0].translated, 'drag-to->x2y2');
 });
