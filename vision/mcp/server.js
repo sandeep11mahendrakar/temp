@@ -19,6 +19,7 @@
 
 const path = require('path');
 const { ensureVisionServices, shutdownVisionServices } = require('../src/serviceManager');
+const { classify: classifyBlock } = require('../src/blockDetector');
 
 const SERVER_NAME = 'vision-test';
 const SERVER_VERSION = '0.1.0';
@@ -325,6 +326,21 @@ function freshMcpCompact(vdom, fallbackUrl, shotAbs) {
   };
 }
 
+// F-G H1x MCP-perceive-block: surface the B0 block classification on the
+// perceive reply (ZERO new tools; the act surface is untouched — a classifier
+// never acts). Never throws: a detector failure yields null rather than a
+// misclassification. status is passed as 200 for cross-surface parity with
+// executeTests.blockVerdict (MCP perceive has no HTTP status of its own);
+// a caller-supplied input.status overrides it.
+function blockField(input) {
+  try {
+    const r = classifyBlock({ status: 200, ...(input || {}) });
+    return { class: r.class, confidence: r.confidence };
+  } catch (_) {
+    return null;
+  }
+}
+
 /**
  * Unified perceive (R3-T9 P1): drives the PERSISTENT session page to the URL
  * instead of a one-shot capture browser, so act-after-perceive just works.
@@ -349,13 +365,18 @@ async function handlePerceive(url, opts = {}) {
   }
   const shotAbs = await shotCurrentPage(page, 'perceive');
   const vdom = await processMcpImage(shotAbs);
+  const compactUrl = (vdom && vdom.source_url) || url;
+  const pageText = ((vdom.raw && vdom.raw.full_text) || '').slice(0, 800);
+  let pageTitle = '';
+  try { if (page && typeof page.title === 'function') pageTitle = await page.title(); } catch (_) { pageTitle = ''; }
   const compact = {
-    url: (vdom && vdom.source_url) || url,
+    url: compactUrl,
     element_count: vdom.element_count ?? (vdom.elements || []).length,
-    page_text: ((vdom.raw && vdom.raw.full_text) || '').slice(0, 800),
+    page_text: pageText,
     elements: compactElements(vdom),
     screenshot: shotAbs,
     navigated,
+    block: blockField({ title: pageTitle, url: compactUrl, bodyText: pageText }),
   };
   appendHistory({ tool: 'perceive', url: compact.url, screenshot: shotAbs, at: new Date().toISOString() });
   session.lastDom = compact; session.lastScreenshot = shotAbs; session.lastUrl = compact.url;
@@ -961,4 +982,4 @@ if (require.main === module) {
   process.on('SIGTERM', shutdown);
 }
 
-module.exports = { SERVER_NAME, SERVER_VERSION, TOOLS, callTool, session, resolveMcpTarget, toFullElements, dispatchMessage, summarizeFormState, formStateLens, readInputValue };
+module.exports = { SERVER_NAME, SERVER_VERSION, TOOLS, callTool, session, resolveMcpTarget, toFullElements, dispatchMessage, summarizeFormState, formStateLens, readInputValue, blockField };

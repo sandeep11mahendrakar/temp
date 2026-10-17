@@ -1015,3 +1015,69 @@ describe('Q5 fill probe-readback (injected fakes, no browser, no ports)', () => 
     } finally { teardown(); }
   });
 });
+
+describe('F-G perceive block field (injected fakes, no browser, no ports)', () => {
+  const srv = require('./server');
+
+  it('blockField flags a bot-challenge page as non-ok with confidence', () => {
+    const b = srv.blockField({ title: 'Just a moment...', url: 'https://x.test/', bodyText: 'Checking your browser before accessing' });
+    assert.equal(b.class, 'bot_challenge');
+    assert.ok(b.confidence >= 0.55 && b.confidence <= 0.95, 'confidence in the deterministic band');
+  });
+
+  it('blockField flags a login wall', () => {
+    const b = srv.blockField({ title: 'Sign in', url: 'https://x.test/', bodyText: 'Please log in to continue' });
+    assert.equal(b.class, 'login_wall');
+  });
+
+  it('blockField CONTROL normal page => ok (never a false wall)', () => {
+    const b = srv.blockField({ title: 'Example', url: 'https://example.com/', bodyText: 'Hello world' });
+    assert.deepEqual(b, { class: 'ok', confidence: 0.6 });
+  });
+
+  it('blockField never throws on junk/empty input', () => {
+    assert.doesNotThrow(() => srv.blockField(null));
+    assert.doesNotThrow(() => srv.blockField({}));
+    // empty render + status 200 is honestly blank_render (executor parity)
+    assert.equal(srv.blockField(null).class, 'blank_render');
+    assert.equal(srv.blockField({ title: 'x', bodyText: 'real content' }).class, 'ok');
+  });
+
+  it('perceive reply carries block{class,confidence}; act surface untouched', async () => {
+    srv.__testEnsure = async () => ({ ok: true });
+    srv.__testPage = {
+      _url: 'https://example.com/',
+      url() { return this._url; },
+      async goto(u) { this._url = u; },
+      async title() { return 'Example Domain'; },
+      async screenshot() {},
+      async waitForTimeout() {},
+      async waitForLoadState() {},
+    };
+    srv.__testProcess = async () => ({
+      source_url: 'https://example.com/',
+      element_count: 1,
+      raw: { full_text: 'Hello world' },
+      elements: [{ id: 'e1', type: 'button', text: 'Login', bbox: { x1: 1, y1: 2, x2: 3, y2: 4 }, confidence: { yolo: 0.9 } }],
+    });
+    srv.__testShotPath = '/tmp/mcp-fake-block.png';
+    srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+    srv.session.history = []; srv.session.lastDom = null;
+    srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    try {
+      const res = await srv.callTool('perceive', { url: 'https://example.com/' });
+      const body = JSON.parse(res.content[0].text);
+      assert.ok(body.block, 'perceive reply has a block field');
+      assert.equal(body.block.class, 'ok');
+      assert.equal(typeof body.block.confidence, 'number');
+      // no new tools: the 5 dual-way tools stay; act carries no block property.
+      assert.equal(srv.TOOLS.length, 5);
+      assert.equal(srv.TOOLS.find((t) => t.name === 'act').inputSchema.properties.block, undefined);
+    } finally {
+      delete srv.__testEnsure; delete srv.__testPage; delete srv.__testProcess; delete srv.__testShotPath;
+      srv.session.page = null; srv.session.browser = null; srv.session.context = null;
+      srv.session.history = []; srv.session.lastDom = null;
+      srv.session.lastScreenshot = null; srv.session.lastUrl = null;
+    }
+  });
+});
