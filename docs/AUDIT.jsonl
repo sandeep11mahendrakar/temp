@@ -28,3 +28,4 @@
 {"row":"S-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"docs/INDEX_INTERFACE_NOTES.md interface notes only; USER-INDEX/USER-DB untouched; commit dee51f1","evid":"git show --stat dee51f1 + docs/INDEX_INTERFACE_NOTES.md","ts":"2026-10-17T23:40:00+05:30"}
 {"row":"E-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"top-3 retrieval + flag-gated augment; 5 tests; suites 487/487; AIza 0","evid":"vision/src/lessonRetrieval.js","ts":"2026-10-17"}
 {"row":"E-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"proposal file auto_edit false; 3 tests; suites 490/490; AIza 0","evid":"vision/src/archetypeProposals.js","ts":"2026-10-17"}
+{"row":"V-4","aud":"ACCEPT","gates":"G1-G5 pass","check":"retry/timeout/stale helpers; 6 tests; suites 496/496; AIza 0","evid":"vision/src/executorRobustness.js","ts":"2026-10-17"}
