@@ -612,11 +612,21 @@ function expandAll(goal, vdom, ocrText, mem) {
   // Goal text selects login/crudlist when it names them (matrix intent);
   // otherwise the top page-detection score wins (generic fallback always runs).
   const g = normGoal(goal);
-  const goalHit = ['login', 'crudlist'].find((id) => {
-    try { return ARCHETYPES[id].match(g); } catch (_) { return false; }
-  });
   const ranked = detectAll(vdom, mem);
-  const name = goalHit || (ranked[0] || {}).name || 'generic';
+  const top = (ranked[0] || {}).name || 'generic';
+  const topScore = (ranked[0] || {}).score || 0;
+  // New dev-set archetypes win on page evidence even when the goal names a
+  // bundled intent (e.g. "search" is bundled under the login archetype).
+  const NEW_ARCHS = new Set(['search', 'listpage', 'cart', 'navmenu', 'modal', 'wizard']);
+  let name;
+  if (NEW_ARCHS.has(top) && topScore >= 0.4) {
+    name = top;
+  } else {
+    const goalHit = ['login', 'crudlist'].find((id) => {
+      try { return ARCHETYPES[id].match(g); } catch (_) { return false; }
+    });
+    name = goalHit || top || 'generic';
+  }
   const arch = CONTRACT_ARCHETYPES[name] || CONTRACT_ARCHETYPES.generic;
   const tcs = arch.expand(arch.hints(vdom, ocrText), goal);
   for (const tc of (Array.isArray(tcs) ? tcs : [])) {
