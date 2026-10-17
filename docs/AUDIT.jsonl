@@ -27,3 +27,4 @@
 {"row":"V-7","aud":"ACCEPT","gates":"G1-G5 pass","check":"meterLoop llm_calls/tokens(real|null)/screens/time_ms; never estimate; per-loop cost attach in buildLoopReport; reportSchema additive; +2 tests; suites 482/482+41/41; api0","evid":"vision/src/report.js abc47a0","ts":"2026-10-17"}
 {"row":"S-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"docs/INDEX_INTERFACE_NOTES.md interface notes only; USER-INDEX/USER-DB untouched; commit dee51f1","evid":"git show --stat dee51f1 + docs/INDEX_INTERFACE_NOTES.md","ts":"2026-10-17T23:40:00+05:30"}
 {"row":"E-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"top-3 retrieval + flag-gated augment; 5 tests; suites 487/487; AIza 0","evid":"vision/src/lessonRetrieval.js","ts":"2026-10-17"}
+{"row":"E-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"proposal file auto_edit false; 3 tests; suites 490/490; AIza 0","evid":"vision/src/archetypeProposals.js","ts":"2026-10-17"}

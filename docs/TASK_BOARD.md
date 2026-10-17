@@ -242,11 +242,11 @@ M-5 mcp-docs | VERIFY | W4 | 2026-10-17 | 2026-10-17 | (14ef411 +6/-6 lines; too
 # TRACK EXPERIENCE MEMORY (PROMPT27) - rows below, claim per D39
 E-1 lesson-store | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (665edf0; vision/src/lessonStore.js + test +7; suites 442/442; AIza 0; gate STRONG/MED+run_id) | {pattern,action,outcome,lesson,confidence,count,run_ids[]}; write only from reliable oracles (STRONG/MED, citable runs))
 E-2 memory-planner | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (7c1a4f4; top-3 retrieval + flag-gated augment; 5 tests; suites 487/487; AIza 0) |
-E-3 archetype-proposals | CLAIMED | W1 | - | - | - (deps E-1 | S | offline | promotion proposal: pattern seen on >=3 sites => archetype hint proposal file (never auto-edit archetypes))
+E-3 archetype-proposals | VERIFY | W1 | 2026-10-17 | 2026-10-17 | (475c12b; proposal file, auto_edit false; 3 tests; suites 490/490; AIza 0) |
 E-4 memory-ablation | OPEN | - | - | - | - (deps E-2,A-8 | M | live(mock+api if USER-KEY) | ablation with/without memory; metrics vs truth; honest if no gain)
 # TRACK REPORTING (PROMPT27) - rows below, claim per D39
 R-1 report-v1 | VERIFY | W3 | 2026-10-17 | 2026-10-17 | (report JSON v1 finalized: brain.role, tc_source, cost, label, citable, evid_paths, block info; validator extended; docs/report.schema.json synced; sample per label type docs/report_sample_v1.json; commit 91ec957; suites 476/476) (deps none | M | files reportSchema+docs | finalize report JSON v1: brain.role, tc_source, cost, label, citable, evid_paths, block info; validator; one sample per label type; docs/report.schema.json synced | PV)
-R-2 report-summary | OPEN | - | - | - | - (deps R-1 | S | md summary per run + per site generated from report JSON)
+R-2 report-summary | CLAIMED | W3 | 2026-10-17 | - | - (deps R-1 | S | md summary per run + per site generated from report JSON)
 R-3 metrics-calc | OPEN | - | - | - | - (deps R-1 | L | aggregate metrics calculator, read-only over any folder of report JSONs: success vs truth, verdict mix, weak rate, dom_assist rate, block rate, calls/tokens/screens per site, label table; fixtures tests; run on user data when USER-INDEX flag set | PV)
 R-4 model-ablation | OPEN | - | - | - | - (deps R-1 | M | live | ablation across 3 free models + mock via same suite; table)
 R-5 claims-matrix | OPEN | - | - | - | - (deps R-3 | M | claims matrix doc: claim -> evidence path -> label -> limitation (what is NOT proven); no overclaim)
@@ -3257,3 +3257,5 @@ All rows above remain OPEN on sheet pending reviewer/sub-master flip. api_calls 
 
 [2026-10-17 23:35 IST] [W3] DONE-PROOF S-3 index-user-owned (offline, api_calls=0): posted interface notes only (docs/INDEX_INTERFACE_NOTES.md) for the user-owned index/DB; no implementation, no USER-INDEX/USER-DB set. Commit dee51f1. VERIFY-NOTES: read docs/INDEX_INTERFACE_NOTES.md. RESUME next=claim.
 [2026-10-17 23:00 IST] [W4] DONE-PROOF V-7: commit abc47a0 (report.js + reportSchema.js + report.test.js). meterLoop (llm_calls, tokens real|null, screens, time_ms) per loop; never estimate; +2 tests. suites 482/482+41/41; api0. V-7 -> VERIFY; AUDIT ACCEPT appended. W4 now completed A-6, M-5, S-1, V-7 (all VERIFY). RESUME next=claim (V-6 oracle-adversarial or other).
+
+[2026-10-17 23:50 IST] [W3] CLAIM R-2 report-summary (lowest eligible OPEN; deps R-1 VERIFY; S; md summary per run + per site generated from report JSON). First-claim-wins. api_calls=0. RESUME next=R-2-build.
