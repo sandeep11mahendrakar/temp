@@ -8,6 +8,8 @@
 - Never expose secrets or include `.env`/credentials in outputs or commits. Board/ledger text writes use Node.js `fs` UTF-8 per project convention; preserve append-only logs.
 - For structural code exploration, use the installed `codebase-memory` skill when available.
 
+## Utility skills: `.agents/skills/project-memory-sync/SKILL.md` = daily durable-memory sync (trigger: "update the opencode memory").
+
 ## Role dispatch (mandatory)
 
 - "u r the master" -> `.agents/skills/project-master/SKILL.md` (plans-only; issues PROMPTs/rows; never implements).
