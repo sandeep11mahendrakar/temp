@@ -9,14 +9,18 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 function parseArgs(argv) {
-  const out = { index: null };
+  const out = { index: null, caseRecords: null };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--index') { out.index = argv[i + 1]; i += 1; }
+    // PX-1 optional: attach computed per-site case records from the real fusion
+    // dashboard shape. Opt-in only -> default output is unchanged (FX-2 law).
+    else if (argv[i] === '--case-records') { out.caseRecords = argv[i + 1]; i += 1; }
   }
   return out;
 }
 
 const DEFAULT_INDEX = 'C:/Users/sandeep/pes/vs code/Capstone-Project/testing/site_reports/INDEX.md';
+const DEFAULT_RUNS_ROOT = 'C:/Users/sandeep/pes/vs code/Capstone-Project/runs';
 
 function parseIndex(filePath) {
   const text = fs.readFileSync(filePath, 'utf8');
@@ -96,6 +100,28 @@ function main() {
   console.log('');
   console.log('Headline check: Tier1 mean computed above (memory cited ~20%); 48.7% cited for decontaminated 20-site ledger (Tier1+2).');
   console.log('If computed mean differs from cited headline, the cited headline is replaced by the computed value (honest).');
+
+  // PX-1 OPTIONAL section: only when --case-records is passed. Absent adapter or
+  // missing root degrades gracefully; the FX-2 output above is never changed.
+  if (args.caseRecords) {
+    console.log('');
+    console.log('=== PX-1 per-site case records (optional; adapter over fusion dashboards) ===');
+    try {
+      const { loadDashboardsFromDir } = require('../vision/src/dashboardAdapter');
+      const { aggregateCaseRecords } = require('../vision/src/metricsCalc');
+      const root = args.caseRecords === 'true' ? DEFAULT_RUNS_ROOT : args.caseRecords;
+      const m = aggregateCaseRecords(loadDashboardsFromDir(root));
+      console.log('Root:', root);
+      console.log('Dashboards:', m.sites);
+      console.log('pass_rate = cases_pass/(cases_pass+cases_fail) = ' + m.cases_pass + '/(' + m.cases_pass + '+' + m.cases_fail + ') = ' + (m.pass_rate === null ? 'n/a' : m.pass_rate));
+      console.log('cases_total = ' + m.cases_total + ' (PASS ' + m.cases_pass + ', FAIL ' + m.cases_fail + ', NOT_RECORDED ' + m.cases_not_recorded + ', weak ' + m.cases_weak + ')');
+      console.log('final_tests/executed/not_executed = ' + m.final_tests_total + '/' + m.executed_total + '/' + m.not_executed_total);
+      console.log('api_calls = ' + m.cost.api_calls + '; tokens/usd = NOT_RECORDED');
+      console.log('NOT_RECORDED fields:', m.not_recorded_fields.join(', '));
+    } catch (e) {
+      console.log('PX-1 case records UNAVAILABLE:', e && e.message);
+    }
+  }
 }
 
 main();
