@@ -1,0 +1,9 @@
+{
+  "id": "opencart",
+  "url": "https://demo.opencart.com",
+  "access": "third_party",
+  "cred_env": null,
+  "truth_ref": null,
+  "source": "FX-5 stop-list",
+  "notes": "BLOCKED: third_party stop-listed (no further runs). STOP-LIST (FX-5): no further runs on this site ever. access=third_party."
+}

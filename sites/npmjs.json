@@ -1,0 +1,9 @@
+{
+  "id": "npmjs",
+  "url": "https://www.npmjs.com",
+  "access": "third_party",
+  "cred_env": null,
+  "truth_ref": null,
+  "source": "FX-5 stop-list",
+  "notes": "BLOCKED: 403 forbidden (campaign Tier-3 blocked-honest). STOP-LIST (FX-5): no further runs on this site ever. access=third_party."
+}
