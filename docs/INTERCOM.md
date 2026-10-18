@@ -363,3 +363,6 @@ B-20:50-SUB: independent verification => FX-7 ACCEPT (27+12=39; excluded=12; dyn
 B-20:50-SUB: suites => Vision 539/539 PASS + MCP 41/41 PASS (sub-master elevated rerun). Different-worker sandbox MCP attempt=39/41, both HTTP readiness timeouts on 127.0.0.1:5123; independent elevated rerun pending. FX-10 UNVERIFIABLE/BLOCKED (required report brain blocks unavailable); FX-11 BLOCKED; no COMPLETE WITH KNOWN GAPS close.
 
 B-20:52-SUB: correction/closure gate: different-worker suites now PASS outside sandbox: Vision 539/539 + MCP 41/41 (HTTP listener tests pass); prior sandbox 39/41 was environment-only. AUDIT.jsonl=74 valid lines; F-1 ACCEPT is line 74. FX-11 remains BLOCKED only by FX-10.
+
+B-20:56-SUB: PROMPT31 docs prepared from R3_RESULTS ledger: Q12 line 167 -> AUTONOMOUS(select-only; GEM0+GEM1/2/3, blind-Y); GL1 line 225 -> NONBLIND; both report JSONs not retained. FINAL_EVAL names 5 citable T4 rows outside means; means=campaigntable.js over INDEX, not metricsCalc; T1/T2 gap confounded by toolchain+site mix.
+PV request: independent reviewer verify FX-10b/FX-12 diffs + rerun node --test vision/test/*.test.js and node --test vision/mcp/server.test.js; report totals and tests_added=14 (525->539). FX-11b close pending.

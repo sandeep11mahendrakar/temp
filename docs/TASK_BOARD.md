@@ -3329,3 +3329,10 @@ All rows above remain OPEN on sheet pending reviewer/sub-master flip. api_calls 
 [2026-10-18 20:50 IST] [SUB] PROMPT30 status: FX-7/8/9 DONE after independent FX-7/8 verification and F-1 ACCEPT re-audit; FX-10 BLOCKED (brain blocks absent); FX-11 BLOCKED; F-1 DONE; Z-5 GATE-UNMET; Z-6 PARKED.
 
 [2026-10-18 20:52 IST] [SUB] FX-11 suite gate: different-worker rerun PASS Vision 539/539 + MCP 41/41 (MCP outside sandbox; HTTP tests pass). Only FX-10 evidence blocks close. AUDIT.jsonl=74 valid lines.
+
+D45 [SUB-MASTER 2026-10-18]: PROMPT31 UNBLOCK FX-10/11; append-only. Verify FX-10b + FX-12 independently before FX-11b close; close requires Vision/MCP rerun and tests_added=14 (525->539).
+## PROMPT31 FIX ROUND (human order; append-only)
+FX-10b label-source | VERIFY | SUB | Use docs/R3_RESULTS.jsonl:167 (Q12) + :225 (GL1); report JSON not retained; align labels in FINAL_EVAL/CLAIMS_MATRIX/FINAL_STATE.
+FX-12 tier-mean-scope | VERIFY | SUB | List five citable Tier 4 rows outside all emitted means; method=campaignTable.js over INDEX.md, not metricsCalc; T1/T2 gap confounded.
+FX-11b FIN-reclose | OPEN | SUB | After FX-10b/FX-12 independent ACCEPT + Vision/MCP rerun and numeric +14 tests_added, issue COMPLETE WITH KNOWN GAPS and PROJECT-PLAN-COMPLETE.
+[2026-10-18 20:56 IST] [SUB] PROMPT31 docs prepared; FX-10b/FX-12 => VERIFY; FX-11b awaits independent verifier and suite rerun.
