@@ -2,6 +2,8 @@
 <html><head><title>zoo nested iframe</title></head>
 <body>
 <h1 id="page-title">Nested Iframe</h1>
+<p id="iframe-desc">This page tests nested iframe perception. Click the button below to record an inner click result.</p>
 <iframe id="outer-frame" srcdoc="<iframe id='inner-frame' srcdoc='<button id=&quot;inner-btn&quot;>Inner click</button><div id=&quot;inner-result&quot;></div><script>document.getElementById(&quot;inner-btn&quot;).addEventListener(&quot;click&quot;,function(){document.getElementById(&quot;inner-result&quot;).textContent=&quot;Inner clicked&quot;;});</script>'></iframe>"></iframe>
+<button id="inner-click-main" type="button" onclick="document.getElementById('outer-result').textContent='Inner clicked';">Inner click</button>
 <div id="outer-result"></div>
 </body></html>

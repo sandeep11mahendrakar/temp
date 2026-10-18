@@ -59,9 +59,10 @@ function loadTruths() {
 // Seed query shared by the seeder: visible actionable elements with labels.
 const SEED_JS = `(() => {
   const out = [];
-  const els = [...document.querySelectorAll('button,a,input,select,textarea,[role="button"]')];
+  const els = [...document.querySelectorAll('button,a,input,select,textarea,[role="button"],[contenteditable]')];
   const mapType = (el) => {
     const tag = (el.tagName || '').toUpperCase();
+    if (el.getAttribute && el.getAttribute('contenteditable') === 'true') return 'text_input';
     if (tag === 'INPUT') {
       const t = String(el.getAttribute('type') || 'text').toLowerCase();
       if (t === 'checkbox') return 'checkbox';

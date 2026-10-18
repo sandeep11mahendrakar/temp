@@ -2,7 +2,8 @@
 <html><head><title>zoo cookie variant</title></head>
 <body>
 <h1 id="page-title">Cookie Banner Variant</h1>
-<div id="cookie-banner" style="position:fixed;bottom:0;width:100%;background:#333;color:#fff;padding:10px;">We use cookies. <button id="reject-cookies" type="button">Reject</button> <button id="accept-cookies2" type="button">Accept all</button></div>
+<p id="cookie-desc">This page demonstrates a cookie consent banner with accept and reject options for testing overlay handling.</p>
+<div id="cookie-banner" style="position:static;width:100%;background:#333;color:#fff;padding:10px;">We use cookies. <button id="reject-cookies" type="button" onclick="document.getElementById('cookie-banner').style.display='none';document.getElementById('cookie-result').style.display='block';document.getElementById('cookie-result').textContent='Rejected cookies';">Reject</button> <button id="accept-cookies2" type="button" onclick="document.getElementById('cookie-banner').style.display='none';document.getElementById('cookie-result').style.display='block';document.getElementById('cookie-result').textContent='Accepted cookies';">Accept all</button></div>
 <div id="cookie-result" style="display:none;">Cookie choice recorded</div>
 <script>
 document.getElementById('reject-cookies').addEventListener('click', function(){

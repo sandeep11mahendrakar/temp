@@ -2,8 +2,9 @@
 <html><head><title>zoo datepicker</title></head>
 <body>
 <h1 id="page-title">Datepicker</h1>
-<input id="date-input" type="date" />
-<button id="date-submit" type="button">Submit</button>
+<p id="date-desc">Pick a date and submit to see the formatted result. This page tests date input handling.</p>
+<input id="date-input" type="text" placeholder="YYYY-MM-DD" />
+<button id="date-submit" type="button" onclick="document.getElementById('date-result').textContent='Date: '+document.getElementById('date-input').value;">Submit</button>
 <div id="date-result"></div>
 <script>
 document.getElementById('date-submit').addEventListener('click', function(){
