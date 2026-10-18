@@ -1,0 +1,82 @@
+{
+  "entities": [
+    {
+      "name": "workspace",
+      "entityType": "config",
+      "observations": [
+        "Canonical repo: C:\\Users\\sandeep\\pes\\vs code\\Capstone-Project, branch capstone-final-integrated @ d37a616. Never use old clone at C:\\Users\\sandeep\\pes\\CAPSTONE\\Capstone-Project.",
+        "Duplicate folder Autonomous-web-UI-testing-as-MCP-tools-for-AI-agents deleted Oct 2026 after mirror; full diff review pack at C:\\Users\\sandeep\\pes\\vs code\\temp (AUTO_version vs CAP_version + DIFF_SUMMARY.txt).",
+        "Untracked runtime files kept in repo (not in GitHub snapshot): .env, package.json, package-lock.json, logs/, runs/, node_modules/, _TEMP_BIN/.",
+        "Old Tier-2 git history (branches after-tier-2, capstone-tier2-prep, tags) recoverable any time via backup remote https://github.com/sandeep11mahendrakar/mcp-for-the-testing-temp-.",
+        "This memory.json must stay pure ASCII valid JSON: a corrupt non-ASCII write in Aug 2026 made the MCP serve an empty graph until rebuilt Oct 2026."
+      ]
+    },
+    {
+      "name": "capstone-project",
+      "entityType": "project",
+      "observations": [
+        "AI test-case generation for Web/Mobile UI, Team 101 PES capstone. Arch A web/ = DOM state-machine explorer; Arch B vision/ = YOLO ScreenParser + OCR visual pipeline; fusion/ = S1 catalog, S2 gaps, S4 grounded LLM synthesis, FT live execution, S6 dashboard; mobile/ = Appium dry-run only.",
+        "Entry docs (read on demand, never paste whole): agents/memory/PROJECT_HANDOFF.md = session state; PROJECT_MEMORY.md = source of truth; docs/TASK_BOARD.md = live board (209KB, pull sections only).",
+        "Offline suites: node --test test/*.test.js fusion/test/*.test.js web/test/*.test.js (157/157 green at Tier-3 audit).",
+        "Key negative finding (mutation/results/ANALYSIS.md): system verifies actions-work, not values-correct; no assertion/value oracles exist. Top V2 item, deliberately deferred mid-campaign."
+      ]
+    },
+    {
+      "name": "campaign-status",
+      "entityType": "state",
+      "observations": [
+        "50-site campaign: Tier1 sites 1-10 done; Tier2 11-20 done and decontaminated; Tier3 21-30 near-complete (Aug 26 final audit PASS: 6 cleared / 6 blocked-honest, pre-registered bar >=6/10 MET).",
+        "Headlines: fusion value ~20% (Tier1) to ~49% mean on messy real sites; Arch B sees ~19x elements/run vs A but A generates ~3x tests/run; phptravels exposed as demoblaze mirror (real autonomous find).",
+        "Ground-truth ledgers: testing/site_reports/INDEX.md + testing/CAMPAIGN_EVALUATION.md (regen with node fusion/s8_campaign_eval.js)."
+      ]
+    },
+    {
+      "name": "provider-quotas",
+      "entityType": "reference",
+      "observations": [
+        "OpenRouter stealth ox-alpha: 1000 req/day GLOBAL shared pool, resets 05:30 IST. S4 synthesis requires FUSION_LLM_REASONING=low + FUSION_MAX_TOKENS=4000 or model burns budget on reasoning chains.",
+        "Groq free: 8k TPM + 200k TPD per model; gpt-oss-120b/20b emit clean JSON, qwen leaks <think> and is unusable for JSON.",
+        "All keys live in untracked .env / vision/.env only. Never commit, never print."
+      ]
+    },
+    {
+      "name": "open-work",
+      "entityType": "queue",
+      "observations": [
+        "P0: finish Tier-3 in-flight sites per docs/TASK_BOARD.md D6. P1: verify run-isolation leak on guarded re-runs; add schema_version to dashboard_data.json. P2: token-usage logging; T402 freeze regen at window end.",
+        "Per-site protocol: hold testing/.campaign.lock, run node runBoth.js, attribute runs with testing/run_attribution.js (never newest-dir), folder_purity must be PURE, commit only with user approval."
+      ]
+    },
+    {
+      "name": "agent-conventions",
+      "entityType": "reference",
+      "observations": [
+        "Write markdown via node fs utf8 only (PowerShell Add-Content mangles unicode). Never run concurrent pipelines/chains (caused 8-site contamination). Report numbers only from testing/extract_run.js.",
+        "Commit/push only with explicit user approval. Work on capstone-final-integrated; never touch main."
+      ]
+    },
+    {
+      "name": "Mid-market AI accounting opportunity research",
+      "entityType": "project",
+      "observations": [
+        "Aug 2026 research, 5 parallel streams. Primary pick (7.80/10): AI-drafted recurring month-end journal-entry packet from historical JEs + source docs. Backups: intercompany automation (7.65), cash-application cleanup (7.15).",
+        "Winning pattern from failures (Bench, ScaleFactor): accountant-in-loop agents on deterministic work, $15K-60K ACV, sold to controllers."
+      ]
+    },
+    {
+      "name": "PES placements market research",
+      "entityType": "project",
+      "observations": [
+        "Final-year B.Tech CS PES EC Campus, fresher roles India >=6 LPA. Docs live in C:\\Users\\sandeep\\pes\\placements\\notes\\ plus market-coverage-analysis.md.",
+        "Primary niche: GenAI/Agentic Application Engineer; secondary: Full-Stack AI Product Engineer."
+      ]
+    }
+  ],
+  "relations": [
+    {"from": "workspace", "relationType": "hosts", "to": "capstone-project"},
+    {"from": "campaign-status", "relationType": "documented in", "to": "capstone-project"},
+    {"from": "open-work", "relationType": "continues", "to": "campaign-status"},
+    {"from": "provider-quotas", "relationType": "constrains", "to": "open-work"},
+    {"from": "open-work", "relationType": "governed by", "to": "agent-conventions"}
+  ]
+}

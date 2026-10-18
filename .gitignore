@@ -80,3 +80,7 @@ logs/
 # worker-personal tier drivers - PENDING section-4 Master sign-off, do not enable yet
 # testing/tier3_w*.cjs
 # testing/tier3_repl.*
+
+# ---- PX-2 dirty-tree disposition (2026-10-18, W-B) ----
+# Playwright MCP tool cache (console logs + page snapshots; regenerated, never program source)
+.playwright-mcp/
