@@ -112,8 +112,8 @@ Pilot field map: `docs/INDEX_PILOT_FINDINGS.md`. Template: `docs/SITE_RUN_REPORT
 
 | Label | Meaning | Applies to |
 |---|---|---|
-| AUTONOMOUS | blind-Y only, no human seed | none at campaign scale (only Q12 select-only qualifies, NONBLIND) |
-| NONBLIND | keyed API / MCP / CLI generate | GL1, MCP tools, Q12 select-only
+| AUTONOMOUS | blind-Y, all-API select-only run as recorded | Q12 select-only; `docs/R3_RESULTS.jsonl:167`; report JSON not retained |
+| NONBLIND | keyed API / MCP / CLI generate | GL1, MCP tools |
 | ASSISTED | file/mock/replay/seeded | unit suites, holdouts, control tests
 | OBSERVED | no oracle | mutation run (no business-value oracle)
 | BLOCKED | citable:false | 7 blocked sites above
@@ -123,6 +123,11 @@ Pilot field map: `docs/INDEX_PILOT_FINDINGS.md`. Template: `docs/SITE_RUN_REPORT
 | Bot-wall / bot-check (403/202/blank) | OpenCart, StackOverflow, IMDb, Goodreads, npmjs, Reddit, Magento |
 | Catalog contamination (foreign page_keys) | BBC News, Techlistic, Practice Test Automation, W3Schools inputs, EvilTester |
 | Completed, zero fusion contribution | CURA, ParaBank, Automation Exercise, The Internet (Heroku), Archive.org |
+
+### Label source records
+
+- Q12: `docs/R3_RESULTS.jsonl:167` records GEM0 HTTP 200, GEM1/2/3 clean (all API stages), tokenCap Y, and `blind-Y AUTONOMOUS`; the report JSON is not retained. Q12 is select-only (selection among archetype/target candidates), so its recorded class is AUTONOMOUS.
+- GL1: `docs/R3_RESULTS.jsonl:225` records `AUTONOMY_NONBLIND(generate)`; the report JSON is not retained. The claims-matrix classification is NONBLIND.
 
 ## Limitations (what is NOT proven)
 - Fusion% is a campaign share of generated tests, not a success-vs-truth measure; no business-value (price/total) oracle exists. UI-state oracle kinds DO exist.
