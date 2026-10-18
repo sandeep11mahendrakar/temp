@@ -717,6 +717,18 @@ function deriveStepSignal(step, before, after) {
   if (action === 'navigate' || action === 'click') {
     // URL handled separately at test level; nothing here.
   }
+  // V-5: generic fallback for batch4 classes (select/combobox/datepicker/slider/
+  // hover/download/keyboard/scroll/upload): any observable property change at
+  // the probe point is a weak verification signal. Never invents a signal when
+  // before/after are absent or identical.
+  if (before && after && typeof before === 'object' && typeof after === 'object') {
+    const keys = ['value', 'checked', 'tag', 'inputType'];
+    for (const k of keys) {
+      if (before[k] !== undefined && after[k] !== undefined && before[k] !== after[k]) {
+        return { method: `${action}_change`, detail: `${k}: ${String(before[k]).slice(0, 40)} -> ${String(after[k]).slice(0, 40)}` };
+      }
+    }
+  }
   return null;
 }
 const DEFAULT_OUTPUT = path.join(OUTPUT_DIR, 'execution_results.json');
@@ -1268,7 +1280,10 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     }
 
     // Pre-action observable state.
-    const pointProbeBefore = ['click', 'fill'].includes(step.action)
+    // V-5: probe point for batch4 classes too (select/hover/press/key/scroll/
+    // upload/download/right_click) so deriveStepSignal can emit a signal.
+    const PROBE_ACTIONS = ['click', 'fill', 'select', 'selectOption', 'hover', 'press', 'key', 'scroll', 'upload', 'download', 'right_click'];
+    const pointProbeBefore = PROBE_ACTIONS.includes(step.action)
       ? await probePoint(page, execStep.x, execStep.y).catch(() => null)
       : null;
     // L1: arm the contextmenu listener BEFORE the right-click lands.
@@ -1398,7 +1413,7 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
         } catch (_) { /* evidence capture must never break execution */ }
       }
 
-      const pointProbeAfter = ['click', 'fill'].includes(execStep.action)
+      const pointProbeAfter = PROBE_ACTIONS.includes(execStep.action)
         ? await probePoint(page, execStep.x, execStep.y).catch(() => null)
         : null;
       const sig = deriveStepSignal(execStep, pointProbeBefore, pointProbeAfter);
@@ -1903,6 +1918,7 @@ module.exports = {
   splitPierce, pierceQueryNode, rectCenter, pierceWalkFn, pierceCandidate, tryShadowPierce,
   domAssistTag, domAssistCount, armContextMenuProbe, readContextMenuProbe,
   needsAfterShot, ScreenMeter, staleFillRecovery,
+  deriveStepSignal,
   DEFAULT_CONF, LOWCONF_RETRY_CONF,
   STEP_ACTIONS, assertStepAction, normaliseStep,
 };
