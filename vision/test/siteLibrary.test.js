@@ -108,7 +108,8 @@ test('S0 link-run: permitted third_party records mcp slots', () => {
 // 9. seeds: exactly 3, urls from repo files, unknowns null.
 test('S0 seeds: saucedemo/demoqa/todomvc urls + null unknowns', () => {
   const ids = lib.listSites(SEED_DIR);
-  assert.deepEqual(ids, ['demoqa', 'saucedemo', 'todomvc']);
+  // FX-5 stop-list added third_party sites to sites/; seeds must still be present.
+  for (const s of ['demoqa', 'saucedemo', 'todomvc']) assert.ok(ids.includes(s), `seed ${s} present`);
   const get = (id) => lib.loadSite(SEED_DIR, id).site;
   assert.equal(get('saucedemo').url, 'https://www.saucedemo.com');
   assert.equal(get('demoqa').url, 'https://demoqa.com');
