@@ -55,3 +55,4 @@
 {"row":"Q-6","aud":"ACCEPT","gates":"G1-G5 pass","check":"docs/DRESS_REHEARSAL.md; commit ec208c8","evid":"git show --stat ec208c8 + docs/DRESS_REHEARSAL.md","ts":"2026-10-18T05:45:00+05:30"}
 {"row":"G-3","aud":"ACCEPT","gates":"G1-G5 pass","check":"3 seeded sites (saucedemo 18el/login/9TC, demoqa 31el/navmenu/3TC, todomvc 10el/navmenu/3TC) match A-8 baseline exactly, no regression; HTTP 200; api0; secret scan 0","evid":"docs/G3_LIBRARY_REGRESSION.md 163122e","ts":"2026-10-18"}
 {"row":"F-1","aud":"ACCEPT","gates":"G1-G5 pass","check":"pilot 3 runs + FINAL_EVAL.md + metricsCalc run (0 case records, shape mismatch reported); suites 525/525; AIza 0","evid":"docs/FINAL_EVAL.md","ts":"2026-10-18"}
+{"row":"FX-2","aud":"ACCEPT","gates":"G1-G5 pass","check":"tools/campaignTable.js parses 39 rows, 27 citable, 12 excluded; tier means with arithmetic; cited 20%/48.7% not reproduced (replaced with computed); AIza 0","evid":"tools/campaignTable.js","ts":"2026-10-18"}
