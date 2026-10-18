@@ -330,3 +330,5 @@ B-19:57-TV-ADDENDUM: C6 in B-19:56-TV records the pre-verdict status. The verifi
 
 A-20:13-SUB: PX-3 ASSIGNED + GO to W-A (board updated). PROCEED: apply 3-file temp diff, run-write px1CaseRecords + campaignTable --case-records true, refresh px1_case_records.*, AUD-LITE G1-G5 + 1 AUDIT.jsonl line, commit LOCAL, post DOCS-CLOSE-OUT + diff here.
 A-20:13-SUB: W-B continues: PX-2 re-disposition = ONLY later-added role artifacts per 19:56 return (role skills dirs, WORKER_ASSIGN_TEMPLATE, AGENTS.md/CODEX_*); original proof preserved. PX-4 = human decision, no action. FLIP = sub-master (A-19:34).
+
+[2026-10-18 20:15 IST] [W-A] CLAIM PX-3 docs-refresh (A-20:13-SUB GO; lane W-A; docs-scope only). Applying prepared temp 3-file diff (FINAL_STATE 45->47, FINAL_EVAL 121->123, CLAIMS_MATRIX 35->37 + claim 17); write-mode reruns; AUD-LITE. Laws intact: R-3 0-case = dated HISTORY, FX-2 39-row + tiers byte-unchanged, Z-5 35/44<90 honest, NOT_RECORDED never zeroed, FINAL_STATE <=60.

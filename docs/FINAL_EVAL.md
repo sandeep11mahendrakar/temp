@@ -10,7 +10,8 @@ Pilot field map: `docs/INDEX_PILOT_FINDINGS.md`. Template: `docs/SITE_RUN_REPORT
 - Per-site rows parsed from `testing/site_reports/INDEX.md` (39 registered rows).
 - Citable = row has a numeric fusion% AND is not contaminated/do-not-cite. Blocked and contaminated rows are retained as evidence but excluded from aggregate means.
 - Means are unweighted arithmetic mean of per-site fusion% with explicit n and summed numerator (shown so the reader can reproduce by hand).
-- R-3 `vision/src/metricsCalc.js` was run read-only over the fusion dashboards; it returns 0 case records because `fusion/dashboard_data.json` is not report-v1 shaped. Disclosed, not hidden; it does not change the INDEX-derived numbers.
+- HISTORY (R-3/F-1 run, 2026-10-18 morning): `vision/src/metricsCalc.js` was run read-only over the fusion dashboards and returned 0 case records because `fusion/dashboard_data.json` is not report-v1 shaped (no `cases[]`). Kept as historical; it never changed the INDEX-derived numbers.
+- NOW (PX-1 dashboard adapter, W-A, DONE 2026-10-18; commits b3d86e4 + b2ea3c5): `vision/src/dashboardAdapter.js` parses the REAL dashboard shape offline and `metricsCalc.aggregateCaseRecords()` yields per-site case records with a REAL n over the 69 canon dashboards: n=243 = 154 PASS + 89 FAIL (35 weak PASS_WEAK), rate 154/(154+89)=0.634; final tests 439 / executed 243 / not_executed 196; api_calls 0 (recorded); tokens/usd/brain.blind/dom_assist NOT_RECORDED (never zeroed). These are UI-state execution records from the dashboards and use a DIFFERENT source/denominator from the FX-2 INDEX campaign share below: they do NOT replace, alter, or aggregate with the 39-row campaign table or its tier means. Reproduce: `node tools/px1CaseRecords.js` or `node tools/campaignTable.js --case-records true` (flag-off output is byte-identical to pre-PX-1).
 
 ## Per-site table (all 39 registered rows; every star matches a row)
 
@@ -113,8 +114,9 @@ Pilot field map: `docs/INDEX_PILOT_FINDINGS.md`. Template: `docs/SITE_RUN_REPORT
 | Completed, zero fusion contribution | CURA, ParaBank, Automation Exercise, The Internet (Heroku), Archive.org |
 
 ## Limitations (what is NOT proven)
-- Fusion% is a campaign share of generated tests, not a success-vs-truth measure; no business-value (price/total) oracle exists.
+- Fusion% is a campaign share of generated tests, not a success-vs-truth measure; no business-value (price/total) oracle exists. UI-state oracle kinds DO exist.
+- PX-1 dashboard case records are UI-state execution outcomes (per-test PASS/FAIL from `execution.steps`), not business-value correctness; they are reported separately from the FX-2 campaign share.
 - Per-site FT hits vs the site truth files are not asserted here; only INDEX-reported aggregates are reproduced.
-- R-3 metricsCalc produced 0 case records on the fusion dashboards (schema mismatch) - future instrumentation item.
+- HISTORY: R-3 metricsCalc produced 0 case records on the fusion dashboards (schema mismatch, 2026-10-18 morning). NOW DELIVERED as PX-1 (DONE): the adapter yields 243 case records over 69 dashboards (154 PASS / 89 FAIL, rate 0.634). tokens/usd remain NOT_RECORDED (the dashboards do not record them).
 
 _Generated read-only from INDEX.md by FX-2 tools/campaignTable.js; W1, 2026-10-18._

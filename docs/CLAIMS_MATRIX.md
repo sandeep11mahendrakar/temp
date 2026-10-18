@@ -21,6 +21,7 @@ Labels: AUTONOMOUS (blind-Y only), NONBLIND (MCP/CLI), ASSISTED (file/mock/repla
 | 14 | Site library validates + refuses third_party unpermitted | vision/src/siteLibrary.js + tests 9/9 | ASSISTED | Unit-tested; no live site onboarding at scale yet |
 | 15 | Report schema v1 carries brain.role/tc_source/label/evid_paths/block | vision/src/reportSchema.js + docs/report.schema.json | ASSISTED | Additive fields; old reports still validate (backward compat) |
 | 16 | Q12 AUTONOMOUS (select-only) live generate: selected class only, no blind-Y claim | vision/src/brain.js, vision/test/geminiApi.test.js (8/8 mock) | NONBLIND | select-only scope; n=1 class live; key required |
+| 17 | Dashboard adapter: per-site UI-state case records over the canon fusion dashboards: 69 dashboards, n=243 = 154 PASS + 89 FAIL (35 weak PASS_WEAK), rate 154/(154+89)=0.634 | vision/src/dashboardAdapter.js, vision/src/metricsCalc.js, tools/px1CaseRecords.js (commits b3d86e4+b2ea3c5) | ASSISTED | UI-state execution records only (per-test PASS/FAIL from execution.steps); NOT a business-value correctness measure; separate from the FX-2 INDEX campaign share (claim 3) - different source and denominator; tokens_in/out, usd_estimated, brain.blind, dom_assist NOT_RECORDED (never zeroed) |
 
 ## What is NOT claimed (explicit non-claims)
 
@@ -32,3 +33,4 @@ Labels: AUTONOMOUS (blind-Y only), NONBLIND (MCP/CLI), ASSISTED (file/mock/repla
 Note: F-1 30-site final eval IS completed (USER-INDEX set); see docs/FINAL_EVAL.md + tools/campaignTable.js for computed figures.
 
 Prepared by W1, 2026-10-18. api_calls=0.
+Update (PX-1 close-out, W-A, 2026-10-18): added claim 17; dashboard case records added offline (api0). Claim 12 suite figure left as reported at FX time; the independent verifier re-ran Vision 539/539 + MCP 41/41 at B-19:56-TV (PX-1 added 14 offline tests).
