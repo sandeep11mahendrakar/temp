@@ -170,3 +170,42 @@ time; api_calls=0 throughout every W2 lane, all reasoning local.
 (c) Completely missed as a program: seconding W1+W3 — a no-browser DEMOQA truth anchor independent of our harness (every K4/G5/M2 verdict compares the pipeline against itself); a shared-file ownership registry (executeTests.js had 4 concurrent writers across B1/B2/H2/P2-AUDIT/G2); canonical cost-audit session rule (my session got misattributed once before message-probing fixed it). Adding mine: no UNSUPPORTED-verdict live coverage — right_click/drag/upload/selectOption have zero headed runs (M2 covered right_click only); and no suite gate on visual_dom fixture staleness (H3 pins counts today, drift will silently age them).
 
 (d) Handoff: W2 stopped after N6 DONE + M-lanes DONE + STANDBY; live slot released, ports verified free (netstat empty 5000-5004+5123), no HOLDER held. Watch: L1 (W3) + L2 (W1) + K1 (W1) + K3 (blocked-on-K1) are the only non-DONE lanes I saw; M5/M3 stay BLOCKED till a Gemini key is provisioned; sheet flips are master action (rows show OPEN, comms+R3 show DONE — do not "fix" by editing the sheet). My files FROZEN. Suites last-green Vision 223/223 + MCP 33/33 (re-run just now for this entry, never trust). api_calls total: 0 (every W2 lane, including all 20+ live runs; J1's single live-LLM call was W1's lane).
+
+## ENTRY-6 [W2 2026-10-15] G2z service-boot lesson (approved D-followup)
+
+serviceManager.ensureVisionServices silent ~120s boot (stdio:ignore on all 5 spawns, vision/src/serviceManager.js:63-66) makes a healthy headed run look exactly like a hung site: G2z showed zero output for minutes while YOLO loaded 153MB weights (weights + torch 2.13.0 + ultralytics 8.4.126 all verified present). SUGGESTION: progress log per service (spawned pid + per-service healthy/not-yet line every poll tick, last-error tail on timeout) instead of silent polling. Owner W3, phase X, NOT NOW (no behavior change; logging only; approved as suggestion-row only).
+
+## ENTRY-7 [W2 2026-10-15] suggestions for Claude (Z0/Z1/G2z program)
+
+(a) Never execSync-block a process that owns a server the child needs: my G2z harness booted the zoo server in-process then blocked on execSync, starving single-threaded Node so all 16 page.gotos timed out — identical symptom to infra failure. Suggest a standing rule (or grep-guard in review): server-owner process must never synchronously wait on that server's clients; use a serve.js-style sidecar process. Cost us one full 0/16 headed run before the bisection caught it.
+
+(b) Batch conformance should default headless with headed reserved for single observed runs: 16 sequential headed windows = 16 new windows + slowMo tax + CPU contention that pushed goto latency 47ms -> 4.3s and can fake timeouts. G2z proved headless classifies identically (same verdicts would need a headed spot-check to confirm, noted as UNSURE).
+
+(c) P3-vs-G2 divergence needs an owner: G2z found 3 TCs (cookie-banner, spinner-delayed, upload-download) where executor status FAILs but result.oracle PASSes (no-signal + short-body gate fires despite satisfied oracle). Either the gate or the oracle is wrong; both cannot stay authoritative.
+
+(d) Truth-oracle kind contract: zoo truth expects are regex-shaped but executor expected_text is substring-matched, so text_present regexes with metachars can never confirm (dbl-right-click, dialogs). Either teach the harness a matchmode field per TC or restrict truth expects to literal substrings; my G2z mapping silently downgraded these to FAIL.
+
+(e) Hidden-target staleness without vision redetect is now measured, not theoretical: wizard step-3 and hover step-2 fail unresolved because the seeded pool predates the reveal and redetectState is null without services. Any future DOM-seeded run should re-seed perception between steps that change visibility, or record the limitation up front as G2z did.
+
+## ENTRY-8 [W3 2026-10-17] harness must forward step.to{} for native drag-to (D1)
+
+Context: D1 (W3) added first-class drag destination resolution in the executor (vision/src/executeTests.js: to{x,y} coords -> to{type,text} resolved vs the current pool -> legacy value "x2,y2"; NO destination => FAIL, never blind-drag). G2r3 raw row shows drag-drop still FAIL with my new reason "no drag destination (missing to{} ...)" => the step ARRIVED without to{} and without a numeric value.
+
+Root cause (read-only, out-of-region): vision/zoo/conformance.js translateSteps builds each step as {action,target,value} and drops step.to, so the executor's native to{} is never exercised; and the legacy '#drop-zone' fallback also missed (drop target unseeded) => value undefined => honest FAIL.
+
+SUGGESTION (owner W2, 2 lines + 1 seed): (a) in translateSteps for action==='drag', forward `to: s.to` on the generated step (keep the x2y2 value too for back-compat); (b) ensure the drop destination is present in the seeded pool (a container the seeder currently misses). With both, D1's expect+1 (drag-drop PASS) becomes measurable live. Until then, drag-drop FAILs by construction, not by executor defect.
+
+Note: this is the same integration-gap class W2 itself filed (executor had no destination concept) — now the executor side is done; the harness side is the remainder.
+
+## ENTRY-9 (W2, 2026-10-17) RETRACTED — executor DOES fire HTML5 DnD (drag-drop now PASSES)
+<!-- renumbered from a colliding ENTRY-8 (W3 posted its ENTRY-8 first; round-robin is W1->W2->W3) -->
+RETRACTION: my first read of the drag path was incomplete — I read `vision/src/llm.js`
+case `drag` (mouse.move/down/up) and wrongly concluded the executor can only drag by mouse.
+W3's D1b (commit c575863) added `dispatchHtml5Drag` + a `dragNative` gate in `executeTests.js`
+(step-level `drag_mechanism: html5_dnd`), so a native destination is actuated with real
+HTML5 DnD events. Evidence: G2r4 drag-drop PASS, step `drag_to_via=to_coords`,
+`drag_mechanism=html5_dnd`, oracle snip `...Dropped: widget`.
+Net: the ONLY missing piece was the harness side (W3 ENTRY-8) — now fixed
+(conformance.js forwards `to{x,y}`/`to{type,text}` + a drag-only container index for the
+div source/target, `#drag-src`/`#drop-zone`). Disregard the "mouse-only" claim below;
+no executor change is needed.

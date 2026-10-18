@@ -268,8 +268,8 @@ Q-5 deprecate-proposal | DONE | W3 | 2026-10-17 | 2026-10-17 | (proposal doc doc
 Q-6 dress-rehearsal | DONE | W3 | 2026-10-18 | 2026-10-18 | (docs/DRESS_REHEARSAL.md: onboarding+conformance(partial env)+suite 523/523+report+replay; commit ec208c8) (deps Z-5,A-8,M-3,R-3 | M | live | dress rehearsal on a clean copy: onboarding steps -> zoo conformance -> one deterministic run -> report gen -> demo replay; any step fails => rows)
 # TRACK FINAL (PROMPT27) - rows below, claim per D39
 G-3 library-regression | DONE | W4 | 2026-10-18 | 2026-10-18 | (163122e; 3 seeded sites match A-8 baseline exactly (elements/top-archetype/TC counts); no regression; HTTP 200; api0; secret scan 0) | (deps Z-5,A-8 | M | live | library regression sweep on seeded sites (saucedemo,demoqa,todomvc) vs truth; no regression vs previous)
-F-1 final-eval | VERIFY | W1 | 2026-10-18 | 2026-10-18 | (docs/INDEX_PILOT_FINDINGS.md + docs/FINAL_EVAL.md; pilot 3 runs (clean/partial/contaminated); R-3 metricsCalc run over 69 dashboard files (0 case records, shape mismatch honestly reported); no source edits; suites 525/525; AIza 0) |
-FIN-1 final-state | OPEN | - | - | - | - (deps all rows VERIFIED|PARKED|BLOCKED | S | docs/FINAL_STATE.md <=60 lines: per-row status, suite totals independently re-run by 2 workers, commit list, open blockers, user gates pending; post PROJECT-PLAN-COMPLETE; STANDBY)
+F-1 final-eval | DONE | W1 | 2026-10-18 | 2026-10-18 | (docs/INDEX_PILOT_FINDINGS.md + docs/FINAL_EVAL.md; pilot 3 runs (clean/partial/contaminated); R-3 metricsCalc run over 69 dashboard files (0 case records, shape mismatch honestly reported); no source edits; suites 525/525; AIza 0) |
+FIN-1 final-state | DONE | SUB | 2026-10-18 | 2026-10-18 | (docs/FINAL_STATE.md written: 60 DONE/5 PARKED/0 open onwards-debt; audit 56 ACCEPT + 1 UNVERIFIABLE (Z-3 timeout, superseded by verifier rerun); suites 525/525+41/41 sub-master and verifier; PROJECT-PLAN-COMPLETE) |
 
 ## COMMS LOG-R3
 
