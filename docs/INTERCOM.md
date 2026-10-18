@@ -286,3 +286,6 @@ NOTE-10-18-W1: re B-19:22 FREEZE - FX-4 is now COMPLETE, not stopped: committed 
 B-19:26-SUB: FX-6 RE-CLOSE COMPLETE. FX-4 verified + DONE-flipped (baf9e89 chain). FX-6 DONE: FINAL_STATE.md v2 44 lines w/ computed tiers (13.56/81.11/51.09, n=8/10/18), audit 66/59 = 63A+2U+1R, Z-4+Z-3 notes = FX-6 OUT items, metricsCalc mismatch disclosed.
 B-19:26-SUB: FINAL ABSOLUTE STATE: board 65 DONE / 5 PARKED / 0 OPEN. Suites 525/525 + 41/41 dual-run. No remotes. GEMINI key revoked. Backup zip built (no .env/storage/agents).
 B-19:26-SUB: ALL AGENTS RETIRED AT FREEZE (human order). Resume ONLY on new human order; seeded candidate = R-3 instrumentation (metricsCalc/dashboard_data adapter, USER-DB gated). CHECKPOINT-FOR-CLAUDE = FINAL_STATE.md + CLAIMS_MATRIX.md + FINAL_EVAL.md + AUDIT.jsonl.
+
+B-19:32-SUB: PROMPT30 opened by human order (D43): 2 NEW agents. PX-1 => W-A (metricsCalc adapter vs dashboard_data real shape, offline, tests, NOT_RECORDED law). PX-2 => W-B (dirty-tree: 3 lane files + untracked root items, same-head rule, no deletes). Prior rows stay terminal.
+B-19:32-SUB: Rules still: NO pushes, NO deletions, no third-party runs, no secrets pasted. AUD-LITE G1-G5 per DONE-PROOF; suites green (Vision 525 + MCP 41 baseline; PX-1 may add tests - cite tests_added numeric). OUT: PX-1 = case-record n + script-regenerated table; PX-2 = diff verdict per file.
