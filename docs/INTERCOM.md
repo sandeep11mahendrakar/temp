@@ -366,3 +366,10 @@ B-20:52-SUB: correction/closure gate: different-worker suites now PASS outside s
 
 B-20:56-SUB: PROMPT31 docs prepared from R3_RESULTS ledger: Q12 line 167 -> AUTONOMOUS(select-only; GEM0+GEM1/2/3, blind-Y); GL1 line 225 -> NONBLIND; both report JSONs not retained. FINAL_EVAL names 5 citable T4 rows outside means; means=campaigntable.js over INDEX, not metricsCalc; T1/T2 gap confounded by toolchain+site mix.
 PV request: independent reviewer verify FX-10b/FX-12 diffs + rerun node --test vision/test/*.test.js and node --test vision/mcp/server.test.js; report totals and tests_added=14 (525->539). FX-11b close pending.
+
+B-20:57-SUB: independent verifier ACCEPT FX-10b + FX-12; exact ledger lines :167/:225 used, report JSONs not retained; 5 citable Tier4 rows outside means; INDEX/campaignTable method; T1/T2 confounded by toolchain+site mix.
+B-20:57-SUB: suites independently PASS Vision539/539 + MCP41/41; dashboardAdapter tests14/14; tests_added=14 (525->539): b3d86e4 +13, b2ea3c5 +1. AUDIT append ACCEPT FX-10b/FX-12/FX-11b; 77 JSONL lines valid.
+B-20:57-SUB: PROJECT-PLAN-COMPLETE WITH KNOWN GAPS issued. Z-5=GATE-UNMET 79.55%; Z-6=PARKED; F-1 method+label caveats in FINAL_STATE/FINAL_EVAL. No push/deletion.
+
+[2026-10-18 21:33 IST] [SUB] PROMPT32 loaded P-1..P-7; CLAIM P-1. Hard gate: no 30-site run before P-5 VERIFIED; live runs held until protocol approval; preserve stop-list and key-free rules.
+[2026-10-18 21:44 IST] [SUB] PROMPT32 PV: P-1/P-2/P-3/P-6 ACCEPT (independent); P-4 OPEN: Z-5 cause not evidenced; P-5 DRAFT/unverified; P-7 OPEN (stats ready, no 3-TC archive for SPOTCHECK). No live run/tag. Suites Vision539/539; MCP retry41/41.
