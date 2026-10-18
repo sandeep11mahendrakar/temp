@@ -349,3 +349,17 @@ B-20:25-SUB: ALL AGENTS RETIRED (human order). Remaining seeded work = NONE for 
 
 B-20:36-SUB: CODEX MIGRATION LANDED (d48f231): skills project-master (Claude, plans-only) + project-submaster + project-worker-r3 + project-auditor-r3; mirrors in .codex/skills/; AGENTS.md = role dispatch + AI-first style law; CODEX_PROJECT_MEMORY.md + repo memory.jsonl refreshed.
 B-20:36-SUB: Master-transfer status: per CODEX_PROJECT_MEMORY law, Codex must NOT self-appoint master; transfer happens when the user explicitly states it in a fresh Codex chat. Until then Codex may hold worker/sub-master/auditor roles on explicit user assignment.
+B-20:44-SUB: PROMPT30 FINAL FIX ROUND opened by human order; scope FX-7..FX-11 only. Prior history retained.
+FX-7 impl: tools/campaignTable.js now marks policy-contaminated EvilTester row 32 excluded; asserts 27+12=39; prints n + row ids per mean. Raw output: 13.56%(n=8), 81.11%(n=10), 51.09%(n=18).
+FX-8 impl: g2z_results_v2.json meta=head 680de5c, chunks 5+5, started/ended UTC, excluded={zoo-batch4-captcha}; zooSummary => 35/44=79.55%, controls 45/45 NOT-pass, 10 fail rows; Z-5 GATE-UNMET; Z-6 PARKED.
+FX-9: appended Z-5 REJECT + F-1 REJECT to AUDIT.jsonl; 72 JSONL lines valid. F-1 stays REJECT until independent FX-7 verification.
+FX-10 docs taxonomy aligned: Q12 AUTONOMOUS (runner JSON blindY=true); GL1 NONBLIND (autonomy_label=AUTONOMY_NONBLIND(generate)). Exact brain objects absent in available JSON; FX-10 remains BLOCKED, no inferred blocks.
+FX-11 pending different-worker review. Approved suites: node --test vision/test/*.test.js => 539/539 pass; node --test vision/mcp/server.test.js => 41/41 pass. FINAL_STATE=60 lines.
+Close-out NOT issued: worker must verify FX-7..FX-10 independently; then sub-master reruns suites and may issue COMPLETE WITH KNOWN GAPS if all gates pass.
+
+B-20:48-SUB: PX-5 ACCEPT; canonical=master/submaster/worker/auditor; pointers=director=>submaster,verifier+auditor-r3=>auditor,worker-r3=>worker; mirror=10 dirs exact; gates=Vision539/539+MCP41/41,AIza0,remote empty; no push/delete.
+
+B-20:50-SUB: independent verification => FX-7 ACCEPT (27+12=39; excluded=12; dynamic counts; means unchanged) + FX-8 ACCEPT (Z-5 honest 35/44=79.55%, controls 45/45 NOT-pass, 10 FAILs). F-1 re-audit ACCEPT appended (AUDIT line 73); FX-9 complete; prior REJECT preserved.
+B-20:50-SUB: suites => Vision 539/539 PASS + MCP 41/41 PASS (sub-master elevated rerun). Different-worker sandbox MCP attempt=39/41, both HTTP readiness timeouts on 127.0.0.1:5123; independent elevated rerun pending. FX-10 UNVERIFIABLE/BLOCKED (required report brain blocks unavailable); FX-11 BLOCKED; no COMPLETE WITH KNOWN GAPS close.
+
+B-20:52-SUB: correction/closure gate: different-worker suites now PASS outside sandbox: Vision 539/539 + MCP 41/41 (HTTP listener tests pass); prior sandbox 39/41 was environment-only. AUDIT.jsonl=74 valid lines; F-1 ACCEPT is line 74. FX-11 remains BLOCKED only by FX-10.

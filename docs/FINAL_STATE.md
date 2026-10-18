@@ -45,3 +45,16 @@ Freeze chain: 92343dc/c35f416 (FX-5) -> g2z_results_v2 chain (FX-1, W2) -> 19ac4
 
 - NONE blocking this program. The seeded R-3 instrumentation row (metricsCalc vs dashboard_data.json schema adapter) was DELIVERED as PX-1 (DONE 2026-10-18, offline, api0). No open seeded candidates.
 - Workers W1-W4 + verifier: RETIRED at freeze (token limits; work all captured). Agendas: docs/WORKER_PROMPT.md, docs/VERIFIER_PROMPT.md, docs/INTERCOM.md (FULL freeze trail 19:2x), AUDIT.jsonl (66 lines), docs/TASK_BOARD.md (all rows DONE/PARKED).
+## PROMPT30 FINAL FIX ROUND (2026-10-18; verification pending)
+Z-5 current=GATE-UNMET: 35/44=79.55% (<90%); controls=45/45 NOT-pass; prior DONE is history, not current gate status.
+Z-5 FAIL zoo-batch4-captcha | pointer | executor:oracle unsatisfied (expected BLOCKED)
+Z-5 FAIL zoo-iframe | system | no semantic signal; body text 32 chars
+Z-5 FAIL zoo-shop-cart | pointer | no_elements_in_current_state
+Z-5 FAIL zoo-shop-checkout | value | no_elements_in_current_state
+Z-5 FAIL zoo-shop-detail | pointer | no_elements_in_current_state
+Z-5 FAIL zoo-shop-filter | value | select requires numeric x/y coordinates
+Z-5 FAIL zoo-shop-list | pointer | no_elements_in_current_state
+Z-5 FAIL zoo-shop-login | value | no_elements_in_current_state
+Z-5 FAIL zoo-shop-search | value | no_elements_in_current_state
+Z-5 FAIL zoo-shop-sort | pointer | no_elements_in_current_state
+FX-7=DONE; FX-8=DONE; FX-9=DONE; FX-10=BLOCKED (report brain blocks unavailable); FX-11=BLOCKED on FX-10; F-1=DONE; Z-6=OPTIONAL PARKED; Vision539/539+MCP41/41 independently PASS; no close.
