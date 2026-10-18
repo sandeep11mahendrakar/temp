@@ -50,3 +50,17 @@ test('G2 oracle: expected change but stayed, no rejection text -> FAIL/n/a', () 
   );
   assert.deepEqual([r.verdict, r.app_outcome], ['FAIL', 'n/a']);
 });
+
+
+test('Z-4.3 control: action skipped => oracle never PASS (slider)', () => {
+  const r = verdictFor(
+    { id: 'slider', expected_text: 'Value: 75' },
+    { urlChanged: true, pageText: 'Value: 75', ocrWords: 10, actionSkipped: true }
+  );
+  assert.notEqual(r.verdict, 'PASS', 'skipped action must not pass');
+  const r2 = verdictFor(
+    { id: 'slider', expected_text: 'Value: 75' },
+    { urlChanged: true, pageText: 'Value: 75', ocrWords: 10 }
+  );
+  assert.equal(r2.verdict, 'PASS', 'non-skipped still passes');
+});

@@ -146,6 +146,18 @@ function rejectionMet(haystack, obs) {
 
 function verdictFor(tc, obs) {
   const o = (obs && typeof obs === 'object' ? obs : {});
+  // Z-4.3: an action that was skipped (not actually executed) can never
+  // produce a PASS, even if the page text happens to contain the expected
+  // string. actionSkipped is a signal supplied by the executor (or a test
+  // control); absent/undefined means "not skipped" (backward compatible).
+  const actionSkipped = o.actionSkipped === true;
+  if (actionSkipped) {
+    const _hay = haystackOf(o);
+    const _snip = _hay.slice(0, 300);
+    const _ocr = (typeof o.ocrWords === 'number') ? o.ocrWords : null;
+    const rej = o.expectRejection === true && REJECTION_RE.test(_hay);
+    return { verdict: 'FAIL', app_outcome: rej ? 'rejected' : 'n/a', snip300: _snip, ocr_count: _ocr };
+  }
   const hay = haystackOf(o);
   const snip300 = hay.slice(0, 300);
   const ocrCount = Number.isFinite(o.ocrWords) ? o.ocrWords : (o.ocrWords === 0 ? 0 : null);

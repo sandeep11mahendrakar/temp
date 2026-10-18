@@ -1645,6 +1645,9 @@ async function runTestCase(page, testCase, baseUrl, beforeScreenshot, initialSta
     // changes verdict semantics. dialogs[]={type,message}, popups[]=url.
     dialogs: seenDialogs,
     popups: seenPages,
+    // Z-4.3: signal when an action was skipped (not executed) so the oracle
+    // never returns PASS on a skipped step.
+    actionSkipped: verification.method === 'skipped',
   });
   // F-C: detach collectors (best-effort; the run owns its listeners).
   try { page.removeListener('dialog', dialogHandler); } catch (_) {}
