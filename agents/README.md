@@ -1,3 +1,5 @@
+ARCHIVED 2026-10-18 => superseded by .agents/skills/* (Codex migration); do not reorganize history.
+
 # agents/ — agent coordination memory (read this first)
 
 Any new agent joining this repo reads this folder BEFORE touching anything.

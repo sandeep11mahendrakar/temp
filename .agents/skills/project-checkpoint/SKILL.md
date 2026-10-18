@@ -5,6 +5,8 @@ description: Record concise, evidence-based task checkpoints for this CAPSTONE p
 
 # Project checkpoint
 
+AI-agent-first style: concise pipe rows, evidence cites, one claim/line, <= 300 chars, IST, ASCII. Board/ledger/intercom text writes use Node.js `fs` UTF-8 only.
+
 When ending substantial work or handing it back:
 
 1. Recheck `git status --short`; identify only files changed by this task and preserve pre-existing dirt.

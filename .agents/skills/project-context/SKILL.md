@@ -5,6 +5,8 @@ description: Retrieve focused, authoritative context for tasks in this CAPSTONE 
 
 # Project context retrieval
 
+AI-agent-first style: concise pipe rows, evidence cites, one claim/line, <= 300 chars, IST, ASCII. Board/ledger/intercom text writes use Node.js `fs` UTF-8 only.
+
 1. Read `CODEX_PROJECT_MEMORY.md` for orientation and source precedence.
 2. Inspect `git status --short` before changing anything; preserve existing dirty work.
 3. For a task tied to an active row or program, search `docs/TASK_BOARD.md` for its ID and governing directive (PROMPT30/D43 currently opens PX-1/PX-2), then read only the relevant row/directive ranges. Do not infer live state from this snapshot or old handoff text.
@@ -12,7 +14,8 @@ description: Retrieve focused, authoritative context for tasks in this CAPSTONE 
 5. For evidence claims, inspect the matching `docs/AUDIT.jsonl` and `docs/R3_RESULTS.jsonl` entries plus cited artifacts. These ledgers are append-only; corrections add entries.
 6. At campaign/program closure, compare `docs/FINAL_STATE.md` with the board and latest intercom; it is a dated closure checkpoint, not permission to ignore contradictory live board rows.
 7. Read `docs/ONBOARDING.md`, worker/verifier prompts, audit-lite rules, skills, reports, or `agents/memory/PROJECT_HANDOFF.md` only when the task requires their specific procedure or background. The handoff is historical and may be stale.
-8. Use `tools/Search-ProjectContext.ps1 -Query '<keyword or phrase>'` for bounded excerpts from selected project documents. Its OpenCode JSONL reader only returns allowlisted CAPSTONE entities to avoid surfacing unrelated cross-project memory. Increase `-Limit` only as needed; use `-Path` to narrow sources.
+8. Use `tools/Search-ProjectContext.ps1 -Query '<keyword or phrase>'` for bounded excerpts from selected project documents. Its OpenCode JSONL reader returns only allowlisted CAPSTONE entities.
+   Increase `-Limit` only as needed; use `-Path` to narrow sources.
 9. For product goals and project history, prefer current user instructions and dated authoritative records. The Oct 14 handoff and Oct 18 summary are historical context; check `docs/TASK_BOARD.md`, latest `docs/INTERCOM.md`, and `docs/FINAL_STATE.md` for later decisions/status.
 
 ## Authority for PROMPT29/D42 records
