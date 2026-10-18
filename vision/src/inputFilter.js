@@ -48,6 +48,7 @@ function config() {
 
 function isInputType(type) {
   if (type === 'text_input' || type === 'search_field' || type === 'password') return true;
+  if (type === 'contenteditable') return true;
   return typeof type === 'string' && type.indexOf('input') === 0;
 }
 
