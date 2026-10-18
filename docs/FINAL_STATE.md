@@ -16,21 +16,21 @@ PROGRAM: PROMPT27 master-board (D39/D40/D41) closed 2026-10-18 IST. Repo: C:/Use
 
 ## PROMPT28 full audit (their law: run once at FIN-1)
 
-- docs/AUDIT.jsonl: 57 entries over 55 rows; 56 ACCEPT / 1 UNVERIFIABLE
-- UNVERIFIABLE detail: Z-3 conformance rerun tool-timeout (120s); superseded by verifier independent G2r5 rerun (30/45 + controls 44/45 NOT-pass + batch3 holdout 5/5) => Z-3 DONE with evidence
+- docs/AUDIT.jsonl: 65 entries over 58 rows; 62 ACCEPT / 2 UNVERIFIABLE / 1 REJECT (append-only; PROMPT29 FX-3 appended F-1 REJECT->ACCEPT and Z-5 UNVERIFIABLE->ACCEPT corrections, history not rewritten)
+- UNVERIFIABLE detail: Z-3 conformance rerun tool-timeout (120s); superseded by verifier independent G2r5 rerun (30/45 + controls 44/45 NOT-pass + batch3 holdout 5/5) => Z-3 DONE with evidence. Z-5 rate 35/44=79.55%<90% => honest failure.
 - AUD-LITE (D40) self-acceptance applied at every DONE-PROOF; Z-4 parent held to control-test + delta>0 law after 2 verifier REJECTs (Ping lines, not ledger verdicts)
 
-## Headline metrics (F-1, docs/FINAL_EVAL.md)
+## Headline metrics (F-1, docs/FINAL_EVAL.md; corrected by FX-2/FX-3)
 
-- Pre-registered bar >=6/10 pipelines: MET (6 cleared)
-- Fusion value: ~20% (Tier 1) -> 48.7% campaign mean over fully decontaminated 20-site ledger
-- Per-site table (39 citable rows) in docs/FINAL_EVAL.md from testing/site_reports/INDEX.md; blocked/contaminated retained as evidence, excluded from aggregates
+- Pre-registered bar >=6/10 pipelines: MET (6-7 cleared; reconcile in docs/FINAL_EVAL.md)
+- Fusion value (campaign share, NOT success-vs-truth): Tier1 13.56% (n=8), Tier2 81.11% (n=10), Tier1+2 51.09% (n=18, decontaminated) computed by tools/campaignTable.js. Earlier 20%/48.7% not reproducible from INDEX (corrected, append-only in AUDIT.jsonl).
+- Per-site table (39 rows: 27 citable, 12 excluded w/ reason) in docs/FINAL_EVAL.md from testing/site_reports/INDEX.md; blocked/contaminated retained as evidence, excluded from aggregates.
 - Schema pilot (docs/INDEX_PILOT_FINDINGS.md): raw-JSON field map over 1 clean + 1 blocked + 1 contaminated run; missing fields = NOT_RECORDED, never zeroed
 - Honest gap: R-3 metricsCalc returns 0 case records on fusion/dashboard_data.json (schema-shaped for reports v1, mismatch documented; future instrumentation item)
 
 ## Known honest limitations
 
-- G2 final gate: control 45/45 NOT-pass (MET); main conformance run crashed mid-way (recurring env issue, not code) - combined pass evidence cited by verifier (~36/40 non-blocked, >=90%)
+- G2 final gate: real rate 35/44 = 79.55% (<90% gate) per FX-1 g2z_results_v2.json; honest failure list with cause, NO 90% claim. Controls 45/45 NOT-pass (batch4 included).
 - OLD Tier-2 campaign history: fetchable from backup remote (read-only); this worktree has NO remotes configured (null push risk)
 - MCP act input_value remains self-reported (no DOM read-back) - carried from standing gaps, disclosed in docs/LIMITATIONS.md
 - Temp GEMINI key (24h, spend 0) used for A-9/GL1 evidence already collected; future live runs need a fresh key
