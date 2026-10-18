@@ -221,11 +221,18 @@ function classifyResult(truth, rep, notes) {
 async function main() {
   const variantArg = (process.argv.find((a) => a.startsWith('--variant=')) || '').split('=')[1] || null;
   const variantDir = variantArg === 'real' ? path.join(ROOT, 'vision', 'zoo-variant-real') : null;
-  const resultsName = variantArg === 'real' ? 'g2z_results_real.json' : 'g2z_results.json';
   if (variantArg && !variantDir) throw new Error(`unknown variant ${variantArg}`);
   const pw = require('../node_modules/playwright');
+  // FX-1 chunking: allow --offset=N --limit=N --suffix=S for chunked runs.
+  const offset = Number((process.argv.find((a) => a.startsWith('--offset=')) || '').split('=')[1] || 0);
+  const limitArg = (process.argv.find((a) => a.startsWith('--limit=')) || '').split('=')[1];
+  const limit = limitArg ? Number(limitArg) : Infinity;
+  const suffix = (process.argv.find((a) => a.startsWith('--suffix=')) || '').split('=')[1] || '';
+  const resultsName = variantArg === 'real' ? 'g2z_results_real.json' : `g2z_results${suffix ? '_' + suffix : ''}.json`;
   const truths = loadTruths();
   if (truths.length < 16) throw new Error(`G2z needs >=16 truth files, found ${truths.length}`);
+  const chunk = truths.slice(offset, offset + (Number.isFinite(limit) ? limit : truths.length));
+  if (!chunk.length) throw new Error(`FX-1: empty chunk offset=${offset} limit=${limit} (total ${truths.length})`);
   const { server, port } = await new Promise((resolve, reject) => {
     // Zoo runs in its OWN process: the executor CLI below blocks on
     // execSync, which would starve an in-process server (single-threaded
@@ -246,7 +253,7 @@ async function main() {
   const base = `http://127.0.0.1:${port}`;
   const rows = [];
   try {
-    for (const truth of truths) {
+    for (const truth of chunk) {
       const slug = truth.tc_id.replace(/^zoo-/, '');
       const ts = Date.now();
       const runId = `run_${ts}`;
@@ -307,7 +314,11 @@ if (require.main === module) {
 async function controlMain() {
   const zoo = require('./server');
   const pw = require('../node_modules/playwright');
+  const offset = Number((process.argv.find((a) => a.startsWith('--offset=')) || '').split('=')[1] || 0);
+  const limitArg = (process.argv.find((a) => a.startsWith('--limit=')) || '').split('=')[1];
+  const limit = limitArg ? Number(limitArg) : Infinity;
   const truths = loadTruths();
+  const chunk = truths.slice(offset, offset + (Number.isFinite(limit) ? limit : truths.length));
   const { server, port } = await new Promise((resolve, reject) => {
     const { spawn } = require('node:child_process');
     const zooProc = spawn('node', [path.join(ZOO, 'serve.js'), '5010'], { cwd: ROOT });
@@ -326,7 +337,7 @@ async function controlMain() {
   const rows = [];
   try {
     const page = await browser.newPage();
-    for (const truth of truths) {
+    for (const truth of chunk) {
       const slug = truth.tc_id.replace(/^zoo-/, '');
       let text = '';
       try {

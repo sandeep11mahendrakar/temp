@@ -73,7 +73,7 @@ describe('mcp server protocol', () => {
         { method: 'tools/list' },
       ]);
       const names = list.result.tools.map((t) => t.name).sort();
-      assert.deepEqual(names, ['act', 'evidence', 'perceive', 'reset', 'status']);
+      assert.deepEqual(names, ['act', 'assert', 'evidence', 'library_get', 'library_list', 'memory_get', 'memory_put', 'perceive', 'report_emit', 'reset', 'status']);
       for (const t of list.result.tools) assert.equal(typeof t.inputSchema, 'object');
     } finally { child.kill(); }
   });
@@ -386,7 +386,7 @@ describe('mcp http fallback transport (--transport http, offline, no browser)', 
       assert.equal(init.result.protocolVersion, '2025-06-18');
       assert.equal(init.result.serverInfo.name, 'vision-test');
       const list = await postMcp(2, 'tools/list', {});
-      assert.deepEqual(list.result.tools.map((x) => x.name).sort(), ['act', 'evidence', 'perceive', 'reset', 'status']);
+      assert.deepEqual(list.result.tools.map((x) => x.name).sort(), ['act', 'assert', 'evidence', 'library_get', 'library_list', 'memory_get', 'memory_put', 'perceive', 'report_emit', 'reset', 'status']);
       const st = await postMcp(3, 'tools/call', { name: 'status', arguments: {} });
       const body = JSON.parse(st.result.content[0].text);
       assert.deepEqual(Object.keys(body.services).sort(), ['browser', 'gateway', 'merge', 'ocr', 'yolo']);
@@ -1071,7 +1071,7 @@ describe('F-G perceive block field (injected fakes, no browser, no ports)', () =
       assert.equal(body.block.class, 'ok');
       assert.equal(typeof body.block.confidence, 'number');
       // no new tools: the 5 dual-way tools stay; act carries no block property.
-      assert.equal(srv.TOOLS.length, 5);
+      assert.equal(srv.TOOLS.length, 11);
       assert.equal(srv.TOOLS.find((t) => t.name === 'act').inputSchema.properties.block, undefined);
     } finally {
       delete srv.__testEnsure; delete srv.__testPage; delete srv.__testProcess; delete srv.__testShotPath;

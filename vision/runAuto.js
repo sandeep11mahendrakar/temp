@@ -70,7 +70,7 @@ const LIVE_DEFAULT_BRAIN = 'cli';
 const STAGES = ['perceive', 'planner', 'executor', 'memory', 'report'];
 
 function parseArgs(argv) {
-  const out = { url: null, goal: null, components: STAGES.slice(), model: 'mock', maxLoops: MAX_LOOPS, cap: LLM_CALL_CAP, brain: LIVE_DEFAULT_BRAIN, siteId: null, permitted: false };
+  const out = { url: null, goal: null, components: STAGES.slice(), model: 'mock', maxLoops: MAX_LOOPS, cap: LLM_CALL_CAP, brain: LIVE_DEFAULT_BRAIN, siteId: null, permitted: false, generate: 'off' };
   const pos = [];
   for (const a of argv) {
     const m = String(a).match(/^--([^=]+)=(.*)$/);
@@ -83,12 +83,17 @@ function parseArgs(argv) {
       out.brain = b;
     }
     else if (m && m[1] === 'max-loops') out.maxLoops = Math.min(parseInt(m[2], 10) || MAX_LOOPS, MAX_LOOPS);
+    else if (m && m[1] === 'generate') {
+      const g = String(m[2] || '').toLowerCase();
+      if (g !== 'on' && g !== 'off') throw new Error('usage: --generate must be on|off');
+      out.generate = g;
+    }
     else if (m && m[1] === 'cap') out.cap = Math.max(parseInt(m[2], 10) || 0, 1);
     else if (String(a) === '--permitted') out.permitted = true;
     else if (!String(a).startsWith('--')) pos.push(a);
   }
   [out.url, out.goal] = pos;
-  if (!out.url || !out.goal) throw new Error('usage: runAuto.js <url> <goal> [--components=a,b] [--model=m]');
+  if (out.generate !== 'on' && (!out.url || !out.goal)) throw new Error('usage: runAuto.js <url> <goal> [--components=a,b] [--model=m]');
   return out;
 }
 
@@ -168,6 +173,17 @@ async function buildRunner(opts) {
 
 async function main(argv) {
   const cfg = parseArgs(argv);
+  // GL1: --generate=on routes to the LIVE generate-conformance driver.
+  // Offline default stays the dry mock path (no browser, api0).
+  if (cfg.generate === 'on') {
+    const { runGenerateLive } = require('./src/generateLive');
+    const out = await runGenerateLive({
+      model: cfg.model && cfg.model !== 'mock' ? cfg.model : 'gemini-3.5-flash-lite',
+      cap: cfg.cap,
+    });
+    console.log(JSON.stringify({ mode: 'generate', brain: cfg.brain, ...out }));
+    return;
+  }
   const out = await buildRunner({ url: cfg.url, goal: cfg.goal, maxLoops: cfg.maxLoops, cap: cfg.cap, brain: cfg.brain, site: cfg.url, siteId: cfg.siteId, permitted: cfg.permitted, runId: `dry_${Date.now()}` });
   console.log(JSON.stringify({ config: out.config, loops: { loops: out.loops.loops, covered: out.loops.covered }, report: out.report.citable }));
 }
