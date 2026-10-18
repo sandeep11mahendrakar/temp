@@ -1,0 +1,146 @@
+{
+  "fixture_format": "db6-raw-pair-v1",
+  "fixture_id": "failed-partial-execution",
+  "provenance": {
+    "origin": "W4-authored synthetic example",
+    "created_date_ist": "2026-10-18",
+    "live_run": false,
+    "source_run_id": null,
+    "parent_fixture": "partial",
+    "mutation": "failed-partial-execution",
+    "credentials": "synthetic prohibited markers only; no real credential"
+  },
+  "input": {
+    "manifest": {
+      "run_id": "db6-failed-partial-execution-v1",
+      "site": "synthetic-partial",
+      "url": "NOT_RECORDED",
+      "head": "NOT_RECORDED",
+      "dirty": "NOT_RECORDED",
+      "model_provider": "NOT_RECORDED",
+      "model_id": "NOT_RECORDED",
+      "contract_hash": "NOT_RECORDED",
+      "prompt_hash": "NOT_RECORDED",
+      "browser": "NOT_RECORDED",
+      "viewport": "NOT_RECORDED",
+      "os": "NOT_RECORDED",
+      "limits": "NOT_RECORDED",
+      "seed": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED",
+      "label": "ASSISTED",
+      "brain": {
+        "mode": "fixture",
+        "role": "db-trial-control",
+        "blind": "N"
+      },
+      "cost": {
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED",
+        "time": "NOT_RECORDED"
+      },
+      "per_call": "NOT_RECORDED",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "artifacts": [
+        {
+          "path": "report.json",
+          "bytes": 1160,
+          "sha256": "30393467b2435c5ac69cf0f80e860d66ba34a8209b482e70cde51581837ff7b6"
+        },
+        {
+          "path": "evidence.json",
+          "bytes": 138,
+          "sha256": "1ab49b9dd91beb30ee474c0de88bfe7a61e15d2494f5f8345a9805d4a6cc4e4d"
+        }
+      ]
+    },
+    "report": {
+      "schema_version": "1.0",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "sample_class": "partial",
+      "run": {
+        "id": "db6-failed-partial-execution-v1",
+        "source": "DB-6 synthetic authored input; no browser or model execution"
+      },
+      "result": {
+        "verdict": "FAIL"
+      },
+      "integrity": {
+        "verdict": "CLEAN",
+        "reasons": []
+      },
+      "cases": [
+        {
+          "id": "db6-failed-partial-execution-v1-case-1",
+          "verdict": "PASS",
+          "app_outcome": "n/a",
+          "tc_source": "fixture",
+          "label": "ASSISTED",
+          "block": null,
+          "strength": "NOT_RECORDED",
+          "evid_paths": [
+            "evidence.json"
+          ]
+        },
+        {
+          "id": "db6-failed-partial-execution-v1-case-2",
+          "verdict": "FAIL",
+          "app_outcome": "n/a",
+          "tc_source": "fixture",
+          "label": "ASSISTED",
+          "block": null,
+          "strength": "WEAK",
+          "evid_paths": [
+            "evidence.json"
+          ],
+          "cause": "synthetic iframe execution failed"
+        }
+      ],
+      "telemetry": {
+        "duration_ms": "NOT_RECORDED",
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED"
+      }
+    },
+    "evidence": {
+      "path": "evidence.json",
+      "content_utf8": "{\n  \"provenance\": \"DB-6 SYNTHETIC ONLY; no live observation\",\n  \"fixture_id\": \"failed-partial-execution\",\n  \"classification\": \"partial\"\n}\n"
+    }
+  },
+  "expected": {
+    "decision": "ACCEPT",
+    "reason": "retain FAIL and failed case; evidence acceptance is not execution success",
+    "execution_class": "PARTIAL",
+    "raw_run_verdict": "FAIL",
+    "integrity_verdict": "CLEAN",
+    "experiment_kind": "TRIAL",
+    "citable": false,
+    "aggregate_eligibility": "EXCLUDED",
+    "availability": {
+      "duration_ms": "NOT_RECORDED",
+      "calls": "NOT_RECORDED",
+      "tokens": null,
+      "screens": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED"
+    },
+    "hashes": {
+      "serialization": "JSON.stringify(value,null,2) + LF; UTF-8, no BOM",
+      "source_manifest_sha256": "aa348e8508cb9628ea12d68ad62e8cbe55fc8e4350ce928c70fafb8471c317c0",
+      "source_report_sha256": "30393467b2435c5ac69cf0f80e860d66ba34a8209b482e70cde51581837ff7b6",
+      "artifact_hashes_match": true,
+      "sanitized_payload_sha256": "COMPUTE_AFTER_EXPORT"
+    },
+    "artifact_access": {
+      "class": "LOCAL_ONLY",
+      "remote_url": null
+    },
+    "network_allowed": false
+  }
+}

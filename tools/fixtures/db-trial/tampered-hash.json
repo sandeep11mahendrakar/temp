@@ -1,0 +1,133 @@
+{
+  "fixture_format": "db6-raw-pair-v1",
+  "fixture_id": "tampered-hash",
+  "provenance": {
+    "origin": "W4-authored synthetic example",
+    "created_date_ist": "2026-10-18",
+    "live_run": false,
+    "source_run_id": null,
+    "parent_fixture": "clean",
+    "mutation": "tampered-hash",
+    "credentials": "synthetic prohibited markers only; no real credential"
+  },
+  "input": {
+    "manifest": {
+      "run_id": "db6-tampered-hash-v1",
+      "site": "synthetic-clean",
+      "url": "NOT_RECORDED",
+      "head": "NOT_RECORDED",
+      "dirty": "NOT_RECORDED",
+      "model_provider": "NOT_RECORDED",
+      "model_id": "NOT_RECORDED",
+      "contract_hash": "NOT_RECORDED",
+      "prompt_hash": "NOT_RECORDED",
+      "browser": "NOT_RECORDED",
+      "viewport": "NOT_RECORDED",
+      "os": "NOT_RECORDED",
+      "limits": "NOT_RECORDED",
+      "seed": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED",
+      "label": "ASSISTED",
+      "brain": {
+        "mode": "fixture",
+        "role": "db-trial-control",
+        "blind": "N"
+      },
+      "cost": {
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED",
+        "time": "NOT_RECORDED"
+      },
+      "per_call": "NOT_RECORDED",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "artifacts": [
+        {
+          "path": "report.json",
+          "bytes": 806,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "path": "evidence.json",
+          "bytes": 125,
+          "sha256": "5e7fa4274999fc9627eb4d94dc7128460e72e25fc378b4870bdd7a8c422951fb"
+        }
+      ]
+    },
+    "report": {
+      "schema_version": "1.0",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "sample_class": "clean",
+      "run": {
+        "id": "db6-tampered-hash-v1",
+        "source": "DB-6 synthetic authored input; no browser or model execution"
+      },
+      "result": {
+        "verdict": "PASS"
+      },
+      "integrity": {
+        "verdict": "CLEAN",
+        "reasons": []
+      },
+      "cases": [
+        {
+          "id": "db6-tampered-hash-v1-case-1",
+          "verdict": "PASS",
+          "app_outcome": "n/a",
+          "tc_source": "fixture",
+          "label": "ASSISTED",
+          "block": null,
+          "strength": "NOT_RECORDED",
+          "evid_paths": [
+            "evidence.json"
+          ]
+        }
+      ],
+      "telemetry": {
+        "duration_ms": "NOT_RECORDED",
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED"
+      }
+    },
+    "evidence": {
+      "path": "evidence.json",
+      "content_utf8": "{\n  \"provenance\": \"DB-6 SYNTHETIC ONLY; no live observation\",\n  \"fixture_id\": \"tampered-hash\",\n  \"classification\": \"clean\"\n}\n"
+    }
+  },
+  "expected": {
+    "decision": "REJECT",
+    "reason": "retained report hash differs from declared artifact hash",
+    "execution_class": "COMPLETE",
+    "raw_run_verdict": "PASS",
+    "integrity_verdict": "CLEAN",
+    "experiment_kind": "TRIAL",
+    "citable": false,
+    "aggregate_eligibility": "EXCLUDED",
+    "availability": {
+      "duration_ms": "NOT_RECORDED",
+      "calls": "NOT_RECORDED",
+      "tokens": null,
+      "screens": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED"
+    },
+    "hashes": {
+      "serialization": "JSON.stringify(value,null,2) + LF; UTF-8, no BOM",
+      "source_manifest_sha256": "e8ef4c96eb4e3f4ecf5d2283734decb5a5ab0d35dd6955051227669a1fdf21be",
+      "source_report_sha256": "dc26cdcfe4eed91a14a2437e03db5ee025d044895ae0a319632cfe7b2280257c",
+      "artifact_hashes_match": false,
+      "sanitized_payload_sha256": "COMPUTE_AFTER_EXPORT"
+    },
+    "artifact_access": {
+      "class": "LOCAL_ONLY",
+      "remote_url": null
+    },
+    "network_allowed": false
+  }
+}

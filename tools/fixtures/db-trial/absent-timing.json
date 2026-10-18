@@ -1,0 +1,132 @@
+{
+  "fixture_format": "db6-raw-pair-v1",
+  "fixture_id": "absent-timing",
+  "provenance": {
+    "origin": "W4-authored synthetic example",
+    "created_date_ist": "2026-10-18",
+    "live_run": false,
+    "source_run_id": null,
+    "parent_fixture": "clean",
+    "mutation": "absent-timing",
+    "credentials": "synthetic prohibited markers only; no real credential"
+  },
+  "input": {
+    "manifest": {
+      "run_id": "db6-absent-timing-v1",
+      "site": "synthetic-clean",
+      "url": "NOT_RECORDED",
+      "head": "NOT_RECORDED",
+      "dirty": "NOT_RECORDED",
+      "model_provider": "NOT_RECORDED",
+      "model_id": "NOT_RECORDED",
+      "contract_hash": "NOT_RECORDED",
+      "prompt_hash": "NOT_RECORDED",
+      "browser": "NOT_RECORDED",
+      "viewport": "NOT_RECORDED",
+      "os": "NOT_RECORDED",
+      "limits": "NOT_RECORDED",
+      "seed": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED",
+      "label": "ASSISTED",
+      "brain": {
+        "mode": "fixture",
+        "role": "db-trial-control",
+        "blind": "N"
+      },
+      "cost": {
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED",
+        "time": "NOT_RECORDED"
+      },
+      "per_call": "NOT_RECORDED",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "artifacts": [
+        {
+          "path": "report.json",
+          "bytes": 771,
+          "sha256": "e6762178c8613a67dc70852afadbbc05770395695984d7019b69ae0863e612b3"
+        },
+        {
+          "path": "evidence.json",
+          "bytes": 125,
+          "sha256": "e243ee72ce2b3946d061d128ae483570fdd068dab85d09a631131a9ca6b3e351"
+        }
+      ]
+    },
+    "report": {
+      "schema_version": "1.0",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "sample_class": "clean",
+      "run": {
+        "id": "db6-absent-timing-v1",
+        "source": "DB-6 synthetic authored input; no browser or model execution"
+      },
+      "result": {
+        "verdict": "PASS"
+      },
+      "integrity": {
+        "verdict": "CLEAN",
+        "reasons": []
+      },
+      "cases": [
+        {
+          "id": "db6-absent-timing-v1-case-1",
+          "verdict": "PASS",
+          "app_outcome": "n/a",
+          "tc_source": "fixture",
+          "label": "ASSISTED",
+          "block": null,
+          "strength": "NOT_RECORDED",
+          "evid_paths": [
+            "evidence.json"
+          ]
+        }
+      ],
+      "telemetry": {
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED"
+      }
+    },
+    "evidence": {
+      "path": "evidence.json",
+      "content_utf8": "{\n  \"provenance\": \"DB-6 SYNTHETIC ONLY; no live observation\",\n  \"fixture_id\": \"absent-timing\",\n  \"classification\": \"clean\"\n}\n"
+    }
+  },
+  "expected": {
+    "decision": "ACCEPT",
+    "reason": "missing timing stays NOT_RECORDED; never infer duration",
+    "execution_class": "COMPLETE",
+    "raw_run_verdict": "PASS",
+    "integrity_verdict": "CLEAN",
+    "experiment_kind": "TRIAL",
+    "citable": false,
+    "aggregate_eligibility": "EXCLUDED",
+    "availability": {
+      "duration_ms": "NOT_RECORDED",
+      "calls": "NOT_RECORDED",
+      "tokens": null,
+      "screens": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED"
+    },
+    "hashes": {
+      "serialization": "JSON.stringify(value,null,2) + LF; UTF-8, no BOM",
+      "source_manifest_sha256": "f93c7bb6cc3ddd38ba8da0417627210cc429cb88db33e45c8bc7f34126d7e573",
+      "source_report_sha256": "e6762178c8613a67dc70852afadbbc05770395695984d7019b69ae0863e612b3",
+      "artifact_hashes_match": true,
+      "sanitized_payload_sha256": "COMPUTE_AFTER_EXPORT"
+    },
+    "artifact_access": {
+      "class": "LOCAL_ONLY",
+      "remote_url": null
+    },
+    "network_allowed": false
+  }
+}

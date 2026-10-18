@@ -1,0 +1,133 @@
+{
+  "fixture_format": "db6-raw-pair-v1",
+  "fixture_id": "fake-eligible-trial",
+  "provenance": {
+    "origin": "W4-authored synthetic example",
+    "created_date_ist": "2026-10-18",
+    "live_run": false,
+    "source_run_id": null,
+    "parent_fixture": "clean",
+    "mutation": "fake-eligible-trial",
+    "credentials": "synthetic prohibited markers only; no real credential"
+  },
+  "input": {
+    "manifest": {
+      "run_id": "db6-fake-eligible-trial-v1",
+      "site": "synthetic-clean",
+      "url": "NOT_RECORDED",
+      "head": "NOT_RECORDED",
+      "dirty": "NOT_RECORDED",
+      "model_provider": "NOT_RECORDED",
+      "model_id": "NOT_RECORDED",
+      "contract_hash": "NOT_RECORDED",
+      "prompt_hash": "NOT_RECORDED",
+      "browser": "NOT_RECORDED",
+      "viewport": "NOT_RECORDED",
+      "os": "NOT_RECORDED",
+      "limits": "NOT_RECORDED",
+      "seed": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED",
+      "label": "ASSISTED",
+      "brain": {
+        "mode": "fixture",
+        "role": "db-trial-control",
+        "blind": "N"
+      },
+      "cost": {
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED",
+        "time": "NOT_RECORDED"
+      },
+      "per_call": "NOT_RECORDED",
+      "experiment_kind": "TRIAL",
+      "citable": true,
+      "aggregate_eligibility": "ELIGIBLE",
+      "artifacts": [
+        {
+          "path": "report.json",
+          "bytes": 817,
+          "sha256": "a231e6a4b377335ec4c441cd8c77d6fd73618fdda57942b178f64fc38f4748e1"
+        },
+        {
+          "path": "evidence.json",
+          "bytes": 131,
+          "sha256": "d9cb941bd10c6458e40fcf0aeb64b546bcb42c15a13f0da1b605b25e80699209"
+        }
+      ]
+    },
+    "report": {
+      "schema_version": "1.0",
+      "experiment_kind": "TRIAL",
+      "citable": true,
+      "aggregate_eligibility": "ELIGIBLE",
+      "sample_class": "clean",
+      "run": {
+        "id": "db6-fake-eligible-trial-v1",
+        "source": "DB-6 synthetic authored input; no browser or model execution"
+      },
+      "result": {
+        "verdict": "PASS"
+      },
+      "integrity": {
+        "verdict": "CLEAN",
+        "reasons": []
+      },
+      "cases": [
+        {
+          "id": "db6-fake-eligible-trial-v1-case-1",
+          "verdict": "PASS",
+          "app_outcome": "n/a",
+          "tc_source": "fixture",
+          "label": "ASSISTED",
+          "block": null,
+          "strength": "NOT_RECORDED",
+          "evid_paths": [
+            "evidence.json"
+          ]
+        }
+      ],
+      "telemetry": {
+        "duration_ms": "NOT_RECORDED",
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED"
+      }
+    },
+    "evidence": {
+      "path": "evidence.json",
+      "content_utf8": "{\n  \"provenance\": \"DB-6 SYNTHETIC ONLY; no live observation\",\n  \"fixture_id\": \"fake-eligible-trial\",\n  \"classification\": \"clean\"\n}\n"
+    }
+  },
+  "expected": {
+    "decision": "REJECT",
+    "reason": "TRIAL cannot claim eligibility or citable=true",
+    "execution_class": "COMPLETE",
+    "raw_run_verdict": "PASS",
+    "integrity_verdict": "CLEAN",
+    "experiment_kind": "TRIAL",
+    "citable": false,
+    "aggregate_eligibility": "EXCLUDED",
+    "availability": {
+      "duration_ms": "NOT_RECORDED",
+      "calls": "NOT_RECORDED",
+      "tokens": null,
+      "screens": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED"
+    },
+    "hashes": {
+      "serialization": "JSON.stringify(value,null,2) + LF; UTF-8, no BOM",
+      "source_manifest_sha256": "8cc2a44a0af18544e6e64b61b1d8e2169efb5cfef929929800f347def9a2b1f2",
+      "source_report_sha256": "a231e6a4b377335ec4c441cd8c77d6fd73618fdda57942b178f64fc38f4748e1",
+      "artifact_hashes_match": true,
+      "sanitized_payload_sha256": "COMPUTE_AFTER_EXPORT"
+    },
+    "artifact_access": {
+      "class": "LOCAL_ONLY",
+      "remote_url": null
+    },
+    "network_allowed": false
+  }
+}

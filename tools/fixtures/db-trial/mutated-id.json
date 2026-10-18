@@ -1,0 +1,133 @@
+{
+  "fixture_format": "db6-raw-pair-v1",
+  "fixture_id": "mutated-id",
+  "provenance": {
+    "origin": "W4-authored synthetic example",
+    "created_date_ist": "2026-10-18",
+    "live_run": false,
+    "source_run_id": null,
+    "parent_fixture": "clean",
+    "mutation": "mutated-id",
+    "credentials": "synthetic prohibited markers only; no real credential"
+  },
+  "input": {
+    "manifest": {
+      "run_id": "db6-mutated-id-v1",
+      "site": "synthetic-clean",
+      "url": "NOT_RECORDED",
+      "head": "NOT_RECORDED",
+      "dirty": "NOT_RECORDED",
+      "model_provider": "NOT_RECORDED",
+      "model_id": "NOT_RECORDED",
+      "contract_hash": "NOT_RECORDED",
+      "prompt_hash": "NOT_RECORDED",
+      "browser": "NOT_RECORDED",
+      "viewport": "NOT_RECORDED",
+      "os": "NOT_RECORDED",
+      "limits": "NOT_RECORDED",
+      "seed": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED",
+      "label": "ASSISTED",
+      "brain": {
+        "mode": "fixture",
+        "role": "db-trial-control",
+        "blind": "N"
+      },
+      "cost": {
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED",
+        "time": "NOT_RECORDED"
+      },
+      "per_call": "NOT_RECORDED",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "artifacts": [
+        {
+          "path": "report.json",
+          "bytes": 808,
+          "sha256": "be0eeed5ec67f76401123f939f6a62701b7f2c3968481a002bfe2073e595e8dd"
+        },
+        {
+          "path": "evidence.json",
+          "bytes": 122,
+          "sha256": "7372038503d175f035126f9d39a4b502dc64c0948cd71e09db6683d0e835c258"
+        }
+      ]
+    },
+    "report": {
+      "schema_version": "1.0",
+      "experiment_kind": "TRIAL",
+      "citable": false,
+      "aggregate_eligibility": "EXCLUDED",
+      "sample_class": "clean",
+      "run": {
+        "id": "db6-mutated-id-v1-mutated",
+        "source": "DB-6 synthetic authored input; no browser or model execution"
+      },
+      "result": {
+        "verdict": "PASS"
+      },
+      "integrity": {
+        "verdict": "CLEAN",
+        "reasons": []
+      },
+      "cases": [
+        {
+          "id": "db6-mutated-id-v1-case-1",
+          "verdict": "PASS",
+          "app_outcome": "n/a",
+          "tc_source": "fixture",
+          "label": "ASSISTED",
+          "block": null,
+          "strength": "NOT_RECORDED",
+          "evid_paths": [
+            "evidence.json"
+          ]
+        }
+      ],
+      "telemetry": {
+        "duration_ms": "NOT_RECORDED",
+        "calls": "NOT_RECORDED",
+        "tokens": null,
+        "screens": "NOT_RECORDED"
+      }
+    },
+    "evidence": {
+      "path": "evidence.json",
+      "content_utf8": "{\n  \"provenance\": \"DB-6 SYNTHETIC ONLY; no live observation\",\n  \"fixture_id\": \"mutated-id\",\n  \"classification\": \"clean\"\n}\n"
+    }
+  },
+  "expected": {
+    "decision": "REJECT",
+    "reason": "manifest/report identity mismatch",
+    "execution_class": "COMPLETE",
+    "raw_run_verdict": "PASS",
+    "integrity_verdict": "CLEAN",
+    "experiment_kind": "TRIAL",
+    "citable": false,
+    "aggregate_eligibility": "EXCLUDED",
+    "availability": {
+      "duration_ms": "NOT_RECORDED",
+      "calls": "NOT_RECORDED",
+      "tokens": null,
+      "screens": "NOT_RECORDED",
+      "started": "NOT_RECORDED",
+      "ended": "NOT_RECORDED"
+    },
+    "hashes": {
+      "serialization": "JSON.stringify(value,null,2) + LF; UTF-8, no BOM",
+      "source_manifest_sha256": "718215f730e90eff93bdb6ee007a5632299a4a01628515e52c082474103d085a",
+      "source_report_sha256": "be0eeed5ec67f76401123f939f6a62701b7f2c3968481a002bfe2073e595e8dd",
+      "artifact_hashes_match": true,
+      "sanitized_payload_sha256": "COMPUTE_AFTER_EXPORT"
+    },
+    "artifact_access": {
+      "class": "LOCAL_ONLY",
+      "remote_url": null
+    },
+    "network_allowed": false
+  }
+}
