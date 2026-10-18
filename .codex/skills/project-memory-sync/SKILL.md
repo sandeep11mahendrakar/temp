@@ -34,6 +34,11 @@ Target file: `opencode-memory/memory.jsonl` in THIS repo (JSONL: one JSON object
 ## Why Codex writes only the repo copy
 The LIVE persistent graph (`C:/Users/sandeep/.config/opencode/memory.jsonl`) belongs to OpenCode/Claude and is merged by Claude AFTER reading this repo copy. Your job ends at a validated repo copy + intercom note. Do not fabricate live-graph state.
 
+## AMENDMENT (mandatory, after the memory.jsonl update)
+1. REWRITE `docs/MASTER_ROLE.md` = current master handoff, <= 60 lines: STATE (board/ledger truth with cites), STANDING TRUTHS (numbers with sources: FX-1 35/44=79.55%, tiers 13.56/81.11/51.09, Z-5 controls 45/45), PENDING lines (PX-4 human-only, USER-DB/USER-KEY/USER-INDEX gates), role map + boot phrases, style law. Refresh FROM: docs/FINAL_STATE.md + docs/TASK_BOARD.md + docs/AUDIT.jsonl + docs/R3_RESULTS.jsonl (cite source per line). Never copy secrets.
+2. PRINT a MEMORY-PASTE block to the owner (terminal output, not a file): <= 40 lines, ASCII, DURABLE FACTS ONLY (decisions, labels, numbers WITH source, open gates) - no secrets, no transient row states, no un-cited totals. Prefix each line `MEM: `. The owner pastes it to Claude with "update memory"; Claude appends to its own memory.
+3. NEVER write Claude-side memory from Codex. The MEMORY-PASTE block is the only bridge, and Claude decides what to keep.
+
 ## Failure modes to avoid
 - Powershell writes mangling unicode => ALWAYS Node fs UTF-8, never PowerShell redirect/Add-Content.
 - Rewriting the whole file from a parsed model (order churn) => ONLY the target line may differ.
