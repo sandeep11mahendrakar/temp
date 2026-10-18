@@ -208,3 +208,27 @@ test('PX1 adapter: pure function, no mutation of input', () => {
   caseRecordsFromDashboard(d);
   assert.equal(JSON.stringify(d), before);
 });
+
+// Negative control (flag-off law): campaignTable's default output must NOT
+// change; the PX-1 section appears only when --case-records is passed.
+test('PX1 control: campaignTable flag-off output is unchanged, flag-on adds records only', () => {
+  const { execFileSync } = require('node:child_process');
+  const repo = path.join(__dirname, '..', '..');
+  const index = 'C:/Users/sandeep/pes/vs code/Capstone-Project/testing/site_reports/INDEX.md';
+  const tool = path.join(repo, 'tools', 'campaignTable.js');
+  if (!fs.existsSync(index)) { test.skip('canonical INDEX.md not present'); return; }
+
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'px1-ct-'));
+  const run = path.join(root, 'run_20260823_225906');
+  fs.mkdirSync(path.join(run, 'fusion'), { recursive: true });
+  fs.writeFileSync(path.join(run, 'fusion', 'dashboard_data.json'), JSON.stringify(dash()));
+  fs.writeFileSync(path.join(run, 'run_manifest.json'), JSON.stringify({ url: 'https://saucedemo.com/' }));
+
+  const runTool = (extra) => execFileSync('node', [tool, '--index', index].concat(extra), { cwd: repo, encoding: 'utf8', maxBuffer: 1 << 24 });
+  const off = runTool([]);
+  const on = runTool(['--case-records', root]);
+  assert.ok(!off.includes('PX-1'), 'flag-off output must not mention PX-1');
+  assert.ok(on.includes('PX-1 per-site case records'), 'flag-on must add the PX-1 section');
+  assert.ok(on.includes('Dashboards: 1'), 'flag-on must read the fixture root');
+  assert.ok(on.startsWith(off), 'flag-on output must keep the flag-off output as a prefix (no legacy change)');
+});
