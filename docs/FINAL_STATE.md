@@ -1,55 +1,44 @@
-# FINAL_STATE - PROMPT27/28 MEGA-RUN CLOSE-OUT (CHECKPOINT-FOR-CLAUDE)
+# FINAL_STATE (RE-ISSUED at PROMPT29 FX-6 re-close, 2026-10-18 IST) - CHECKPOINT-FOR-CLAUDE
 
-PROGRAM: PROMPT27 master-board (D39/D40/D41) closed 2026-10-18 IST. Repo: C:/Users/sandeep/pes/CAPSTONE/sem 6 reivew 3/code, branch main, LOCAL commits only, never pushed.
+PROGRAM: PROMPT27/28 closed, PROMPT29 FIX ROUND re-closed at FX-6. Repo C:/Users/sandeep/pes/CAPSTONE/sem 6 reivew 3/code, branch main, LOCAL commits only, never pushed (git remote -v empty). FREEZE note: original worker set stopped at token limits after FX-4; FX-4 flip + FX-6 close verified by sub-master on frozen evidence.
 
-## Row statuses (docs/TASK_BOARD.md, terminal)
+## Row statuses (ultimate)
 
-- DONE: 60 rows (Z-1..Z-5 pilot/baseline/fixes/final-gate; A-1..A-9 archetypes+probes+GL1; V-1..V-8 perception/executor/oracle/cost; M-1..M-5 MCP freeze+docs+live; E-1..E-4 memory; R-1..R-6 reporting+claims-matrix; S-1..S-3 sites+onboarding+index; Q-1..Q-6 quality audits incl determinism, secret sweep, dress-rehearsal, limitations)
-- PARKED: 5 PASSED-PASTES (PROMPT26 legacy carried rows: A0, A1, M1-mcp, M2-prompt, drag-tag - superseded by PROMPT27 ids, all DONE in their carried id)
-- OPEN: 0 (before FIN-1 self) | VERIFY: 0 | BLOCKED: 0 unresolved
+- PROMPT27 implementation: 60 DONE / 5 PARKED(PASSED-PASTES legacy: A0, A1, M1-mcp, M2-prompt, drag-tag, all satisfied via carried ids) / 0 OPEN / 0 VERIFY.
+- PROMPT29 FX round: FX-1 DONE (W2, verifier) | FX-2 DONE (W1, verifier) | FX-3 DONE (W1, verifier append-only proof @@ -56,3 +56,10) | FX-4 DONE (W1 author, flipped by sub-master at freeze with spot-verification of definition + count-definition honesty + audit count) | FX-5 DONE (W3, verifier; 7 third_party sites access=third_party+BLOCKED; Goodreads + EvilTester reruns ledgered as policy deviations) | FX-6 DONE (this re-issue).
+- FIN-1: re-closed DONE after this file (was VERIFY during FX round).
 
-## Independent suite evidence at FIN-1 HEAD (799d3fc)
+## PROMPT28 audit ledger (their law, once at FX-6/FIN-1)
 
-- Sub-master re-run: Vision 525/525 + MCP 41/41, fail 0
-- Verifier run: Vision 525/525 + MCP 41/41 (cited in intercom B-)
-- Secret scan: git grep AIza = 0 hits (every run)
+- docs/AUDIT.jsonl: 66 lines over 59 distinct rows: 63 ACCEPT + 2 UNVERIFIABLE + 1 REJECT; per-row multi-line history including correction pairs: F-1 REJECT -> re-audit ACCEPT after FX-2; Z-5 UNVERIFIABLE -> re-audit ACCEPT after FX-1. Append-only confirmed by git diff (-0 deletions in jsonl).
+- Z-4 REJECT backfill (2 intercom REJECTs) + Z-3 line scope-mismatch note: recorded HERE and in R3_RESULTS (FX-6 OUT per verifier 2026-10-18 ruling), not as AUDIT appends.
+- Suite evidence at freeze: Vision 525/525 + MCP 41/41 fail 0 (verifier repeated runs) + secret scan 0 + no remotes.
 
-## PROMPT28 full audit (their law: run once at FIN-1)
+## CORRECTED headline (truth-first; supersedes the FIN-1 v1 numbers)
 
-- docs/AUDIT.jsonl: 65 entries over 58 rows; 62 ACCEPT / 2 UNVERIFIABLE / 1 REJECT (append-only; PROMPT29 FX-3 appended F-1 REJECT->ACCEPT and Z-5 UNVERIFIABLE->ACCEPT corrections, history not rewritten)
-- UNVERIFIABLE detail: Z-3 conformance rerun tool-timeout (120s); superseded by verifier independent G2r5 rerun (30/45 + controls 44/45 NOT-pass + batch3 holdout 5/5) => Z-3 DONE with evidence. Z-5 rate 35/44=79.55%<90% => honest failure.
-- AUD-LITE (D40) self-acceptance applied at every DONE-PROOF; Z-4 parent held to control-test + delta>0 law after 2 verifier REJECTs (Ping lines, not ledger verdicts)
+- Z-5 canonical rerun (FX-1, g2z_results_v2.json, 45 rows merged chunked, same-HEAD, controls g2z_controls_v2.json 45/45 NOT-pass full): real pass rate = 35 PASS / 44 rateable = 79.55% < 90% gate. NO 90% claim stands. Honest failures: zoo-batch4-captcha (expected-BLOCKED by design), zoo-iframe short-body 32 chars, zoo-shop-* x8 pages not served by main zoo server (environmental).
+- FX-2 campaignTable.js (commit 19ac43d; FX-4 regeneration baf9e89): headline numbers now reproducible BY RUNNING THE SCRIPT over the FINAL_EVAL per-site table (39 rows: 27 citable + 7 BLOCKED + 5 CONTAMINATED). CORRECTED computed values: Tier 1 fusion share 13.56% (n=8), Tier 2 81.11% (n=10), Tier1+2 51.09% (n=18) - arithmetic + numerator sums shown in FINAL_EVAL. The old hand-aggregated 20%/48.7% are no longer asserted claims; they are historical labels of the pre-correction reporting (not reproducible from INDEX, replaced).
+- Fusion value (binding definition, FINAL_EVAL line 7): campaign share of the final test set attributable to the fusion stage - it is NOT a success-vs-truth measure of this engine. No business-value (price/total) correctness oracle exists; UI-state oracle kinds exist and are not weakened by this statement.
+- 6-vs-7-cleared: count-definition difference (>=6/10 pre-registered bar tally vs INDEX completed-row count, 8 incl. OpenCart pre-gate variant); both stated, neither deleted.
 
-## Headline metrics (F-1, docs/FINAL_EVAL.md; corrected by FX-2/FX-3)
+## Known honest limitations (unchanged, plus)
 
-- Pre-registered bar >=6/10 pipelines: MET (6-7 cleared; reconcile in docs/FINAL_EVAL.md)
-- Fusion value (campaign share, NOT success-vs-truth): Tier1 13.56% (n=8), Tier2 81.11% (n=10), Tier1+2 51.09% (n=18, decontaminated) computed by tools/campaignTable.js. Earlier 20%/48.7% not reproducible from INDEX (corrected, append-only in AUDIT.jsonl).
-- Per-site table (39 rows: 27 citable, 12 excluded w/ reason) in docs/FINAL_EVAL.md from testing/site_reports/INDEX.md; blocked/contaminated retained as evidence, excluded from aggregates.
-- Schema pilot (docs/INDEX_PILOT_FINDINGS.md): raw-JSON field map over 1 clean + 1 blocked + 1 contaminated run; missing fields = NOT_RECORDED, never zeroed
-- Honest gap: R-3 metricsCalc returns 0 case records on fusion/dashboard_data.json (schema-shaped for reports v1, mismatch documented; future instrumentation item)
+- G2 main conformance recurring env crash documented in FX-1 (root cause hunt + chunked remediation instead of heroic single run); Z-3 conformance rerun UNVERIFIABLE line (tool timeout) superseded by verifier independent rerun (g2z_results.json 21 rows/19 PASS on disk, path in AUDIT check field).
+- R-3 metricsCalc returns 0 case records on fusion/dashboard_data.json (reports-v1 shape mismatch) - disclosed everywhere; future instrumentation item, deferred post-program.
+- MCP act input_value remains self-reported (no DOM read-back) - carried standing gap, docs/LIMITATIONS.md.
+- Temp GEMINI key used for A-9/GL1 evidence then REVOKED from vision/.env on freeze order (vision/.env holds no live key).
 
-## Known honest limitations
+## Commit list (LOCAL only)
 
-- G2 final gate: real rate 35/44 = 79.55% (<90% gate) per FX-1 g2z_results_v2.json; honest failure list with cause, NO 90% claim. Controls 45/45 NOT-pass (batch4 included).
-- OLD Tier-2 campaign history: fetchable from backup remote (read-only); this worktree has NO remotes configured (null push risk)
-- MCP act input_value remains self-reported (no DOM read-back) - carried from standing gaps, disclosed in docs/LIMITATIONS.md
-- Temp GEMINI key (24h, spend 0) used for A-9/GL1 evidence already collected; future live runs need a fresh key
-
-## Commit list (LOCAL only, never pushed)
-
-ee2bfb4 Z-4 re-flip, d4d8ec0 Z-2 pages+truth, ae1a227 V-5 signals, 9286042 Z-4.2, 8051479 Z-4.4, 4d39b71 Z-4.1, 09f785f V-6, ec208c8 Q-6 dress-rehearsal, 163122e G-3 library-regression, 799d3fc F-1 final-eval (plus 60-row cumulative history on main; full list per row in docs/R3_RESULTS.jsonl)
+Freeze chain: 92343dc/c35f416 (FX-5) -> g2z_results_v2 chain (FX-1, W2) -> 19ac43d (FX-2) -> cd7228d/39511db (FX-3 append-only) -> c36f046 (FX-4 claim) -> freeze re-close commit (this file + INTERCOM + board). Prior: f72f80d FIN-1 v1 (superseded frames), 61e1c1c (PROMPT29 load), 799d3fc (F-1 v1), ee2bfb4 (board history).
 
 ## User-gate state
 
-- USER-INDEX: SET 2026-10-18 via docs/SITE_RUN_REPORT_TEMPLATE.md + docs/SITE_RUN_REPORT_FIELD_AUDIT.md
-- USER-KEY: satisfied by human-supplied temp key (expires; not stored in graph, never echoed)
-- USER-DB: never set - S-3 delivered interface notes only (user-owned ingest remains open design)
+- USER-INDEX: set 2026-10-18 (docs/SITE_RUN_REPORT_TEMPLATE.md + docs/SITE_RUN_REPORT_FIELD_AUDIT.md, placed by human).
+- USER-KEY: satisfied then ended (temp 24h key revoked on human order).
+- USER-DB: never set; S-3 delivered interface notes only (user-owned ingest remains open design).
 
-## Open blockers
+## Open blockers / pending for NEW agents
 
-- NONE for the program. FIN-1 self-closes at acceptance.
-
-## Workers + roles
-
-- W1-W4: STANDBY/retired at FIN-1. Sub-master: program integrator. Verifier: independent flips all complete.
-- PROJECT-PLAN-COMPLETE posted after this file.
+- NONE blocking this program. Resumes ONLY if human reopens: the single seeded candidate is the R-3 instrumentation row (metricsCalc vs dashboard_data.json schema adapter, gated on USER-DB decision).
+- Workers W1-W4 + verifier: RETIRED at freeze (token limits; work all captured). Agendas: docs/WORKER_PROMPT.md, docs/VERIFIER_PROMPT.md, docs/INTERCOM.md (FULL freeze trail 19:2x), AUDIT.jsonl (66 lines), docs/TASK_BOARD.md (all rows DONE/PARKED).
