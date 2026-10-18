@@ -112,3 +112,13 @@ At audit start, the six modified tracked paths and untracked artifacts listed in
 - OpenAI official documentation pages read: `https://developers.openai.com/cookbook/examples/codex/iterating-development-workflows-with-codex`, `https://developers.openai.com/blog/eval-skills`, and `https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra`.
 
 Not read: the OpenCode backup `memory.json.bak-20260826`, corrupt copy `memory.json.corrupt-20261011`, full OpenCode graph content outside the project allowlist, every OpenCode agent/skill body, Claude `settings.json` contents, and unavailable Claude/ChatGPT private conversation history.
+
+### Role-workflow setup addendum (2026-10-18)
+
+Implemented from the user-provided “20 best methods” workflow plan:
+
+- Added repo-scoped `project-director`, `project-worker`, and read-only `project-verifier` skills under `.agents/skills/`.
+- Added `docs/WORKER_ASSIGNMENT_TEMPLATE.md` for bounded, self-contained task packets.
+- Added short pointers in `AGENTS.md` and `CODEX_PROJECT_MEMORY.md`; skills require explicit role assignment and do not confer authority or override stop orders.
+- The supplied permanent director/master prompt was not present as a canonical file in the inspected sources. `project-director` is therefore a documented synthesis of current repo safeguards and the user’s workflow plan, not a complete Claude-master migration. Import and reconcile that prompt before treating the skill as the permanent director policy.
+- No new thread/worktree was created, no board row was claimed, and no PX implementation or verification was performed as part of this setup.

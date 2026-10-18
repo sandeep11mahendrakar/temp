@@ -14,7 +14,7 @@ AI-assisted web/mobile UI test generation capstone. This review-3 workspace prim
 4. Task-specific docs/prompts under `docs/`, then `agents/` handoff for historical context.
 5. `opencode-memory/memory.jsonl`: primary OpenCode graph copy, useful for cross-project durable facts; not the authority for live task state.
 
-Use `.agents/skills/project-context/SKILL.md` for selective retrieval and `tools/Search-ProjectContext.ps1` for keyword excerpts. Use `.agents/skills/project-checkpoint/SKILL.md` to record verified outcomes and handoffs. Avoid loading full board/intercom/JSONL/history by default.
+Use `.agents/skills/project-context/SKILL.md` for selective retrieval and `tools/Search-ProjectContext.ps1` for keyword excerpts. Use `.agents/skills/project-director/SKILL.md`, `project-worker/SKILL.md`, and `project-verifier/SKILL.md` only for explicitly assigned roles; they do not grant authority. Use `.agents/skills/project-checkpoint/SKILL.md` to record verified outcomes and handoffs. Start bounded worker briefs from `docs/WORKER_ASSIGNMENT_TEMPLATE.md`. Avoid loading full board/intercom/JSONL/history by default.
 
 ## Durable safeguards
 
