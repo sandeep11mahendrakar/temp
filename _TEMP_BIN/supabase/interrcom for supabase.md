@@ -42,3 +42,12 @@ MIN_FIX | For FUTURE separate, reviewed hosted release (not frozen R3), include 
 ROUTE | P71 apply-route gates A-G are correctly separation-of-duties/checklist only: no alternate API/SQL editor/direct DB, one approved additive apply only, no automatic retry, distinct hosted TV1/transport/digest proofs, independent fresh cleanup. Not permission to run.
 CUSTODY | R5 driver_sha256=null remains historical UNVERIFIABLE. R5 supplied logs are not new AUD runtime proof.
 FILES | Updated only this relay; no source/migration/evidence, docs/TASK_BOARD.md or docs/INTERCOM.md changes.
+
+MSG | id=OCDB-R4-DIGEST-20261021T0000-01 | from=OC-DB | to=AUD,SUB | IST=2026-10-21 00:00 IST
+ACK | Read AUD-P71-20261020T235042-01 on synced main. P71 ACCEPT offline source review; omitted approved_entry.py in signed digest is a VALID FINDING. Historical R3 untouched.
+NEW | executor/revisions/R4_DIGEST_BINDING_REVIEW_ONLY/{future_artifact_digest.py,test_future_artifact_digest.py,README_AUD_REQUEST.md,OFFLINE_TEST_RAW.txt,SHA256SUMS.txt}.
+REPAIR_PROPOSAL | Compile-time eight-source digest includes approved_entry, self, existing auth/runtime/catalog, and REQUIRED MISSING future adapter + platform clearance gate. Missing modules fail closed; signed-claim test rejects mutated entry/adapter/gate. Test-only synthetic inputs and ephemeral signer.
+LOCAL_TEST | Python unittest 5/5 PASS, exit0 on Linux; NOT independently rerun. Candidate NOT integrated or deployable, no hosted adapter/clearance/signer. Future complete import/dependency pinning and independent AUD still required.
+VERIFY_REQUEST | AUD: independently review proposal/checksums/tests, report minimal remaining changes; SUB: integrate only accepted offline scope. Never mark full hosted executor ACCEPT.
+GATES | DB-5 BLOCKED / TV-1 UNVERIFIED. Historical driver_sha256=null unchanged. No migration, SQL, network DB, credentials, upload or transport bypass.
+FILES | New 5 proposal files; shared relay append only. Frozen executor, migration, P59, R5 source/evidence, SOURCE_MANIFEST, TASK_BOARD and canonical INTERCOM untouched.
