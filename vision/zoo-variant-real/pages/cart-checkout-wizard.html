@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head>
+<link rel="stylesheet" href="/real.css"><title>zoo cart checkout wizard</title></head>
+<body>
+<h1 id="page-title">Checkout</h1>
+<section id="step-cart"><h2>Step 1: cart</h2>
+<button id="add-widget" type="button">Add widget ($10)</button>
+<p id="cart-echo">cart: empty</p>
+<button id="to-ship" type="button">Continue</button></section>
+<section id="step-ship" hidden><h2>Step 2: shipping</h2>
+<label for="ship-name">Ship to</label><input id="ship-name" type="text" value="">
+<button id="to-review" type="button">Review order</button></section>
+<section id="step-review" hidden><h2>Step 3: review</h2>
+<p id="review-echo"></p><button id="place-order" type="button">Place order</button></section>
+<p id="order-echo"></p>
+<script>
+var cart = [];
+document.getElementById('add-widget').addEventListener('click', function () {
+  cart.push('widget');
+  document.getElementById('cart-echo').textContent = 'cart: ' + cart.length + ' item(s) $' + (cart.length * 10);
+});
+document.getElementById('to-ship').addEventListener('click', function () {
+  if (!cart.length) return;
+  document.getElementById('step-cart').hidden = true;
+  document.getElementById('step-ship').hidden = false;
+});
+document.getElementById('to-review').addEventListener('click', function () {
+  var n = document.getElementById('ship-name').value;
+  if (!n) return;
+  document.getElementById('step-ship').hidden = true;
+  document.getElementById('step-review').hidden = false;
+  document.getElementById('review-echo').textContent = 'review: ' + cart.length + ' item(s) for ' + n;
+});
+document.getElementById('place-order').addEventListener('click', function () {
+  document.getElementById('order-echo').textContent = 'Thank you! order placed: ZOO-0001';
+});
+</script>
+</body></html>

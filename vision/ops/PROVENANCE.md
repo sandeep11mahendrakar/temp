@@ -1,0 +1,5 @@
+# vision/ops provenance (author: worker-3; D35 TUI-provenance; untracked, no-commit)
+lane: W3 ops-tooling (single-terminal vision service runner)
+purpose: boot/status/down the 5 vision services HIDDEN in ONE table (kills the 5 popup windows)
+files: vision/ops/services.js (runner); vision/storage/outputs/ops_pids.json + *.log (gitignored runtime state)
+scope: zero deps, no shell, windowsHide; down() verifies cmdline before kill (PID-only, own-only)

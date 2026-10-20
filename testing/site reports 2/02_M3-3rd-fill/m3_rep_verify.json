@@ -1,0 +1,184 @@
+{
+  "architecture": "B",
+  "run_id": "exec_1791905579492",
+  "evidence_dir": "storage/screenshots/exec_1791905579492",
+  "re_detection_enabled": true,
+  "source_url": "https://todomvc.com/examples/react/dist/",
+  "test_cases_file": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\m3_verify.json",
+  "started_at": "2026-10-13T15:32:59.776Z",
+  "finished_at": "2026-10-13T15:33:09.843Z",
+  "total_duration_ms": 10067,
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "errors": 0,
+    "pass_rate": 1,
+    "multi_step_tests": 1,
+    "fill_actions": 3,
+    "scroll_actions": 0,
+    "states_observed": 3,
+    "verification_methods": {
+      "body_text_fallback": 1
+    },
+    "weak_verifications": 1,
+    "stale_coordinates_prevented": 2,
+    "unresolved_targets": 0,
+    "warnings": 2
+  },
+  "results": [
+    {
+      "id": "M3-ADD3",
+      "objective": "M3 verify: replay 2 todos then add third Write code via crop_retry",
+      "expected_result": "Todo list shows 3 items left",
+      "evidence": null,
+      "inferred_behavior": null,
+      "expect_navigation": false,
+      "expected_text": "3 items left",
+      "status": "PASS",
+      "failure_reason": null,
+      "verification": {
+        "method": "body_text_fallback",
+        "detail": "no stronger observable signal available; body renders non-trivially"
+      },
+      "verification_strength": "weak",
+      "stale_coordinates_prevented": 2,
+      "unresolved_targets": 0,
+      "warnings": [
+        "Step 3: OCR-anchor synth target (WEAK verification)",
+        "Verification used weak body-text fallback (no semantic signal)"
+      ],
+      "before_screenshot": "storage/screenshots/exec_1791905579492/state_002_before_M3-ADD3.png",
+      "failure_screenshot": null,
+      "url_before": "https://todomvc.com/examples/react/dist/",
+      "url_after": "https://todomvc.com/examples/react/dist/",
+      "steps_executed": [
+        {
+          "index": 1,
+          "action": "fill",
+          "target": {
+            "text": "What needs to be done?",
+            "type": "search_field"
+          },
+          "value": "Buy milk\n",
+          "x": 790,
+          "y": 162,
+          "ok": true,
+          "before_screenshot": "storage/screenshots/exec_1791905579492/state_002_before_M3-ADD3.png",
+          "after_screenshot": "storage/screenshots/exec_1791905579492/state_003_after_fill.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-6",
+            "type": "search_field",
+            "text": "What needs to be done?",
+            "conf": 0.5,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 2883
+        },
+        {
+          "index": 2,
+          "action": "fill",
+          "target": {
+            "text": "What needs to be done?",
+            "type": "search_field"
+          },
+          "value": "Read book\n",
+          "x": 794,
+          "y": 162,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905579492/state_004_after_fill.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-22",
+            "type": "search_field",
+            "text": "Vv What needs to be done?",
+            "conf": 0.28,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 2483
+        },
+        {
+          "index": 3,
+          "action": "fill",
+          "target": {
+            "text": "What needs to be done?",
+            "type": "search_field"
+          },
+          "value": "Write code\n",
+          "x": 683,
+          "y": 162,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905579492/state_005_after_fill.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-anchor-0",
+            "type": "search_field",
+            "text": "Vv What needs to be done?",
+            "conf": 0,
+            "synth": "ocr_anchor"
+          },
+          "resolution_via": "text_match+ocr_anchor",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 2537
+        }
+      ],
+      "states_observed": [
+        {
+          "state_id": "state_003",
+          "screenshot": "storage/screenshots/exec_1791905579492/state_003_after_fill.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 34,
+          "ocr_words": 119,
+          "merged_evidence": "storage/screenshots/exec_1791905579492/state_003_after_fill_merged.png"
+        },
+        {
+          "state_id": "state_004",
+          "screenshot": "storage/screenshots/exec_1791905579492/state_004_after_fill.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 41,
+          "ocr_words": 120,
+          "merged_evidence": "storage/screenshots/exec_1791905579492/state_004_after_fill_merged.png",
+          "elements_delta": 7
+        },
+        {
+          "state_id": "state_005",
+          "screenshot": "storage/screenshots/exec_1791905579492/state_005_after_fill.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 45,
+          "ocr_words": 122,
+          "merged_evidence": "storage/screenshots/exec_1791905579492/state_005_after_fill_merged.png",
+          "elements_delta": 4
+        }
+      ],
+      "duration_ms": 7906
+    }
+  ]
+}

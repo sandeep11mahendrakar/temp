@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head>
+<link rel="stylesheet" href="/real.css"><title>zoo select check radio</title></head>
+<body>
+<h1 id="page-title">Preferences</h1>
+<label for="color-select">Color</label>
+<select id="color-select"><option value="">--pick--</option><option value="red">Red</option><option value="blue">Blue</option></select>
+<label><input id="news-check" type="checkbox"> Newsletter</label>
+<label><input id="plan-monthly" type="radio" name="plan" value="monthly"> Monthly</label>
+<label><input id="plan-yearly" type="radio" name="plan" value="yearly"> Yearly</label>
+<button id="apply-btn" type="button">Apply</button>
+<p id="prefs-echo"></p>
+<script>
+document.getElementById('apply-btn').addEventListener('click', function () {
+  var color = document.getElementById('color-select').value;
+  var news = document.getElementById('news-check').checked ? 'news=yes' : 'news=no';
+  var plan = document.querySelector('input[name="plan"]:checked');
+  document.getElementById('prefs-echo').textContent =
+    'prefs saved: color=' + (color || 'none') + ' ' + news + ' plan=' + (plan ? plan.value : 'none');
+});
+</script>
+</body></html>

@@ -14,7 +14,7 @@ AI-assisted web/mobile UI test generation capstone. This review-3 workspace prim
 4. Task-specific docs/prompts under `docs/`, then `agents/` handoff for historical context.
 5. `opencode-memory/memory.jsonl`: primary OpenCode graph copy, useful for cross-project durable facts; not the authority for live task state.
 
-Use `.agents/skills/project-context/SKILL.md` for selective retrieval and `tools/Search-ProjectContext.ps1` for keyword excerpts. Use `.agents/skills/project-director/SKILL.md`, `project-worker/SKILL.md`, and `project-verifier/SKILL.md` only for explicitly assigned roles; they do not grant authority. Use `.agents/skills/project-checkpoint/SKILL.md` to record verified outcomes and handoffs. Start bounded worker briefs from `docs/WORKER_ASSIGNMENT_TEMPLATE.md`. Avoid loading full board/intercom/JSONL/history by default.
+Canonical procedures: `.agents/skills/project-taskboard/SKILL.md` for board operations and `.agents/skills/project-intercom/SKILL.md` for coordination messages; live state remains in `docs/TASK_BOARD.md` and `docs/INTERCOM.md`. Use `.agents/skills/project-context/SKILL.md` for selective retrieval and `tools/Search-ProjectContext.ps1` for keyword excerpts. Use `.agents/skills/project-submaster/SKILL.md`, `project-worker/SKILL.md`, and `project-auditor/SKILL.md` only for explicitly assigned roles; they do not grant authority. Use `.agents/skills/project-checkpoint/SKILL.md` to record verified outcomes and handoffs. Start bounded briefs from `docs/WORKER_ASSIGNMENT_TEMPLATE.md`. Avoid loading full board/intercom/JSONL/history by default.
 
 ## Durable safeguards
 
@@ -41,3 +41,10 @@ Current authority: Oct 18 `docs/FINAL_STATE.md` closes PROMPT29 FX-1..FX-6 and F
 ## Update 2026-10-18 late - roles + PROMPT30 close
 
 Roles migrated as repo skills: project-master (Claude, plans-only), project-submaster (integrator/verifier-of-record), project-worker-r3 (claim/DONE-PROOF/watch loop), project-auditor-r3 (evidence recompute). Copies mirrored in .codex/skills/ for path portability. Role dispatch + AI-agent-first style law live in AGENTS.md (mandatory all roles). Boot phrases: u r the master | u r sub-master | u r worker N | u r auditor. PROMPT30 closed: PX-1/PX-2/PX-3 DONE (audit 70 lines/62 rows = 67A+2U+1R; suites Vision 539/539 + MCP 41/41), PX-4 gemini-key-state = human decision only (vision/.env GEMINI_API_KEY value EMPTY, revoked). PROJECT-PLAN-COMPLETE-REV2 posted in docs/INTERCOM.md. Codex may hold any role EXCEPT it must not self-appoint master; master transfer needs explicit user statement.
+
+
+## Update 2026-10-18 - active skill tree
+
+- `.agents/skills/` is the sole active Codex skill tree; `.codex/` was archived unchanged at `_TEMP_BIN/.codex-legacy-2026-10-18/`.
+- Canonical roles => project-master | project-submaster | project-worker | project-auditor; utilities => project-context | project-checkpoint | project-memory-sync | project-taskboard | project-intercom.
+- OpenCode config has no CAPSTONE sub-master/worker role files; current `.agents/` role flow is authoritative. Legacy `agents/memory/` briefs remain historical.

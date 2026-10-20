@@ -1,0 +1,6 @@
+{
+  "sample_class": "blocked",
+  "run": { "id": "sample-blocked", "source": "schema-fixture" },
+  "result": { "verdict": "BLOCKED" },
+  "cases": [{ "id": "BLOCK-1", "verdict": "BLOCKED", "tc_source": "fixture", "label": "BLOCKED", "block": "bot_challenge", "evid_paths": ["evidence.txt"] }]
+}

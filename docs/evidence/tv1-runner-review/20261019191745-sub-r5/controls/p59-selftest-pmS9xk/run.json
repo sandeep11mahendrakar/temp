@@ -1,0 +1,314 @@
+{
+  "started": "2026-10-19T13:48:46.397Z",
+  "mode": "LOCAL_ISOLATED",
+  "expectedBaseline": "zero",
+  "fixtureBaseline": "zero",
+  "testFault": "notice",
+  "source_sha256": {
+    "migration": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "diagnostic": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d"
+  },
+  "runtime": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit",
+    "role": "postgres",
+    "pglite": "0.5.10"
+  },
+  "baseline": {
+    "objects_n": 0,
+    "names": [],
+    "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "postcheck": {
+    "inventory": {
+      "objects_n": 0,
+      "names": [],
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "fixture_count": 0,
+    "same_baseline": true,
+    "same_team_rows": true,
+    "fresh_connection": true
+  },
+  "rollback": {
+    "attempted": true,
+    "ok": true
+  },
+  "close": {
+    "attempted": true,
+    "closed": true,
+    "ok": true
+  },
+  "exit": 1,
+  "postcheck_closed": true,
+  "ended": "2026-10-19T13:48:51.566Z",
+  "errors": [
+    {
+      "stage": "execution",
+      "message": "INJECTED_NOTICE_CAPTURE_FAILURE",
+      "code": null,
+      "constraint": null
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "PREFLIGHT/OWNER",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "PREFLIGHT/ROLES",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "PREFLIGHT/TRIGGER",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "PREFLIGHT/BASELINE",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "CAT/RLS",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "CAT/SECURITY-INVOKER",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "CAT/SECURITY-INVOKER",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "POS-INSERT",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-01/SELECT",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-01/INSERT",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-01/UPDATE",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-01/DELETE",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-01/ELIGIBLE-VIEW",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-01/READBACK-VIEW",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-02/SELECT",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-02/INSERT",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-02/UPDATE",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-02/DELETE",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-02/ELIGIBLE-VIEW",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-02/READBACK-VIEW",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-03-SERVICE/UPDATE",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-03-SERVICE/DELETE",
+      "expected_state": "42501",
+      "actual_state": "42501",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "POS-RETRY",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-04/HASH-CONFLICT",
+      "expected_state": "23505",
+      "actual_state": "23505",
+      "constraint": "r3_runs_pkey",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/BAD-SCHEMA",
+      "expected_state": "23514",
+      "actual_state": "23514",
+      "constraint": "r3_runs_schema_version_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/BAD-ELIGIBILITY",
+      "expected_state": "23514",
+      "actual_state": "23514",
+      "constraint": "r3_runs_aggregate_eligibility_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/TRIAL-ELIGIBLE",
+      "expected_state": "23514",
+      "actual_state": "23514",
+      "constraint": "r3_runs_eligible_research_ids_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/MISSING-IDS",
+      "expected_state": "23514",
+      "actual_state": "23514",
+      "constraint": "r3_runs_eligible_research_ids_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/SELF-SUPERSEDES",
+      "expected_state": "23514",
+      "actual_state": "23514",
+      "constraint": "r3_runs_supersedes_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/TRIAL-PENDING",
+      "expected_state": "23514",
+      "actual_state": "23514",
+      "constraint": "r3_runs_trial_excluded_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-06",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-03-OWNER-PREFLIGHT",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-03-OWNER-TRIGGER/UPDATE",
+      "expected_state": "55000",
+      "actual_state": "55000",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "NEG-03-OWNER-TRIGGER/DELETE",
+      "expected_state": "55000",
+      "actual_state": "55000",
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "INJECT-NOTICE-AFTER-FIXTURES",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": false
+    },
+    {
+      "case_id": "FINAL-IN-TX",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "POST-ROLLBACK",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    }
+  ],
+  "noticeCount": 37
+}

@@ -1,0 +1,105 @@
+{
+  "snapshot_ist": "2026-10-19 17:38:00 IST",
+  "source": "SUB implements owner-authorized small repairs after OCC-A1-V-R4 REJECT; independent AUD-1 required",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "revision": "9e8f41dba6a726841c95161a6675e855aaa64f39fdeaad64bdf0ee603f340040",
+  "files": [
+    {
+      "path": "docs/DB_COMPLETION_REPORT.md",
+      "sha256": "740df49b588f434af29063b84268b56fb174c6f967a7f58ff289196ba3a5da7e"
+    },
+    {
+      "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+      "sha256": "5526efa6fe4046f6eb51250c7807ca0cde328cad624c64c806fc58f502c7bc04"
+    },
+    {
+      "path": "docs/TRIAL_CHECKPOINT_RESUME_GAP.md",
+      "sha256": "028dcec51bc7e79ca95194eb1a00f014f4ee986a8f878b9492e7b00c873bdbd8"
+    },
+    {
+      "path": "tools/runArchive.js",
+      "sha256": "1692d5d2dde8d08622a43b69a1ede369c4c203a9c11083ef366abb4e971e0393"
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "sha256": "38775e233d82ddb629b2c9c31689706a4a97778cb8e0ba65c5d84eceb22da999"
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "sha256": "446912aaba879b621209f7eabdf3f635061dccf442df1f84d4656d85709fc181"
+    },
+    {
+      "path": "tools/trialReport.js",
+      "sha256": "67cae0aeb4e4ee820ab15241cb873562adbf8200037315508785c853045a010a"
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "sha256": "221a1825f7e3c85768b005e659e729d98c985efcba285697655b6fb50fa96121"
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "sha256": "a242389bac882e9ee6f4bad13ec5e66a6adf3fa5d65a4ef39333ab9a226b29cd"
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "sha256": "8f471d1b9b0a76b34330d556692b6bea1f6b96a8d85dab00e1d74ec4bf53fb70"
+    }
+  ],
+  "checks": "docs/evidence/oc-code-r5/20261019173800/CHECKS.json",
+  "tests_added": {
+    "tools/trialArtifacts.test.js": 2,
+    "tools/trialReport.test.js": 4,
+    "tools/trialUploader.test.js": 4
+  },
+  "secret_value_scan": {
+    "matches": 0,
+    "scope": "ten pinned files; value-shaped patterns only, not source marker-name literals",
+    "files": [
+      {
+        "path": "docs/DB_COMPLETION_REPORT.md",
+        "matches": 0
+      },
+      {
+        "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+        "matches": 0
+      },
+      {
+        "path": "docs/TRIAL_CHECKPOINT_RESUME_GAP.md",
+        "matches": 0
+      },
+      {
+        "path": "tools/runArchive.js",
+        "matches": 0
+      },
+      {
+        "path": "tools/trialArtifacts.js",
+        "matches": 0
+      },
+      {
+        "path": "tools/trialArtifacts.test.js",
+        "matches": 0
+      },
+      {
+        "path": "tools/trialReport.js",
+        "matches": 0
+      },
+      {
+        "path": "tools/trialReport.test.js",
+        "matches": 0
+      },
+      {
+        "path": "tools/trialUploader.js",
+        "matches": 0
+      },
+      {
+        "path": "tools/trialUploader.test.js",
+        "matches": 0
+      }
+    ]
+  },
+  "limits": [
+    "No hosted/browser/upload action",
+    "Atomic publication requires same-filesystem hard-link support; unsupported environments fail closed",
+    "P59 remains OC-TRIAL implementation; do not repin before completion/freeze"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "run": {
+    "id": "demo-2",
+    "ts": "2026-10-18T18:38:44.501Z",
+    "source": "vision-loopB-v2"
+  },
+  "loops": [],
+  "cases": [],
+  "result": {
+    "verdict": "MIXED",
+    "pass_rate": 0
+  },
+  "cost": {
+    "api_calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "usd_estimated": null
+  },
+  "block": null,
+  "evid_paths": [],
+  "storage": {
+    "paths": []
+  },
+  "citable": {
+    "ref": "run-demo-2",
+    "sha1": "b1aa05ebbf503b63a8d7aa7e829116366018880a"
+  }
+}

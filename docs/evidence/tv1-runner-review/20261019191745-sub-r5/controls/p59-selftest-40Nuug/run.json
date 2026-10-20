@@ -1,0 +1,89 @@
+{
+  "started": "2026-10-19T13:49:03.709Z",
+  "mode": "LOCAL_ISOLATED",
+  "expectedBaseline": "zero",
+  "fixtureBaseline": "zero",
+  "testFault": "collision",
+  "source_sha256": {
+    "migration": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "diagnostic": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d"
+  },
+  "runtime": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit",
+    "role": "postgres",
+    "pglite": "0.5.10"
+  },
+  "baseline": {
+    "objects_n": 0,
+    "names": [],
+    "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "postcheck": {
+    "inventory": {
+      "objects_n": 0,
+      "names": [],
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "fixture_count": 4,
+    "same_baseline": true,
+    "same_team_rows": true,
+    "fresh_connection": true
+  },
+  "rollback": {
+    "attempted": true,
+    "ok": true
+  },
+  "close": {
+    "attempted": true,
+    "closed": true,
+    "ok": true
+  },
+  "exit": 1,
+  "postcheck_closed": true,
+  "ended": "2026-10-19T13:49:08.884Z",
+  "errors": [
+    {
+      "stage": "execution",
+      "message": "TV1 diagnostic fixture collision; refuse to overwrite or reuse",
+      "code": "P0001",
+      "constraint": null
+    },
+    {
+      "stage": "fresh-postcheck",
+      "message": "FRESH_POSTCHECK baseline/rows/fixtures differ",
+      "code": null,
+      "constraint": null
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "PREFLIGHT/OWNER",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "PREFLIGHT/ROLES",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "PREFLIGHT/TRIGGER",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    },
+    {
+      "case_id": "PREFLIGHT/BASELINE",
+      "expected_state": null,
+      "actual_state": null,
+      "constraint": null,
+      "pass": true
+    }
+  ],
+  "noticeCount": 4
+}

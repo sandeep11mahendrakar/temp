@@ -1,0 +1,106 @@
+'use strict';
+
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { runBatch } = require('./runBatch');
+
+function temp(t) { const root = fs.mkdtempSync(path.join(os.tmpdir(), 'run-batch-')); t.after(() => fs.rmSync(root, { recursive: true, force: true })); return root; }
+function archiveInput(id) { return { run_id: id, site: id, artifacts: [] }; }
+
+test('runs in declared serial order, archives complete and blocked, and preserves the cap', async (t) => {
+  const root = temp(t); const order = []; const archived = [];
+  const result = await runBatch({
+    sites: [{ id: 'site-a' }, { id: 'site-b' }, { id: 'site-c' }], maxSites: 2,
+    checkpointFile: path.join(root, 'state.json'), timeoutMs: 100,
+    execute: async (site) => { order.push(site.id); return { status: site.id === 'site-a' ? 'COMPLETE' : 'BLOCKED', archive_input: archiveInput(site.id) }; },
+    archive: (input) => { archived.push(input.run_id); return { archive: `runs/${input.run_id}` }; },
+  });
+  assert.deepEqual(order, ['site-a', 'site-b']); assert.deepEqual(archived, order);
+  assert.deepEqual(result.order, ['site-a', 'site-b']); assert.equal(result.completed, 1); assert.equal(result.blocked, 1);
+  assert.equal(result.processed, 2); assert.equal(result.stopped, false);
+});
+
+test('resume skips completed and blocked sites and executes only pending sites', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json'); const archived = [];
+  const base = { sites: [{ id: 'already-done' }, { id: 'already-blocked' }, { id: 'pending' }], checkpointFile, timeoutMs: 100,
+    archive: (input) => { archived.push(input.run_id); return { archive: input.run_id }; } };
+  const state = { version: 1, order: ['already-done', 'already-blocked', 'pending'], plan_hash: require('node:crypto').createHash('sha256').update(JSON.stringify([{ id: 'already-done', run_id: 'already-done' }, { id: 'already-blocked', run_id: 'already-blocked' }, { id: 'pending', run_id: 'pending' }])).digest('hex'), sites: {
+    'already-done': { site_id: 'already-done', run_id: 'already-done', status: 'COMPLETE' },
+    'already-blocked': { site_id: 'already-blocked', run_id: 'already-blocked', status: 'BLOCKED' },
+  } };
+  fs.writeFileSync(checkpointFile, `${JSON.stringify(state)}\n`);
+  const executed = [];
+  const result = await runBatch({ ...base, execute: async (site) => { executed.push(site.id); return { status: 'COMPLETE', archive_input: archiveInput(site.id) }; } });
+  assert.deepEqual(executed, ['pending']); assert.deepEqual(archived, ['pending']); assert.equal(result.skipped, 2);
+});
+
+test('refuses a concurrent driver and a changed plan/order', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json'); const lock = `${checkpointFile}.lock`;
+  fs.writeFileSync(lock, JSON.stringify({ pid: process.pid, token: 'held' }));
+  await assert.rejects(runBatch({ sites: [{ id: 'one' }], checkpointFile, execute: async () => {} }), /another batch driver/);
+  fs.unlinkSync(lock);
+  await runBatch({ sites: [{ id: 'one' }], checkpointFile, execute: async () => ({ status: 'COMPLETE', archive_input: archiveInput('one') }), archive: () => ({ archive: 'one' }) });
+  await assert.rejects(runBatch({ sites: [{ id: 'two' }], checkpointFile, execute: async () => ({ status: 'COMPLETE', archive_input: archiveInput('two') }), archive: () => ({ archive: 'two' }) }), /checkpoint does not match/);
+});
+
+test('timeout checkpoints without archive; resume retries only with explicit opt-in', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json'); let archives = 0; let aborted = false;
+  const timed = await runBatch({ sites: [{ id: 'slow' }], checkpointFile, timeoutMs: 5,
+    execute: (_site, { signal }) => { signal.addEventListener('abort', () => { aborted = true; }); return new Promise((resolve) => setTimeout(() => resolve({ status: 'COMPLETE', archive_input: archiveInput('slow') }), 30)); }, archive: () => { archives += 1; return { archive: 'slow' }; } });
+  assert.equal(timed.stopped, true); assert.equal(archives, 0);
+  assert.equal(aborted, true);
+  const saved = JSON.parse(fs.readFileSync(checkpointFile, 'utf8')); assert.equal(saved.sites.slow.status, 'TIMED_OUT');
+  await assert.rejects(runBatch({ sites: [{ id: 'slow' }], checkpointFile, timeoutMs: 100, execute: async () => {}, archive: () => ({ archive: 'slow' }) }), /another batch driver/);
+  await new Promise((resolve) => setTimeout(resolve, 40));
+  const held = await runBatch({ sites: [{ id: 'slow' }], checkpointFile, timeoutMs: 100, execute: async () => { throw new Error('must not run without opt-in'); }, archive: () => ({ archive: 'slow' }) });
+  assert.equal(held.processed, 0); assert.equal(held.stopped, true);
+  const resumed = await runBatch({ sites: [{ id: 'slow' }], checkpointFile, timeoutMs: 100, retryInterrupted: true,
+    execute: async () => ({ status: 'COMPLETE', archive_input: archiveInput('slow') }), archive: () => { archives += 1; return { archive: 'slow' }; } });
+  assert.equal(resumed.completed, 1); assert.equal(archives, 1);
+});
+
+test('archive failure stops the batch and resume retries archive without re-executing', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json'); let executions = 0; let archiveCalls = 0;
+  await assert.rejects(runBatch({ sites: [{ id: 'first' }, { id: 'second' }], checkpointFile,
+    execute: async () => { executions += 1; return { status: 'COMPLETE', archive_input: archiveInput('first') }; },
+    archive: () => { archiveCalls += 1; throw new Error('archive denied'); } }), /batch stopped/);
+  assert.equal(executions, 1); assert.equal(archiveCalls, 1);
+  const resumedSites = [];
+  const resumed = await runBatch({ sites: [{ id: 'first' }, { id: 'second' }], checkpointFile,
+    execute: async (site) => { executions += 1; resumedSites.push(site.id); return { status: 'COMPLETE', archive_input: archiveInput(site.id) }; },
+    archive: (input) => { archiveCalls += 1; return { archive: input.run_id }; } });
+  assert.equal(executions, 2); assert.deepEqual(resumedSites, ['second']); assert.equal(archiveCalls, 3); assert.equal(resumed.completed, 1);
+});
+
+test('validates duplicate IDs and requires an explicit executor', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json');
+  await assert.rejects(runBatch({ sites: [{ id: 'same' }, { id: 'same' }], checkpointFile, execute: async () => {} }), /duplicate site id/);
+  await assert.rejects(runBatch({ sites: [{ id: 'one' }], checkpointFile }), /explicit executor is required/);
+});
+
+test('recovers a dead driver lock but marks an interrupted site for explicit retry', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json'); const lockFile = `${checkpointFile}.lock`;
+  const state = { version: 1, order: ['interrupted'], plan_hash: require('node:crypto').createHash('sha256').update(JSON.stringify([{ id: 'interrupted', run_id: 'interrupted' }])).digest('hex'), source_revision: 'rev-1', sites: { interrupted: { site_id: 'interrupted', run_id: 'interrupted', status: 'RUNNING', attempts: 1 } } };
+  fs.writeFileSync(checkpointFile, `${JSON.stringify(state)}\n`);
+  fs.writeFileSync(lockFile, JSON.stringify({ pid: 2147483647, token: 'stale' }));
+  let executions = 0;
+  const paused = await runBatch({ sites: [{ id: 'interrupted' }], checkpointFile, sourceRevision: 'rev-1', execute: async () => { executions += 1; return { status: 'COMPLETE', archive_input: archiveInput('interrupted') }; }, archive: () => ({ archive: 'interrupted' }) });
+  assert.equal(executions, 0); assert.equal(paused.stopped, true);
+  const saved = JSON.parse(fs.readFileSync(checkpointFile, 'utf8'));
+  assert.equal(saved.sites.interrupted.status, 'ERROR'); assert.equal(saved.sites.interrupted.error_code, 'EINTERRUPTED');
+  const resumed = await runBatch({ sites: [{ id: 'interrupted' }], checkpointFile, sourceRevision: 'rev-1', retryInterrupted: true,
+    execute: async () => { executions += 1; return { status: 'COMPLETE', archive_input: archiveInput('interrupted') }; }, archive: () => ({ archive: 'interrupted' }) });
+  assert.equal(executions, 1); assert.equal(resumed.completed, 1);
+});
+
+test('uses P-1 archiveRun by default and retains source revision', async (t) => {
+  const root = temp(t); const checkpointFile = path.join(root, 'state.json');
+  await runBatch({ sites: [{ id: 'archived-run' }], checkpointFile, sourceRevision: 'abc123', archiveOptions: { root },
+    execute: async () => ({ status: 'COMPLETE', archive_input: { run_id: 'archived-run', site: 'synthetic', artifacts: [] } }) });
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'runs', 'archived-run', 'manifest.json'), 'utf8'));
+  const checkpoint = JSON.parse(fs.readFileSync(checkpointFile, 'utf8'));
+  assert.equal(manifest.run_id, 'archived-run'); assert.equal(checkpoint.source_revision, 'abc123');
+});

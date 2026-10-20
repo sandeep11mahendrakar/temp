@@ -1,0 +1,97 @@
+{
+  "ts": "2026-10-13T15:49:10.774Z",
+  "api_calls": 0,
+  "coords": {
+    "user": {
+      "x": 640,
+      "y": 173,
+      "w": 292,
+      "h": 38
+    },
+    "pass": {
+      "x": 640,
+      "y": 226,
+      "w": 292,
+      "h": 38
+    },
+    "login": {
+      "x": 640,
+      "y": 325,
+      "w": 292,
+      "h": 49
+    },
+    "addBackpack": {
+      "x": 493,
+      "y": 356,
+      "w": 160,
+      "h": 34
+    },
+    "cart": {
+      "x": 1225,
+      "y": 30,
+      "w": 40,
+      "h": 40
+    },
+    "checkout": {
+      "x": 1155,
+      "y": 428,
+      "w": 220,
+      "h": 34
+    },
+    "first": {
+      "x": 640,
+      "y": 274,
+      "w": 380,
+      "h": 38
+    },
+    "last": {
+      "x": 640,
+      "y": 327,
+      "w": 380,
+      "h": 38
+    },
+    "zip": {
+      "x": 640,
+      "y": 380,
+      "w": 380,
+      "h": 38
+    },
+    "cont": {
+      "x": 1155,
+      "y": 617,
+      "w": 220,
+      "h": 41
+    },
+    "finish": {
+      "x": 1140,
+      "y": 698,
+      "w": 220,
+      "h": 34
+    }
+  },
+  "phases": [
+    {
+      "phase": "login",
+      "url": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "phase": "add",
+      "badge": "1"
+    },
+    {
+      "phase": "cart",
+      "url": "https://www.saucedemo.com/cart.html",
+      "items": 1
+    },
+    {
+      "phase": "overview",
+      "url": "https://www.saucedemo.com/checkout-step-two.html",
+      "total": "Total: $32.39"
+    },
+    {
+      "phase": "complete",
+      "url": "https://www.saucedemo.com/checkout-complete.html",
+      "header": "Thank you for your order!"
+    }
+  ]
+}

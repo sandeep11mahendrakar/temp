@@ -1,0 +1,309 @@
+{
+  "architecture": "B",
+  "run_id": "exec_1791905680262",
+  "evidence_dir": "storage/screenshots/exec_1791905680262",
+  "re_detection_enabled": true,
+  "source_url": "https://todomvc.com/examples/react/dist/",
+  "test_cases_file": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\m6_chain.json",
+  "started_at": "2026-10-13T15:34:40.496Z",
+  "finished_at": "2026-10-13T15:34:55.103Z",
+  "total_duration_ms": 14607,
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "errors": 0,
+    "pass_rate": 1,
+    "multi_step_tests": 1,
+    "fill_actions": 3,
+    "scroll_actions": 0,
+    "states_observed": 6,
+    "verification_methods": {
+      "url_change": 1
+    },
+    "weak_verifications": 0,
+    "stale_coordinates_prevented": 5,
+    "unresolved_targets": 0,
+    "warnings": 1
+  },
+  "results": [
+    {
+      "id": "M6-FULLCHAIN",
+      "objective": "M6 LoopB scratch: add3 + toggle 2nd + Active + Clear completed",
+      "expected_result": "3 todos added, 2nd toggled completed, Active filter, Clear completed leaves 2 items left",
+      "evidence": null,
+      "inferred_behavior": null,
+      "expect_navigation": true,
+      "expected_text": "2 items left",
+      "status": "PASS",
+      "failure_reason": null,
+      "verification": {
+        "method": "url_change",
+        "detail": "navigated to https://todomvc.com/examples/react/dist/#/active"
+      },
+      "verification_strength": "strong",
+      "stale_coordinates_prevented": 5,
+      "unresolved_targets": 0,
+      "warnings": [
+        "Step 3: OCR-anchor synth target (WEAK verification)"
+      ],
+      "before_screenshot": "storage/screenshots/exec_1791905680262/state_002_before_M6-FULLCHAIN.png",
+      "failure_screenshot": null,
+      "url_before": "https://todomvc.com/examples/react/dist/",
+      "url_after": "https://todomvc.com/examples/react/dist/#/active",
+      "steps_executed": [
+        {
+          "index": 1,
+          "action": "fill",
+          "target": {
+            "text": "What needs to be done?",
+            "type": "search_field"
+          },
+          "value": "Buy milk\n",
+          "x": 790,
+          "y": 162,
+          "ok": true,
+          "before_screenshot": "storage/screenshots/exec_1791905680262/state_002_before_M6-FULLCHAIN.png",
+          "after_screenshot": "storage/screenshots/exec_1791905680262/state_003_after_fill.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-6",
+            "type": "search_field",
+            "text": "What needs to be done?",
+            "conf": 0.5,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 3021
+        },
+        {
+          "index": 2,
+          "action": "fill",
+          "target": {
+            "text": "What needs to be done?",
+            "type": "search_field"
+          },
+          "value": "Read book\n",
+          "x": 794,
+          "y": 162,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905680262/state_004_after_fill.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-22",
+            "type": "search_field",
+            "text": "Vv What needs to be done?",
+            "conf": 0.28,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 2505
+        },
+        {
+          "index": 3,
+          "action": "fill",
+          "target": {
+            "text": "What needs to be done?",
+            "type": "search_field"
+          },
+          "value": "Write code\n",
+          "x": 683,
+          "y": 162,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905680262/state_005_after_fill.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-anchor-0",
+            "type": "search_field",
+            "text": "Vv What needs to be done?",
+            "conf": 0,
+            "synth": "ocr_anchor"
+          },
+          "resolution_via": "text_match+ocr_anchor",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 2591
+        },
+        {
+          "index": 4,
+          "action": "click",
+          "target": {
+            "text": "",
+            "type": "radiobox"
+          },
+          "value": "",
+          "x": 535,
+          "y": 284.8000183105469,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905680262/state_006_after_click.png",
+          "signal": {
+            "method": "checked_state",
+            "detail": "checkbox/radio toggled false -> true"
+          },
+          "resolved_element": {
+            "id": "elem-13",
+            "type": "radiobox",
+            "text": "Read book",
+            "conf": 0.43,
+            "synth": null
+          },
+          "resolution_via": "check_bbox+domsnap",
+          "checked_state_attempts": 1,
+          "checked_state_verified": true,
+          "check_snap": true,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 1432
+        },
+        {
+          "index": 5,
+          "action": "click",
+          "target": {
+            "text": "Active",
+            "type": "link"
+          },
+          "value": "",
+          "x": 762,
+          "y": 394,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905680262/state_007_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-26",
+            "type": "text",
+            "text": "Active",
+            "conf": 0.27,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 1452
+        },
+        {
+          "index": 6,
+          "action": "click",
+          "target": {
+            "text": "Clear completed",
+            "type": "button"
+          },
+          "value": "",
+          "x": 996,
+          "y": 334,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791905680262/state_008_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-20",
+            "type": "link",
+            "text": "Clear completed",
+            "conf": 0.33,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 1446
+        }
+      ],
+      "states_observed": [
+        {
+          "state_id": "state_003",
+          "screenshot": "storage/screenshots/exec_1791905680262/state_003_after_fill.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 34,
+          "ocr_words": 119,
+          "merged_evidence": "storage/screenshots/exec_1791905680262/state_003_after_fill_merged.png"
+        },
+        {
+          "state_id": "state_004",
+          "screenshot": "storage/screenshots/exec_1791905680262/state_004_after_fill.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 41,
+          "ocr_words": 120,
+          "merged_evidence": "storage/screenshots/exec_1791905680262/state_004_after_fill_merged.png",
+          "elements_delta": 7
+        },
+        {
+          "state_id": "state_005",
+          "screenshot": "storage/screenshots/exec_1791905680262/state_005_after_fill.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 45,
+          "ocr_words": 122,
+          "merged_evidence": "storage/screenshots/exec_1791905680262/state_005_after_fill_merged.png",
+          "elements_delta": 4
+        },
+        {
+          "state_id": "state_006",
+          "screenshot": "storage/screenshots/exec_1791905680262/state_006_after_click.png",
+          "url": "https://todomvc.com/examples/react/dist/",
+          "elements": 48,
+          "ocr_words": 124,
+          "merged_evidence": "storage/screenshots/exec_1791905680262/state_006_after_click_merged.png",
+          "elements_delta": 3
+        },
+        {
+          "state_id": "state_007",
+          "screenshot": "storage/screenshots/exec_1791905680262/state_007_after_click.png",
+          "url": "https://todomvc.com/examples/react/dist/#/active",
+          "elements": 37,
+          "ocr_words": 121,
+          "merged_evidence": "storage/screenshots/exec_1791905680262/state_007_after_click_merged.png",
+          "elements_delta": -11
+        },
+        {
+          "state_id": "state_008",
+          "screenshot": "storage/screenshots/exec_1791905680262/state_008_after_click.png",
+          "url": "https://todomvc.com/examples/react/dist/#/active",
+          "elements": 39,
+          "ocr_words": 120,
+          "merged_evidence": "storage/screenshots/exec_1791905680262/state_008_after_click_merged.png",
+          "elements_delta": 2
+        }
+      ],
+      "duration_ms": 12450
+    }
+  ]
+}

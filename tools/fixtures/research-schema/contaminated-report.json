@@ -1,0 +1,7 @@
+{
+  "sample_class": "contaminated",
+  "run": { "id": "sample-contaminated", "source": "schema-fixture" },
+  "result": { "verdict": "CONTAMINATED" },
+  "contamination": ["fixture policy deviation"],
+  "cases": [{ "id": "CONTAM-1", "verdict": "PASS", "tc_source": "fixture", "label": "ASSISTED", "block": null, "evid_paths": ["evidence.txt"] }]
+}

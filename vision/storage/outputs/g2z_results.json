@@ -1,10 +1,10 @@
 {
-  "ts": "2026-10-17T12:06:12.513Z",
+  "ts": "2026-10-18T12:20:35.230Z",
   "api_calls": 0,
   "autonomy": "ASSISTED",
   "brain": "none-seeded-steps",
   "seeded_perception": "dom-derived visual_dom (conf.yolo=0.5, disclosed); vision weights absent",
-  "pass": "19/21",
+  "pass": "24/45",
   "rows": [
     {
       "tc_id": "zoo-accordion",
@@ -13,9 +13,151 @@
       "app_outcome": "accepted",
       "verification_strength": "moderate",
       "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-backforward",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-captcha",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "strong",
+      "failure_cause": "executor:oracle unsatisfied",
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-combobox",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-contenteditable",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-contextmenu",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-cookievariant",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-datepicker",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-filedownload",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-longform",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-nestediframe",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-popup",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-slider",
+      "action_class": "value",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-sortable",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-sticky",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-tooltip",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
+    },
+    {
+      "tc_id": "zoo-batch4-viewport",
+      "action_class": "pointer",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "moderate",
+      "failure_cause": null,
+      "notes": []
     },
     {
       "tc_id": "zoo-cart-checkout-wizard",
@@ -28,9 +170,7 @@
         "target-only:Ship to",
         "target-only:Review order",
         "target-only:Place order"
-      ],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      ]
     },
     {
       "tc_id": "zoo-cookie-banner",
@@ -39,9 +179,7 @@
       "app_outcome": "accepted",
       "verification_strength": "moderate",
       "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "notes": []
     },
     {
       "tc_id": "zoo-dbl-right-click",
@@ -50,9 +188,7 @@
       "app_outcome": "accepted",
       "verification_strength": "moderate",
       "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "notes": []
     },
     {
       "tc_id": "zoo-dialogs",
@@ -61,9 +197,7 @@
       "app_outcome": "accepted",
       "verification_strength": "moderate",
       "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "notes": []
     },
     {
       "tc_id": "zoo-drag-drop",
@@ -72,9 +206,7 @@
       "app_outcome": "accepted",
       "verification_strength": "moderate",
       "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "notes": []
     },
     {
       "tc_id": "zoo-form-validate",
@@ -83,9 +215,7 @@
       "app_outcome": "accepted",
       "verification_strength": "strong",
       "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "notes": []
     },
     {
       "tc_id": "zoo-hover-menu",
@@ -96,9 +226,7 @@
       "failure_cause": null,
       "notes": [
         "target-only:Widgets"
-      ],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      ]
     },
     {
       "tc_id": "zoo-iframe",
@@ -109,172 +237,215 @@
       "failure_cause": "executor:No semantic signal and page body text too short (32 chars)",
       "notes": [
         "read-text-dropped:observe-only"
-      ],
-      "executor_status": "FAIL",
-      "oracle_verdict": "FAIL"
+      ]
     },
     {
       "tc_id": "zoo-infinite-scroll",
       "action_class": "system",
-      "verdict": "FAIL",
-      "app_outcome": "n/a",
-      "verification_strength": "none",
-      "failure_cause": "executor:No semantic signal and page body text too short (86 chars)",
+      "verdict": "PASS",
+      "app_outcome": "accepted",
+      "verification_strength": "strong",
+      "failure_cause": null,
       "notes": [
         "unseeded:#feed"
-      ],
-      "executor_status": "FAIL",
-      "oracle_verdict": "FAIL"
+      ]
     },
     {
       "tc_id": "zoo-keyboard-only",
       "action_class": "key",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-login-6users",
       "action_class": "value",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "strong",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-modal",
       "action_class": "pointer",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-new-tab",
       "action_class": "pointer",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "strong",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-paginate-sort-filter-search",
       "action_class": "value",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "strong",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-select-check-radio",
       "action_class": "value",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "strong",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-shadow-dom",
       "action_class": "value",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [
-        "unseeded:#zoo-login>>>#shadow-user",
-        "unseeded:#zoo-login>>>#shadow-go"
-      ],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-spinner-delayed",
       "action_class": "pointer",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-tabs",
       "action_class": "pointer",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-toast",
       "action_class": "pointer",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     },
     {
       "tc_id": "zoo-upload-download",
       "action_class": "value",
-      "verdict": "PASS",
-      "app_outcome": "accepted",
-      "verification_strength": "moderate",
-      "failure_cause": null,
-      "notes": [],
-      "executor_status": "PASS",
-      "oracle_verdict": "PASS"
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
+    },
+    {
+      "tc_id": "zoo-shop-cart",
+      "action_class": "pointer",
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
+    },
+    {
+      "tc_id": "zoo-shop-checkout",
+      "action_class": "value",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 1 (fill): no_elements_in_current_state. No stale coord",
+      "notes": [
+        "target-only:Ship to",
+        "target-only:Place order"
+      ]
+    },
+    {
+      "tc_id": "zoo-shop-detail",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 1 (click): no_elements_in_current_state. No stale coor",
+      "notes": [
+        "target-only:Add to cart"
+      ]
+    },
+    {
+      "tc_id": "zoo-shop-filter",
+      "action_class": "value",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor-error:Step 1 (select) failed: executeAction: select requires numeric x and y coordinat",
+      "notes": [
+        "target-only:cat-filter",
+        "target-only:Apply"
+      ]
+    },
+    {
+      "tc_id": "zoo-shop-list",
+      "action_class": "pointer",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 1 (click): no_elements_in_current_state. No stale coor",
+      "notes": [
+        "target-only:Search"
+      ]
+    },
+    {
+      "tc_id": "zoo-shop-login",
+      "action_class": "value",
+      "verdict": "FAIL",
+      "app_outcome": "n/a",
+      "verification_strength": "none",
+      "failure_cause": "executor:Unresolved target at step 1 (fill): no_elements_in_current_state. No stale coord",
+      "notes": [
+        "target-only:Username",
+        "target-only:Password",
+        "target-only:Login"
+      ]
+    },
+    {
+      "tc_id": "zoo-shop-search",
+      "action_class": "value",
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
+    },
+    {
+      "tc_id": "zoo-shop-sort",
+      "action_class": "pointer",
+      "verdict": "PENDING",
+      "app_outcome": "n/a",
+      "verification_strength": "NONE",
+      "failure_cause": "page-2x:seed-failed:page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5"
     }
   ],
   "per_class": [
     {
       "action_class": "pointer",
-      "tcs": 12,
-      "pass": 12,
-      "pass_rate": 1
+      "tcs": 27,
+      "pass": 17,
+      "pass_rate": 0.63
     },
     {
       "action_class": "value",
-      "tcs": 6,
+      "tcs": 15,
       "pass": 6,
-      "pass_rate": 1
+      "pass_rate": 0.4
     },
     {
       "action_class": "system",
       "tcs": 2,
-      "pass": 0,
-      "pass_rate": 0
+      "pass": 1,
+      "pass_rate": 0.5
     },
     {
       "action_class": "key",
       "tcs": 1,
-      "pass": 1,
-      "pass_rate": 1
+      "pass": 0,
+      "pass_rate": 0
     }
   ],
   "note": "classify-only: no page/truth/executor file was modified by this run"

@@ -1,0 +1,19 @@
+{
+  "revision": "a7f99216fd18706cf31a3777f5cbc43b0cbd22e29586e148ef091a5edaaee00a",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "source": "SUB-pinned current bytes; owner-forwarded report",
+  "files": [
+    {
+      "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+      "sha256": "7d3b06dd5ef3adfbc470ec04a94835e766d2ac9466ed929cd8080e5b714adc5b"
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "sha256": "c545f6382a74c122e8f656b2b5dd14b388e9b686b627e7dd66e2eb29b34ee3de"
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "sha256": "4aeaad1466b08a07b42aa3036f848c43f91ef4c3302c086461da1e8925cade0c"
+    }
+  ]
+}

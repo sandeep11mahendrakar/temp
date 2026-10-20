@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "runs": [
+    {
+      "site": "s",
+      "run_id": "r1",
+      "ts": "2026-10-18T18:38:44.723Z",
+      "summary": "PASS 1/1",
+      "phases_done": [
+        "a"
+      ],
+      "verdict": "PASS",
+      "delta": null
+    }
+  ]
+}

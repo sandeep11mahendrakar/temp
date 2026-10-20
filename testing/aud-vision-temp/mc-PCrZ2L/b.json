@@ -1,0 +1,1 @@
+{"samples":[{"report":{"schema":1,"run":{"id":"x"},"result":{"verdict":"PASS","pass_rate":1},"cases":[],"cost":{"api_calls":0,"tokens_in":0,"tokens_out":0,"usd_estimated":null},"storage":{"paths":[]}}}]}

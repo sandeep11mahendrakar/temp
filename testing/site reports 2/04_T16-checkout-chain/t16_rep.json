@@ -1,0 +1,527 @@
+{
+  "architecture": "B",
+  "run_id": "exec_1791906843898",
+  "evidence_dir": "storage/screenshots/exec_1791906843898",
+  "re_detection_enabled": true,
+  "source_url": "https://www.saucedemo.com/",
+  "test_cases_file": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\t16_chain.json",
+  "started_at": "2026-10-13T15:54:04.117Z",
+  "finished_at": "2026-10-13T15:54:26.819Z",
+  "total_duration_ms": 22702,
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "errors": 0,
+    "pass_rate": 1,
+    "multi_step_tests": 1,
+    "fill_actions": 5,
+    "scroll_actions": 0,
+    "states_observed": 11,
+    "verification_methods": {
+      "url_change": 1
+    },
+    "weak_verifications": 0,
+    "stale_coordinates_prevented": 5,
+    "weak_count": 0,
+    "unresolved_targets": 0,
+    "warnings": 0
+  },
+  "results": [
+    {
+      "id": "T16-CHECKOUT",
+      "objective": "P7/T16 LoopB executor proof: saucedemo full checkout chain",
+      "expected_result": "Login, backpack to cart, checkout with John/Doe/12345, finish at checkout-complete",
+      "evidence": null,
+      "inferred_behavior": null,
+      "expect_navigation": true,
+      "expected_text": "Thank you for your order",
+      "status": "PASS",
+      "weak_steps": 0,
+      "verdict": "PASS",
+      "failure_reason": null,
+      "verification": {
+        "method": "url_change",
+        "detail": "navigated to https://www.saucedemo.com/checkout-complete.html"
+      },
+      "verification_strength": "strong",
+      "stale_coordinates_prevented": 5,
+      "unresolved_targets": 0,
+      "warnings": [],
+      "before_screenshot": "storage/screenshots/exec_1791906843898/state_002_before_T16-CHECKOUT.png",
+      "failure_screenshot": null,
+      "url_before": "https://www.saucedemo.com/",
+      "url_after": "https://www.saucedemo.com/checkout-complete.html",
+      "steps_executed": [
+        {
+          "index": 1,
+          "action": "fill",
+          "target": {
+            "text": "",
+            "type": "text_input"
+          },
+          "value": "standard_user",
+          "x": 640,
+          "y": 174,
+          "ok": true,
+          "before_screenshot": "storage/screenshots/exec_1791906843898/state_002_before_T16-CHECKOUT.png",
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_003_after_fill.png",
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"standard_user\""
+          },
+          "resolved_element": {
+            "id": "elem-2",
+            "type": "text_input",
+            "text": "",
+            "conf": 0.71,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 3067
+        },
+        {
+          "index": 2,
+          "action": "fill",
+          "target": {
+            "text": "",
+            "type": "text_input"
+          },
+          "value": "secret_sauce",
+          "x": 640,
+          "y": 228,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_004_after_fill.png",
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"secret_sauce\""
+          },
+          "resolved_element": {
+            "id": "elem-1",
+            "type": "text_input",
+            "text": "",
+            "conf": 0.71,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 2534
+        },
+        {
+          "index": 3,
+          "action": "click",
+          "target": {
+            "text": "Login",
+            "type": "button"
+          },
+          "value": "",
+          "x": 640,
+          "y": 325,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_005_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-0",
+            "type": "button",
+            "text": "Login",
+            "conf": 0.86,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 1630
+        },
+        {
+          "index": 4,
+          "action": "click",
+          "target": {
+            "text": "Add to cart",
+            "type": "button"
+          },
+          "value": "",
+          "x": 493,
+          "y": 356,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_006_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-8",
+            "type": "button",
+            "text": "",
+            "conf": 0.68,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 1551
+        },
+        {
+          "index": 5,
+          "action": "click",
+          "target": {
+            "text": "",
+            "type": "badge"
+          },
+          "value": "",
+          "x": 1235,
+          "y": 19,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_007_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-20",
+            "type": "badge",
+            "text": "",
+            "conf": 0.54,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 1345
+        },
+        {
+          "index": 6,
+          "action": "click",
+          "target": {
+            "text": "Checkout",
+            "type": "button"
+          },
+          "value": "",
+          "x": 1155,
+          "y": 428,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_008_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-1",
+            "type": "button",
+            "text": "",
+            "conf": 0.67,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 1352
+        },
+        {
+          "index": 7,
+          "action": "fill",
+          "target": {
+            "text": "Firs",
+            "type": "link"
+          },
+          "value": "John",
+          "x": 471,
+          "y": 273,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_009_after_fill.png",
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"John\""
+          },
+          "resolved_element": {
+            "id": "elem-12",
+            "type": "link",
+            "text": "Firs:",
+            "conf": 0.29,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 2180
+        },
+        {
+          "index": 8,
+          "action": "fill",
+          "target": {
+            "text": "Las ane",
+            "type": "link"
+          },
+          "value": "Doe",
+          "x": 484,
+          "y": 326,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_010_after_fill.png",
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"Doe\""
+          },
+          "resolved_element": {
+            "id": "elem-4",
+            "type": "link",
+            "text": "Las ane",
+            "conf": 0.42,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 2105
+        },
+        {
+          "index": 9,
+          "action": "fill",
+          "target": {
+            "text": "al",
+            "type": "link"
+          },
+          "value": "12345",
+          "x": 502,
+          "y": 380,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_011_after_fill.png",
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"12345\""
+          },
+          "resolved_element": {
+            "id": "elem-6",
+            "type": "link",
+            "text": "al",
+            "conf": 0.37,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 2211
+        },
+        {
+          "index": 10,
+          "action": "click",
+          "target": {
+            "text": "Continue",
+            "type": "button"
+          },
+          "value": "",
+          "x": 1155,
+          "y": 616,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_012_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-1",
+            "type": "button",
+            "text": "Continua",
+            "conf": 0.68,
+            "synth": null
+          },
+          "resolution_via": "fuzzy_windowed_edit",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 1370
+        },
+        {
+          "index": 11,
+          "action": "click",
+          "target": {
+            "text": "Finish",
+            "type": "button"
+          },
+          "value": "",
+          "x": 1139,
+          "y": 697,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791906843898/state_013_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-2",
+            "type": "button",
+            "text": "Finish",
+            "conf": 0.57,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": true,
+          "state_id_before": null,
+          "duration_ms": 1334
+        }
+      ],
+      "states_observed": [
+        {
+          "state_id": "state_003",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_003_after_fill.png",
+          "url": "https://www.saucedemo.com/",
+          "elements": 19,
+          "ocr_words": 19,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_003_after_fill_merged.png"
+        },
+        {
+          "state_id": "state_004",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_004_after_fill.png",
+          "url": "https://www.saucedemo.com/",
+          "elements": 21,
+          "ocr_words": 19,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_004_after_fill_merged.png",
+          "elements_delta": 2
+        },
+        {
+          "state_id": "state_005",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_005_after_click.png",
+          "url": "https://www.saucedemo.com/inventory.html",
+          "elements": 47,
+          "ocr_words": 183,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_005_after_click_merged.png",
+          "elements_delta": 26
+        },
+        {
+          "state_id": "state_006",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_006_after_click.png",
+          "url": "https://www.saucedemo.com/inventory.html",
+          "elements": 43,
+          "ocr_words": 184,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_006_after_click_merged.png",
+          "elements_delta": -4
+        },
+        {
+          "state_id": "state_007",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_007_after_click.png",
+          "url": "https://www.saucedemo.com/cart.html",
+          "elements": 25,
+          "ocr_words": 39,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_007_after_click_merged.png",
+          "elements_delta": -18
+        },
+        {
+          "state_id": "state_008",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_008_after_click.png",
+          "url": "https://www.saucedemo.com/checkout-step-one.html",
+          "elements": 21,
+          "ocr_words": 23,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_008_after_click_merged.png",
+          "elements_delta": -4
+        },
+        {
+          "state_id": "state_009",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_009_after_fill.png",
+          "url": "https://www.saucedemo.com/checkout-step-one.html",
+          "elements": 21,
+          "ocr_words": 21,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_009_after_fill_merged.png",
+          "elements_delta": 0
+        },
+        {
+          "state_id": "state_010",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_010_after_fill.png",
+          "url": "https://www.saucedemo.com/checkout-step-one.html",
+          "elements": 22,
+          "ocr_words": 20,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_010_after_fill_merged.png",
+          "elements_delta": 1
+        },
+        {
+          "state_id": "state_011",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_011_after_fill.png",
+          "url": "https://www.saucedemo.com/checkout-step-one.html",
+          "elements": 18,
+          "ocr_words": 20,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_011_after_fill_merged.png",
+          "elements_delta": -4
+        },
+        {
+          "state_id": "state_012",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_012_after_click.png",
+          "url": "https://www.saucedemo.com/checkout-step-two.html",
+          "elements": 37,
+          "ocr_words": 49,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_012_after_click_merged.png",
+          "elements_delta": 19
+        },
+        {
+          "state_id": "state_013",
+          "screenshot": "storage/screenshots/exec_1791906843898/state_013_after_click.png",
+          "url": "https://www.saucedemo.com/checkout-complete.html",
+          "elements": 17,
+          "ocr_words": 41,
+          "merged_evidence": "storage/screenshots/exec_1791906843898/state_013_after_click_merged.png",
+          "elements_delta": -20
+        }
+      ],
+      "duration_ms": 20682
+    }
+  ]
+}

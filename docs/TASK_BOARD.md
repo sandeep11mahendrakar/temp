@@ -3332,7 +3332,720 @@ All rows above remain OPEN on sheet pending reviewer/sub-master flip. api_calls 
 
 D45 [SUB-MASTER 2026-10-18]: PROMPT31 UNBLOCK FX-10/11; append-only. Verify FX-10b + FX-12 independently before FX-11b close; close requires Vision/MCP rerun and tests_added=14 (525->539).
 ## PROMPT31 FIX ROUND (human order; append-only)
-FX-10b label-source | VERIFY | SUB | Use docs/R3_RESULTS.jsonl:167 (Q12) + :225 (GL1); report JSON not retained; align labels in FINAL_EVAL/CLAIMS_MATRIX/FINAL_STATE.
-FX-12 tier-mean-scope | VERIFY | SUB | List five citable Tier 4 rows outside all emitted means; method=campaignTable.js over INDEX.md, not metricsCalc; T1/T2 gap confounded.
-FX-11b FIN-reclose | OPEN | SUB | After FX-10b/FX-12 independent ACCEPT + Vision/MCP rerun and numeric +14 tests_added, issue COMPLETE WITH KNOWN GAPS and PROJECT-PLAN-COMPLETE.
+FX-10b label-source | DONE | SUB | Different-worker ACCEPT; Q12 R3_RESULTS:167=AUTONOMOUS(select-only); GL1 :225=NONBLIND; report JSONs not retained.
+FX-12 tier-mean-scope | DONE | SUB | Different-worker ACCEPT; FINAL_EVAL lists five citable Tier4 rows outside means; campaignTable.js/INDEX; T1/T2 confounded.
+FX-11b FIN-reclose | DONE | SUB | Independent FX-10b/FX-12 ACCEPT; Vision539/539+MCP41/41; tests_added=14 (525->539); COMPLETE WITH KNOWN GAPS issued.
 [2026-10-18 20:56 IST] [SUB] PROMPT31 docs prepared; FX-10b/FX-12 => VERIFY; FX-11b awaits independent verifier and suite rerun.
+
+[2026-10-18 20:57 IST] [SUB] PROMPT31 ACCEPT: FX-10b/FX-12 independent ACCEPT; suites Vision539/539 + MCP41/41; adapter tests14/14; drift=+14 (b3d86e4 +13, b2ea3c5 +1). FX-10b/FX-12/FX-11b DONE. PROJECT-PLAN-COMPLETE WITH KNOWN GAPS.
+
+D46 [SUB-MASTER 2026-10-18]: PROMPT32 PRE-RUN HARDENING loaded; no 30-site run until P-5 VERIFIED. P-1..P-7 same PV/AUD/locks; live run gate binding.
+## PROMPT32 PRE-RUN HARDENING (human order; append-only)
+P-1 runArchive | DONE | SUB | M | tools | Archive each run without overwrite; manifest + per-call JSONL; missing values NOT_RECORDED; numeric tests + PV.
+P-2 research-schema | DONE | SUB | M | docs+script | Schema 1.0; PV-3 ACCEPT; null/false/array rejected; 6 CLI controls + 3 archives; tests5/5.
+P-3 preflight | DONE | SUB | S | tools | Read-only library access + blockDetector; GO/NO-GO; third_party NO-GO unless --permitted.
+P-4 runBatch | VERIFY | W2 | L | OFFLINE phase | Serial/resumable mock runner+checkpoint/watchdog; Z-5 evidence read-only. Full P-4 pending cause/live proof; no run before P-5 VERIFIED.
+P-5 protocol | OPEN | SUB | S | docs | Seed/order/caps/pinned model+date/repeats/metrics/exclusions/labels/stops; tag research-run-1; no src commits during run.
+P-6 record-fixes | DONE | SUB | S | docs | PV ACCEPT; Q5 probe/readback 3/3; R3 corrections retained; GL1 UTF-16LE source hash verified.
+P-7 spotcheck-stats | VERIFY | W1 | S | OFFLINE | stats.js;stats.test.js;spotcheck.js;spotcheck.test.js;docs/SPOTCHECK.csv | 3 repo fixtures=1TC; canonical 152 dirs/0 P1 pairs; deltas Git-verified +9/+8; no sheet; evidence=docs/evidence/p7-completion/20261019-0001.
+[2026-10-18 21:33 IST] [SUB] CLAIM P-1 runArchive; offline only until P-5 independently VERIFIED; no 30-site run.
+
+D47 [SUB-MASTER 2026-10-18]: PROMPT33 TRIAL only; P-1/P-2 DONE prerequisites; T-1..T-5 + independent TV-1..TV-4; no 30-site run. Real upload only owner shell/opencode; safe targets only; key env-only; RLS/insert-only/local-first.
+## PROMPT33 TRIAL RUN (human order 2026-10-18; NOT citable; label TRIAL)
+T-1 uploader | VERIFY | W-CODEX | M | tools | Local-first immutable outbox; env-only JWT role=anon or sb_publishable key; POST ignore-duplicates; GET configured view; tests10/10; no upload; backend RLS/table/view pending PV-1.
+TV-1 audit-uploader | OPEN | AUD | S | tools | deps T-1 VERIFY; read-only code/test review + rerun; verify env-only key, RLS, no updates, eligible-only view, 3 secret-form rejects, duplicate=1 row, net-fail retains/retries outbox; ACCEPT/REJECT with raw evidence.
+T-2 safe-trial | OPEN | - | M | runs+reports | deps T-1 DONE,DB-5 DONE; only saucedemo, zoo captcha-like (BLOCKED), zoo iframe (partial); P-1 archive + P-2 report each; record time/calls/screens; upload via owner shell/opencode; check current free-tier limits before Storage; no other sites.
+TV-2 audit-trial | OPEN | AUD | S | runs+reports | deps T-2 VERIFY; read-only verify 3 allowlisted targets/labels, immutable P-1 archives, P-2 reports, time/calls/screens, upload evidence and secret scan; reject any extra target or CAPTCHA evasion; ACCEPT/REJECT with raw evidence.
+T-3 roundtrip | VERIFY | W-A | S | tools+reports | step0 offline verifier DONE-PROOF posted; AUD-OFFLINE pending read back 3 rows; compare SHA256+manifest fields; repeat upload => 1 row; verify eligibility view excludes declared BLOCKED/partial; scan stored payload for service_role|sb_secret_|eyJ.
+TV-3 audit-roundtrip | OPEN | AUD | S | tools+reports | deps T-3 VERIFY; independently compare local/remote SHA256+manifest fields; verify one row per run_id after duplicate upload, eligibility exclusions, and zero secret-pattern hits; ACCEPT/REJECT with raw evidence.
+T-4 trial-report | OPEN | - | S | docs/TRIAL_REPORT.md | deps T-3 DONE; <=60 lines; per-run table, failures+cause-class, schema gaps, time/cost, secret/storage status, GO/NO-GO for schema 1.0 freeze+P-5; label TRIAL, NOT citable.
+TV-4 audit-report | OPEN | AUD | S | docs/TRIAL_REPORT.md | deps T-4 VERIFY; read-only check <=60 lines, all 3 runs/evidence, failure causes, schema gaps, time/cost provenance, storage/secret status, honest freeze+P-5 recommendation; ACCEPT/REJECT with cites.
+T-5 owner-freeze | OPEN | OWNER | S | docs/TRIAL_REPORT.md | deps T-4 DONE; owner records freeze/no-freeze decision; freeze approval only unlocks P-5; tag research-run-1 only after P-5 VERIFIED; 30-site run requires later owner gate.
+
+## MASTER DB-INTEGRATION ADDENDUM (owner-approved direction; plans-only)
+DB-DECISION | Sandeep approved same-project companion table + trusted server-side upload in master chat; existing team A/B objects preserved. (docs/DB_INTEGRATION_PLAN.md)
+DB-SCOPE | Owner explicitly requested plan + minor board tasks while PROMPT32/33 continue; append-only additions; no existing ownership/state changed; no new flags or campaign authority.
+DB-REF | Remote source pinned 6a558f3; deployed state unverified; TV-1 remains unresolved. (docs/DB_INTEGRATION_PLAN.md; docs/INTERCOM.md:B-22:33-AUD)
+DB-1 field-contract | OPEN | - | S | deps P-1,P-2 DONE | lock docs/DB_FIELD_MAP.md;tools/r3DbContract.js+test | offline field/status/ID/availability map; negative guessed-pairing control; PV | B hard-block proof.
+DB-2 companion-sql | OPEN | - | M | deps DB-1 DONE | lock database/r3_companion.sql+test.sql | draft additive table/RLS/grants/immutability/views; allow+deny controls; no deploy; PV | B no live SQL.
+DB-3 transport-align | OPEN | - | M | deps DB-1,DB-2 DONE + W-CODEX handoff | lock tools/trialUploader.js+test | server-env auth, payload hash, duplicate conflict, exact-ID readback, timeout; negative controls; TV-1 | B preserve T-1.
+DB-4 research-export | OPEN | - | M | deps DB-1 DONE | lock tools/r3DbExport.js+test;docs/DB_REPORT_COVERAGE.md | sanitize keys+values, raw/export hashes, identity+eligibility, template gap map; negative controls; PV | B no archive overwrite.
+DB-V independent-review | OPEN | AUD | S | deps DB-1..DB-4 VERIFY/DONE | lock read-only | independent outputs; no self-audit/fixes; route uploader verdict to TV-1; negative controls | B UNVERIFIABLE with evidence.
+DB-5 backend-proof | BLOCKED | - | M | deps DB-V ACCEPT + owner DB-access order/environment | lock R3 table only; owner shell/opencode | additive deploy + metadata/RLS/no-update/duplicate/hash/view proof; AUD review | B remain local; no flag inferred.
+DB-RETURN | author/verifier | paths | commit | raw command+exit | tests_added/file | negative control | delta/block proof; local explicit-path commit only after AIza=0; no push/delete.
+
+## PROMPT34 DB-COMPLETION / FOUR WORKERS (owner order; append-only revision)
+P34-AUTH | Owner requests complete DB integration via W1..W4; approved companion table + trusted server uploads retained; master plans-only; SUB integrates; AUD verifies.
+P34-HISTORY | Latest DB rows below supersede earlier MASTER DB-INTEGRATION row definitions; same IDs are carried, not duplicate tasks; no previous claims/results erased.
+P34-SCOPE | Offline code+SQL+workflow, backend proof, existing safe trial+roundtrip+report; no research campaign, no flag inferred, no team-table changes.
+P34-CARRY | T-1 VERIFY=>W-CODEX retained; DB-3 source edit waits explicit SUB/author handoff. Existing T/TV/P rows retained; do not create replacement trials.
+P34-LANES | W1=>DB-1,DB-4,T-4,DB-8; W2=>DB-2a,DB-2,DB-5; W3=>DB-3a,DB-3,T-3; W4=>DB-6,DB-7,T-2.
+P34-START | W1 DB-1; W2 DB-2a; W3 DB-3a; W4 DB-6; independent exact file scopes in docs/DB_WORKER_<N>_PROMPT.md.
+P34-CLAIM | Assigned eligible OPEN only; deps DONE; recheck current locks; no other-lane edits. Workers append own proof/Q/PING; SUB handles shared status integration.
+P34-PV | AUD reviews each ready VERIFY row immediately; SUB may flip that row DONE after independent ACCEPT; DB-V final rollup does not block early dependencies.
+P34-PV | Worker self-AUD is evidence only, not independent acceptance; no author verifies own change. SQL source review is not deployed RLS proof.
+P34-RETURN | Raw commands+exit, tests_added/file, negative control, delta/block proof, artifact paths+commit; scan own tracked+untracked paths; local explicit commits only; no push/delete.
+DB-1 field-contract | DONE | W3 | M | deps P-1,P-2 DONE | lock contract | AUD ACCEPT; precedence+conflicting-source control; tests13/13, Vision539/539, MCP41/41; tests_added=1.
+DB-1 FILES | docs/DB_FIELD_MAP.md; tools/r3DbContract.js; tools/r3DbContract.test.js. (docs/DB_WORKER_1_PROMPT.md)
+DB-2a SQL-preflight-pack | DONE | W2 | S | deps none | lock SQL-inspect | PV ACCEPT offline preflight only; synthetic controls 5/5; hosted DB remains uninspected (AUD B-23:12).
+DB-2a FILES | docs/DB_SQL_REVIEW.md; database/r3_inspect.sql. (docs/DB_WORKER_2_PROMPT.md)
+DB-2a PROOF | fc06507 | G1 hits=0; synthetic controls=5/5; SQL markers=10/10; Vision539/539+MCP41/41; no DB runtime; tests_added=0 (DB_SQL_REVIEW.md, r3_inspect.sql).
+DB-2 companion-sql | DONE | W4 | M | deps DB-1,DB-2a DONE | lock companion-SQL | AUD ACCEPT; PGlite0.5.10/PG18.6 migration+tests exit0; placeholders unchanged; rollback rows=0; hosted defs remain unknown.
+DB-2 FILES | database/r3_companion.sql; database/r3_companion.test.sql. No existing team schema modifications. (docs/DB_WORKER_2_PROMPT.md)
+DB-3a server-runbook | DONE | W3 | S | deps none | lock server-doc | AUD ACCEPT docs contract only; C1-C11; no hosted proof (AUDIT.jsonl:97; INTERCOM B-23:16-AUD).
+DB-3a FILES | docs/DB_SERVER_UPLOAD.md. (docs/DB_WORKER_3_PROMPT.md)
+DB-3 transport-align | DONE | W3 | M | deps DB-1,DB-2,DB-3a,DB-4 effective DONE + T-1 recovery ACCEPT | lock uploader=>W3 | server env+timeout+retry+duplicate hash conflict+exact-ID readback; negatives; TV-1 | B preserve recovered baseline; no live upload.
+DB-3 FILES | tools/trialUploader.js; tools/trialUploader.test.js; consume W1 contract/exporter read-only. (docs/DB_WORKER_3_PROMPT.md)
+DB-4 research-export | VERIFY | W2 | M | deps DB-1 DONE | lock export | sanitize keys+values; source/export hashes; stable paths; missing telemetry; template coverage map; leak/tamper/identity controls; PV | B no archive/template rewrite; proof INTERCOM 23:44-W2.
+DB-4 FILES | tools/r3DbExport.js; tools/r3DbExport.test.js; docs/DB_REPORT_COVERAGE.md. (docs/DB_WORKER_1_PROMPT.md)
+DB-6 trial-fixtures | DONE | W4 | S | deps none | lock trial-fixtures | PV ACCEPT synthetic fixtures only; 11 fixtures=6 accept/5 reject; no live/export claim (AUD B-23:12).
+DB-6 FILES | tools/fixtures/db-trial/*.json; docs/DB_TRIAL_EXPECTATIONS.md. (docs/DB_WORKER_4_PROMPT.md)
+DB-7 full-path-workflow | DONE | W-B | M | deps DB-1,DB-3,DB-4,DB-6 DONE | lock workflow | archive/report/outbox/upload/readback CLI; default offline; real-module mock e2e; failure retains data; negatives; PV | B hard-block proof.
+DB-7 FILES | tools/r3DbWorkflow.js; tools/r3DbWorkflow.test.js; docs/DB_RUNBOOK.md. Consume P-1/P-2 unchanged. (docs/DB_WORKER_4_PROMPT.md)
+DB-5 backend-proof | BLOCKED | OC-DB | M | deps DB-2,DB-3,DB-4,DB-7 DONE + owner DB access/environment | lock R3 table; external lane | additive deploy+real allow/deny/hash/duplicate/view proof; AUD | B explicit blocker; no USER-* inferred.
+DB-5 FILES | docs/evidence/db-backend/<new-id>/ sanitized proof; owner shell/opencode only; baseline confirms existing team objects preserved. (docs/DB_WORKER_2_PROMPT.md)
+P34-TRIAL-OWNERS | Existing unclaimed T-2=>W4; T-3=>W3; T-4=>W1; SUB checks no new claim before applying mapping; TV-1..TV-4=>AUD unchanged; T-5=>OWNER.
+P34-TRIAL-DEPS | T-2 also waits DB-5 DONE + T-1 DONE; existing T-3/T-4 deps and TV reviews stand. Backend proof resolves TV-1; offline mock pass cannot close it.
+P34-LIVE | W2 DB-only deployment -> release; W4 safe trial HOLDER -> release; W3 roundtrip. One browser driver; opencode/owner shell network only; no .env output/foreign processes.
+P34-TARGETS | Existing allowlist: saucedemo, local zoo captcha-like BLOCKED, local zoo iframe partial; new immutable IDs; time/calls/screens measured; no CAPTCHA retry/evasion.
+DB-8 delivery-handoff | OPEN | - | S | deps DB-5,DB-7,T-4 DONE | lock closure-doc | <=60-line DB report + runnable commands/evidence/limits; missing-proof negative; AUD+SUB | B PARTIAL/BLOCKED, never fake COMPLETE.
+DB-8 FILES | docs/DB_COMPLETION_REPORT.md. (docs/DB_WORKER_1_PROMPT.md)
+DB-V independent-review | OPEN | AUD | S | deps each row VERIFY | lock read-only | rolling per-row verdicts + TV carry reviews; final rollup after DB-8/T-4; no code fixes | B UNVERIFIABLE with exact missing proof.
+P34-CLOSE | SUB closes DB program only after independent backend+trial/roundtrip/report ACCEPT, accepted runnable workflow and delivery handoff; owner freeze/research decisions remain separate.
+P34-COORD | docs/DB_COORDINATOR_PROMPT.md; latest plan amendment supersedes older linear DB-V dependency chain. No workers dispatched by master.
+
+## PROMPT35 / PROMPT34 INDEPENDENT VERIFY CHECKLIST AMENDMENT
+P35-AUTH | 18/10/2026, 23:05 IST | Owner order; board-only append; no code/tests/upload/SQL/network/credential access by master; USER-* unchanged.
+P35-PRESERVE | No task rows created/replaced; IDs/owners/claims/deps/states unchanged. P-1/P-2 DONE, T-1 VERIFY/W-CODEX, TV-1 unresolved and DB-5 BLOCKED remain.
+P35-FLOW | Worker raw DONE-PROOF -> own row VERIFY; separate non-author AUD read-only review -> ACCEPT/REJECT/UNVERIFIABLE; only SUB flips independent ACCEPT to DONE.
+P35-INDEPENDENCE | Self-AUD/mock success is not independent acceptance or deployed proof; no auditor implementation fixes. Read-only source review permits isolated temporary mock tests, never hosted mutations.
+P35-REVIEW | Apply these checks to each completed/current task's exact evidence revision; prior DONE not auto-reopened/flipped; missing proof => AUD records finding, SUB decides action.
+P35-ROLLING | DB-V reviews every ready row immediately, not after all implementation. DB-V final DONE is not an implementation dependency.
+P35-DB5 | Required DB-V ACCEPT means a recorded offline prerequisite-bundle ACCEPT before DB-5, not final DB-V DONE; no DB-5 -> DB-V-final -> DB-5 cycle.
+P35-BOUNDARY | All live INSERT/duplicate/conflict/UPDATE/DELETE tests belong to authorized owner shell/opencode; AUD inspects sanitized proof read-only; Codex runs no live actions.
+P35-BOUNDARY | DB-2 verifies SQL layer; DB-3 verifies transport layer; joint deployed behavior is DB-5 proof. Missing later-layer evidence cannot be silently claimed as present.
+P35-EVIDENCE | Each verdict names row, author/reviewer, source HEAD+dirty digest, explicit paths, commands, raw exit/results, test counts, negative controls and immutable evidence refs.
+P35-REVISION | Changed source/hash after review invalidates acceptance for changed scope; re-review affected rows before downstream acceptance; do not stitch different runs into one decision.
+P35-TESTS | Report tests_added numeric per file from baseline/current source+raw tests; docs-only may be zero; don't count assertions/static markers as added tests.
+P35-COMMANDS | Run targeted commands below when artifacts exist; retain exact args/cwd/runtime and exit; expected negative rejection must be distinguished from unexpected harness failure.
+P35-SCAN | Inventory changed tracked paths with git diff --name-only HEAD and new paths with git ls-files --others --exclude-standard; explicit own/evidence paths, not git grep alone.
+P35-SCAN | Exclude credential files/.env from reads; scan eligible changed tracked+untracked source/tests/proof for actual secret values; payload/log/outbox scan marker keys AND values; output counts only.
+P35-SCAN | Payload/evidence markers: service_role|sb_secret_|eyJ plus AIza[0-9A-Za-z_-]{35}; no match text/keys printed. Review literal auth names/synthetic test fixtures separately from leaked secrets.
+P35-SCAN | Record scanner command, scanned path inventory, coverage exclusions, counts and exit; detection control uses synthetic input; exclusion of a file is not a clean scan.
+P35-REGRESSION | Required current commands: node --test vision/test/*.test.js; node --test vision/mcp/server.test.js. Record raw totals/failures/exit and tests_added/file.
+P35-BASELINE | Vision539/539 + MCP41/41 at INTERCOM B-22:33-AUD is historical only; do not reuse it as current proof. Reuse current raw run only when revision+scope unchanged and cited.
+P35-VERDICT | ACCEPT only required checks proven; REJECT for demonstrated failure; UNVERIFIABLE for missing runtime/access/evidence; no unavailable backend claim accepted from mocks.
+P35-NEGATIVE | Record each corrupted/synthetic input, expected refusal and raw actual outcome; never modify original archives or hosted rows to manufacture a control.
+
+### VERIFY DB-1
+POS | AUD traces each exported field to source file+JSON pointer, accepted types/units, manifest/report IDs, statuses, canonical hash definition, availability and TRIAL exclusion.
+NEG | ID mismatch; guessed A/B pairing; unsupported status; malformed hash/root; missing-vs-zero conflation; TRIAL marked ELIGIBLE must reject.
+CMD | node --test tools/r3DbContract.test.js; worker-provided source-map/fixture check command; record raw counts+exit and tests_added/file.
+AUD | Read docs/DB_FIELD_MAP.md + contract/test source; independently recompute canonical hash on synthetic copy; inspect missing/zero and source-vs-payload hash assertions.
+
+### VERIFY DB-2a
+POS | AUD checks database/r3_inspect.sql + docs/DB_SQL_REVIEW.md cover collisions, columns/types, PK/unique keys, RLS/grants, triggers, view definitions and capacity.
+NEG | Synthetic missing PK/RLS/column/view/capacity or unsafe grants/trigger/collision must fail checklist review; unknown capacity stays UNKNOWN, not safe.
+CMD | Replay worker's exact synthetic metadata review command from DONE-PROOF; record raw inputs/results+exit; inspect SQL AST/statements for read-only intent; no DB connection.
+AUD | No DDL/DML/credential query; inspect transaction/read-only boundaries, object-preservation baseline and expected failure labels; static markers alone cannot prove hosted state.
+
+### VERIFY DB-2
+POS | AUD checks additive companion objects only; accepted DB-1 fields/constraints, RLS/grants, append-only guard, run_id unique, security_invoker eligible-only view and authorized evidence readback.
+NEG | Anon/authenticated unauthorized reads/inserts, UPDATE/DELETE, duplicate ID, bad hash/eligible TRIAL and team-object mutation must be denied or fail test.
+DUP | Same-hash idempotent insert is no-op; different-hash retry is conflict at declared SQL/transport boundary; plain ON CONFLICT DO NOTHING does not prove matching content.
+CMD | Authorized isolated Postgres runner: psql --no-psqlrc --set=ON_ERROR_STOP=1 --file=database/r3_companion.test.sql; no DSN/credential in captured args; retain assertions+exit.
+AUD | Read migration/test SQL; inspect real isolated SQL output and before/after team-object definitions; negative denials caught by assertions; absent runtime => UNVERIFIABLE SQL execution.
+BOUNDARY | Joint transport/hosted duplicate/conflict evidence is required again in DB-3/DB-5; do not introduce a DB-2 dependency on DB-3 or deploy from Codex.
+
+### VERIFY DB-3a
+POS | AUD checks server-only key types/header rules, env names only, bounded retry/readback, redaction, denied public access; cite current official Supabase docs with retrieval date.
+NEG | Reject browser secret, logged/persisted credential, public INSERT policy, secret key treated as legacy JWT, and mocked-as-live RLS claims.
+CMD | Replay worker's documented checklist/control command; inspect docs/DB_SERVER_UPLOAD.md citations and synthetic unsafe examples; raw outcome+exit, docs tests_added=0 if no tests.
+AUD | Compare contract against https://supabase.com/docs/guides/getting-started/api-keys and https://supabase.com/docs/guides/database/postgres/row-level-security; never access real keys.
+
+### VERIFY DB-3
+PRE | DB-1/DB-2/DB-3a/DB-4 DONE + recorded W-CODEX handoff; AUD checks author acknowledgment, preserved dirty diff/hash and released uploader lock before edits.
+POS | Approved server auth only; canonical payload hash; bounded timeout/retry; local-first immutable outbox; exact-ID readback independent of eligibility view.
+NEG | No key in payload/log/outbox; wrong auth/header/config; timeout/network failure retains data; hash tamper; same ID different hash => conflict; mismatch readback fails.
+DUP | Same ID+hash uploaded twice => one stored/mock row with same content; success requires content comparison, not merely HTTP2xx or ignored insert.
+CMD | node --test tools/trialUploader.test.js; synthetic config/transport probes from DONE-PROOF; raw totals/exit + current required regressions.
+AUD | Read final source/tests, fake-network request bodies+headers with synthetic keys only, retry bounds/hash assertions, outbox bytes and error paths; mock proof stays labeled mock.
+
+### VERIFY DB-4
+POS | AUD checks allowlisted sanitizer handles keys+values/URLs; source file hashes retained; canonical sanitized payload hash recomputed; missing telemetry and numeric zero preserved.
+NEG | service_role/sb_secret_/eyJ/AIza payload markers; nested secrets; ID mismatch; tampered artifact/hash; changed same-ID outbox and ungrounded metadata must reject.
+CMD | node --test tools/r3DbExport.test.js; replay explicit counts-only changed tracked+untracked scan; raw exits, scan coverage, tests_added/file.
+AUD | Read exporter/tests + docs/DB_REPORT_COVERAGE.md; compare original/sanitized synthetic copies and hash inputs; map template gaps honestly; no archive/template rewrite.
+
+### VERIFY DB-6
+POS | AUD parses synthetic clean/BLOCKED/partial/contaminated fixtures; paired IDs, source provenance, expected status/availability and research exclusion; no real run claim.
+NEG | Mutated ID, nested secret key/value, eligible TRIAL, missing provenance and false-complete partial run must fail relevant accepted contract/export checks.
+CMD | Replay worker's exact fixture parse/control command; once DB-1/DB-4 are accepted, run fixtures through their actual validators/exporter and record results; no fixture count invention.
+AUD | Read tools/fixtures/db-trial/*.json + docs/DB_TRIAL_EXPECTATIONS.md; distinguish deliberate corrupt controls from valid examples; verify all trial examples excluded.
+
+### VERIFY DB-7
+POS | AUD observes mocked e2e using real P-1 archive + P-2 generator + accepted export/outbox/uploader/readback modules; explicit offline default; synthetic clean path succeeds.
+NEG | Upload fail/timeout retains local archive+outbox; archive overwrite refuses; duplicate/conflicting hash; invalid identity/hash; blocked/partial/TRIAL exclusions; offline mode makes zero network calls.
+CMD | node --test tools/r3DbWorkflow.test.js; targeted archive/schema/export/uploader suites from runbook; raw exits+totals; current Vision/MCP regressions.
+AUD | Inspect tools/r3DbWorkflow.js + tests + docs/DB_RUNBOOK.md; fake only network boundary; inspect archive manifest/artifact hashes and persisted outbox before/after failure.
+AUD | Report is prepared/archived consistently with P-1 immutability; no rewriting old archive to repair ID/report evidence; sample CLI is runnable and default has no live side effects.
+
+### VERIFY DB-5
+PRE | Remain BLOCKED until DB-2/DB-3/DB-4/DB-7 DONE, recorded DB-V offline-bundle ACCEPT and explicit owner DB-access order/environment; no USER-* flag inferred.
+POS | Owner shell/opencode supplies sanitized before/after columns/keys/RLS/grants/triggers/views/capacity + team-object preservation; SQL revision and deployment identity recorded.
+NEG | Real unauthorized access, UPDATE/DELETE, duplicate uniqueness, differing-hash conflict, corrupt hash/readback and ineligible/TRIAL view inclusion must fail as expected.
+CMD | Owner executes accepted r3_inspect.sql, companion SQL tests and runbook upload/readback controls; proof records exact redacted commands+exit/results; AUD does not deploy/upload/mutate.
+AUD | Independently inspect stored-row count/hash/identity, grant/trigger definitions and eligible/evidence view outputs against local sanitized records; no secrets in proof scan.
+AUD | Source SQL or mocks cannot accept hosted RLS/grants/immutability; missing access/runtime/proof => UNVERIFIABLE, DB-5 not DONE; no destructive rollback.
+
+### VERIFY DB-8
+POS | docs/DB_COMPLETION_REPORT.md <=60 lines; runnable commands, accepted evidence/verdict refs, commits, run IDs, actual backend proof, workflow and honest limitations.
+NEG | Missing backend/roundtrip/audit proof must yield PARTIAL/BLOCKED; stale/mismatched revision or fabricated COMPLETE is REJECT.
+CMD | AUD counts report lines with Node fs, resolves every evidence reference and compares raw outputs/commits/run IDs; replay worker's missing-proof control on a temporary input.
+AUD | Check DB-5/DB-7/T-4 DONE dependencies and accepted TV results; no freeze/campaign claim inferred from DB implementation completion.
+
+### VERIFY DB-V
+POS | Separate non-author AUD issues per-row verdicts as rows reach VERIFY; records offline prerequisite-bundle ACCEPT for DB-5 separately from final program rollup.
+NEG | Reject self-acceptance, mixed revision/run evidence, missing required controls, mock-as-hosted claims or completion with unresolved required evidence.
+CMD | Per-row commands above; record current raw regressions, reviewer identity, evidence revision and counts-only scans; audit is read-only apart from authorized verdict record.
+AUD | Review only current task scope; rolling DB-V final state never blocks implementation; SUB alone flips independent ACCEPTed rows; do not wait for final DB-V DONE to review early rows.
+
+### VERIFY T-1 / TV-1
+POS | Fresh independent audit of final DB-3 server-auth source/tests plus DB-5 actual backend proof; retain W-CODEX ownership/history until recorded handoff.
+NEG | Reject old anon-only review reused as final approval; missing hosted RLS/grants/unique ID/append-only/view proof; secret leakage; duplicate conflict ignored.
+CMD | node --test tools/trialUploader.test.js + accepted DB-5 owner-shell evidence commands; current regressions and explicit source/evidence scans; no live action by Codex.
+AUD | Old anon-only verdict remains historical; mocks can prove client behavior only. TV-1 unresolved until fresh required evidence ACCEPT, then SUB decides T-1 flip.
+
+### VERIFY T-2 / TV-2
+POS | Only saucedemo, local zoo captcha-like BLOCKED, local zoo iframe partial; honest TRIAL labels/exclusions; new immutable P-1 archives + P-2 reports and upload receipts.
+NEG | Extra target, CAPTCHA retry/evasion, archive overwrite, fabricated cost/screens/calls, partial upload mislabeled successful or trial included in research => reject.
+CMD | node tools/researchSchema.js validate <each-retained-trial-dir>; offline hash/manifest checks + owner-shell run/upload receipts; exact safe target and source revision per run.
+AUD | Inspect time/calls/screens source counters, report IDs/artifact paths, block/failure causes and counts-only secret scan of stored/exported payload/proof; missing telemetry not zeroed.
+
+### VERIFY T-3 / TV-3
+POS | Exact-ID readback for each trial row including excluded runs; compare canonical payload hash, source hashes and manifest fields against retained local evidence.
+NEG | Duplicate upload leaves one row; conflicting hash/mutated ID must refuse; corrupt readback fails; eligible-only view excludes BLOCKED/partial/TRIAL per declared policy.
+CMD | Owner shell/opencode runs accepted exact-ID readback/duplicate commands; AUD recomputes local canonical hashes offline and inspects sanitized remote output; raw exits+counts.
+AUD | Counts-only scan stored payload keys+values and proof; compare correct raw-source vs sanitized-hash domains; no backend claim from mocked Map results.
+
+### VERIFY T-4 / TV-4
+POS | docs/TRIAL_REPORT.md <=60 lines; all retained safe runs, cause classes, schema gaps, actual time/cost provenance, storage/secret status and honest freeze recommendation.
+NEG | Missing run/artifact, cost guessed from absent counters, weak/partial marked clean, trial called research-citable or freeze claimed without owner decision => reject.
+CMD | Node fs line count + evidence-reference resolution; compare reported figures with raw T-2/T-3 artifacts; replay missing-proof control on temporary input; record exact outputs+exit.
+AUD | Verify TV-2/TV-3 results, all run IDs and source revisions; storage capacity UNKNOWN stays UNKNOWN; no screenshot upload claim without actual evidence.
+
+### VERIFY T-5
+POS | Owner records explicit freeze/no-freeze decision linked to accepted T-4/TV-4; agents summarize that decision only.
+NEG | Agent self-approval, inferred flag, tag before P-5 VERIFIED or campaign without later owner authorization is rejected.
+CMD | Read owner decision provenance + P-5 independent verdict; inspect git tag --list research-run-1 and referenced revision read-only when tag is claimed; never create tag here.
+AUD | Check owner identity/order, exact decision/date, protocol revision and independent P-5 evidence; no 30-site run authority from PROMPT35.
+
+P35-RETURN | AUD: row | reviewer | evidence revision | positive/negative controls | exact commands+exit/results | tests_added/file | scan coverage/counts | verdict | missing proof.
+P35-NO-EXEC | These are future verification instructions, not results. Master changed board only; no tests/audit/upload/SQL/deploy/live run performed.
+
+D48 [SUB-MASTER 2026-10-18]: Explicitly assigned OPEN+DONE deps only; worker DONE-PROOF+self-check => VERIFY; independent AUD reviews promptly; SUB alone flips ACCEPT=>DONE.
+D48-VERIFY: Every new task requires verifier identity/path, POS/NEG controls, exact commands/evidence, scope, deps and verdict destination; add counter-row unless existing TV/PV/DB-V explicitly covers it. No duplicate IDs.
+D48-WATCH: Worker/AUD poll board+latest intercom every 30s for 15m; initial+changes only. No claim stealing; AUD read-only; checkpoint active work and report final state at expiry.
+
+## PROMPT36 / SHARED WORKER CLAIM POOL (owner order; scheduling only)
+P36-AUTH | Owner orders worker-free claiming; W1..W4 explicitly assigned the shared DB/trial implementation pool. This supersedes fixed P34 lanes/packet lane limits, not task scope or verification.
+P36-POOL | DB-1,DB-2,DB-3,DB-4,DB-7,DB-8,T-2,T-3,T-4: any worker may claim when OPEN, deps DONE and lock free. No fresh owner approval needed merely to change worker number.
+P36-RESERVATIONS | For these unclaimed OPEN rows, earlier W1/W2/W3/W4 owner cells are historical lane reservations, not exclusive ownership. Claimant records actual owner when claiming; no duplicate row.
+P36-PRESERVE | Existing CLAIMED/RUNNING/VERIFY rows and outstanding valid intercom claims retain actual holders; no takeover. DONE/BLOCKED/PARKED rows remain as recorded.
+P36-DB1 | Rejected/reopened DB-1 is available to the pool unless a newer valid claim exists. Preserve f09eec5 work; fix outcome-source precedence and add conflicting-source control; fresh P35 AUD review required.
+P36-PRIORITY | Claim DB-1 first. Once AUD ACCEPT + SUB DONE: DB-2 and DB-4 become separate parallel claims. Next DB-3, then DB-7; use current row deps, not this summary as proof.
+P36-DEPS | Keep all real deps and P35 checks; OPEN does not imply eligible. Do not code final SQL/export against unaccepted contract or mark placeholder/mock work as integrated.
+P36-NOW | Last board read: DB-1 OPEN; DB-2a/DB-3a/DB-6 DONE; DB-2/DB-4 wait DB-1; others wait upstream. Re-read live state before claim; not all workers have simultaneous eligible work.
+P36-CLAIM | Pick highest-priority eligible pool row; re-read latest row/intercom; append CLAIM with IST,row,owner,exact files; record actual claimant; re-read for collisions before source edits.
+P36-RACE | First valid durable claim wins; later claimant backs off before edits. Conflicting claims/locks => SUB arbitration; never overwrite another claim or copy independent fixes into the same files.
+P36-WIP | One active implementation row per worker; no speculative future reservation. After VERIFY proof, immediately inspect pool for next eligible row; preserve review author identity.
+P36-FILES | Existing exact FILES lines and packets still define scope; shared contract/SQL/export/uploader/workflow paths each have one active writer.
+P36-HANDOFF | DB-3 still requires recorded W-CODEX handoff + DB-1/DB-2/DB-3a/DB-4 DONE. Pool policy does not release T-1 source or accept hosted backend.
+P36-ROLES | DB-V/TV rows stay separate non-author AUD; SUB alone integrates ACCEPT->DONE; OWNER T-5 stays owner-only. P rows remain under their current scope/authority.
+P36-EXTERNAL | DB-5 stays BLOCKED until prerequisites, DB-V offline ACCEPT + owner access/environment. Once SUB releases OPEN, any network-capable opencode worker may claim; no fixed W2 reservation.
+P36-LIVE | T-2/T-3 still require upstream acceptance and owner-shell/opencode network; one live HOLDER, exact existing allowlist. Worker-free does not authorize Codex upload/deploy/browser action.
+P36-WATCH | Existing D48 watch: 15m window, 30s change-only polls; Q/PING dependency blocker; AUD promptly reviews ready rows, SUB integrates. At expiry checkpoint; no fake work or bypass to occupy workers.
+P36-RETURN | Claim/run/VERIFY proof uses Node fs UTF-8; raw commands+exit, tests_added/file, negative control, scans, delta/block evidence; P35 checklists and fresh backend TV-1 review unchanged.
+P36-RESTART | Paste docs/DB_WORKER_POOL_PROMPT.md to every worker. Prior packets remain technical references; their fixed worker/lane restrictions are superseded here.
+P36-NO-EXEC | Scheduling correction only; no implementation, test/audit acceptance, flag change, deployment, upload, new task ID or source deletion.
+
+D49 [SUB-MASTER 2026-10-18]: PROMPT36 overrides D48 assigned-only claim rule for listed OPEN DB/trial pool rows; any W1-W4 may claim with DONE deps/free lock; DB-1 priority; first durable claim wins.
+D49-POOL: Historical lane owner cells cleared only on unclaimed OPEN pool rows; DB-1 claim integrated W3; other active, DONE, BLOCKED, TV/AUD and owner-only T-5 states unchanged.
+AUD-QUEUE-23:39-W1 | TV-1 AUD review requested for T-1 VERIFY; verify local client/tests read-only; hosted RLS/grants/view/duplicate gates => UNVERIFIABLE absent owner-shell proof.
+
+## PROMPT37 / REMAINING WORK AND OFFLINE POOL ADJUSTMENT
+P37-AUTH | 18/10/2026, 23:44 IST | Owner requests remaining-work update and safe scheduling adjustment; existing IDs carried; no code/tests/flags/live runs by master; no new task IDs.
+P37-SNAPSHOT | DB-1 DONE; DB-2a/DB-3a/DB-6 DONE; P-1/P-2/P-3/P-6 DONE. Current row/intercom always outranks this dated snapshot. (INTERCOM B-23:38:37-AUD; TASK_BOARD PROMPT32/34)
+P37-ACTIVE | DB-2=>W4 CLAIMED; DB-4=>W2 CLAIMED. Preserve authors, edits and locks; no takeover. (INTERCOM CLAIM 23:39:22/23:39:46)
+P37-NEXT | DB-3 waits DB-2+DB-4 DONE and W-CODEX handoff; DB-7 waits DB-3+DB-4 DONE with existing deps; DB-8 waits DB-5/DB-7/T-4 DONE. (TASK_BOARD PROMPT34)
+P37-AUD | Review DB-2/DB-4 once VERIFY; independent ACCEPT + SUB integration unlocks downstream. Do not rerun unresolved TV-1 repeatedly without changed source/backend proof.
+P37-ADMIN | SUB may request/record W-CODEX source handoff now while DB-2/DB-4 run; preserve diff/hash and actual author acknowledgment; no early DB-3 source edit.
+P37-BACKEND | DB-5 remains BLOCKED: accepted offline bundle + owner DB access/environment + real proof; T-1 VERIFY/TV-1 UNVERIFIABLE remain. (INTERCOM A-23:41-SUB)
+P37-TRIAL | T-2 waits DB-5+T-1 DONE; T-3 waits T-2 DONE; T-4 waits T-3 DONE; T-5 owner-only. All TV checks and safe allowlist remain.
+P37-ADJUST | Any idle W1..W4 may now claim existing unclaimed OPEN P-4 OFFLINE phase or P-7 OFFLINE phase after fresh claim/lock sweep; SUB retains integration, not exclusive implementation reservation.
+P37-POOL | This expands P36 pool only by P-4/P-7 offline scopes below; no new rows, no gate/dependency waiver. Active CLAIMED/VERIFY work remains owned.
+P37-PRIORITY | Finish current row; then eligible DB-3/DB-7 first, else P-4/P-7 offline work. One active implementation claim per worker; no speculative reservation.
+P37-CLAIM | First durable claim wins; update existing row actual owner + OFFLINE phase; preserve its full acceptance. Claimed work cannot be reassigned just to fill an idle lane.
+P37-P4-SCOPE | P-4 files: tools/runBatch.js; tools/runBatch.test.js; docs/Z5_ENV_CRASH.md. Existing conformance/runtime sources and logs read-only; use codebase-memory skill for structural investigation.
+P37-P4-POS | Implement serial resumable runner with injectable mock executor, checkpoints, timeout/watchdog and P-1 archive interface; retain source revision+failure diagnostics; offline/mock only.
+P37-P4-NEG | Resume must not rerun completed/BLOCKED site; concurrent driver refused; timeout/service crash checkpoints without overwriting artifacts; archive failure stops; caps/order retained.
+P37-P4-EVID | node --test tools/runBatch.test.js; exact retained Z-5 log/artifact pointers for diagnosis; root cause OBSERVED vs HYPOTHESIS separated; numeric delta/tests_added/file + raw exits.
+P37-P4-AUD | Existing AUD/PV independently reviews source+controls+raw outputs; missing live reproduction is UNVERIFIABLE, not a proven root cause. SUB integrates verdict; no self-acceptance.
+P37-P4-LIMIT | Offline code/proof is partial P-4 progress; do not mark whole row DONE if required crash/root-cause/live verification is missing. P-5 live/research restrictions remain.
+P37-P7-SCOPE | P-7 files: tools/stats.js; tools/stats.test.js; tools/spotcheck.js; tools/spotcheck.test.js; docs/SPOTCHECK.csv. Preserve existing untracked SUB work; claim only after scope release/current lock sweep.
+P37-P7-POS | Complete manifests/report-based per-site stats, Wilson interval, repeat variance, block rate and traceable spot-check sheet; preserve units, denominators, labels and eligibility.
+P37-P7-NEG | Missing telemetry stays unknown; zero eligible n has no rate/interval; contaminated/TRIAL excluded from research performance; blocked runs retained for declared block-rate denominator; missing repeats not zero variance.
+P37-P7-EVID | node --test tools/stats.test.js tools/spotcheck.test.js; documented CLI on synthetic archives; raw inputs/results/exits, tests_added/file and denominator arithmetic.
+P37-P7-AUD | Existing AUD/PV independently recomputes synthetic known values, exclusions and CSV evidence pointers; inspect raw retained references; synthetic examples are not human spot-checks.
+P37-P7-LIMIT | No new site/DB run; do not invent sampled TCs/reviewer decisions. Missing required retained real archive or human spot-check proof remains explicit blocker to full P-7 acceptance.
+P37-PV | P-4/P-7 VERIFY proof must distinguish completed offline scope from pending full acceptance; independent AUD posts ACCEPT/REJECT/UNVERIFIABLE to ledgers/intercom; SUB flips only proven scope.
+P37-SAFETY | P-4/P-7 do not edit DB-2/DB-4 files, source oracles/truths, original archives, shared protocol or uploader; no package install, secret read or foreign-process action authorized.
+P37-PROTOCOL | P-5 remains under current SUB/owner protocol decisions; model/list/caps/order/live proof/freeze unresolved; no research-run-1 tag or campaign authority inferred.
+P37-RETURN | Every row: paths, commands+raw exits, tests_added/file, negative control, delta/block proof, scan changed tracked+untracked own paths counts-only; Vision/MCP current regressions as required.
+P37-WATCH | P36/D48 first-claim + 15m change-only watch remains; fresh board/intercom read before any edit. If P-4/P-7 already claimed/released elsewhere, preserve that holder and ask SUB.
+DB-2-PGLITE-23:54-SUB | PGlite0.5.10/PG18.6; memory DB; migration+test exit0; placeholders unchanged; rollback rows=0; raw=docs/evidence/db2-pglite-20261018.log; hosted defs unknown.
+
+## P-7 COMPLETION FOLLOW-UP (owner order; existing row only)
+P7-NEXT | W1 retains P-7 VERIFY ownership. Complete the missing evidence packet; no source change/state downgrade without SUB coordination; AUD remains independent.
+P7-INVENTORY | Inspect compatible retained manifest+report archives under this repo and approved canonical runs root C:/Users/sandeep/pes/vs code/Capstone-Project/runs; offline only, source read-only.
+P7-SELECT | Determine sampler requirements from existing CLI/source; select a qualifying retained archive with resolvable case evidence; record exact origin/run ID/schema/hash and selection rule.
+P7-INTEGRITY | Never pad/duplicate cases, combine unrelated runs, relabel synthetic data as real or weaken sample minimum. Use existing supported adapter only if source semantics/provenance remain intact.
+P7-SHEET | Generate docs/SPOTCHECK.csv with the actual spotcheck CLI; retain exact args/exit and row count. If sheet exists by then, preserve it; publish a versioned addition, never overwrite human review.
+P7-HUMAN | Prepopulate machine/evidence columns and stable artifact pointers; leave reviewer decisions/name/date blank; provide a concise owner checklist showing each case and what outcome/evidence to compare.
+P7-HANDOFF | Deliver the generated sheet and linked evidence to Sandeep for actual review; ask only for human decisions that cannot be obtained from retained evidence. No agent signs a human reviewer field.
+P7-NO-ARCHIVE | If no compatible qualifying archive exists, list inspected candidates and exact rejection reasons; identify the precise missing evidence for an already authorized future trial; no new run/site implicitly authorized.
+P7-BASELINE | Recover prior test source from Git blobs or retained local snapshots; compare its SHA256 with saved baseline before computing per-file tests_added; current counts alone cannot establish delta.
+P7-BASELINE | If recovery fails, append correction withdrawing unsupported numeric deltas and report tests_added=UNVERIFIABLE; preserve reported current pass totals and record current source snapshots for future deltas; AUD/SUB decide remaining gate.
+P7-RUNTIME | P-7 already runs under Node; missing retained evidence/human review is not an installation problem. Do not install packages or change environment merely to satisfy this gate.
+P7-PROOF | node --test tools/stats.test.js tools/spotcheck.test.js; stats/spotcheck CLI on selected retained input; counts-only secret scans; raw args/exits/results; source+artifact hashes; human sheet evidence when returned.
+P7-NEG | Undersized archive rejects; missing provenance refuses; tampered evidence/ID fails; blank human cells never count as reviewed; synthetic CLI success never substitutes for retained real/human proof.
+P7-AUD | Request fresh independent review of completed packet; separate offline behavior, retained-archive validity, human sheet and baseline-delta verdicts. SUB alone closes only when full required proof is established.
+P7-SCOPE | Existing source paths remain per P37; additional evidence output docs/evidence/p7-completion/<new-id>/ only; append corrections, preserve raw/human files; no live/credential/DB action.
+
+COORDINATION-RELOCATED | Feedback discussion lives in docs/SUGGESTIONS.md, not project task rows; original section preserved verbatim there by owner order. Decisions/routing => docs/INTERCOM.md.
+
+W2-CHECKPOINT-19/10/2026 00:06 IST | DB-4/P-4=VERIFY/W2; AUD pending; P-7=VERIFY/W1; DB-3 waits DB-4+W-CODEX; no eligible W2 OPEN row. (INTERCOM:653-660)
+
+P7-REVIEW-DELEGATION | Owner delegates technical/manual evidence review to SUB; actual reviewer_role=SUB/AUD, never forged HUMAN/OWNER. Suitable retained evidence and fresh independent code AUD still required; no automatic P-7 DONE or flag change.
+AUD-P7-AUD-W1-20261019-0840 | OFFLINE=ACCEPT; FULL=UNVERIFIABLE | tests=22/22 exit0; inventory=155 rows/152 canonical/0 P1 pairs; no sheet; keep VERIFY pending suitable evidence. (fix-evidence.json; archive_inventory.csv; INTERCOM:2026-10-19 08:44:40 IST)
+P7-CORR-20261019-0856 | Delta correction: spotcheck=+9 (prior +8 stale), stats=+9; offline AUD=ACCEPT; targeted tests=22/22 exit0. Full P-7 remains VERIFY/W1 pending qualifying archive, SPOTCHECK.csv and SUB case review. (INTERCOM:735; fix-evidence.json)
+P7-SCOPE-OVERRIDE-20261019-0900 | OWNER order narrows P-7 acceptance to offline code only; archive, SPOTCHECK.csv and case-review gates are deferred/out-of-scope for this row. Independent AUD offline=ACCEPT; focused tests=22/22 exit0.
+P-7 | DONE | scope=offline code only | SUB rerun: node --test tools/stats.test.js tools/spotcheck.test.js => 22/22, exit0; deltas stats=+9,spotcheck=+9. No archive/sheet acceptance claimed; W1 resume after fresh pool sweep.
+OWNER-VERIFY-OVERRIDE-20261019-0904 | Remaining implementation rows may be forced DONE on node --check + exact offline tests passing. Complex/live/backend/evidence reviews deferred to final pass; never claim deferred gates passed. USER/access/stop gates remain binding.
+P-4 | DONE (FORCED/CODE-ONLY) | node --check tools/runBatch.js exit0; node --test tools/runBatch.test.js => 8/8, exit0 (workspace TEMP rerun after sandbox EPERM). Z-5/live/root-cause checks deferred.
+DB-4 | DONE (FORCED/CODE-ONLY) | node --check tools/r3DbExport.js exit0; node --test tools/r3DbExport.test.js => 5/5, exit0. Complex export review deferred.
+T-1 | DONE (FORCED/CODE-ONLY) | node --check tools/trialUploader.js exit0; node --test tools/trialUploader.test.js => 10/10, exit0. Hosted RLS/deploy/readback deferred; T-2 still waits DB-5.
+AUD-FORCED-CODE-CHECK-20261019 | P-4=8/8,DB-4=5/5,T-1=10/10; node checks=0; TEMP=workspace/testing. Code-only override reproduced; Z-5/live/hosted gates remain deferred. Original VERIFY rows retained as history.
+
+OWNER-CODE-GATE-20261019-0910 | Current reruns pass: P-4 8/8; DB-4 5/5; T-1 10/10; P-7 22/22; node --check exit0 for all source files. Effective code-only DONE; deferred live/backend/evidence gates unchanged.
+OWNER-14-SWEEP-20261019-0925 | 14 not-DONE rows remain after code-only overrides: P-5,TV-1..4,T-2..5,DB-3,DB-5,DB-7,DB-8,DB-V. No other implemented code scope has new focused-check evidence to flip DONE.
+NEXT P-5 | SUB protocol/freeze gate; owner decision required; no research tag/run authority.
+NEXT TV-1 | T-1 offline code scope DONE; full AUD remains open for hosted RLS/view/duplicate evidence.
+NEXT T-2 | waits T-1+DB-5 DONE; safe targets and owner-shell/opencode live gate remain.
+NEXT TV-2 | waits T-2 VERIFY; review exact three safe runs, archives, reports, upload evidence.
+NEXT T-3 | waits T-2 DONE; remote readback/hash/id proof requires authorized network lane.
+NEXT TV-3 | waits T-3 VERIFY; independent hash/id/eligibility/secret review.
+NEXT T-4 | waits T-3 DONE; write trial report from recorded run evidence.
+NEXT TV-4 | waits T-4 VERIFY; independent report evidence review.
+NEXT T-5 | OWNER decision after T-4; freeze/tag gate is human-only.
+NEXT DB-3 | next code priority; waits recorded W-CODEX diff/hash+lock release and AUD handoff check; then fresh claim sweep.
+NEXT DB-5 | BLOCKED by DB-2/3/4/7 DONE plus explicit owner DB access/env; live owner-shell proof only.
+NEXT DB-7 | waits DB-1/3/4/6 DONE; offline workflow implementation only after DB-3.
+NEXT DB-8 | waits DB-5/DB-7/T-4 DONE; final delivery report and AUD/SUB review.
+NEXT DB-V | rolling read-only AUD review per ready VERIFY row; final rollup after DB-8/T-4; not coding.
+T1-STATE-CLARIFICATION-20261019-0929 | OFFLINE CODE SCOPE=DONE per OWNER override; FULL T-1 row=VERIFY pending independent hosted RLS/view/no-update/duplicate/readback evidence. No deploy/upload acceptance inferred.
+
+## T-1 CUSTODIAL RECOVERY / UNREACHABLE AUTHOR (owner progress request)
+T1-RECOVERY | Original W-CODEX author/session cannot be identified after owner+W1..W4 checks. Author-specific acknowledgment is superseded by preserved-work custodial recovery; no identity substitution.
+T1-CUSTODY | Preserved source/test bytes, SHA256, HEAD, status and tracked diff: docs/evidence/t1-custody-20261019093601/manifest.json. Custodian=MASTER:CODEX; original_author=UNIDENTIFIED; not an AUD verdict.
+T1-LOCK | SUB owns recovery coordination. Retire unreachable author reservation only after conflict sweep+independent custody ACCEPT; no need to find/recreate original session or fabricate its release.
+T1-POS | AUD read-only compares both live files to snapshot hashes/bytes, inspects full inherited source+tests and tracked/untracked status, confirms work preserved and no conflicting active claimant.
+T1-NEG | Changed live hash, missing snapshot/source, differing copied bytes or valid competing claim => HOLD; preserve changes, refresh snapshot/review, never overwrite or auto-steal.
+T1-CMD | AUD: node --test tools/trialUploader.test.js; read-only hash/byte/status comparison; counts-only own snapshot/source/test secret scan; raw exits/results and exact revision. Mock tests establish offline scope only.
+T1-UNTRACKED | Empty git diff does not mean no work; full snapshots preserve untracked files. SUB records exact starting SHA256 for DB-3 before edits.
+T1-RELEASE | After AUD custody ACCEPT, SUB posts explicit RECOVERY_HANDOFF_ACCEPTED with evidence revision, scope and released/reassigned lock; then any pool worker may claim existing DB-3 with other deps satisfied.
+T1-SCOPE | DB-3 gate now means original-author handoff OR this independently reviewed recovery handoff. Earlier author-only wording in board/packets/runbook is historical for this gate.
+T1-CONTINUE | DB-3 server-auth/transport implementation -> DB-7 workflow -> DB-V offline acceptance -> authorized DB-5 backend proof -> existing safe trial/upload/readback. No code task duplicated.
+T1-PRESERVE | T-1 offline code-only DONE and full T-1 VERIFY remain; DB-5/backend/owner-access gates unchanged; no USER-* flag, live upload or backend acceptance inferred.
+## P38 CO-MASTER DESIGN v1 RECEIPT + STEP-LEVEL DEP AMENDMENTS (owner co-master 2026-10-19 10:25 IST; append-only; live board wins; canonical IDs/rows unchanged)
+D50 [SUB 2026-10-19]: CO-MASTER DESIGN v1 adopted as scheduling layer; step-level amendments below use existing IDs only; append-only; conflicts resolved by RECEIPT lines.
+DB-3-INT|2026-10-19 10:25|row VERIFY=>DONE|scope=offline code|AUD DB3-AUD-V ACCEPT rev=sha256:83b42f2629718c22706ee4a271f37a58cab52330e39ea2baf32da9c91c617f8b|raw: hashes trialUploader.js=0208d03e...04/test=ae1e8d6b...0c; agg path|hash==83b42f26...8b; check0x2; uploader18/18; contract+export18/18; custody T1C-V=>DB-3 released (INTERCOM DB3-INT-SUB)
+P38-INT | COORD-OPS-2 R3 => integrated DONE per owner handoff: AUD CO2-R3-V ACCEPT rev=sha256:4d2085617e6e185fdfe38c93dc356781bc9936b7a42cb2b23622b53f010d7d52; file hashes == INTERCOM:872-873; agg reproduced (path|sha256= recipe); check0; tests33/33.
+P38-C1 | T-1 vs DB-3 same-file conflict resolved: offline uploader canon=tools/trialUploader.js+test (T-1 DONE FORCED/CODE-ONLY, custody T1C-V); DB-3=transport layer DONE on same files; ONE hosted gate=TV-1; no duplicate row created.
+P38-C2 | DB-5 blocker reworded by RECEIPT (row text kept verbatim): DB-2/3/4 offline prereqs DONE => current blockers = DB-7 DONE + explicit owner DB access/environment; hosted proof is DB-5 OUTPUT not prereq; no USER-* inferred.
+P38-C3 | DB-V (rolling offline DB scopes) vs TV-1 (hosted trial chain): DISTINCT; DB-V reviews DB rows at VERIFY; TV-n audits trial chain T-2..T-5; final DB-V rollup after DB-8/T-4.
+P38-C4 | T-2 step split (same ID): STEP1=local safe target runs + P-1 archive + P-2 reports, label TRIAL, gate=live-capable worker+holder ONLY (no DB-5); STEP2=upload/readback via owner shell/opencode, gate=DB-5 DONE+TV-1 ACCEPT.
+P38-C5 | Deferred-gate map for code-only DONE scopes: P-4 live/Z-5 cause => T-2 STEP1 evidence; P-7 qualifying archive+sheet => T-2 STEP1 output + SUB/owner case review; DB-4 complex export review => post T-3 real rows; T-1 hosted acceptance => DB-5+TV-1.
+P38-C6 | DB-8 confirmed = final DB delivery report: docs/DB_COMPLETION_REPORT.md; deps DB-5,DB-7,T-4; <=60 lines; runnable commands+evidence+limits; missing-proof negative; AUD+SUB; never fake COMPLETE.
+P38-C7 | T-5/P-5 owner-only; no campaign; no research-run-1 tag in this plan; P-5 DRAFT preparation authorized offline (SUB/W1); freeze decision stays owner.
+P38-DEPS-AMEND | Step-level, same IDs: T-3 step0 offline verifier (tools/trialVerify.js+test) starts NOW pre-T-2; T-4 step0 generator-on-fixtures pre-T-3; DB-5 step0 offline prep NOW with NO deploy.
+P38-TARGETS | Safe trial targets fixed: saucedemo (clean) | zoo captcha-like (expects honest BLOCKED) | zoo iframe (partial). No third_party; no stop-list domains (FX-5 list); label TRIAL; never citable.
+P38-DB7 | DB-7 ELIGIBLE offline: deps DB-1 DONE + DB-4 code-only DONE + DB-6 DONE + DB-3 DONE (this receipt); DB-4 complex-export review is deferred gate (C5), does not block mock workflow; final DB-V rollup still waits it.
+P38-LANES | Lane A (offline, no Supabase): W3=T-3 step0 (trialVerify) -> W4=DB-7 -> W1=T-4 step0 + P-5 draft. Lane B (Supabase-capable): W2=DB-5 step0 -> owner env => DB-5 apply DEV/branch ONLY, never prod. One active claim per worker; live HOLDER serial.
+P38-BLOCKERS | DB-5 apply: owner DB env+approval (human-only); T-2 STEP1: live-capable worker identity + holder window; DB-8: DB-5+DB-7+T-4; final gates T-5/P-5 owner.
+P38-EVID | Integration evidence appended to docs/INTERCOM.md (CO2-R3-INT-SUB, DB3-INT-SUB, T1-RECOVERY-HANDOFF) 2026-10-19 10:25; corrections=append lines; no row history rewritten.
+
+## P39 CO-MASTER DESIGN v2 CORRECTIONS + WAVES (owner co-master 2026-10-19 10:41 IST; append-only; board wins on conflict; no new IDs; no forced DONE)
+P39-K1 | T-1 offline-DONE does NOT satisfy T-2 step2; step2 gate = T-1 full via DB-5 + TV-1 ACCEPT; T-2 step1 uses no uploader.
+P39-K2 | P-4 no-run-before-P-5 rule applies to research/campaign runs; TRIAL runs on the 3 fixed safe targets need only owner approval (H3); label TRIAL; citable:false.
+P39-K3 | DB-3 stale-item CORRECTION: OWNER-14 listed DB-3 not-DONE; DB-3 integrated DONE 10:25 IST (AUD DB3-AUD-V ACCEPT rev=83b42f2...; INTERCOM DB3-INT-SUB). v2 status block drafted pre-integration; rest of v2 adopted.
+P39-K4 | DB-3/T-1 same code files tools/trialUploader.js+test; current change owner = W3; W-CODEX author history superseded by custodial handoff chain (T1-RECOVER -> T1C-V). Other lanes must not edit uploader without W3.
+P39-K5 | DB-5 claimant W2 stays; if W2 thread lacks Supabase plugin, apply step routes to plugin-enabled worker thread or owner-run (DB-5 def = owner-run); no re-claim without SUB approval.
+P39-K6 | DB-V = rolling offline AUD; TV-n = trial/hosted AUD; DISTINCT (restates P38-C3).
+P39-K7 | T-2 DB-5 dep applies to step2 upload only (restates P38-C4).
+P39-K8 | Safe targets fixed: saucedemo (clean) | zoo captcha-like page (expects honest BLOCKED) | zoo iframe page (partial); no third_party; no stop-list sites (FX-5 list).
+P39-K9 | Conservative default kept: DB-5 waits DB-7 DONE; relax only if master proves DB-7 not needed for hosted-proof harness.
+P39-DRIFT | v2 lane roster SUPERSEDES P38-LANES: Lane A (offline): W1 = T-3 step0 (trialVerify) then P-5 draft; W3 = docs/TRIAL_RUNBOOK.md then DB-8 skeleton; W4 = DB-7 then T-4 step0. Lane B: W2 = DB-5 step0 (offline prep; NO deploy). One active claim per worker; live HOLDER serial.
+P39-WAVES | W0 = probes + step0 starts (now). W1 = DB-7 DONE + DB-5 step0 AUD-ok + H1/H2 => DB-5 APPLY dev/branch only => AUD TV-1 => T-1 full; parallel after H3/H4: T-2 step1 (3 local trial runs + P-1/P-2 archive/report + one kill-and-resume to diagnose Z-5; NO upload). W2 = after TV-1 ACCEPT + T-2 step1 DONE + H8: T-2 step2 upload 3 runs => AUD TV-2; then T-3 readback (uses W1 verifier) => TV-3. W3 = T-4 (W4 builds from W3 skeleton) => TV-4 => DB-8 => DB-V final rollup. W4 = owner: T-5 freeze => P-5 protocol => research tag; 30-site campaign OUT OF SCOPE.
+P39-OWNERASK | H1-H8 pending OWNER: H1 target project/branch + shared-project Y/N (if shared: teammate consent + R3-prefixed additive only); H2 who applies DB-5; H3 TRIAL approval for 3 safe targets; H4 live holder identity (network+browser); H5 SUPABASE_URL + service key env-only owner-placed, never pasted/logged/committed; H6 P-7 human spot-check (3 TCs vs screenshots); H7 T-5 freeze + P-5 protocol decision; H8 upload-step approval.
+P39-PROBE | Every worker + AUD posts 5-line READ-ONLY probe to INTERCOM now: network Y/N; headless browser launch Y/N; Supabase tool names present Y/N (list); active claims/locks; env note. No writes beyond probe line.
+P39-BACKYARD | Adoption record: INTERCOM B-2026-10-19 10:41-SUB lines (9 lines); design v2 from MASTER CONTEXT 2026-10-19; corrections append-only; DB-3/DB-7 blocker note resolved by K3 receipt.
+
+## P40 LOOP-CHECK: T-3 / DB-5 reject-repair cycles (SUB 2026-10-19 11:28 IST; append-only)
+P40-FACT | T-3 round=5 (W-A): disk trialVerifier.js=74250828b6.. test=a9bb6c81a9.. == R5 receipt; plain path|hash agg=80d99fc5... == claim; AUD verdict R5 pending.
+P40-FACT | DB-5 round=3 (W-B): disk plan=f73cf665.. negative=a7f362de.. readback=1042b91f.. rollback=c37b45e7.. runbook=4c8c273b..; claim agg 657dcc72... INVALID (plain=84cbc0dd.., sha256-variant=243995fe..); envelope defects listed in INTERCOM A-lines.
+P40-AGG | Canonical aggregate recipe for all lanes from now: plain "path|sha256hex" rows, sorted, LF-join, no terminal LF (same construction reproduced integrated DB-3 rev=83b42f2..). sha256= prefix variant allowed only if declared on the DONE-PROOF line.
+P40-DIR | Binding directives issued via INTERCOM A- lines: W-A freeze + strict bidirectional pairing method for R6; W-B resubmit R4 with valid envelope + bundle-pinned aggregate + complete 6-point NEG output list. No semantic re-edits required for W-B resubmit.
+P40-ROSTER | W-B probe: network=Y, supabase CLI v2.121.0 logged-in, no MCP Supabase tools => Lane B APPLY capability exists via CLI; still owner-gated (H1/H2). W-A probe not yet posted.
+
+P40-CORR|SUB 2026-10-19 11:42|My 11:28 FACT line "claim agg 657dcc72... INVALID" was WRONG: 657dcc72... == sorted path|hash LF-join over the 5 disk files (SUB raw recompute). My earlier 84cbc0dd/243995fe numbers came from an UNSORTED/variant-label computation. W-B R3/R4 aggregates were valid; W-B R4 envelope is lawful and awaits AUD adjudication. Recipe law: SORTING IS PART of the canonical recipe.
+
+## P41 OWNER SKIP-AUDIT FLIPS + DB-5 DIGIT FACT (owner order this session 2026-10-19 12:05 IST; append-only)
+P41-AUTH | Owner order: flip VERIFY rows where raw code-only checks pass, using 09:04 forced-DONE precedent; AUD complex verdicts deferred; pending verdicts retained as history; reopen on later AUD REJECT.
+P41-T3 | T-3 STEP0 => DONE (code-only): disk == R5 receipt (trialVerifier.js=74250828b6.., test=a9bb6c81a9..); node --check exit0; 21/21 exit0; diff clean; scanner counts-only synthetic. Full T-3 row stays OPEN (live readback later uses this verifier).
+P41-T3-EXP | tests_added(trialVerifier.js)=0, (trialVerifier.test.js)=21 new file; revision agg 80d99fc5... (sorted path|hash, canonical).
+P41-DB5 | DB-5 step0 NOT flipped: expected digest 6f1d688f. in readback.sql does not reproduce: raw-string sha256("{\"run_id\":\"rb-research\"}")=330a9bd9...; contract path payloadHash(canonicalJson INSERT-envelope, SUB via tools/r3DbContract.js)=008a3d1e...; claim-vs-literal check VACUOUS => third fabrication instance recorded (after R1/R2 rejects). Repair directive issued via INTERCOM A-LINES.
+P41-NEXT | W-A released to P-5 DRAFT (docs-only). W-B repairs DB-5 step0 (module-computed digest). Nothing gated on owner this round. AUD verdicts pending (T-3 R5, DB-5 R4) retained as evidence.
+
+
+## P42 OWNER H1 PROVENANCE + DB-5 NEXT STEP (SUB 2026-10-19 12:41 IST; append-only)
+P42-H1 | capstone-r3-dev ref=xvizjawcpafdqrygzvcx; org=qwgbhcakpfwytcrryuxd; ACTIVE_HEALTHY; ap-south-1; Free; shared=N; owner-pasted web provenance only.
+P42-H2 | Who applies DB-5 remains unconfirmed. H1 is not apply authorization or an independent backend verdict.
+P42-DB5 | Step0 prep NOT ACCEPTED; P41-DB5 records digest mismatch (TASK_BOARD:3718). W-B continues existing repair claim; no duplicate claim.
+P42-NEXT | W-B derive digest via r3DbContract.buildEnvelope/payloadHash with full schema; send raw output, 6 NEG results, 5-file hashes/new revision to AUD.
+P42-GATE | No apply/deploy until step0 AUD ACCEPT + explicit owner H2 order. No browser or credential handling.
+## P42 R6 REPIN + DB5-R5 SUB CROSSCHECK (SUB 2026-10-19 12:46 IST; append-only)
+P42-T3 | AUD R5 verdict = REJECT on repin-only: code findings green per AUD evidence (21/21 POS/NEG passed, bytes match); divergence = declared-recipe label only. SUB raw computed BOTH on identical bytes: plain=80d99fc5... (=W-A claim), path|sha256= variant=7410838f... (=AUD). No drift. Repin R6 directive sent to W-A; step0 code-only DONE (P41-T3) stands; audit closure completes on R6 ACCEPT.
+P42-DB5 | W-B R5 SUB cross-check = PASS via independent rebuild: envelope from readback.sql header through buildEnvelope; module payloadHash dc943b2b... == claim byte-exact; 5 file hashes == disk (plan=f73cf665, neg=a7f362de, readback=b5b825bf, rollback=c37b45e7, runbook=4c8c273b); agg 80d2aaf8... == claim. Awaiting AUD verdict on R5; DB-5 row stays BLOCKED (owner env), step0 DONE rides the verdict.
+P42-H1 | H1 CONFIRMED recorded (owner-pasted web provenance): capstone-r3-dev ref=xvizjawcpafdqrygzvcx org=qwgbhcakpfwytcrryuxd ap-south-1 FREE dev-only shared=N. Earlier wrong-shared ref bxbfgvchkytylnugjpyt NOT approved for changes; no SQL applied anywhere.
+P42-SEC | Owner action pending: rotate chat-exposed DB password privately BEFORE first backend login; no credential values in files/logs/intercom (worker policy). H2=worker-CLI via capstone-r3-dev; apply starts only after AUD step0 ACCEPT + owner GO.
+
+## P43 OWNER GO RELEASE (owner orders this session 2026-10-19 12:52 IST; append-only; live board wins)
+P43-GO | OWNER-GO-DEV-APPLY-20261019: W-B authorized to CLI-apply accepted step0 migration to capstone-r3-dev ref=xvizjawcpafdqrygzvcx (dev-only, shared=N). Password rotation DEFERRED by owner for the throwaway dev project (owner handles privately; deletion recommended at program end). AUD step0 verdict on R5 runs in parallel; AUD REJECT after apply => rollback per r3_companion_step0_rollback.sql.
+P43-H3 | TRIAL approved (OWNER-H3-APPROVED-20261019): the 3 fixed safe targets only, label TRIAL, citable:false, no research-run-1 tag, no 30-site campaign. T-2 step1 start still gated: H4 live-holder identity + TRIAL_RUNBOOK.md delivery.
+P43-APPLY | Apply packet given to W-B via INTERCOM A-line: list_tables collision check => ONE additive migration => RLS+view+schema verification => 4 scripts+readback raw outputs => rollback command => TV-1 APPLY-PROOF to AUD.
+P43-DB7 | DB-7 remains offline W4 work in parallel; owner-GO does NOT close DB-7 row; K9 conservative default recorded as owner-relaxed FOR THE APPLY ONLY (trial upload/readback chain still uses DB-3 uploader; DB-7 workflow closes at e2e stage).
+P43-CRED | AUTH: W-B uses linked CLI/management-API path only; never asks for or pastes passwords/keys in chat; on any credential prompt STOP and report to SUB.
+
+## P44 H4 LIVE HOLDER (owner order this session 2026-10-19 12:56 IST; append-only)
+P44-H4 | LIVE HOLDER for T-2 step1 = W-B (OWNER-H4-WB-20261019). Guard: 2-command headless-launch pilot must PASS before any trial run (PILOT-PROOF to SUB); runbook caps + BLOCKED-never-retried binding; serial single HOLDER; owner reads pasted raw outputs only, nothing unattended.
+P44-SEQ | W-B order: DB-5 APPLY packet (P43) => pilot proof => on AUD step0 ACCEPT + TV-1 => T-2 step1 claim (waits TRIAL_RUNBOOK.md present) => 3 safe runs + ONE kill-and-resume Z-5 diagnosis => archive/report via P-1/P-2 => AUD TV-2/TV-3 chain later. No upload at step1 (step2 gated on TV-1 ACCEPT + H8).
+P44-OTHERS | Browser runs by any other lane (W-A/W3/W4/owner threads) are BLOCKED while W-B holds the slot; request via PING-SUB.
+
+## P46 AUD-2 INTEGRATION (SUB 2026-10-19 14:17 IST; append-only; report by AUD:AUD-2 13:37 IST)
+P46-AUD2 | Active auditor-of-record = AUD-2 (owner-created, independent, recomputed raw). Original AUD superseded; its verdicts retained as history. Conflict old-DB5-R5 UNVERIFIABLE vs AUD2 ACCEPT tie-broken by owner-forwarded order: ACCEPT stands.
+P46-DB5 | DB-5 STEP0 => DONE (code-only scope) per AUD2-DB5-R5-1 ACCEPT: 5 hashes+agg reproduce; module digest dc943b2b... byte-exact; PGlite replay 20/15/10/12 exit0; negatives raw; rollback leaves 0 R3 objects; scan counts clean. DB-5 ROW stays BLOCKED(owner env) - owner GO already covers apply path (P43).
+P46-TV1-CHECK | TV-1 hardening item from AUD-2 caveat (class PINNED_LITERAL_NOT_RECOMPUTED, readback.sql:18-19): column-vs-constant check passes vacuously for arbitrary payload; require recomputed-over-stored-bytes comparison in dev apply evidence. Old UNVERIFIABLE retained.
+P46-T3 | T-3 STEP0 REOPENED (VERIFY): AUD2-T3-R5-1 code REJECT with classes ASYMMETRIC_ALL_FIELD_COMPARE (trialVerifier.js:116) + DECLARED_HASH_TRUST (:95-100): GAP-1 manifest-key-only loop skips absent row fields; GAP-2 extra row field passes; GAP-3 no target_file => declared-hash accepted w/o recompute. Recipe-label dispute closed by AUD2-CORR-T3. Repair packet => W-A (symmetric pairing + SHA recompute + 3 NEG tests 21=>24). Owner-order P41-T3 code-only flip superseded by reopen.
+P46-P5 | P-5 DRAFT ACCEPTED docs-only (AUD2-P5D-1; 24 lines, d509953f...): TRIAL protocol usable for the 3 approved targets. Pre-run fills REQUIRED: exact model IDs (docs/MODEL_LANES.md:18-19) + run date (owner/holder). P-5 row stays owner-gated; no research tag; H3 approval unchanged.
+P46-TV1 | TV-1 NOT opened (no APPLY-PROOF yet); armed on W-B evidence. AUD-2 verdict mix: 2 ACCEPT + 1 REJECT(code) + 1 CORR; all ≤300-char ASCII lines posted.
+
+
+## P47 DB-5 READBACK CAVEAT + CURRENT APPLY HOLD (SUB 2026-10-19 14:40 IST; append-only)
+P47-CORR | P42-DB5/INTERCOM:1148 said step0 lacked AUD ACCEPT; superseded by AUD2-DB5-R5-1 ACCEPT and P46-DB5 (INTERCOM:1083-1091; TASK_BOARD:3748).
+P47-CAVEAT | Prep step0 is code-only DONE; remaining readback defect=PINNED_LITERAL_NOT_RECOMPUTED. DB-5 hosted/apply proof remains open (TASK_BOARD:3749).
+P47-APPLY | Newer owner/master order is plugin-only; no CLI reauth/grant, browser workaround, deployment or retry assumed authorized. P43 CLI GO is on hold pending exact plugin identity + explicit H2 order.
+P47-NEXT | W-B continues offline readback hardening: recompute digest over stored manifest/report bytes; reject arbitrary payload vs pinned digest; submit new proof bundle to active AUD-2. No DB mutation.
+## P47 MODELS PIN + RUNBOOK REJECT + APPLY ROUTING (SUB 2026-10-19 15:04 IST; append-only)
+P47-MODELS | Required-models fill RESOLVED: primary nvidia/nemotron-3-super-120b-a12b:free (OpenRouter, ARCH_B_LLM_PROVIDER=openrouter, reasoning low) + fallback google/gemma-4-31b-it:free; exact IDs = docs/MODEL_LANES.md:18-19; AUD-2 verified runbook:7-8 byte-exact. P5 draft file stays untouched at accepted rev d509953f; run date = holder stamps at run start.
+P47-DB5 | DB5-READBACK-R6 ACCEPT by both auditors (AUD-1 V6 INTERCOM:1164 + AUD-2 15:24, agreement, no tie-break): hardened recompute-over-stored-bytes clears PINNED_LITERAL_NOT_RECOMPUTED; determinism x2; module tests 13/13; step0 evidence chain CLOSED; step0 remains DONE.
+P47-APPLY | Hosted apply STILL BLOCKED by W-B 403/NOT_LISTED + IPv6 unsupported (INTERCOM:1124,1128); my 12:45 stop-attempts directive stands; TV-1 remains unopened; owner choice pending: grant W-B account access OR owner-SQL-editor apply.
+P47-RUNBOOK | docs/TRIAL_RUNBOOK.md REJECTED (AUD2-TRIALRB-1, rev a77c4412, 51 lines): DEF-1 wrong archive input path (never produced by pipeline); DEF-2 requires report.json nothing emits; DEF-3 saucedemo line relies on unset SEED_* with hardcoded fallback creds (explorer.js:295); DEF-4 per verdict. T-2 step1 CANNOT start; repair packet issued to W3.
+P47-DB7 | DB-7 ownership = W-B per first durable claim (INTERCOM:1200); W4 10:41 dispatch superseded; W-B works offline mock workflow; apply retries frozen until owner access decision.
+
+## P48 FOUR-WORKER REDIVISION (owner reports 4 free workers; SUB 2026-10-19 15:14 IST; append-only)
+P48-SPLIT | W-A = T-3 R7 repair (trialVerifier, AUD2 packet stands) | W-B = DB-7 R2 repair (AUD-1 REJECT finding + revision repin a5bcd588) | W3 = runbook R2 repair (4 defects, packet stands) | W4 = NEW: T-4 step0 report generator on fixtures (offline).
+P48-W4 | W4 packet: tools/trialReport.js + tools/trialReport.test.js + docs/TRIAL_REPORT_TEMPLATE.md; generator fills TRIAL_REPORT (<=60 lines) from T-2/T-3 artifacts when they exist; runs on fixtures NOW; every number must cite an artifact path or NOT_RECORDED; schema gaps + go/no-go + label TRIAL citable:false; missing-proof NEG control. Verifier AUD:AUD-2; SUB integrates.
+P48-GATES | Owner-only still: DB-5 apply access choice (a: grant W-B account access OR b: owner SQL-editor apply); H8 upload approval; H6 spot-check; T-5/P-5 final. No agent path around them.
+
+
+## P49 T-4 STEP0 INTEGRATION (SUB; append-only)
+P49-T4STEP0 | Code+fixture ACCEPT (AUD-1 owner-assigned, T4-A1-V-R2); SUB HOLD (INTERCOM:1330-1335); full T-4 OPEN pending T-3 DONE+real artifacts; no TV-4/full-report claim.
+
+## P50 STATUS CENSUS (SUB; append-only)
+P50-STATUS-CENSUS | DMs to W1-W4 and available AUD-1 requested owned/review rows, done vs remaining scope, proof, locks, deps, blockers, next owner; replies pending (INTERCOM tail, 2026-10-19 15:45:37 IST). No state changed.
+P50-STATUS-RETURNS | W1-W4,AUD-1 to append one concise status response in INTERCOM addressed SUB; separate offline/step0 from full/live gates; no ownership or state changes.
+
+## P51 AUD-2 VERDICT RECORD (AUD:AUD-2 read-only; 2026-10-19 16:10 IST; append-only; no row state flipped)
+P51-AUTH | AUD-2 does not flip rows. Entries below record auditor decisions only; integration/DONE remains SUB authority per project-auditor SKILL + taskboard SKILL.
+P51-T3-R8 | T-3 (row 3359) AUD-2 verdict = ACCEPT, rev 368c5888c5e086f9. DEFECT-1 deep compare cured (trialVerifier.js:118 JSON.stringify); DEFECT-2 EISDIR cured (:96 statSync isFile); 26/26 exit0; hashes match.
+P51-T3-R8-FOLLOW | Non-blocking: no POS test locks nested-equal PASS (24->26, my ask was 27); JSON.stringify key-order sensitive (fail-closed). Optional before hosted TV-3.
+P51-T3-ROW | T-3 stays VERIFY in this record; SUB may integrate DONE on P51-T3-R8. Verdict covers offline code+tests only; hosted roundtrip remains TV-3.
+P51-TRB-R2 | TRIAL-RUNBOOK (T-2 step1 docs) AUD-2 verdict = REJECT, rev 519a1ceac573306d. DEF-1 path, DEF-2 report prereq, DEF-4 caps CURED; DEF-3 NOT cured.
+P51-TRB-R2-DEF3 | runVision.js:20 dotenv.config() has no path => reads cwd/.env; runbook :11 cwd=repo root but :9 says vision/.env. Preflight Y/N would print N. Concur AUD-1 TRB-A1-V-R2.
+P51-TRB-R2-SELF | AUD-2 self-correction: my 15:59 ACCEPT on same revision was wrong (accepted a doc path without recomputing runtime lookup). Corrected at 16:04. Treat TRB-R2 as REJECT.
+P51-TRB-R2-FIX | Single remedy: make preflight and runVision load the same explicit vision/.env path (or export to both), repin, fresh VERIFY_REQUEST to both auditors. Then T-2 step1 docs gate clears.
+P51-DB5-R6 | DB-5 readback R6 = ACCEPT by both auditors (AUD-1 V6 + AUD-2). PINNED_LITERAL_NOT_RECOMPUTED cleared: digest reproduces over stored bytes, determinism x2, 13/13. Step0 chain CLOSED.
+P51-DB7 | DB-7 ownership = W-B per first durable claim (P47/TASK_BOARD:3764); my 15:33 conflict B-line closed. DB-4 forced code-only DONE (:3636) explains row 3399 VERIFY as retained history.
+P51-OPEN-GATES | Remaining owner-only: DB-5 hosted apply choice (a grant access / b owner SQL apply) => unblocks TV-1; H8 upload; H6 spot-check; T-5 freeze. No AUD-2 action possible on these.
+P51-NEXT | AUD-2 standby for: TV-1 on APPLY-PROOF, TRB-R3 re-audit, T-3 repin if POS test added, T-4/TV-3 when live artifacts exist. No repo files created by AUD-2.
+
+## P52 STATUS CENSUS SNAPSHOT (SUB; append-only; no row state changes)
+P52-CENSUS | Responses received W-B,W2,W4,AUD-1; W3 snapshot pending. Details in INTERCOM STATUS-CENSUS-SNAPSHOT-1 (2026-10-19 15:48:09 IST); statuses below distinguish offline acceptance from full/live gates.
+P52-DB7 | VERIFY/W-B; AUD-1 ACCEPT R2 offline; SUB integration pending; hosted effects not included. (TASK_BOARD:3403-3404; INTERCOM:1306)
+P52-DB5 | BLOCKED; R6 step0 ACCEPT does not prove hosted apply; owner access/apply route remains required. TV-1 not verified. (TASK_BOARD:3405,3762)
+P52-W2 | No active claim reported; P-4/DB-4 code-only overrides remain distinct from their retained full-row VERIFY/deferred checks. (TASK_BOARD:3347,3399,3635-3636)
+P52-W3 | Last evidence: TRIAL-RUNBOOK R2 REJECT on DEF3 dotenv path; R3 fix+repin+fresh review remains. Current census reply pending. (TASK_BOARD:P51; INTERCOM:1297-1304)
+P52-W4 | T-4 step0 R2 offline ACCEPT integrated HOLD; full T-4 OPEN pending T-3 DONE and real artifacts; TV-4/full report not accepted. (TASK_BOARD:3361,3773)
+P52-T3 | AUD-2 R8 ACCEPT covers offline verifier only; row remains VERIFY pending SUB integration; hosted roundtrip remains TV-3. (TASK_BOARD:3359,P51; INTERCOM:P51)
+## P52 SUB INTEGRATIONS: T-3 R8 + DB-7 R2 (SUB 2026-10-19 15:52 IST; append-only)
+P52-T3 | T-3 STEP0 => DONE (code-only scope): AUD-2 ACCEPT AUD2-T3-R8-1 rev=368c5888... ; SUB raw recheck: disk files trialVerifier.js=e9523ff4../test=42447927.. == receipt; agg reproduces 368c5888... byte-exact; node --test tools/trialVerifier.test.js 26/26 exit0. T-3 ROW stays VERIFY (hosted readback deferred).
+P52-T3-EXP | tests_added(trialVerifier.js)=0, (trialVerifier.test.js)=+2 this round (24=>26); both prior gaps cured per AUD-2 (26/26 incl GAP-1/2/3 negatives); DEF follow-ups (POS nested-equal test, key-order sensitivity) logged non-blocking.
+P52-DB7 | DB-7 ROW => DONE (offline workflow scope, whole row by definition): AUD-1 ACCEPT DB7-A1-V-R2 rev=99954bed... ; SUB raw recheck: files r3DbWorkflow.js=328cb526../test=3e02b3dd../DB_RUNBOOK.md=21761b06.. == receipt; agg reproduces 99954bed...; node --test tools/r3DbWorkflow.test.js 8/8 exit0 (AUD-1 full 38/38 + Vision539/MCP41 on record). Hosted apply/upload NOT covered - those live in DB-5/TV-1/T-2 gates.
+P52-ELIG | Downstream after this flip: DB-8 waits DB-5 DONE (still owner-gated) + T-4 DONE; DB-8 SKELETON (step0 docs) unblocked; T-2 step2 upload waits TV-1 ACCEPT + H8; T-3 hosted readback waits T-2.
+
+
+P53-TRB-R3 | TRIAL-RUNBOOK R3 env fix; preflight+all runVision commands run from vision/ => dotenv cwd=.env resolves vision/.env; DEF1/2/4 retained; rev=a7bc2ba209180a06; 55 lines; AUD-2 verification pending. (2026-10-19 15:56 IST)
+P53-TRB-STATE | TRIAL-RUNBOOK docs gate => VERIFY (W3 R3 proof TRB-R3-PROOF-W3-1556; rev=a7bc2ba209180a06b7dd996ebecb4bb3b144241be2d969a3bc9ece8a4c7f56b0); AUD-2 request TRB-R3-W3-1556 pending; T-2 run remains gated pending ACCEPT+SUB integration.
+
+## P54 T-4 TEMPLATE REVIEW ROUTING (SUB; append-only)
+P54-T4-TEMPLATE | Refresh R1 rev aebac585f315 is VERIFY for AUD-2; no AUD-2 chat is available (only AUD-1). No reroute; await owner-provided/activated AUD-2 thread. Full T-4 stays OPEN; no state change.
+
+## P55 STATUS CENSUS UPDATE (SUB; append-only)
+P55-TRB | AUD-2 ACCEPT TRB-R3 rev=a7bc2ba209180a06b7dd996ebecb4bb3b144241be2d969a3bc9ece8a4c7f56b0; disk SHA matches. Docs gate clear; T-2 step1 still needs live HOLDER/owner gates. P53 pending text superseded.
+P55-T4 | AUD-2 ACCEPT T4-TEMPLATE-REFRESH rev=aebac585f31534318257841b087bf55a5c32841a0f70f5a7; disk SHA matches. Template-only scope; full T-4 remains OPEN. No row state change.
+P55-OTHER | DB-7 DONE (offline); DB-5 BLOCKED on owner DB access/apply; T-3 VERIFY pending SUB integration/hosted readback; DB-8 AUD-1 REJECT repair pending; T-2 run gated.
+P55-IST | 2026-10-19 16:02 IST
+
+## P56 BLOCKER CLEARANCE HANDOFF (SUB; no new claims)
+P56-T3-CORR | P55-OTHER pending SUB integration wording is stale: P52 already integrated STEP0 DONE. Full T-3 row remains VERIFY solely for hosted roundtrip/evidence; T-4 real fill still waits that full gate. No task state changed.
+P56-ACCEPTED | TRIAL-RUNBOOK R3, T4 template refresh and DB-7 offline workflow have accepted/integrated scopes; old REJECTs remain history. Do not reimplement them. (INTERCOM:1378,1416,1427-1428; P52)
+P56-REPAIR | Active DB-8 skeleton REJECT => existing W-A claimant; fix real CLI input command, split syntax checks, executable missing-proof NEG, repin for AUD-1. Board OPEN does not override durable claim. (INTERCOM:1366,1390-1395)
+P56-GAPS | T4 input contract gaps: missing report producer, manifest/report flag mismatch, case cause mapping, retained hosted readback artifact. These are pending compatibility work, not already accepted implementation. (INTERCOM:1419-1423)
+P56-OWNERS | W-A DB-8 claim and W-B H4 browser HOLDER remain; no transfer recorded. W2 owns DB-5 backend row. OpenCode continuation requires explicit recorded scope/holder handoff; no duplicate rows or claims.
+P56-LIVE | Preserve P44 strict order while current: DB-5/TV-1 before T-2 execution. Earlier P39 permitted local parallelism; this packet does not waive the later sequence. Offline repair, access preflight and evidence preparation may proceed independently.
+P56-PLAN | Three continuation lanes: OC-CODE offline compatibility/DB8 repairs; OC-TRIAL local evidence/report/spotcheck; OC-DB hosted apply/upload/readback. User-paste packets assign future scopes only after existing locks are reconciled.
+P56-TIME | 2026-10-19 16:13 IST
+
+## P57 OC-CODE AUDIT DISPOSITION (SUB; no new claims)
+P57-OCC | Snapshot cbae5a2c... => REPAIR, not DONE. AUD-1 OCC-A1-V-R1 REJECT: DB8 executable NEG absent; contradictory experiment_kind accepted; retained readback overwrites/arbitrary path/fake-hash provenance. (INTERCOM:1450-1462)
+P57-GAPS | Genuine exploration-result -> compatible report producer and wired checkpoint/resume remain missing. Archive passthrough/gap-document acceptance is narrow; no whole-chain or live-readiness acceptance.
+P57-TRIAL | R3 runbook is the accepted reference, not permission to execute. Proposed runVision --explore pilot is a real exploration run; require startup-only headless pilot proposal and explicit success/cleanup checks before release.
+P57-LOCKS | H4=W-B; W2 DB5 and prior W-A DB8/uploader scope history remain pending exact handoff. No new current X-LOCK confirmed in checked latest records; absence is not a file-scope release.
+P57-TIME | 2026-10-19 16:38 IST
+
+## P58 OFFLINE CONTINUATION AND H4 TRANSITION (SUB; existing scopes only)
+P58-CODE | Under owner-requested OpenCode continuation, OC-CODE is designated sole continuing writer for trialReport.js+test, trialUploader.js+test and DB_COMPLETION_REPORT.md repairs. Prior W-A/W3 file claims are superseded only for these scoped repairs; history retained.
+P58-ADAPTER | OC-CODE adapter scope released: tools/trialArtifacts.js + tools/trialArtifacts.test.js and docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md. Use actual producer contract/provenance; W3 read-only discovery requested. No engine/resume code or live run released.
+P58-BOUND | This is explicit prospective scope reconciliation, not retroactive approval, audit ACCEPT, new row, full DB8 DONE or release of W2 DB5. runArchive passthrough remains unchanged in reviewed scope; preserve unrelated shared-tree changes.
+P58-R2 | OC-CODE new eight-file SUB snapshot rev=110796f22da7dfcb3ef26734f68916e1b7502d18fd6bb6930e3c2eaef8425075 => AUD-1 review requested. Author reports 81/81; no independent R2 verdict yet. Snapshot=docs/evidence/oc-code-r2/20261019-165535/SUB_SNAPSHOT.json
+P58-H4 | Owner delegated holder choice to SUB; selected OC-TRIAL for eventual pilot/trials. W-B release/checkpoint acknowledgement requested; H4 transfer is pending that acknowledgement and SUB recording. Other P44 gates unchanged; no launch now.
+P58-PILOT | browser /health is unconditional and does not start Chromium (browser.js:22,25-37). Require an actual headless launch/close proof. Full-stack start is a separate proposal; no exploration/model calls. Cleanup only owned PIDs; not global Chrome termination.
+P58-TIME | 2026-10-19 16:55 IST
+P58-H4-TRANSFER | H4 => OC-TRIAL effective on this appended record: owner delegated choice to SUB; W-B release H4-RELEASE-WB-20261019-01 recorded (INTERCOM:1481). Prior W-B holder superseded. Assignment only: corrected pilot approval + other P44 gates still required.
+P58-H4-NEXT | OC-TRIAL submits real headless Chromium launch/close proposal; /health-only proves Express readiness, not browser launch. No full-stack/model/site start authorized by this holder transfer. (2026-10-19 16:56 IST)
+P58-R2-VERDICT | AUD-1 OCC-A1-V-R2 => REJECT/REPAIR; missing expected-input requirement, DB8 placeholders, link-publication POS sandbox EPERM. Contradictory-kind NEG passed. No whole-lane acceptance; no repeat of repaired kind finding.
+P58-ADAPTER-EVID | Genuine explorer outputs + companion testcase files found for run_1791724255517 and run_1791725272124; ignored local history, not new trials. Adapter R1 snapshot now at AUD-1; preserve raw bytes and missing execution/provenance fields.
+P58-PILOT-API | chromium.launch returns Browser, not BrowserServer; proposed b.process() fails. Use launchServer/process/close with finally cleanup for PID-backed proposal. Pilot remains unexecuted/gated. (2026-10-19 17:00 IST)
+P58-PILOT-RESULT | Owner-forwarded probe: BrowserServer PID24956 launched/closed, exit0; SUB current PID lookup absent. Narrow startup result recorded; no independent historical launch observation or site-run proof. Do not rerun solely for logs.
+P58-R3 | Current ten-file repair+adapter snapshot => AUD-1 via OCC-VR-SUB-R3; prior REJECTs retained until new scoped verdict. Author reports 32/32 and schema compatibility; not independently accepted. Resume, hosted and real trial gates remain. (2026-10-19 17:04 IST)
+P58-R3-VERDICT | AUD-1 OCC-A1-V-R3 REJECT; SUB => REPAIR. 32/32 reproduced; expected-value guards cured. Remaining: partial readback writes/path defense, adapter evidence+telemetry, DB8 placeholders and stale blocker. Historical schema compatibility only accepted.
+P58-TV1-R2 | SQL receipt verified 20ec3dd...: 31881 bytes/472 lines; expected matrix pinned; independent static review requested via TV1D-VR-SUB-R2. No SQL executed. Six-object baseline applicability and rollback executor remain explicit questions. (2026-10-19 17:10 IST)
+
+## P59 TV1 DIAGNOSTIC REPAIR CONTINUATION (owner assigns OC-TRIAL)
+P59-OWNER | OC-TRIAL => existing TV1 diagnostic implementation sub-scope, offline only. No new row/competing auditor claim; DB5=W2, H4=OC-TRIAL, OC-CODE repair files unchanged. (2026-10-19 17:18 IST)
+P59-SCOPE | database/TV1_Diagnostics_R3.sql; tools/tv1LocalRunner.js+test; docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md; docs/TV1_R3_OFFLINE_RUNBOOK.md; docs/evidence/tv1-r3/<fresh-id>/. Full brief=docs/TV1_OC_TRIAL_REPAIR_BRIEF.md.
+P59-CHECK | Explicit approved baseline input; genuine isolated SQL execution for zero-team and six-object local fixtures; role/constraint checks; error-injected rollback/close and cleanup; reject remote modes. Worker repairs/self-checks before one frozen AUD-1 request.
+P59-GATES | Static review alone is not requested completion. Offline runtime output required; missing runtime => precise blocker, not synthetic PASS. Independent AUD+SUB still close offline scope; no hosted apply/trial/upload release.
+
+P59-RUNTIME | PGlite unresolved at five known roots; npm cache lookup empty; AUD has no known current import path. Owner install/existing-path decision requested; OC-TRIAL may prepare code meanwhile, no fabricated SQL execution.
+P59-RUNTIME-READY | Owner-approved @electric-sql/pglite@0.5.10 installed in tools/.tv1-runtime. Fresh local SQL smoke PostgreSQL18.6 / value1 / close PASS exit0; proof=docs/evidence/tv1-runtime-setup/PGLITE_SMOKE.json. OC-TRIAL local self-check may proceed. (2026-10-19 17:22 IST)
+P58-R4-REVIEW | Fresh repair bytes pinned under OCC-VR-SUB-R4 (worker labels submission R3); author reports32/32. AUD-1 to verify prior write-safety, evidence/telemetry and DB8/doc findings; no acceptance/state flip inferred. (2026-10-19 17:23 IST)
+P59-R3-SUBMISSION | Worker reports local self-check exit0 and2/2 args tests. Snapshot => TV1RUN-VR-SUB-R3; no offline completion accepted. P59 SQL/failure matrix coverage remains missing. (2026-10-19 17:28 IST)
+P59-NOTICES | Installed PGlite0.5.10 onNotice callback verified in fresh local query; raw notice+SELECT captured and DB closed. Evidence=docs/evidence/tv1-runtime-setup/NOTICE_CAPTURE_PROBE.json. Worker claimed no-NOTICE limitation is configuration gap.
+P59-R3-GAPS | Restore post-rollback fingerprint comparison; explicit expected inventory (not hardcode0); genuine empty/six-fixture and injected-error cleanup tests; explicit rollback/close failure handling; capture raw results/states and actual runtime version.
+
+P58-R5-OWNER | Owner authorizes SUB small repairs in existing P58 scope; SUB sole writer for this revision, OC-CODE pause. Prior claims/history retained. (INTERCOM OCC-VR-SUB-R5)
+P58-R4-RESULT | AUD-1 R4 REJECT => REPAIR. SUB repaired telemetry, evidence, atomic publication and DB8 header; focused42/42 exit0 + ten tests; AUD-1 R5 pending; no DONE. (2026-10-19 17:40 IST)
+P58-R5-EVID | docs/evidence/oc-code-r5/20261019173800/SUB_SNAPSHOT.json; CHECKS.json raw local42/42 + syntax7/7. Sandbox hard links EPERM; approved local execution passed. Unsupported filesystems fail closed.
+P59-R4-REVIEW | Fresh notice-capture submission => TV1RUN-VR-SUB-R4. P59 incomplete: omitted SQL rows, args-only tests, constant empty post-rollback baseline and absent failure controls. OC-TRIAL freeze pending review.
+
+## P60 BOUNDED CONNECTED REPAIR LOOP
+P60-LOOP | Owner authorizes bounded SUB + connected W3 + AUD-1 offline repair loop with direct chat replies. Existing P58/P59 scopes only, no new row/claim or hosted release. (2026-10-19 17:45 IST)
+P60-P59-WRITER | W3 replaces frozen OC-TRIAL as sole continuing writer: TV1_Diagnostics_R3.sql; tv1LocalRunner.js+test; TV1_R3 runbook/matrix; fresh own evidence. OC-TRIAL pause on these paths; prior evidence unchanged.
+P60-P58-WRITER | SUB repairs R5 artifact-byte secret-scan finding in trialReport.js+test only; fresh frozen R6 to independent AUD-1. Prior R5 REJECT retained. Other P58 files frozen.
+P60-IDLE | Each chat stops after5min IDLE without substantive received work. New work cancels idle wait; finish/checkpoint work, then restart idle timer. Polls/own heartbeats do not reset it; no background automation created.
+P60-BOUND | Max two repair/review rounds per package; expanded engine/resume work or owner/live gates => checkpoint blocker. No forced DONE; SUB integrates only independent ACCEPT. H4=OC-TRIAL, DB5=W2 unchanged.
+
+P60-R6 | SUB repaired R5 artifact-byte secret scan; focused46/46 + syntax7/7 recorded; independent AUD-1 request OCC-VR-SUB-R6 pending. No DONE or live release. (2026-10-19 17:47 IST)
+
+P60-W3-HOLD | Automatic approval review rejected W3 P59 ACK: direct human authorization for specific assignment required in worker chat. W3 verified root order but made no edits. Transfer is pending acceptance; do not assume active worker. (2026-10-19 17:48 IST)
+
+P60-R6-INTEGRATED | AUD-1 OCC-A1-V-R6 ACCEPT => scoped secret-byte repair DONE; SUB ten-file recheck intact. This is not whole P58/DB8/live DONE. P59 worker remains approval-blocked. (2026-10-19 17:49 IST)
+
+P60-OCC-CLEAR | AUD-1 DM confirms no reported R4/R5 source findings remain in frozen R6; independent46/46+syntax7/7 PASS. Identified repair scope complete; hosted/trial/resume/P59 gates remain. (2026-10-19 17:51 IST)
+
+P60-OWNER-REPLY | Owner answered specific W3/P59+DM question: u divide and continue. W3 to verify new trusted evidence; activation still requires accepted acknowledgment. W3 implement / AUD review / SUB integrate. (2026-10-19 19:08 IST)
+
+P60-SUB-P59 | W3 ACK rejected again; no retry or worker edits. Under owner continue order, SUB takes P59 implementation in existing SQL/runner/test/docs/evidence scope. AUD-1 remains independent; no self-ACCEPT or hosted release. (2026-10-19 19:10 IST)
+
+P60-P59-VERIFY | SUB implementation frozen at TV1RUN-SUB-PROOF-R6; raw local16/16+syntax2/2; net tests14. Independent AUD-1 requested; no P59 DONE, hosted TV1 ACCEPT or trial release. (2026-10-19 19:32 IST)
+
+P60-P59-OFFLINE-DONE | AUD-1 TV1RUN-A1-V-R6 ACCEPT + SUB integration closes P59 offline runner repair. Evidence=docs/evidence/tv1-runner-review/20261019193033-sub-r6/SUB_SNAPSHOT.json. Hosted TV1/DB5/live gates remain open. (2026-10-19 19:37 IST)
+
+## P61 OWNER WORK ORDERS / THREE OFFLINE CHILDREN
+P61-AUTH | Direct human co-master WORK ORDERS verified in W4/W3/W1 chats; W4 userMessage01a15486-4553-7591-9b15-5cc0045b69e0. Supersedes P60 no-new-scope restriction ONLY for children below. No duplicate parent IDs. (2026-10-19 19:52:59 IST)
+P61-PARENTS | P-4 code-only DONE at3635 and P-1 DONE remain. Old P-4 VERIFY/W2 is retained history, not a live source lock. W2 current handoff reports no active source/apply lock; DB5 row remains W2.
+P61-CUSTODY | Before transfer, full source/test/protocol bytes preserved at docs/evidence/p61-scope-custody/20261019195259/manifest.json. Dirty/untracked work retained; no reset/stash/delete/push.
+P61-LOCKS | Prospectively tools/runBatch.js+test =>W4; tools/runArchive.js+test =>W3; tools/credPreflight.js+test =>W1. Prior reservations superseded only for these continuing scopes. No other source file released.
+P-4.1 resume | DONE | W4 | child P-4 | deps P-4 code-only DONE | files tools/runBatch.js;tools/runBatch.test.js;docs/TRIAL_CHECKPOINT_RESUME_GAP.md | offline; AUD-OFFLINE via DB-V; SUB integrates.
+P41-GOAL | Atomic checkpoint after each site: done/blocked/crashed, archive path + HEAD; CLI --resume skips done/blocked, restarts crashed site from scratch with honest identity; never retry BLOCKED. Preserve legacy checkpoint compatibility or explicit refusal.
+P41-POSNEG | Real mock-child kill mid-batch + resume remaining; BLOCKED calls unchanged; corrupt JSON/schema checkpoint refuses; no duplicate complete sites or archive overwrite. node --check tools/runBatch.js; node --test tools/runBatch.test.js; raw counts/exits.
+P41-LIMIT | Batch resume is not in-site Vision continuation. Document actual executor/invocation contract; identify live wiring gap if absent. Only mock child processes may run for this scope; no browser/model/site/network execution.
+P-1.1 capture | DONE | W3 | child P-1 | deps P-1,P-2 DONE | files tools/runArchive.js;tools/runArchive.test.js | offline; AUD-OFFLINE via DB-V; SUB integrates.
+P11-GOAL | Report-backed verdict; run/stage timings when observed; calls,tokens/screens; HEAD/dirty/model/contract-prompt hash/browser/viewport/OS provenance. Unavailable =>NOT_RECORDED+reason; preserve real0/false; no inference or estimation.
+P11-POSNEG | Full fixture fields exact; unavailable fields carry reason; zero/false retained; identity/hash/tamper and immutable-overwrite controls preserved; secret-safe metadata only. node --check tools/runArchive.js; node --test tools/runArchive.test.js; counts-only scan.
+T-2.pre preflight | DONE | W1 | child T-2 | deps none for fake-env offline work | files tools/credPreflight.js;tools/credPreflight.test.js | AUD-OFFLINE via DB-V; SUB integrates. No real env/access/H3 needed for implementation.
+T2PRE-GOAL | Required env NAMES presence/length only; no values. Match target ref against owner-designated local untracked input; missing/wrong ref =>STOP. No manufactured owner file/ref. No network =>SKIPPED(no network), never fake reachability PASS.
+T2PRE-POSNEG | Fake env present/absent, missing-owner-ref/mismatch, secret strings in values never appear in output; no-network skip. node --check tools/credPreflight.js; node --test tools/credPreflight.test.js; raw numeric evidence.
+P61-P5 | P-5 remains existing SUB/owner row; draft already accepted docs-only. W1 may inspect docs/RESEARCH_PROTOCOL.md and propose necessary delta to SUB after T-2.pre; do not overwrite accepted draft or claim final freeze/tag.
+P61-AUD | DB-V rolling review explicitly covers AUD-OFFLINE for each child; no new verifier rows. Worker =>VERIFY with frozen hashes+POS/NEG+raw outputs; AUD-1 independent per child =>SUB; only SUB closes ACCEPTed scopes.
+P61-LIVE-SEQ | New owner order supersedes P44 strict DB-first rule ONLY for T-2 local step1: P-4.1+P-1.1+T-2.pre independently ACCEPTed + H3 + SUB release required. H4=OC-TRIAL. Hosted upload step2 still waits DB5+TV1 ACCEPT+H8.
+P61-HUMAN | DB target/env/shared YN/apply operator and H3/H8 still require actual owner decisions. Offline child claims need none of those. No hosted SQL, credentials, live browser, upload or research campaign released.
+P61-LOOP | Workers start eligible assigned child now, DM AUD/SUB via human authorization in own chats; idle5min stop, cancel idle timer on substantive work. Max two repair/review rounds; avoid heartbeat-only DM loops.
+
+P61-T2PRE-R1 | AUD-1 REJECT R1 parent-junction escape (INTERCOM1670-1672); W1 repairing within current scope. Row stays VERIFY pending fresh frozen pin+independent verdict; passing5/5 alone is insufficient. (2026-10-19 20:00 IST)
+
+## P62 OWNER DB5 TARGET / CONDITIONAL OPERATOR HANDOFF
+P62-OWNER | Direct owner reply confirms capstone-r3-dev/xvizjawcpafdqrygzvcx, personaldev shared=N main project; applying operator OC-DB AFTER access approval. (2026-10-19 20:09 IST)
+P62-OWNERSHIP | DB5 execution owner W2=>OC-DB prospectively; W2 accepted offline prep/source history retained, no active source/apply lock reported. No R3 source edits or competing claim. Row stays BLOCKED pending access/tool approval.
+P62-BOUND | This grants no bypass/retry of safety-blocked action. Fresh identity/collision check before permitted apply; pinned original migration only. No hosted diagnostic approval from local P59 PASS; independent hosted executor/proof still required.
+P62-REF | OC-DB handoff=docs/OC_DB_CURRENT_HANDOFF_20261019.md; target/operator questions resolved, access approval outstanding. TV1/DB5 hosted acceptance, H3/H8 and freeze remain separate.
+P61-P11-REPAIR | AUD P11-A1-V-W3-R2 REJECT source-parent containment + partial-stage missing reasons; W3 repairing same two files. Row VERIFY; no new task/claim or live release.
+
+P61-CHILDREN-DONE | P-4.1, P-1.1, T-2.pre independently ACCEPTed + SUB integrated. No live/hosted release. Approved resume semantics are site-level restart; actual Vision executor wiring, H3 and real preflight remain separate. (2026-10-19 20:13 IST)
+
+P61-H3-CORR | Existing owner H3 approval is recorded at P43-H3/3735 for the unchanged3targets. Generic P61 pending wording does not revoke it. Live executor wiring, actual runtime preflight and SUB release still required; H8 upload approval remains separate. (2026-10-19 21:17 IST)
+
+## P63 T-4 code-only audit (AUD-1; 2026-10-19 21:31 IST; append-only)
+P63-T4-R2 | ACCEPT code-only guard rev=sha256:8605c861524c093768cdaf97c6fc37d3f472d417b715bdcf152e11cf91a91b05; pin2/2; node --check2/2 exit0; node --test tools/trialReport.test.js 26/26 exit0; raw docs/evidence/trial-report-verdict/20261019T155537-r2/CHECKS.json.
+P63-T4-SCOPE | Run-level cause required; malformed cause leaves rejected; valid BLOCKED preserved. Full T-4 remains OPEN pending full T-3 DONE+real artifacts; no full report, TV-4 or GO inferred.
+
+## P64 REMAINING / UNREVIEWED WORK INDEX (AUD-1; 2026-10-19 21:48 IST)
+P64-SOURCE | Derived from existing rows, owner overrides, and latest INTERCOM; no task state, owner, claim, or lock changed.
+P64-UNREVIEWED | P-4 full Z-5/live/cause; P-7 retained evidence/human sheet; DB-4 complex export; T-1 hosted RLS/view proof. Code-only DONE does not close these deferred gates. (TASK_BOARD:3633-3644; INTERCOM:1220,1645)
+P64-REMAINING | P-5 protocol/freeze; TV-1 uploader audit; T-2 safe trial; TV-2 audit trial; T-3 hosted roundtrip; TV-3 audit roundtrip; T-4 full report; TV-4 audit report; T-5 owner freeze; DB-5 backend proof; DB-8 delivery handoff; DB-V final rollup.
+P64-DEPS | T-2 waits T-1+DB-5; TV-2 waits T-2; T-3/TV-3 wait trial/readback; T-4/TV-4 wait real artifacts; DB-8 waits DB-5+DB-7+T-4. DB-5 stays BLOCKED on access/tool approval. (TASK_BOARD:3356-3364,3406,3412;P62)
+P64-CLAIMS | DB-8 skeleton repair remains W-A claim; P-11.1 repair remains W3. No reassignment or new task authorized. (TASK_BOARD:P56,P61;INTERCOM:1438,1645)
+
+## P65 MASTER-ORDERED INDEX CORRECTIONS / NO TASK STATE CHANGE
+P65-AUTH | MASTER GO requests reconciliation before disjoint encoder dispatch. This is appended index correction only; no existing completed work reopened. IST=2026-10-19 22:24 IST
+P65-P11 | P64-CLAIMS P-11.1 repair is stale/misnamed. Canonical child P-1.1 is DONE per P61-CHILDREN-DONE:3926; W3 has no repair reassigned by that index. Historical lines retained.
+P65-T2 | P64 generic T2 DB-first deps do not override P61-LIVE-SEQ:3913: local step1 may proceed after accepted children + actual runtime readiness + existing same-scope H3 + SUB release; H4=OC-TRIAL.
+P65-HOSTED | Upload step2 still waits DB5/TV1 ACCEPT + H8; DB5 remains BLOCKED/OC-DB pending actual access/tool approval. No hosted or local run release issued here.
+P65-ENCODER | MASTER-approved free-worker scope tracked only at SUGGESTIONS.md COORD-ENVELOPE-1; W2 assigned pending own no-conflict claim. Non-author AUD via DB-V then SUB; no extra editable queue or automatic state tool.
+
+## P66 OFFLINE SCOPE CLOSURES (SUB; 2026-10-20; append-only; no parent row flipped)
+P66-AUTH | Two offline scopes closed after independent AUD-2 review and SUB integration. No live/browser/model/DB/upload action, no push, no commit, no parent-row flip, no new claim. IST=2026-10-20 00:27:24 IST
+P66-ITEM1 | ITEM1 run_id contract | DONE (offline) | W4 | child T-2 | files tools/visionTrialExecutor.js+test | rev=sha256:2978f0f66cc5b69c | AUD-2 ACCEPT + SUB integrated; e2e archive => manifest.run_id=pinned-run-A status=done; 3 fallbacks pass; NEG mismatch refused; suite 228/228 exit0; +1 test
+P66-ITEM1-EFFECT | The archive-id contract break that aborted EVERY real run is fixed, so T-2 step1 archiving is no longer blocked by it. T-2 still waits DB-5 + live gate + H8 + SEED creds. No live release implied.
+P66-ITEM4 | ITEM4 TV1RUN re-pin | ACCEPT (local pin) | OC-TRIAL file set | files docs/evidence/tv1-r3/snapshot-oc-trial-20261020-r2.md | rev=sha256:4b411d638a7541e0 | 8/8 file sha256 match disk 0 drift; aggregate recomputes; recipe vs r6; R1 retained
+P66-ITEM4-CAVEAT | Scope caveat CARRIED: R2 pins 8 files vs r6 7, so database/r3_companion.sql and tools/.tv1-runtime/package-lock.json are NOT pinned in it. Owner confirmation of that drop is still required. Hosted RLS/view/duplicate evidence remains UNVERIFIABLE; TV-1 stays OPEN.
+P66-DISC | Two disclosures recorded: 2 ITEM4 intercom lines were edited in place to correct an AUD-2 transcription typo (62-char hash -> 64-char), and the R2 snapshot was authored by AUD-2 rather than the worker. Both are self-reported in INTERCOM; a second pair of eyes is advisable.
+P66-LEDGER | The tests-baseline LEDGER is deliberately NOT rewritten by P66: it is the baseline anchor for future deltas. The ITEM1 delta (+1 on tools/visionTrialExecutor.test.js) is recorded in INTERCOM and AUDIT.jsonl instead.
+P66-REMAIN | Unchanged and still open: DB-5, DB-8, DB-V, T-2, T-3, T-4, TV-1, TV-2, TV-3, TV-4, T-5, P-5. Owner gates still required: DB-5 access/tool approval + OC-DB hosted executor, H8 upload approval, SEED_USERNAME/SEED_PASSWORD in vision/.env, T-5 freeze, P-5 tag.
+P66-NEXT | Next offline work available now: DB-4 export re-pin+review, P-5 protocol deltas (model/date pin from MODEL_LANES:18-19, owner-stamped run date). Both need an independent auditor; neither needs owner input.
+
+## P67 OFFLINE DOC/EXPORT SCOPE CLOSURES (SUB; 2026-10-20; append-only; no parent row flipped)
+P67-AUTH | Two offline scopes closed after independent AUD-2 review and SUB integration. No live/browser/model/DB/upload action, no push, no commit, no parent-row flip, no new claim. IST=2026-10-20 00:41:25 IST
+P67-ITEM2 | ITEM2 DB-4 export | DONE (offline export scope) | W2 | rev=sha256:f41a7450a57a1db6 | 3/3 pins match disk; delta +0 vs LEDGER (5->5); 9/9 behavioural checks incl. 5 NEG refusals; check 2/2, test 5/5, suite 228/228 exit0; AIza/eyJ 0.
+P67-ITEM2-SCOPE | DB_REPORT_COVERAGE.md maps template sections 1-17 and marks 7 NOT_RECORDED (no accepted A/B/Fusion mapping). This ACCEPT covers the export only, not that template coverage gap.
+P67-ITEM3 | ITEM3 P-5 protocol deltas | DONE (docs-only) | W1 | rev=sha256:1ef116b17b3eb0d7 | model ids byte-exact vs MODEL_LANES:18-19; run date stays owner-stamped NOT_RECORDED; STATUS DRAFT/NOT VERIFIED; 30-site run + tag + freeze ungranted; 36 lines ASCII; secrets 0.
+P67-ITEM3-CAVEAT | The doc says an owner-stamped run date is in each manifest, but no such field exists: schema REQUIRED, export MANIFEST_KEYS and runArchive FIELDS omit run_date, so it is dropped on export. Fix = add it to all three, or reword the doc. Decision needed, non-blocking.
+P67-P5-STILL-OPEN | P-5 itself remains an open SUB/owner row. A docs delta is not a freeze: the 30-site run, the research-run-1 tag and P-5 VERIFIED still need the owner gate and the P-1..P-4 evidence.
+P67-REMAIN | Unchanged and still open: DB-5, DB-8, DB-V, T-2, T-3, T-4, TV-1, TV-2, TV-3, TV-4, T-5, P-5. Owner gates still required: DB-5 access/tool approval + OC-DB hosted executor, H8 upload approval, SEED_USERNAME/SEED_PASSWORD in vision/.env, T-5 freeze, P-5 tag.
+P67-NEXT | All four dispatchable offline items (ITEM1, ITEM2, ITEM3, ITEM4) are now closed. Remaining offline work is limited to the run_date caveat and the TV1RUN scope drop confirmation. Everything else waits on owner gates.
+
+## P68 SESSION CLOSE / BOARD FLIPS (SUB; 2026-10-20; append-only)
+P68-AUTH | Session close with 4 offline scopes flipped to DONE by SUB after independent AUD-2 ACCEPT. Only the rows listed below were flipped. No push, no commit, no live/hosted action, dirty tree preserved at 141. IST=2026-10-20 00:49:00 IST
+P68-FLIP-1 | ITEM1 run_id contract | DONE | W4 | child T-2 | files visionTrialExecutor.js+test | rev=sha256:2978f0f66cc5b69c | AUD-2 ACCEPT + SUB integrated; e2e archive manifest.run_id=pinned-run-A status=done; 3 fallbacks pass; NEG mismatch refused; suite 228/228 exit0; tests_added +1
+P68-FLIP-2 | ITEM2 DB-4 export | DONE | W2 | rev=sha256:f41a7450a57a1db6ca3fcc1563bbb4e1b65b92dcd9680dfcc35ea5137941303c | AUD-2 ACCEPT + SUB integrated; 3/3 pins match disk; delta +0 vs LEDGER; 9/9 behavioural checks incl. 5 NEG refusals; check 2/2, test 5/5 exit0; AIza/eyJ 0
+P68-FLIP-3 | ITEM3 P-5 protocol deltas | DONE (docs-only) | W1 | rev=sha256:1ef116b17b3eb0d7 | AUD-2 ACCEPT_WITH_CAVEAT + SUB integrated; model ids byte-exact vs MODEL_LANES:18-19; run date owner-stamped NOT_RECORDED; STATUS DRAFT/NOT VERIFIED; 30-site run + tag + freeze ungranted
+P68-FLIP-4 | ITEM4 TV1RUN re-pin | DONE (local pin scope) | OC-TRIAL file set | files tv1-r3/snapshot-oc-trial-20261020-r2.md | rev=sha256:4b411d638a7541e0 | AUD-2 ACCEPT + SUB integrated; 8/8 pin match disk; aggregate recomputes; R1 retained
+P68-NOT-FLIPPED | Deliberately NOT flipped: DB-4, T-1, P-4 stay DONE (FORCED/CODE-ONLY), deferred hosted/live/root-cause gates still open; P-5 stays OPEN (a docs delta is not a freeze); DB-8 OPEN (needs DB-5 + T-4); T-3 VERIFY (needs hosted readback); TV-1..4, T-2, T-4, T-5, DB-5, DB-V unchanged.
+P68-DISCLOSURE | 2 artifacts were authored by AUD-2, not a worker: the regenerated tests-baseline LEDGER/CHECKS and the TV1RUN R2 snapshot. Deterministic recomputations from disk, but a second pair of eyes is advisable. See INTERCOM:CLOSE-20261020-AUD2-SUB-R1.
+P68-OWNER-GATES | 12 rows remain open, owner/hosted-gated, not worker-fixable: DB-5, DB-8, DB-V, T-2, T-3, T-4, TV-1, TV-2, TV-3, TV-4, T-5, P-5. Gates: DB-5 access/tool approval + real OC-DB hosted executor; H8 upload; SEED creds in vision/.env; T-5 freeze; P-5 tag; 30-site gate.
+P68-OPEN-DECISIONS | Two owner decisions, both non-blocking: (a) P-5 doc claims an owner-stamped run date in each manifest but no such field exists in schema REQUIRED / export MANIFEST_KEYS / runArchive FIELDS, so it is dropped on export; (b) TV1RUN R2 pins 8 files vs r6 7, so 2 paths are unpinned.
+P68-SAFE-TO-CLOSE | No live run, browser, DB session, HOLDER, mid-flight checkpoint or pending upload. All 4 offline scopes are closed with frozen hashes, so a later session resumes from the pins without redoing work.
+
+## P69 OC-DB R5 WINDOWS EVIDENCE REVIEW (AUD-2; 2026-10-20; append-only)
+P69-AUTH | Independent AUD-2 review of the OC-DB R5 Windows offline evidence package. Read-only; no hosted action, no push, no commit, no DB-5/TV-1 state change. IST=2026-10-20 21:54:49 IST
+P69-VERDICT | ACCEPT (OFFLINE scope only) | rev=4b1ae4e36151afd6 | 20/20 checks: outer+inner ZIP sha256 == claim, SHA256SUMS 4/4, both extract cleanly; R3 zip cae1405f == driver record, still holds ORIGINAL fake_adapter (source unmutated); patch +34 lines, hash-guarded, temp-only.
+P69-LOG-SUPPORT | Recomputed from raw: unittest Ran 48 tests OK; P59 node tests pass 16 fail 0; NEG-05 local PGlite 6/6 actual 23514 + exact constraint names, rollback count 0, baseline preserved; zero+six 36/36 each with rollback+close+fresh reopen and baseline match; 12 helper steps exit 0.
+P69-NEG05-NAMING | DECISION: no rename. Legacy label NEG-05/TRIAL-ELIGIBLE kept for exact 35-case coverage, but its control value is PENDING_VALIDATION + ELIGIBLE; the real ck requires experiment_kind=RESEARCH + non-empty app_id/comparison_id. A legacy NAME. Append a clarification.
+P69-LIMITS | Residual limits on this ACCEPT: 48/16/6 are owner-machine evidence, not re-executed by AUD-2; the Windows unittest layer runs against a test double, so it proves executor logic and failure handling, NOT hosted RLS; NEG-05 6/6 is local PGlite, not Supabase.
+P69-NO-STATE-CHANGE | DB-5 stays BLOCKED, TV-1 stays UNVERIFIED, R3 HOLD is correct. This evidence can satisfy the OFFLINE acceptance gate for the local R3 runtime layer only. Hosted BLOCK preserved until explicit normal apply + tool clearance; owner DB-5 access approval still required.
+
+## P69 AUD2 REPORT RECONCILIATION / THREE-LANE RELEASE
+P69-AUTH | Owner requests board update + one Supabase and two non-Supabase lanes. IST=2026-10-20 22:10 IST
+P69-DATED | AUD2 close summary228/228, empty remote and141 dirty entries are historical00:49 evidence, not a fresh current rerun or current process-state assertion. P68 completed child scopes stay closed.
+P69-R5 | Supersedes stale P68 claim that current P59 source is unavailable: R5 companion/source recovered,37/37 source hashes verified; independent AUD evidence/source receipt integrated (INTERCOM:R5-SUB-INT-1).
+P69-R5-LIMIT | Whole hosted executor/source approval and historical PS1 invocation identity are not established by that receipt. DB5 BLOCKED/OC-DB; TV1 UNVERIFIED. No hosted release or parent DONE.
+P69-LOCAL | P61 local-only T2 exception remains: DB5/H8 do not gate local step1. Actual runtime/seed readiness + accepted wiring + existing same-scope H3 + SUB release are required; H4=OC-TRIAL per latest holder record, recheck before run.
+P69-UPLOAD | Hosted upload step2 requires actual DB5/TV1 ACCEPT + H8. Old blanket DB-first/H8-local wording is superseded only for local step1, not uploads.
+P69-DECISION-A | Use truthful started/ended wording, not new run_date schema/export fields. Release P5-DATE-DOC; preserves owner freeze/scheduling decisions and P-5 parent OPEN.
+P69-DECISION-B | Treat R2 and R6 as different retained pin scopes, not permission to lose migration/runtime custody. Release supplemental union verification; source pins currently match original migration/runtime hashes.
+P5-DATE-DOC | VERIFY | W-A | child P-5 | deps none/offline | file docs/RESEARCH_PROTOCOL.md only + own evidence | baseline 1ef116b17b3eb0d739c899049ba5b81f2892230ad4516ec1e331e44ad05ef50c -> submitted 436a4df75d9c79e344f13ff9591286cc7010a552ba2fbec329ea44a1057bb551; evidence docs/evidence/p5-date-doc/EVIDENCE.txt; AUD01a15a1a via DB-V; SUB integrates; parent OPEN.
+TV1-CUSTODY-CHECK | OPEN | pool NONDB-B (one worker) | child DB-V/P59 follow-up | deps existing manifests accessible | read-only source + own fresh evidence | AUD01a15a1a via DB-V; SUB integrates.
+P69-SUPABASE | Existing DB5/TV1 chain =>OC-DB, no ownership transfer. Offline preparation claimable within existing scope; hosted phase BLOCKED on normal tool/access approval + actual executor/source review.
+P69-PACKET | Full objectives/files/preflight/POS/NEG/checks/independent reviewer/stop rules: docs/P69_THREE_LANE_WORK_20261020.md. Pool workers claim actual identity after no-conflict recheck; no auto-claim.
+P69-COUNT |12 original full scopes remain: DB5,DB8,DB-V,T2,T3,T4,TV1,TV2,TV3,TV4,T5,P5. They are not all immediately runnable; two child follow-ups above can proceed offline now.
+P69-UNCHANGED | No browser/model/site/DB/upload/research/tag/flag authorization, no secrets, deletion, history rewrite, push or commit. No rerun solely for NEG05 historical naming.
+
+P70-AUTH | Two P69 child scopes verified by independent AUD-3 and integrated by SUB in one owner-assigned session. Artifacts authored by worker sessions, not by AUD-3/SUB. IST=2026-10-20 22:35 IST
+P70-FLIP-1 | P5-DATE-DOC | DONE (docs-only child) | W-A | file docs/RESEARCH_PROTOCOL.md | rev=sha256:436a4df75d9c79e344f13ff9591286cc7010a552ba2fbec329ea44a1057bb551 | AUD-3 ACCEPT + SUB integrated; started/ended in 3 schemas; run_date 0 hits; source untouched; P-5 parent OPEN
+P70-FLIP-2 | TV1-CUSTODY-CHECK | DONE (artifact-verification child) | W-B | rev=sha256:780b91f00cfee7b923eb2923e54d61db3907c41e27fad97240981c6eba85aa7f | chain OPEN->CLAIMED->VERIFY->DONE; union 10/10; aggregates recomputed; LEDGER 19/20 + 1 dated drift; TV-1 UNVERIFIED, DB-5 BLOCKED
+P70-NOT-FLIPPED | P-5 stays OPEN (a doc fix is not a freeze); TV-1, TV-2, TV-3, TV-4, T-2, T-3, T-4, T-5, DB-5, DB-8, DB-V unchanged; no parent DONE
+P70-FINDING | Lane A posted no intercom VERIFY_REQUEST and no R3_RESULTS line; Lane B left its row OPEN with no intercom/AUDIT/R3_RESULTS record; SUB backfilled both ledgers 2026-10-20 22:35 IST
+P70-INDEPENDENCE | AUD-3 and SUB are the same session for these 2 lanes; artifacts are worker-authored so the verdict is not self-acceptance; designated AUD id 01a15a1a not claimed - owner assigned this session as verifier
+P70-OWNER-GATES | Unchanged 12 rows: DB-5, DB-8, DB-V, T-2, T-3, T-4, TV-1, TV-2, TV-3, TV-4, T-5, P-5. Gates: DB-5 tool/access approval + real hosted executor; H8 upload; SEED creds in vision/.env; T-5 freeze; P-5 tag; 30-site gate
+P70-SAFE | No live run, browser, model call, DB session, upload, tag, commit or push. git remote -v empty. Dirty tree preserved. Suites green this session: vision 539/539, mcp 41/41, tools 228/228
+
+P71-AUTH | 3 offline lanes seeded from the 12 still-open parent scopes. No parent row flipped, no gate widened, no live/hosted/action authorization. IST=2026-10-20 22:50 IST
+T2-CLI-WIRING | OPEN | pool W-CODE (one worker claims) | child T-2 | deps none/offline | lock tools/runBatch.js+tools/runBatch.test.js (P-4.1 DONE releases the P61 W4 lock) | offline
+T2-CLI-WIRING-GOAL | Make the runBatch CLI executor path usable with a factory-exported executor, so local step1 has a runnable wiring (runtime, seed creds and SUB release still separate gates).
+T2-CLI-WIRING-DEFECT | tools/runBatch.js:239 takes loaded.execute, but tools/visionTrialExecutor.js:111 exports { createVisionTrialExecutor } -> loaded.execute undefined -> CLI aborts "an explicit executor is required" (runBatch.js:116). Programmatic wiring works; CLI path dead.
+T2-CLI-WIRING-FILES | Own: tools/runBatch.js, tools/runBatch.test.js, own evidence dir. Read-only reference: tools/visionTrialExecutor.js(+test). Do not edit visionTrialExecutor.js, runArchive.js, trialUploader.js, any vision/ source, any .env.
+T2-CLI-WIRING-POS | CLI resolves factory-export executor (createVisionTrialExecutor) and calls it once with documented options; plain-function and {execute} exports still work; stub factory module end-to-end via CLI => one site COMPLETE + archive manifest.run_id == plan run_id.
+T2-CLI-WIRING-NEG | Unknown export shape (no execute, no known factory) => clear refusal, exit 1, no checkpoint or archive written; no browser or child spawn in tests; no secret echoed; existing runBatch 11/11 + visionTrialExecutor 5/5 stay green.
+T2-CLI-WIRING-AUD | Independent non-author AUD via DB-V; the auditor id is recorded on this row before any verdict (use 01a15a1a if alive). Worker never sets DONE. SUB integrates; T-2 parent stays OPEN.
+TV1-OFFLINE-REVIEW | OPEN | pool W-CODE (one worker claims) | child TV-1 | deps none/offline | lock read-only: tools/trialUploader.js + tools/trialUploader.test.js may be READ, never edited | offline
+TV1-OFFLINE-REVIEW-GOAL | Independent read-only review of the CURRENT uploader bytes (DB-3 rewrote it after T-1, so this is the first review of current bytes).
+TV1-OFFLINE-REVIEW-SCOPE | env-only key policy, 3 secret-form rejects, duplicate=1 row, net-fail retains/retries outbox, GET-only eligibility view, exact-ID readback. Hosted RLS/deploy/real readback = UNVERIFIABLE, never accepted.
+TV1-OFFLINE-REVIEW-POS | node --check tools/trialUploader.js exit 0; node --test tools/trialUploader.test.js 25/25 fail 0 exit 0; every criterion cited file:line; no .env read, no network, no upload, no credential value printed.
+TV1-OFFLINE-REVIEW-NEG | No source edit, no hosted call, no key access, no fake COMPLETE, no secret value in the report. ACCEPT scope may only cover the offline criteria.
+TV1-OFFLINE-REVIEW-AUD | DB-V rolling independent review path; SUB accepts the offline scope only; TV-1 parent stays OPEN until hosted evidence exists.
+DB5-SRC-REVIEW | OPEN | owner OC-DB (existing session, no ownership transfer) | child DB-5 | deps none/offline | lock read-only source + new evidence dir docs/evidence/db5-executor/<new-id>/ | hosted apply still BLOCKED
+DB5-SRC-REVIEW-SCOPE | Reconcile the recovered R3 executor/plan/helper (source rev 87ef5658, 37/37 source hashes verified) against the prior code-review requirements; publish one source-pinned hosted-executor review + one permitted apply-route checklist.
+DB5-SRC-REVIEW-POS | Every reviewed file pinned by sha256 and mapped to its requirement; gaps listed as findings, not fixes; apply-route checklist lists exact target/operator/tool/access/session-cleanup steps with no execution.
+DB5-SRC-REVIEW-NEG | No hosted apply, no SQL execution, no .env/credential read, no mutation of the frozen R3 source or existing evidence, no release_route change. Historical PS1 invocation identity stays UNVERIFIABLE.
+P71-SUB-TODO | T-4 guard R2 (tools/trialReport.js rev 8605c861, trialReport.test.js 26/26 exit0 confirmed this session) has request T4-VR-SUB-R2A from 2026-10-19 21:25 with NO verdict since. SUB/AUD to close it offline. Not a worker row.
+P71-CHECK | After seeding: suites re-verified vision 539/539 + mcp 41/41 + tools 228/228 fail 0; git remote empty; dirty tree preserved; no commit, push, live run, browser, model call, DB session or upload.
+P71-REMAIN | 12 parent scopes unchanged: DB-5, DB-8, DB-V, T-2, T-3, T-4, TV-1, TV-2, TV-3, TV-4, T-5, P-5. The 3 lanes above are child follow-ups, not parent DONE. Owner gates still: DB-5 tool/access + real hosted executor, H8 upload, SEED creds, T-5 freeze, P-5 tag, 30-site gate.
+
+TV1-OFFLINE-REVIEW-FILES | Read-only: tools/trialUploader.js, tools/trialUploader.test.js, docs/evidence/tv1-offline-review/<new-id>/ (own report only). Edit nothing outside that evidence dir. No .env read, no key access, no network.
+DB5-SRC-REVIEW-GOAL | Produce a source-pinned hosted-executor review plus a permitted apply-route checklist for the recovered R3 executor/plan/helper, so the owner can make the hosted-apply decision later.
+DB5-SRC-REVIEW-FILES | Read-only: the recovered R3 executor/plan/helper sources located by the R5 evidence; write only docs/evidence/db5-executor/<new-id>/. Do not touch the frozen R3 archive or existing evidence.
+DB5-SRC-REVIEW-AUD | Independent non-author AUD reviews the pinned review + checklist; SUB integrates the offline prep only; DB-5 parent stays BLOCKED and no hosted apply is authorized.
+
+## OWNER GIT POLICY 2026-10-20 / LOCAL WORK ONLY
+GIT-AUTH | Direct owner selected connect repository and keep changes local; confirmed repository email=sandeepmahendrakar11@gmail.com. IST=2026-10-20 23:04 IST
+GIT-ORIGIN | Local origin=https://github.com/sandeep11mahendrakar/temp.git configured by explicit owner order. No fetch, commit, push or historical-author rewrite performed.
+GIT-LOCAL | All normal task work stays local. Do not commit, fetch/pull or push automatically per task; wait for an explicit owner request for the requested Git action. No global Git identity change.
+GIT-GATE | Supersedes older empty-remote and automatic per-task commit requirements: configured owner-approved origin is expected. No-push/local-work requirement remains; inspect/report config honestly, never remove origin to satisfy old G4.
+GIT-SCOPE | GitHub connection grants no hosted app/DB/browser/upload/research permission and no broad staging, deletion, reset, history rewrite or secret publication authority.
+
+## OWNER ONE-TIME CLOUD SNAPSHOT PUSH / 2026-10-20
+GIT-ONCE | Direct owner now explicitly requests commit/push of current work to configured origin for cloud checkout. This supersedes no-push only for this publication. IST=2026-10-20 23:08 IST
+GIT-RETAIN | Future work remains local; no automatic per-task commit/fetch/push. No force push, history rewrite, credential publication, unrelated deletion or task-state completion.
+GIT-PACKET | docs/CLOUD_HANDOFF_20261020.md records cloud-readiness limits and excluded local generated/private runtime data. No live/DB/upload/research permission granted.

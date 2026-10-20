@@ -1,0 +1,9 @@
+{
+  "commands": [
+    "node tools/spotcheck.js \"C:/Users/sandeep/pes/vs code/Capstone-Project/runs\" 32",
+    "node tools/spotcheck.js runs 32"
+  ],
+  "exits": [2, 2],
+  "result": "NO_QUALIFYING_ARCHIVE",
+  "note": "spotcheck requires manifest.json+report.json with >=3 cases; none found"
+}

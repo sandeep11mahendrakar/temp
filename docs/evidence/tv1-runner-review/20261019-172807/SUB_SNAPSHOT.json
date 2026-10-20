@@ -1,0 +1,40 @@
+{
+  "snapshot_ist": "2026-10-19 17:28 IST",
+  "revision": "a25c0ab9b688f9b1b6b137b7531db43722c1c9637d8ee070ddb94800e736bc06",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "scope": "worker R3 local diagnostic submission; no hosted acceptance",
+  "files": [
+    {
+      "path": "database/TV1_Diagnostics_R3.sql",
+      "sha256": "859335f73dd4815b1031012c9dd14ff7e4115581fa8ded035749a53431d19fde"
+    },
+    {
+      "path": "docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md",
+      "sha256": "ff0398bd9637e0f78d79f141adb5594fbe5ba094584e9639502f6ec43e70af92"
+    },
+    {
+      "path": "docs/TV1_R3_OFFLINE_RUNBOOK.md",
+      "sha256": "ec158626d0e1e619e57518da06850cacdedf11ed35c9bf2a6b26ab0796cb6a31"
+    },
+    {
+      "path": "docs/evidence/tv1-r3/oc-trial-20261019/run.json",
+      "sha256": "519e5fba470b9014d48cd1d7329270cccfaaaec81356f94de43908938bb05127"
+    },
+    {
+      "path": "tools/.tv1-runtime/package-lock.json",
+      "sha256": "3b0aacaecd8b6d08ce889f37cffdcf1da93c4c6a0c722c16768aaec29d83220f"
+    },
+    {
+      "path": "tools/.tv1-runtime/package.json",
+      "sha256": "5d92248d8a0f8bfbeddff06cc26282658e6e2d686d1c71c9e32e7b7528d87003"
+    },
+    {
+      "path": "tools/tv1LocalRunner.js",
+      "sha256": "a32df08aabc02c96eb85758c44434338e08970edca4df845f88884ea12f26743"
+    },
+    {
+      "path": "tools/tv1LocalRunner.test.js",
+      "sha256": "0cd41cc05ca4bf8dc06fa7333fe2e1b8b8deb368ed84bad5158b37765fe66db7"
+    }
+  ]
+}

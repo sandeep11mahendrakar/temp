@@ -1,0 +1,21 @@
+<!doctype html>
+<html><head>
+<link rel="stylesheet" href="/real.css"><title>zoo cookie banner</title></head>
+<body>
+<h1 id="page-title">Article</h1>
+<p>Static article body. No tracking, no ads.</p>
+<div id="cookie-banner" role="dialog" aria-label="cookies">
+<span id="banner-text">We use cookies.</span>
+<button id="accept-cookies" type="button">Accept</button>
+<button id="reject-cookies" type="button">Reject</button>
+</div>
+<p id="banner-echo">banner: visible</p>
+<script>
+function done(v) {
+  document.getElementById('cookie-banner').hidden = true;
+  document.getElementById('banner-echo').textContent = 'banner: ' + v;
+}
+document.getElementById('accept-cookies').addEventListener('click', function () { done('accepted'); });
+document.getElementById('reject-cookies').addEventListener('click', function () { done('rejected'); });
+</script>
+</body></html>

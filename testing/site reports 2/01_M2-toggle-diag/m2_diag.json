@@ -1,0 +1,81 @@
+{
+  "ts": "2026-10-13T15:22:56.479Z",
+  "headed": true,
+  "api_calls": 0,
+  "log": [
+    {
+      "step": "3todos",
+      "counter": "3 items left!",
+      "items": [
+        {
+          "text": "Buy milk",
+          "liClass": "",
+          "checked": false,
+          "bbox": {
+            "x": 515,
+            "y": 205.1999969482422,
+            "w": 40,
+            "h": 40,
+            "cx": 535,
+            "cy": 225.1999969482422
+          }
+        },
+        {
+          "text": "Read book",
+          "liClass": "",
+          "checked": false,
+          "bbox": {
+            "x": 515,
+            "y": 264.8000183105469,
+            "w": 40,
+            "h": 40,
+            "cx": 535,
+            "cy": 284.8000183105469
+          }
+        },
+        {
+          "text": "Write code",
+          "liClass": "",
+          "checked": false,
+          "bbox": {
+            "x": 515,
+            "y": 324.3999938964844,
+            "w": 40,
+            "h": 40,
+            "cx": 535,
+            "cy": 344.3999938964844
+          }
+        }
+      ],
+      "toggleAll": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "bbox": {
+          "x": 519,
+          "y": 132.8000030517578,
+          "w": 40,
+          "h": 60
+        }
+      },
+      "clearCompleted": true
+    },
+    {
+      "step": "pre-click",
+      "cx": 535,
+      "cy": 285,
+      "elementFromPoint": {
+        "tag": "input",
+        "type": "checkbox",
+        "cls": "toggle",
+        "text": ""
+      }
+    },
+    {
+      "step": "post-input-click",
+      "counter": "2 items left!",
+      "struck": "completed",
+      "checked": true,
+      "clearCompleted": true
+    }
+  ]
+}

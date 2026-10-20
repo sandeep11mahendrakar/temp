@@ -1,0 +1,182 @@
+{
+  "architecture": "B",
+  "run_id": "exec_1791908350985",
+  "evidence_dir": "storage/screenshots/exec_1791908350985",
+  "re_detection_enabled": true,
+  "source_url": "https://www.saucedemo.com/",
+  "test_cases_file": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_performance_glitch_user.json",
+  "started_at": "2026-10-13T16:19:11.232Z",
+  "finished_at": "2026-10-13T16:19:24.114Z",
+  "total_duration_ms": 12882,
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "errors": 0,
+    "pass_rate": 1,
+    "multi_step_tests": 1,
+    "fill_actions": 2,
+    "scroll_actions": 0,
+    "states_observed": 1,
+    "verification_methods": {
+      "url_change": 1
+    },
+    "weak_verifications": 0,
+    "stale_coordinates_prevented": 0,
+    "weak_count": 0,
+    "dom_assist_count": 0,
+    "unresolved_targets": 0,
+    "screens_taken": 2,
+    "screens_skipped": 2,
+    "screens_per_test": 2,
+    "warnings": 0
+  },
+  "results": [
+    {
+      "id": "B8-performance_glitch_user",
+      "objective": "B8 matrix login as performance_glitch_user",
+      "expected_result": "Login as performance_glitch_user",
+      "evidence": null,
+      "inferred_behavior": null,
+      "expect_navigation": true,
+      "expected_text": "Products",
+      "status": "PASS",
+      "weak_steps": 0,
+      "verdict": "PASS",
+      "failure_reason": null,
+      "verification": {
+        "method": "url_change",
+        "detail": "navigated to https://www.saucedemo.com/inventory.html"
+      },
+      "verification_strength": "strong",
+      "stale_coordinates_prevented": 0,
+      "unresolved_targets": 0,
+      "warnings": [],
+      "before_screenshot": "storage/screenshots/exec_1791908350985/state_002_before_B8-performance_glitch_user.png",
+      "failure_screenshot": null,
+      "url_before": "https://www.saucedemo.com/",
+      "url_after": "https://www.saucedemo.com/inventory.html",
+      "steps_executed": [
+        {
+          "index": 1,
+          "action": "fill",
+          "target": {
+            "text": "",
+            "type": "text_input"
+          },
+          "value": "performance_glitch_user",
+          "x": 640,
+          "y": 174,
+          "ok": true,
+          "before_screenshot": "storage/screenshots/exec_1791908350985/state_002_before_B8-performance_glitch_user.png",
+          "after_screenshot": null,
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"performance_glitch_user\""
+          },
+          "resolved_element": {
+            "id": "elem-2",
+            "type": "text_input",
+            "text": "",
+            "conf": 0.71,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "dom_assist": null,
+          "vision_boundary": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 2978
+        },
+        {
+          "index": 2,
+          "action": "fill",
+          "target": {
+            "text": "",
+            "type": "text_input"
+          },
+          "value": "secret_sauce",
+          "x": 640,
+          "y": 228,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": null,
+          "signal": {
+            "method": "input_value",
+            "detail": "field now holds \"secret_sauce\""
+          },
+          "resolved_element": {
+            "id": "elem-1",
+            "type": "text_input",
+            "text": "",
+            "conf": 0.74,
+            "synth": null
+          },
+          "resolution_via": "proximity",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "dom_assist": null,
+          "vision_boundary": null,
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 2014
+        },
+        {
+          "index": 3,
+          "action": "click",
+          "target": {
+            "text": "Login",
+            "type": "button"
+          },
+          "value": "",
+          "x": 640,
+          "y": 325,
+          "ok": true,
+          "before_screenshot": null,
+          "after_screenshot": "storage/screenshots/exec_1791908350985/state_003_after_click.png",
+          "signal": null,
+          "resolved_element": {
+            "id": "elem-0",
+            "type": "button",
+            "text": "Login",
+            "conf": 0.83,
+            "synth": null
+          },
+          "resolution_via": "text_match",
+          "checked_state_attempts": null,
+          "checked_state_verified": null,
+          "check_snap": null,
+          "dom_assist": null,
+          "vision_boundary": "click-by-vision:Y",
+          "submit_key_pressed": null,
+          "low_confidence_retry": false,
+          "re_detected": true,
+          "stale_coordinates_prevented": false,
+          "state_id_before": null,
+          "duration_ms": 5861
+        }
+      ],
+      "states_observed": [
+        {
+          "state_id": "state_003",
+          "screenshot": "storage/screenshots/exec_1791908350985/state_003_after_click.png",
+          "url": "https://www.saucedemo.com/inventory.html",
+          "elements": 47,
+          "ocr_words": 184,
+          "merged_evidence": "storage/screenshots/exec_1791908350985/state_003_after_click_merged.png"
+        }
+      ],
+      "duration_ms": 10856
+    }
+  ]
+}

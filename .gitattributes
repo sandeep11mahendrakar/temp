@@ -1,0 +1,2 @@
+# Preserve immutable evidence bytes across Windows/cloud checkouts
+/docs/evidence/** -text

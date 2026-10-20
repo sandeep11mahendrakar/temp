@@ -1,0 +1,19 @@
+{
+  "scope": "UNEXECUTED SQL+expected matrix static review only",
+  "recipe": "sorted logical source filenames|sha256hex LF-join no terminal LF",
+  "revision": "1026903bad6ddb2f2db215f90a059bcf3281f2e5561261a5aa0cf89207c1b083",
+  "files": [
+    {
+      "name": "TV1_Diagnostics_R2.sql",
+      "path": "C:/Users/sandeep/pes/temp/TV1_Diagnostics_R2.sql",
+      "bytes": 31881,
+      "sha256": "20ec3ddba19e9d57d73256bcccaf441ca67558f0622edb1208f2686c1acfa893"
+    },
+    {
+      "name": "TV1_R2_EXPECTED_OUTPUT_MATRIX.md",
+      "path": "C:/Users/sandeep/pes/temp/TV1_R2_EXPECTED_OUTPUT_MATRIX.md",
+      "bytes": 4416,
+      "sha256": "8472c59506f07a92edf1cf3045fcd54f6dd7caf527089d6df2f9459383482166"
+    }
+  ]
+}

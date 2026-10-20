@@ -1,0 +1,40 @@
+{
+  "snapshot_ist": "2026-10-19 16:55 IST",
+  "source": "owner-forwarded completion; current SUB-pinned bytes, not an original author receipt",
+  "recipe": "sorted relative-path|sha256hex LF-join no terminal LF",
+  "revision": "110796f22da7dfcb3ef26734f68916e1b7502d18fd6bb6930e3c2eaef8425075",
+  "files": [
+    {
+      "path": "docs/DB_COMPLETION_REPORT.md",
+      "sha256": "576ca9c6ff8c9b179a7e9fa79d189fe2aef6198bd7f18140464200c1fde04b06"
+    },
+    {
+      "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+      "sha256": "8b645c7117dc7897548342681a5fcde2f324c35d8a4449df6051d2467086154a"
+    },
+    {
+      "path": "docs/TRIAL_CHECKPOINT_RESUME_GAP.md",
+      "sha256": "028dcec51bc7e79ca95194eb1a00f014f4ee986a8f878b9492e7b00c873bdbd8"
+    },
+    {
+      "path": "tools/runArchive.js",
+      "sha256": "1692d5d2dde8d08622a43b69a1ede369c4c203a9c11083ef366abb4e971e0393"
+    },
+    {
+      "path": "tools/trialReport.js",
+      "sha256": "34eb30e784f9258a814bdcb4f495832cc2878b3898f0084a404ca7f3b24ea863"
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "sha256": "d11a13824020075d034eafdd6a9ebc5b5cce1f5de735f893c25507d53b896974"
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "sha256": "f3083bde9430ba1b67c5929f4a1387b920c7f3963a6aad785ce5fcc61520d820"
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "sha256": "5c8ae46f461b100c838ab8c2aa795f138705346dff3cdc215968c1f2d44cbd67"
+    }
+  ]
+}

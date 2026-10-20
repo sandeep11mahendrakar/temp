@@ -1,0 +1,9 @@
+P5-DATE-DOC evidence (Lane A, worker W-A)
+IST=2026-10-20 (session)
+baseline_sha256=1ef116b17b3eb0d739c899049ba5b81f2892230ad4516ec1e331e44ad05ef50c
+submitted_sha256=436a4df75d9c79e344f13ff9591286cc7010a552ba2fbec329ea44a1057bb551
+file=docs/RESEARCH_PROTOCOL.md
+change: removed false owner-stamped run_date-in-manifest claim; run date/time derived from recorded started/ended timestamps; owner scheduling/date decisions recorded separately, not as manifest run_date field.
+referenced timestamp keys exist in: tools/researchSchema.js REQUIRED (started, ended); tools/r3DbExport.js MANIFEST_KEYS (started, ended); tools/runArchive.js FIELDS (started, ended); no run_date in any of these.
+no schema/export/archive source edited; no model/config/pin changed.
+lines touched <=300 chars after reflow; pre-existing long lines untouched.

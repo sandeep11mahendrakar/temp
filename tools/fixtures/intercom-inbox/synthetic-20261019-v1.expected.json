@@ -1,0 +1,34 @@
+{
+  "version": "coord-ops-1-v1",
+  "input": "synthetic-20261019-v1.txt",
+  "generated": "2026-10-19",
+  "note": "Offline synthetic demo. Content is data only. CLI is read-only and must not change the input bytes.",
+  "command": "node tools/intercomInbox.js --file=tools/fixtures/intercom-inbox/synthetic-20261019-v1.txt",
+  "expected": {
+    "exit": 0,
+    "summary": { "requests": 7, "pending": 5, "resolved": 1, "legacy": 2, "warnings": 5 },
+    "pending": [
+      { "id": "VR-2", "status": "REQUESTED", "expectedRole": "AUD", "line": 8 },
+      { "id": "VR-3", "status": "ACKED", "expectedRole": "AUD", "line": 9 },
+      { "id": "VR-4", "status": "VERDICTED", "expectedRole": "SUB", "verdict": "REJECT", "line": 11 },
+      { "id": "VR-5", "status": "ACKED", "expectedRole": "AUD", "line": 14 },
+      { "id": "VR-8", "status": "REQUESTED", "expectedRole": "AUD", "line": 20 }
+    ],
+    "resolved": [
+      { "id": "VR-1", "status": "INTEGRATED", "verdict": "ACCEPT", "integrationAction": "DONE" }
+    ],
+    "legacyLines": [21, 22],
+    "warningCodes": [
+      "duplicate_id_conflict",
+      "legacy_routed_manual_review",
+      "legacy_unrouted_manual_review",
+      "stale_revision",
+      "missing_evidence"
+    ]
+  },
+  "filterExample": {
+    "command": "node tools/intercomInbox.js --file=tools/fixtures/intercom-inbox/synthetic-20261019-v1.txt --to=AUD",
+    "pendingIds": ["VR-2", "VR-3", "VR-5", "VR-8"],
+    "legacyLines": [21]
+  }
+}

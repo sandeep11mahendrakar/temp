@@ -1,0 +1,172 @@
+[
+  {
+    "message": "PREFLIGHT/OWNER | owner_or_superuser=true | update=true | delete=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "PREFLIGHT/ROLES | anon/authenticated/service_role SET=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "PREFLIGHT/TRIGGER | enabled=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "PREFLIGHT/BASELINE | objects=0 | fingerprint=d41d8cd98f00b204e9800998ecf8427e | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "CAT/RLS | table=r3_runs | expected=true | actual=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "CAT/SECURITY-INVOKER | view=r3_research_eligible | expected=true | actual=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "CAT/SECURITY-INVOKER | view=r3_evidence_readback | expected=true | actual=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "POS-INSERT | fixture_count=4 | expected=4 | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-01/SELECT | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-01/INSERT | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-01/UPDATE | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-01/DELETE | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-01/ELIGIBLE-VIEW | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-01/READBACK-VIEW | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-02/SELECT | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-02/INSERT | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-02/UPDATE | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-02/DELETE | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-02/ELIGIBLE-VIEW | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-02/READBACK-VIEW | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-03-SERVICE/UPDATE | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-03-SERVICE/DELETE | expected=42501 | actual=42501 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "POS-RETRY | inserted=0 | row_count=1 | digest_unchanged=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-04/HASH-CONFLICT | expected=23505 | actual=23505 | constraint=r3_runs_pkey | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-05/BAD-SCHEMA | expected=23514 | actual=23514 | constraint=r3_runs_schema_version_ck | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-05/BAD-ELIGIBILITY | expected=23514 | actual=23514 | constraint=r3_runs_aggregate_eligibility_ck | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-05/TRIAL-ELIGIBLE | expected=23514 | actual=23514 | constraint=r3_runs_eligible_research_ids_ck | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-05/MISSING-IDS | expected=23514 | actual=23514 | constraint=r3_runs_eligible_research_ids_ck | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-05/SELF-SUPERSEDES | expected=23514 | actual=23514 | constraint=r3_runs_supersedes_ck | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-05/TRIAL-PENDING | expected=23514 | actual=23514 | constraint=r3_runs_trial_excluded_ck | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-06 | eligible_count=1 | sole_id=ocdb_tv1_20261019_eligible | readback_count=4 | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-03-OWNER-PREFLIGHT | owner_or_superuser=true | update=true | delete=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-03-OWNER-TRIGGER/UPDATE | expected=55000 | actual=55000 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "NEG-03-OWNER-TRIGGER/DELETE | expected=55000 | actual=55000 | constraint= | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  }
+]

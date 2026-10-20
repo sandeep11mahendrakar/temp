@@ -1,0 +1,37 @@
+'use strict';
+
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { archiveRun, MISSING } = require('./runArchive');
+
+test('archives files with hashes and preserves missing evidence as NOT_RECORDED', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'run-archive-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  fs.writeFileSync(path.join(root, 'report.json'), '{"ok":true}\n');
+  fs.writeFileSync(path.join(root, 'calls.jsonl'), '{"call":1}\n');
+  const result = archiveRun({ run_id: 'sample-clean', artifacts: [{ source: 'report.json', path: 'report.json' }], calls_source: 'calls.jsonl' }, { root });
+  assert.equal(result.manifest.site, MISSING);
+  assert.equal(result.manifest.brain.blind, MISSING);
+  assert.equal(result.manifest.cost.tokens, null);
+  assert.equal(result.manifest.artifacts.length, 2);
+  assert.equal(result.manifest.artifacts[0].bytes, 12);
+  assert.match(result.manifest.artifacts[0].sha256, /^[a-f0-9]{64}$/);
+  assert.equal(fs.existsSync(path.join(root, 'runs', 'sample-clean', 'per_call.jsonl')), true);
+});
+
+test('refuses an existing run archive without overwriting it', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'run-archive-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  fs.mkdirSync(path.join(root, 'runs', 'same'), { recursive: true });
+  assert.throws(() => archiveRun({ run_id: 'same' }, { root }), /refuse overwrite/);
+});
+
+test('rejects traversal and paths outside the archive root', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'run-archive-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  fs.writeFileSync(path.join(root, 'report.json'), '{}');
+  assert.throws(() => archiveRun({ run_id: 'safe', artifacts: [{ source: 'report.json', path: '../escape' }] }, { root }), /unsafe artifact path/);
+});

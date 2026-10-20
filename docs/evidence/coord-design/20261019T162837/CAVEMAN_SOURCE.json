@@ -1,0 +1,21 @@
+{
+  "repo": "https://github.com/JuliusBrussee/caveman",
+  "commit": "bad48a0e1df55e05e3f52249afa35ecc1909ee76",
+  "path": "skills/caveman",
+  "approved": "Owner explicitly approved this repository skill only",
+  "installed": ".agents/skills/caveman",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "e8b22f37ccb204bd00cdf98c723c0df37aeda1f5863e9ad1d634f5c839d99e5d"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "415d43518f2b1a9498c15a445d4657117b129ee5e81b19454ce348439cc6672b"
+    }
+  ],
+  "hooks": false,
+  "proxy": false,
+  "upstreamExecutablesRun": false,
+  "IST": "2026-10-19 21:58 IST"
+}

@@ -7,7 +7,7 @@ Labels: AUTONOMOUS (blind-Y only), NONBLIND (MCP/CLI), ASSISTED (file/mock/repla
 |---|---|---|---|---|
 | 1 | Arch A (web/DOM) generates selector-grounded tests | web/src/*, web/test/* | ASSISTED | Offline suites only; no live business-value oracle |
 | 2 | Arch B (vision/YOLO+OCR) sees ~19x more elements/run than A | testing/CAMPAIGN_EVALUATION.md, site_reports | ASSISTED | Campaign n=18 clean; site subset, not all 50 |
-| 3 | Fusion value 13.56% (Tier1, n=8) / 81.11% (Tier2, n=10) / 51.09% (Tier1+2, n=18, decontaminated) | testing/site_reports/INDEX.md (FX-2), tools/campaignTable.js | ASSISTED | Computed from INDEX citable rows; not value correctness. Earlier 20%/48.7% not reproducible. T1-vs-T2 gap is confounded by toolchain evolution + site mix, not evidence of improvement. |
+| 3 | Fusion value T1 13.56%(n8), T2 81.11%(n10), T1+2 51.09%(n18) | INDEX.md, campaignTable.js | ASSISTED | Campaign share, not value correctness; old 20%/48.7% unreproducible. T1/T2 gap confounded by toolchain + site mix; no improvement inference. |
 | 4 | System verifies actions-work, not values-correct | mutation/results/ANALYSIS.md | OBSERVED | Negative finding; no business-value (price/total) correctness oracle exists; UI-state oracle kinds do exist (V2 item for business value, deferred) |
 | 5 | G2 zoo conformance 35/44 = 79.55% (<90% gate) | vision/storage/outputs/g2z_results_v2.json, docs/TASK_BOARD.md (FX-1) | ASSISTED | rate <90%, honest failure list; controls 45/45 NOT-pass (batch4 included) |
 | 6 | Batch3 holdout 5/5 PASS | docs/TASK_BOARD.md, git bc4be63 | ASSISTED | Scored once, no tuning before paste; single run |

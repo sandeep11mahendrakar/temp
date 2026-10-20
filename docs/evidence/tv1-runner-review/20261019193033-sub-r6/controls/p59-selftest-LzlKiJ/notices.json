@@ -1,0 +1,22 @@
+[
+  {
+    "message": "PREFLIGHT/OWNER | owner_or_superuser=true | update=true | delete=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "PREFLIGHT/ROLES | anon/authenticated/service_role SET=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "PREFLIGHT/TRIGGER | enabled=true | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  },
+  {
+    "message": "PREFLIGHT/BASELINE | objects=0 | fingerprint=d41d8cd98f00b204e9800998ecf8427e | PASS",
+    "code": "00000",
+    "severity": "NOTICE"
+  }
+]

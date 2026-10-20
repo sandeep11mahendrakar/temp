@@ -1,0 +1,54 @@
+{
+  "ts": "2026-10-14T07:52:16.647Z",
+  "api_calls": 0,
+  "batches": 4,
+  "pass": 4,
+  "fail": 0,
+  "fail_cause_classes": [],
+  "rows": [
+    {
+      "batch": "K4-B1-TEXTBOX",
+      "page": "demoqa.com/text-box",
+      "autonomy": "ASSISTED",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "url_after": "https://demoqa.com/text-box",
+      "screens": 3,
+      "fail_cause": null,
+      "cause_class": "n/a"
+    },
+    {
+      "batch": "K4-B2-RADIO",
+      "page": "demoqa.com/radio-button",
+      "autonomy": "ASSISTED",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "url_after": "https://demoqa.com/radio-button",
+      "screens": 3,
+      "fail_cause": null,
+      "cause_class": "n/a"
+    },
+    {
+      "batch": "K4-B3-FORM",
+      "page": "demoqa.com/automation-practice-form",
+      "autonomy": "ASSISTED",
+      "verdict": "PASS",
+      "weak_steps": 0,
+      "url_after": "https://demoqa.com/automation-practice-form",
+      "screens": 5,
+      "fail_cause": null,
+      "cause_class": "n/a"
+    },
+    {
+      "batch": "K4-B4-BOOKS",
+      "page": "demoqa.com/books",
+      "autonomy": "ASSISTED",
+      "verdict": "PASS_WEAK(1)",
+      "weak_steps": 1,
+      "url_after": "https://demoqa.com/books?search=9781449325862",
+      "screens": 3,
+      "fail_cause": null,
+      "cause_class": "n/a"
+    }
+  ]
+}

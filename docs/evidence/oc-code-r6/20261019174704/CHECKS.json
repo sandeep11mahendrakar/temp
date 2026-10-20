@@ -1,0 +1,58 @@
+{
+  "ist": "2026-10-19 17:47:04 IST",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test",
+    "tools/trialArtifacts.test.js",
+    "tools/trialReport.test.js",
+    "tools/trialUploader.test.js"
+  ],
+  "exit_code": 0,
+  "stdout": "✔ adapter preserves NOT_RECORDED and maps test cases (4.1012ms)\n✔ REGRESSION preserves all twelve producer metrics including zero and fractional values (1.4595ms)\n✔ REGRESSION absent and nonnumeric metrics remain NOT_RECORDED (0.4708ms)\n✔ REGRESSION missing declared case screenshot prevents GO despite matching readback (38.0083ms)\n✔ POS retained and hashed case evidence permits review-only GO (96.2153ms)\n✔ NEG same-length tampered case evidence prevents GO (32.2848ms)\n✔ NEG existing but unlisted case evidence prevents GO (29.5751ms)\n✔ REGRESSION opaque marker in correctly hashed evidence bytes rejects GO without echo (40.6582ms)\n✔ REGRESSION role marker in correctly hashed evidence bytes rejects GO without echo (38.0033ms)\n✔ REGRESSION jwt marker in correctly hashed evidence bytes rejects GO without echo (37.7194ms)\n✔ REGRESSION api marker in correctly hashed evidence bytes rejects GO without echo (35.0755ms)\n✔ POS renders artifact-backed trial row with citations and review-only GO (22.7569ms)\n✔ NEG missing manifest/readback is NOT_RECORDED and fails without fake values (11.5463ms)\n✔ REGRESSION missing manifest row has 10 cells and storage remains NOT_RECORDED (14.0869ms)\n✔ NEG readback identity/hash fields missing prevents GO (23.7702ms)\n✔ NEG declared readback hashes that differ from retained bytes prevent GO (23.0585ms)\n✔ POS preserves failure cause class and never rewrites a failed outcome as PASS (27.7929ms)\n✔ NEG secret marker is reported by status only and never echoed (22.7859ms)\n✔ CLI materializes and reads a DB-6 authored fixture without claiming a live run (150.2257ms)\n✔ NEG contradictory experiment_kind (TRIAL manifest / RESEARCH report) fails (27.1649ms)\n✔ POS cause from cases[].cause string and object block (27.9225ms)\n✔ builds schema-versioned, sanitized payload with hashes and pending eligibility (113.7567ms)\n✔ queues immutable local outbox and refuses changed run_id payload (66.426ms)\n✔ POST is insert-only and duplicate retry leaves one run_id row (43.913ms)\n✔ network failure retains outbox and retry succeeds (38.2601ms)\n✔ rejects all required secret-marker forms before outbox write (61.0641ms)\n✔ reruns carry supersedes_report and must use a new run_id (46.9058ms)\n✔ rejects manifest/report run identity mismatch (32.8058ms)\n✔ eligibility reads use the configured view with GET only (1.0335ms)\n✔ legacy service-role JWT transport sends apikey and bearer only after role validation (37.4251ms)\n✔ requires HTTPS, server auth, and configured table/views (2.1716ms)\n✔ ignored duplicate accepts only an exact stored payload hash (37.2776ms)\n✔ excluded TRIAL reads back by exact ID outside the eligibility view (36.959ms)\n✔ tampered outbox hash fails before any request and retains evidence (37.8105ms)\n✔ timeout retries stay bounded and preserve outbox without transport detail (68.5332ms)\n✔ transient rate limit honors bounded Retry-After and retries same payload (34.345ms)\n✔ zero or multiple exact-ID rows cannot acknowledge upload (39.2905ms)\n✔ forbidden credential markers in object keys are rejected before outbox creation (32.5422ms)\n✔ HTTP denial is not retried and response text is never surfaced (98.7525ms)\n✔ retainReadback writes one sanitized hosted row (10.3714ms)\n✔ retainReadback refuses overwrite and path escape (6.2723ms)\n✔ retainReadback validates expected hashes and fetched provenance (5.9269ms)\n✔ REGRESSION competing publication survives EEXIST unchanged (10.0292ms)\n✔ REGRESSION final path is absent until complete JSON publication (10.996ms)\n✔ NEG partial staging write is cleaned without publishing partial final JSON (5.9629ms)\n✔ NEG unsupported atomic publication fails closed and cleans only staging (5.6717ms)\nℹ tests 46\nℹ suites 0\nℹ pass 46\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1128.0945\n",
+  "stderr": "",
+  "checks": [
+    {
+      "path": "tools/runArchive.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialReport.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "environment": "approved local execution outside Windows sandbox; mock transport; no hosted actions"
+}

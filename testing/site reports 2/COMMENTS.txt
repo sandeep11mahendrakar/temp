@@ -1,0 +1,19 @@
+COMMENTS per report (W2 session 2026-10-13; PASS means executable proof, WEAK tags stay visible, FAILs are honest evidence — no false passes anywhere)
+
+01_M2-toggle-diag/m2_rep_verify.json — PASS, the session's best click proof (domsnap 632,284->535,285 attempt 1, checked false->true, 0 warnings). Special: keep as regression anchor for toggle work.
+01_M2-toggle-diag/m2_diag.json — scratch DOM truth (bboxes, elementFromPoint, 3 click variants). Special: input-center click toggled fine; the bug was never the checkbox, only the perceived coords.
+01_M2-toggle-diag/m2_perceive.json — 40 elements 0 inputs; the M3 starting condition, not an error.
+01_M2-toggle-diag/m2_crop.json — Fix A pipeline proof (Text Input conf 0.212 at true coords). Special: this single result unblocked the whole 3rd-todo gap.
+01_M2-toggle-diag/m2_fullframe.json — Fix B proof (elem-anchor-0 on placeholder row, sidebar correctly beaten).
+02_M3-3rd-fill/m3_rep_verify.json — PASS with 2 honest WEAK warnings (text_match+ocr_anchor). Special: OCR cross-check (Write code + 3 items) is what makes this PASS citable, not the weak resolution.
+03_M6-fullchain/m6_rep.json — PASS strong (url_change #/active). Special: end counter OCR-verified ("2items left", Clear gone); step3 WEAK warning retained.
+04_T16-checkout-chain/t16_rep.json — PASS weak0 (run 4 of 4). Special: attempts 1-3 FAILs are the real findings (link-proximity gap, single-char text-match trap, deterministic underline-input invisibility); their rep JSONs were overwritten — only screenshot dirs + SESSION_REPORT preserve them.
+04_T16-checkout-chain/t16_probe.json — CSS-selector scratch: badge 1, cart 1, $32.39, Thank-you. Special: ground truth the executor proof was measured against.
+04_T16-checkout-chain/attempt1..3 dirs — screenshots of honest FAILs. Special: attempt3 state_009 (merged render) shows the phantom lowconf fill — John never entered.
+05_B2-s1-login/b2_rep_s1.json — PASS, the fewer-shots proof (screens 4->2 PNGs, states 3->1, fills input_value x2). Special: compare with s1_rep1.json (old, not copied — looper era) for before/after.
+06_B8-6user-matrix/b8_rep_locked_out_user.json — FAIL-expected, the most important file here: fills+click executed, stayed on login, no false-DONE. Special: S2-class negative done right.
+06_B8-6user-matrix/b8_rep_performance_glitch_user.json — PASS despite slow app. Special: no timeout tuning needed; 15s step budget held.
+06_B8-6user-matrix/b8_matrix.json — INDEX row, MATCH 6/6, per-run deltas. Special: case verdict = expectation-met (PASS means "behaved as expected", not "app passed").
+07_T15-http-smoke/t15_http_smoke.json — PASS, no screenshots by design (transport proof, not page proof). Special: 9 elements/594 chars over live HTTP in 8705ms.
+08_T10-mcp-loop/t10_loop.json — PASS 9/9 turns (LAST run only; runs 1-3 overwritten). Special: run-3's empty-submit sadface screenshot (in mcp-shots/) is the perceive-navigates lesson — do not re-add mid-form perceives.
+08_T10-mcp-loop/mcp-shots/ — 39 PNGs across 4 runs, mtime-attributed (no per-run folders; server names by timestamp only). Special: act_after_click_1791910662265.png = the Username-is-required evidence.

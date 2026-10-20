@@ -1,0 +1,81 @@
+SUB R2 WORDING REPAIR | DRAFT ONLY; NOT EXECUTOR APPROVAL OR APPLY CLEARANCE
+OC-DB / DB-5 - gated apply and hosted evidence procedure
+Status: PREPARATION ONLY; NOT AN APPLY-PROOF; no SQL, migration, upload, or data mutation executed in this preparation.
+Prepared: 2026-10-19 (Asia/Kolkata). Evidence recipient: independent AUD-2; SUB retains board authority.
+Immutable target / custody
+- Target name capstone-r3-dev; ref xvizjawcpafdqrygzvcx; org qwgbhcakpfwytcrryuxd; region ap-south-1; personal dev; shared=N; main project (not branch). SUB reports owner confirmation and W2-to-OC-DB execution handoff.
+- One authorized additive SQL file only: database/r3_companion.sql; expected SHA-256 b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6 (distinct from offline R6 aggregate).
+- Accepted R6 offline packet aggregate: 9fe071c560826b4cf4e578cda619e66f9aa685edf72245806b20cc3dd1352def; not proof of a hosted apply.
+- SUB reports revised P59 diagnostics + LOCAL runner passed 16/16 using zero-team and six-object fixtures. Current P59 pins are in docs/evidence/tv1-runner-review/20261019193033-sub-r6/SUB_SNAPSHOT.json, revision 87ef5658d907fa75b265ac4f3329d79383cf428f21be9cfe2f0f4a853d7b50e9. Supply the
+actual files to any external reviewer. The LOCAL runner is not approved for hosted execution.
+- Last read-only hosted preflight (2026-10-19 ~19:54 IST): project ACTIVE_HEALTHY, 0 public tables, 0 migrations, 0 R3 object collisions and 0 of the six historical team objects. Time-sensitive snapshot only; recheck immediately before authorized apply. Do not manufacture six team
+placeholders.
+GATE 0 - formal clearance (must satisfy all before the first mutation)
+1. Preserve recorded SUB scope release naming OC-DB as the single DB-5 apply operator; no new task claim needed.
+2. Owner/authorized administrator resolves the actual migration tool's safety restriction through its normal permitted approval path, and SUB records clearance for the exact unchanged migration on the exact dev project. A plugin setting saying "Allow all actions" is not evidence that
+platform safety checks permit this specific call.
+3. Distinguish read-only connection / database privileges from tool approval. Earlier plugin migration invocation returned This tool call was blocked by OpenAI's safety checks; no root cause or override mechanism was supplied. Do not retry, chunk the SQL, change APIs/transports, switch
+user, or use the owner SQL Editor as a workaround for that block. If a separately authorized owner-executed path is later chosen, require a fresh SUB operator/route decision, not an implicit transport substitution.
+4. Independent AUD reviews the exact P59 diagnostic sources, six NEG case mapping, role checks, expected SQLSTATE/constraint names, per-session transactional rollback/error/closure behavior, and final post-rollback verification. Explicitly approve an actual hosted-capable executor; LOCAL
+16/16 is insufficient.
+5. Reconfirm no live-trial H3 or upload H8 approval is implied. Keep credentials in environment only. Never include keys, tokens, URLs containing secrets, or matched secret values in evidence.
+GATE 1 - source authentication and fresh preflight (read-only)
+1. Read repository source bytes and independently compute SHA-256 for database/r3_companion.sql; require exact match above. Ensure it is the same reviewed additive migration (R3-prefixed only) and source file has not changed since independent approval.
+2. Supabase plugin get_project for exact ref: require matching name/ref/org/region, ACTIVE_HEALTHY, correct non-shared dev main project; stop on mismatch.
+3. list_tables for public: return names only (not rows). Capture exact raw result and snapshot time.
+4. Read-only catalog inventory: all r3_ tables, views, indexes, policies, functions, triggers and relevant other schemas; record object ownership. Any unexpected R3 object or partial migration => stop, never overwrite.
+5. list_migrations: compare applied names/IDs/hashes where supported; any ambiguous prior apply => stop. Capture team-baseline object names and definitions/fingerprints (including zero-team case), protect them from mutation. P59 must accept actual zero-team baseline without synthesizing
+placeholders.
+6. Capture timestamp and operator in sanitized provenance; never infer deployment access from a successful SELECT, database role name, or public CREATE privilege alone.
+GATE 2 - exactly one authorized hosted apply
+1. Only when G0 and G1 pass, use the expressly approved Supabase plugin supported DDL/migration method (apply_migration) with one named migration carrying the entire exact byte-reviewed file, not reconstructed, split, or edited. Record migration name, returned ID if available, target,
+dev-main environment, attempt timestamp, response, and terminal status.
+2. One call only. On a block, timeout, ambiguous result, or error: STOP. Read-only reconcile migration history and objects; do not automatically retry or switch transports. Send status and raw sanitized error to SUB/AUD.
+3. Following confirmed success, read-only verify catalog contains exactly the reviewed R3 objects; RLS on every new table; both R3 views security_invoker=true; permitted grants/policies; no changes to non-R3 baseline. Preserve detailed catalog evidence without reading confidential rows.
+4. Preserve reviewed R3-only rollback SQL for controlled incident response, but do not execute it automatically. Require proof it cannot touch preexisting objects plus explicit owner/SUB decision; never drop or disable unrelated objects.
+GATE 3 - hosted diagnostic proofs (separate approval after apply)
+1. Use a separate pinned and independently approved hosted-capable executor only (artifact currently MISSING; tv1LocalRunner.js explicitly rejects remote mode), in a single verifiably rollback-safe DB transaction/session for synthetic rows; capture per-case raw return, SQLSTATE, constraint
+name, status/exit, notices, start/end, and cleanup. On any unexpected error, the runner must ROLLBACK, CLOSE the session, and launch a separate read-only cleanup/baseline verification. If this is not guaranteed, do not insert fixtures.
+2. Assert catalog RLS=true on every new R3 table; view options security_invoker=true; exact service_role SELECT/INSERT with UPDATE/DELETE denied, anon/authenticated SELECT/INSERT/UPDATE/DELETE denied on the table and views; privileged owner-trigger check must have a role preflight.
+3. Six NEG groups: (01) anon denied, (02) authenticated denied, (03) service vs privileged owner and append-only trigger, (04) duplicate PK/conflicting hash, (05) invalid values require named CHECK constraints, (06) view eligible-only semantics. Local 16/16 is the offline Node test suite,
+not hosted SQL accounting. Enumerate every hosted SQL subcase and map each separately to raw result, actual SQLSTATE/constraint and status. Do not report a hosted aggregate from the local tests.
+4. Synthetic fixture count=4 (approved P59 form); identical insert retry must leave exactly one row and unchanged digest; same ID with different hash must reject rather than overwrite; updates/deletes fail. Eligibility view must return only intended eligible research run_id using columns
+actually exposed by that view; confirm report schema_version and aggregate eligibility constraints by named SQLSTATE as approved.
+5. SQL constraints only validate SHA-256 shape. Transport retry/hash comparison before upload is an independent application-level test: do not claim it from PK conflicts alone. Likewise, actual stored-envelope byte-digest recomputation and arbitrary modified-payload negative rejection are
+a distinct client-side proof with the accepted tools/r3DbContract.js semantics. Neither is established by successful SQL diagnostics alone.
+6. After rollback, a separate read-only connection asserts exactly zero synthetic test run IDs, unchanged preexisting data/object fingerprints, unchanged migration record except intended apply, and closed/clean test session. If test rows are persisted or cleanup is uncertain, STOP and
+escalate; never delete rows from the append-only table as a quick cleanup.
+7. Count-only scans of all logs, stdout, and retained evidence for secret patterns, with zero leaked credential values; never print the matching strings. Report outcomes, counts, and untrusted/synthetic markers only.
+GATE 4 - handoff / no downstream upload
+- Assemble <=30-line sanitized APPLY-PROOF cover containing exact ref, migration identifier and UTC/IST execution time, environment=dev, preflight result, each hosted case group with raw outcome/SQLSTATE/status, digest positive/negative, transport proof separately, after-rollback row
+count, baseline fingerprint, credential-scan counts, rollback decision/status, and explicit gaps. Attach sanitized raw evidence separately where cover length would otherwise hide details.
+- Submit to independent AUD-2; OC-DB cannot self-issue TV-1 ACCEPT. NOT RUN, BLOCKED, or UNVERIFIED must not be described as passed.
+- Until TV-1 ACCEPT + real approved archives + explicit owner H8 approval, no uploader call. T-3 hosted readback via OC-CODE interface, TV-2/TV-3, and OC-TRIAL reporting are downstream gates only.
+Current actionable blockers (2026-10-19)
+- BLOCKER-A: actual Supabase migration execution was blocked by platform safety checks. UI plugin permission is Allow all actions, but this does not clear tool-specific safety approval. No documented clearance is present.
+- BLOCKER-B: current P59 local sources and independent acceptance are pinned in docs/evidence/tv1-runner-review/20261019193033-sub-r6/SUB_SNAPSHOT.json. External OC-DB needs the actual files, and a separate hosted executor artifact plus independent session/rollback/close review is still
+missing.
+- BLOCKER-C: live hosted migration/proof output does not exist. Do not invent a migration ID/time or SQLSTATE responses.
+<=30-line APPLY-PROOF cover template (placeholders, NOT actual outputs)
+TV-1 APPLY-PROOF | STATUS=NOT EXECUTED
+project_ref=xvizjawcpafdqrygzvcx | project=capstone-r3-dev
+org=qwgbhcakpfwytcrryuxd | env=personal-dev/main | shared=N
+operator=OC-DB | SUB_handoff=reported | tool_clearance=BLOCKED
+migration_file_sha256=b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6
+migration_name=<PENDING_APPROVED_NAME> | migration_id=<NOT_ASSIGNED>
+migration_timestamp=<NOT_APPLIED> | attempt_status=NOT_ATTEMPTED
+preflight_identity=<PENDING_FRESH_RECHECK> | collision=<PENDING_FRESH_RECHECK>
+preexisting_baseline=<PENDING_FINGERPRINT> | migration_history=<PENDING_FRESH_RECHECK>
+RLS_and_view_security_invoker=<NOT_RUN> | grants_and_policies=<NOT_RUN>
+NEG-01_anon_raw_sqlstate_status=<NOT_RUN>
+NEG-02_authenticated_raw_sqlstate_status=<NOT_RUN>
+NEG-03_service_and_owner_raw_sqlstate_status=<NOT_RUN>
+NEG-04_duplicate_conflict_raw_sqlstate_status=<NOT_RUN>
+NEG-05_named_constraints_raw_sqlstate_status=<NOT_RUN>
+NEG-06_eligible_view_raw_result_status=<NOT_RUN>
+fixture_4_and_retry_1_unchanged_digest=<NOT_RUN>
+transport_retry_hash_application_proof=<NOT_RUN_SEPARATE>
+stored_envelope_digest_POS_NEG=<NOT_RUN_SEPARATE>
+after_rollback_fixture_count=<NOT_RUN> | baseline_preserved=<NOT_RUN>
+rollback_status=NOT_APPLICABLE | secret_pattern_scan=<NOT_RUN>
+AUD-2=AWAITING_HOSTED_PROOF | TV-1_ACCEPT=NO

@@ -1,0 +1,29 @@
+[
+  {
+    "args": [
+      "--check",
+      "tools/trialReport.js"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--check",
+      "tools/trialReport.test.js"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--test",
+      "tools/trialReport.test.js"
+    ],
+    "exit": 0,
+    "stdout": "✔ NEG unknown run verdict prevents GO despite CLEAN integrity and valid readback (68.1685ms)\n✔ NEG unknown case verdict prevents GO even with recorded run PASS (51.9582ms)\n✔ NEG empty or malformed case list never produces GO (29.8439ms)\n✔ NEG BLOCKED and FAIL without meaningful cause cannot produce GO (21.9384ms)\n✔ NEG recorded run cause cannot conceal missing failure case cause (13.1602ms)\n✔ POS genuine BLOCKED with recorded run and case causes is reviewable without becoming PASS (13.2086ms)\n✔ REGRESSION missing declared case screenshot prevents GO despite matching readback (16.6488ms)\n✔ POS retained and hashed case evidence permits review-only GO (18.1148ms)\n✔ NEG same-length tampered case evidence prevents GO (17.4947ms)\n✔ NEG existing but unlisted case evidence prevents GO (16.0471ms)\n✔ REGRESSION opaque marker in correctly hashed evidence bytes rejects GO without echo (19.2102ms)\n✔ REGRESSION role marker in correctly hashed evidence bytes rejects GO without echo (19.4845ms)\n✔ REGRESSION jwt marker in correctly hashed evidence bytes rejects GO without echo (19.7596ms)\n✔ REGRESSION api marker in correctly hashed evidence bytes rejects GO without echo (19.4231ms)\n✔ POS renders artifact-backed trial row with citations and review-only GO (13.1428ms)\n✔ NEG missing manifest/readback is NOT_RECORDED and fails without fake values (6.166ms)\n✔ REGRESSION missing manifest row has 10 cells and storage remains NOT_RECORDED (6.5466ms)\n✔ NEG readback identity/hash fields missing prevents GO (13.3185ms)\n✔ NEG declared readback hashes that differ from retained bytes prevent GO (12.4926ms)\n✔ POS preserves failure cause class and never rewrites a failed outcome as PASS (13.7328ms)\n✔ NEG secret marker is reported by status only and never echoed (11.5224ms)\n✔ CLI materializes and reads a DB-6 authored fixture without claiming a live run (79.0401ms)\n✔ NEG contradictory experiment_kind (TRIAL manifest / RESEARCH report) fails (14.6144ms)\n✔ POS cause from cases[].cause string and object block (13.5965ms)\nℹ tests 24\nℹ suites 0\nℹ pass 24\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 622.9391\n",
+    "stderr": ""
+  }
+]

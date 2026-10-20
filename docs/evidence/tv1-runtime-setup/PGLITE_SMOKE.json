@@ -1,0 +1,15 @@
+{
+  "package": "@electric-sql/pglite",
+  "package_version": "0.5.10",
+  "module_path": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\tools\\.tv1-runtime\\node_modules\\@electric-sql\\pglite\\dist\\index.cjs",
+  "mode": "fresh in-memory local SQL only",
+  "query": "SELECT version() AS engine_version, 1 AS smoke",
+  "rows": [
+    {
+      "engine_version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit",
+      "smoke": 1
+    }
+  ],
+  "connection_closed": true,
+  "hosted_calls": 0
+}

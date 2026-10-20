@@ -1,0 +1,14 @@
+{
+  "revision": "8605c861524c093768cdaf97c6fc37d3f472d417b715bdcf152e11cf91a91b05",
+  "recipe": "sha256(sorted path|sha256 rows joined LF; no terminal LF)",
+  "files": [
+    {
+      "path": "tools/trialReport.js",
+      "sha256": "e8bf1a1eca396ee9a1f397af4261e7d187a0567d3d0f1d0aa643c5cc5458905e"
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "sha256": "ffcaf8559c59c74390108032454461b209664c64f1dea8e12fd9192f9f57c0ed"
+    }
+  ]
+}

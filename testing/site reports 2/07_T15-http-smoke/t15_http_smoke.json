@@ -1,0 +1,46 @@
+{
+  "ts": "2026-10-13T15:48:22.146Z",
+  "api_calls": 0,
+  "steps": [
+    {
+      "op": "health",
+      "dt": 45,
+      "ok": true
+    },
+    {
+      "op": "init",
+      "dt": 5,
+      "proto": "2025-06-18"
+    },
+    {
+      "op": "list",
+      "dt": 14,
+      "tools": [
+        "act",
+        "evidence",
+        "perceive",
+        "reset",
+        "status"
+      ]
+    },
+    {
+      "op": "status",
+      "dt": 30,
+      "services": {
+        "gateway": "down",
+        "yolo": "down",
+        "ocr": "down",
+        "merge": "down",
+        "browser": "down"
+      }
+    },
+    {
+      "op": "perceive",
+      "dt": 8705,
+      "url": "https://example.com",
+      "elements": 9,
+      "page_chars": 594
+    }
+  ],
+  "pass": true
+}

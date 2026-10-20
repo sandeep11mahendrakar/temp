@@ -1,0 +1,1 @@
+{"name":"NEG rollback failure preserves original SQL error; close still aborts and fresh postcheck runs"}

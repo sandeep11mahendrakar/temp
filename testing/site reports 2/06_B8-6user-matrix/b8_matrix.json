@@ -1,0 +1,215 @@
+{
+  "ts": "2026-10-13T16:19:41.440Z",
+  "api_calls": 0,
+  "rows": [
+    {
+      "user": "standard_user",
+      "expects": "PASS",
+      "verdict": "PASS",
+      "match": true,
+      "url_after": "https://www.saucedemo.com/inventory.html",
+      "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_standard_user.json",
+      "delta": null
+    },
+    {
+      "user": "locked_out_user",
+      "expects": "FAIL",
+      "verdict": "FAIL",
+      "match": true,
+      "url_after": "https://www.saucedemo.com/",
+      "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_locked_out_user.json",
+      "delta": []
+    },
+    {
+      "user": "problem_user",
+      "expects": "PASS",
+      "verdict": "PASS",
+      "match": true,
+      "url_after": "https://www.saucedemo.com/inventory.html",
+      "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_problem_user.json",
+      "delta": []
+    },
+    {
+      "user": "performance_glitch_user",
+      "expects": "PASS",
+      "verdict": "PASS",
+      "match": true,
+      "url_after": "https://www.saucedemo.com/inventory.html",
+      "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_performance_glitch_user.json",
+      "delta": []
+    },
+    {
+      "user": "error_user",
+      "expects": "PASS",
+      "verdict": "PASS",
+      "match": true,
+      "url_after": "https://www.saucedemo.com/inventory.html",
+      "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_error_user.json",
+      "delta": []
+    },
+    {
+      "user": "visual_user",
+      "expects": "PASS",
+      "verdict": "PASS",
+      "match": true,
+      "url_after": "https://www.saucedemo.com/inventory.html",
+      "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_visual_user.json",
+      "delta": []
+    }
+  ],
+  "mem": {
+    "version": 1,
+    "runs": [
+      {
+        "site": "saucedemo-login",
+        "run_id": "exec_1791908324639",
+        "ts": "2026-10-13T16:18:53.066Z",
+        "summary": "",
+        "phases_done": [
+          "step1-fill",
+          "step2-fill",
+          "step3-click"
+        ],
+        "verdict": "PASS",
+        "delta": null
+      },
+      {
+        "site": "saucedemo-login",
+        "run_id": "exec_1791908333451",
+        "ts": "2026-10-13T16:19:01.822Z",
+        "summary": "",
+        "phases_done": [
+          "step1-fill",
+          "step2-fill",
+          "step3-click"
+        ],
+        "verdict": "FAIL",
+        "delta": []
+      },
+      {
+        "site": "saucedemo-login",
+        "run_id": "exec_1791908342203",
+        "ts": "2026-10-13T16:19:10.601Z",
+        "summary": "",
+        "phases_done": [
+          "step1-fill",
+          "step2-fill",
+          "step3-click"
+        ],
+        "verdict": "PASS",
+        "delta": []
+      },
+      {
+        "site": "saucedemo-login",
+        "run_id": "exec_1791908350985",
+        "ts": "2026-10-13T16:19:24.135Z",
+        "summary": "",
+        "phases_done": [
+          "step1-fill",
+          "step2-fill",
+          "step3-click"
+        ],
+        "verdict": "PASS",
+        "delta": []
+      },
+      {
+        "site": "saucedemo-login",
+        "run_id": "exec_1791908364517",
+        "ts": "2026-10-13T16:19:32.768Z",
+        "summary": "",
+        "phases_done": [
+          "step1-fill",
+          "step2-fill",
+          "step3-click"
+        ],
+        "verdict": "PASS",
+        "delta": []
+      },
+      {
+        "site": "saucedemo-login",
+        "run_id": "exec_1791908373153",
+        "ts": "2026-10-13T16:19:41.439Z",
+        "summary": "",
+        "phases_done": [
+          "step1-fill",
+          "step2-fill",
+          "step3-click"
+        ],
+        "verdict": "PASS",
+        "delta": []
+      }
+    ]
+  },
+  "report": {
+    "schema": 1,
+    "run": {
+      "id": "b8-matrix-1791908381439",
+      "ts": "2026-10-13T16:19:41.439Z",
+      "source": "vision-loopB-b8"
+    },
+    "loops": [],
+    "cases": [
+      {
+        "id": "B8-standard_user",
+        "verdict": "PASS",
+        "weak_steps": 0,
+        "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_standard_user.json"
+      },
+      {
+        "id": "B8-locked_out_user",
+        "verdict": "PASS",
+        "weak_steps": 0,
+        "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_locked_out_user.json"
+      },
+      {
+        "id": "B8-problem_user",
+        "verdict": "PASS",
+        "weak_steps": 0,
+        "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_problem_user.json"
+      },
+      {
+        "id": "B8-performance_glitch_user",
+        "verdict": "PASS",
+        "weak_steps": 0,
+        "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_performance_glitch_user.json"
+      },
+      {
+        "id": "B8-error_user",
+        "verdict": "PASS",
+        "weak_steps": 0,
+        "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_error_user.json"
+      },
+      {
+        "id": "B8-visual_user",
+        "verdict": "PASS",
+        "weak_steps": 0,
+        "evidence": "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_visual_user.json"
+      }
+    ],
+    "result": {
+      "verdict": "PASS",
+      "pass_rate": 1
+    },
+    "cost": {
+      "api_calls": 0,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "usd_estimated": null
+    },
+    "storage": {
+      "paths": [
+        "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_standard_user.json",
+        "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_locked_out_user.json",
+        "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_problem_user.json",
+        "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_performance_glitch_user.json",
+        "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_error_user.json",
+        "C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_visual_user.json"
+      ]
+    },
+    "citable": {
+      "ref": "run-b8-matrix-1791908381439",
+      "sha1": "9ca4456801d51301cd8bb1a1a3124283e186f4f6"
+    }
+  },
+  "index": "| run-b8-matrix-1791908381439 | PASS | 1 | n/a | C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_standard_user.json;C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_locked_out_user.json;C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_problem_user.json;C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_performance_glitch_user.json;C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_error_user.json;C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\vision\\storage\\outputs\\b8_rep_visual_user.json | 9ca4456801d51301cd8bb1a1a3124283e186f4f6 |"
+}

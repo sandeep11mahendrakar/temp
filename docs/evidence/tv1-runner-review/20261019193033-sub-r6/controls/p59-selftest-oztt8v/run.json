@@ -1,0 +1,68 @@
+{
+  "started": "2026-10-19T14:00:46.865Z",
+  "mode": "LOCAL_ISOLATED",
+  "expectedBaseline": "zero",
+  "fixtureBaseline": "six",
+  "testFault": null,
+  "source_sha256": {
+    "migration": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "diagnostic": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d"
+  },
+  "runtime": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit",
+    "role": "postgres",
+    "pglite": "0.5.10"
+  },
+  "baseline": {
+    "objects_n": 6,
+    "names": [
+      "mobile_a",
+      "mobile_b",
+      "run_summary",
+      "runs",
+      "web_a",
+      "web_b"
+    ],
+    "fingerprint": "c439b4e8d96821770fdc5d80758af594"
+  },
+  "postcheck": {
+    "inventory": {
+      "objects_n": 6,
+      "names": [
+        "mobile_a",
+        "mobile_b",
+        "run_summary",
+        "runs",
+        "web_a",
+        "web_b"
+      ],
+      "fingerprint": "c439b4e8d96821770fdc5d80758af594"
+    },
+    "fixture_count": 0,
+    "same_baseline": true,
+    "same_team_rows": true,
+    "fresh_connection": true
+  },
+  "rollback": {
+    "attempted": true,
+    "ok": true
+  },
+  "close": {
+    "attempted": true,
+    "closed": true,
+    "ok": true
+  },
+  "exit": 1,
+  "postcheck_closed": true,
+  "ended": "2026-10-19T14:00:52.582Z",
+  "errors": [
+    {
+      "stage": "execution",
+      "message": "PREFLIGHT/BASELINE expected names differ from measured inventory",
+      "code": null,
+      "constraint": null
+    }
+  ],
+  "cases": [],
+  "noticeCount": 0
+}

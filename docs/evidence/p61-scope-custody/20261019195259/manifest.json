@@ -1,0 +1,36 @@
+{
+  "ist": "2026-10-19 19:52:59 IST",
+  "authority": "Direct human WORK ORDERS verified in W4/W3/W1 chats; W4 userMessage01a15486-4553-7591-9b15-5cc0045b69e0",
+  "files": [
+    {
+      "path": "tools/runBatch.js",
+      "copy": "docs/evidence/p61-scope-custody/20261019195259/tools__runBatch.js.snapshot.txt",
+      "bytes": 10230,
+      "sha256": "67f5b1ba450d2829e123c8148df25aaeb8f4d9c5d2896a31d1247d82c6ddda7d"
+    },
+    {
+      "path": "tools/runBatch.test.js",
+      "copy": "docs/evidence/p61-scope-custody/20261019195259/tools__runBatch.test.js.snapshot.txt",
+      "bytes": 9065,
+      "sha256": "5c8f98d326cc42331959f646e0ba036a48b867c69b131b3c551375c7db5cc82a"
+    },
+    {
+      "path": "tools/runArchive.js",
+      "copy": "docs/evidence/p61-scope-custody/20261019195259/tools__runArchive.js.snapshot.txt",
+      "bytes": 5194,
+      "sha256": "1692d5d2dde8d08622a43b69a1ede369c4c203a9c11083ef366abb4e971e0393"
+    },
+    {
+      "path": "tools/runArchive.test.js",
+      "copy": "docs/evidence/p61-scope-custody/20261019195259/tools__runArchive.test.js.snapshot.txt",
+      "bytes": 1998,
+      "sha256": "8820cecd7941c9df60ce69f837c8bd1de17299e1971556a8ca56082bc7490897"
+    },
+    {
+      "path": "docs/RESEARCH_PROTOCOL.md",
+      "copy": "docs/evidence/p61-scope-custody/20261019195259/docs__RESEARCH_PROTOCOL.md.snapshot.txt",
+      "bytes": 3711,
+      "sha256": "03ee3c48468223a44f458c28d9c3958d308242f120cd3fd89fda41f3b7e1649a"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+'use strict';
+
+// Archive an already completed run without inventing missing evidence.
+// Usage: node tools/runArchive.js <run.json>
+// run.json: {run_id, ...manifest fields, artifacts:[{source,path}], calls_source?}
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+
+const ROOT = path.resolve(__dirname, '..');
+const RUNS = path.join(ROOT, 'runs');
+const MISSING = 'NOT_RECORDED';
+const RUN_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$/;
+const FIELDS = ['site', 'url', 'head', 'dirty', 'model_provider', 'model_id',
+  'contract_hash', 'prompt_hash', 'browser', 'viewport', 'os', 'limits',
+  'seed', 'started', 'ended', 'label'];
+
+function copyValue(v) { return v === undefined ? MISSING : v; }
+function safeRel(value) {
+  if (typeof value !== 'string' || !value || path.isAbsolute(value)) throw new Error('artifact path must be relative');
+  const normalized = value.replace(/\\/g, '/');
+  if (normalized.split('/').some((part) => !part || part === '.' || part === '..')) throw new Error(`unsafe artifact path: ${value}`);
+  return normalized;
+}
+function sha256(file) { return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'); }
+
+function archiveRun(input, opts = {}) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('run record must be an object');
+  if (typeof input.run_id !== 'string' || !RUN_ID.test(input.run_id) || input.run_id === '.' || input.run_id === '..') throw new Error('valid run_id required');
+  const root = path.resolve(opts.root || ROOT);
+  const runsDir = path.resolve(opts.runsDir || path.join(root, 'runs'));
+  fs.mkdirSync(runsDir, { recursive: true });
+  const dest = path.join(runsDir, input.run_id);
+  if (fs.existsSync(dest)) throw new Error(`refuse overwrite: ${path.relative(root, dest)}`);
+  const entries = Array.isArray(input.artifacts) ? input.artifacts.slice() : [];
+  if (input.calls_source) entries.push({ source: input.calls_source, path: 'per_call.jsonl' });
+  const names = new Set();
+  const staged = [];
+  for (const entry of entries) {
+    if (!entry || typeof entry.source !== 'string') throw new Error('each artifact requires source');
+    const rel = safeRel(entry.path || path.basename(entry.source));
+    if (rel === 'manifest.json' || names.has(rel)) throw new Error(`duplicate or reserved archive path: ${rel}`);
+    names.add(rel);
+    const source = path.resolve(root, entry.source);
+    const relSource = path.relative(root, source);
+    if (relSource.startsWith('..') || path.isAbsolute(relSource)) throw new Error('artifact source must stay inside project root');
+    if (!fs.existsSync(source) || !fs.statSync(source).isFile()) throw new Error(`artifact source missing/not file: ${entry.source}`);
+    staged.push({ source, rel });
+  }
+  // Create destination exclusively. If anything fails, keep the partial folder
+  // as a visible failed archive; a later invocation will refuse to overwrite it.
+  fs.mkdirSync(dest, { recursive: false });
+  const artifacts = [];
+  for (const item of staged) {
+    const target = path.join(dest, ...item.rel.split('/'));
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.copyFileSync(item.source, target, fs.constants.COPYFILE_EXCL);
+    artifacts.push({ path: item.rel, bytes: fs.statSync(target).size, sha256: sha256(target) });
+  }
+  const brain = input.brain && typeof input.brain === 'object' ? input.brain : {};
+  const cost = input.cost && typeof input.cost === 'object' ? input.cost : {};
+  const trialFields = {};
+  if (input.experiment_kind !== undefined) trialFields.experiment_kind = copyValue(input.experiment_kind);
+  if (input.citable !== undefined) trialFields.citable = input.citable;
+  if (input.aggregate_eligibility !== undefined) trialFields.aggregate_eligibility = input.aggregate_eligibility;
+  const manifest = {
+    run_id: input.run_id,
+    ...Object.fromEntries(FIELDS.map((key) => [key, copyValue(input[key])])),
+    brain: Object.fromEntries(['mode', 'role', 'blind'].map((key) => [key, copyValue(brain[key])])),
+    cost: {
+      calls: copyValue(cost.calls),
+      tokens: cost.tokens === undefined ? null : cost.tokens,
+      screens: copyValue(cost.screens),
+      time: copyValue(cost.time),
+    },
+    per_call: input.calls_source ? 'per_call.jsonl' : MISSING,
+    artifacts,
+    ...trialFields,
+  };
+  fs.writeFileSync(path.join(dest, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
+  return { ok: true, archive: path.relative(root, dest).replace(/\\/g, '/'), manifest };
+}
+
+module.exports = { archiveRun, MISSING };
+
+if (require.main === module) {
+  try {
+    const arg = process.argv[2];
+    if (!arg) throw new Error('usage: node tools/runArchive.js <run.json>');
+    const record = JSON.parse(fs.readFileSync(path.resolve(ROOT, arg), 'utf8'));
+    const result = archiveRun(record);
+    console.log(`ARCHIVE ${result.archive}`);
+    console.log(`artifacts=${result.manifest.artifacts.length} missing_fields=${Object.values(result.manifest).filter((v) => v === MISSING).length}`);
+  } catch (error) {
+    console.error(`ARCHIVE-REFUSED ${error.message}`);
+    process.exitCode = 1;
+  }
+}

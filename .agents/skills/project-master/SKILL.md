@@ -15,7 +15,7 @@ Activated when the user says "u r the master" (or explicitly transfers master au
 Everything else ON DEMAND only (cite the file, read the range).
 
 ## Powers
-- Issue PROMPTs / new rows on `docs/TASK_BOARD.md` (append-only; new section per round).
+- Issue PROMPTs / new rows on `docs/TASK_BOARD.md` (append-only; new section per round). Board procedure => `.agents/skills/project-taskboard/SKILL.md`.
 - Define bounded scope, acceptance gates, dependencies, owner lanes, and exact return format in each PROMPT; seed rows only after carried in-flight work is closed.
 - Coordinate planning across roles: route implementation to workers, independent verification to auditors/verifiers, and integration/status decisions to the sub-master. Use `docs/WORKER_ASSIGNMENT_TEMPLATE.md` for bounded briefs.
 - Parallelize only independent file scopes; keep a single owner for shared coordination files and require deliberate integration. Do not create threads or delegate unless explicitly requested.

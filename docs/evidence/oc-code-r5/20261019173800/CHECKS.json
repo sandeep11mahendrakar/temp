@@ -1,0 +1,58 @@
+{
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test",
+    "tools/trialArtifacts.test.js",
+    "tools/trialReport.test.js",
+    "tools/trialUploader.test.js"
+  ],
+  "exit_code": 0,
+  "stdout": "✔ adapter preserves NOT_RECORDED and maps test cases (5.9983ms)\n✔ REGRESSION preserves all twelve producer metrics including zero and fractional values (2.2876ms)\n✔ REGRESSION absent and nonnumeric metrics remain NOT_RECORDED (0.6903ms)\n✔ REGRESSION missing declared case screenshot prevents GO despite matching readback (37.7291ms)\n✔ POS retained and hashed case evidence permits review-only GO (33.0992ms)\n✔ NEG same-length tampered case evidence prevents GO (30.8445ms)\n✔ NEG existing but unlisted case evidence prevents GO (30.6148ms)\n✔ POS renders artifact-backed trial row with citations and review-only GO (23.0132ms)\n✔ NEG missing manifest/readback is NOT_RECORDED and fails without fake values (12.3725ms)\n✔ REGRESSION missing manifest row has 10 cells and storage remains NOT_RECORDED (13.6576ms)\n✔ NEG readback identity/hash fields missing prevents GO (23.1643ms)\n✔ NEG declared readback hashes that differ from retained bytes prevent GO (27.2704ms)\n✔ POS preserves failure cause class and never rewrites a failed outcome as PASS (22.4048ms)\n✔ NEG secret marker is reported by status only and never echoed (18.8036ms)\n✔ CLI materializes and reads a DB-6 authored fixture without claiming a live run (156.3228ms)\n✔ NEG contradictory experiment_kind (TRIAL manifest / RESEARCH report) fails (26.1892ms)\n✔ POS cause from cases[].cause string and object block (28.436ms)\n✔ builds schema-versioned, sanitized payload with hashes and pending eligibility (47.4378ms)\n✔ queues immutable local outbox and refuses changed run_id payload (61.7865ms)\n✔ POST is insert-only and duplicate retry leaves one run_id row (39.9631ms)\n✔ network failure retains outbox and retry succeeds (39.6917ms)\n✔ rejects all required secret-marker forms before outbox write (59.4291ms)\n✔ reruns carry supersedes_report and must use a new run_id (44.3153ms)\n✔ rejects manifest/report run identity mismatch (32.84ms)\n✔ eligibility reads use the configured view with GET only (1.6345ms)\n✔ legacy service-role JWT transport sends apikey and bearer only after role validation (37.251ms)\n✔ requires HTTPS, server auth, and configured table/views (3.1918ms)\n✔ ignored duplicate accepts only an exact stored payload hash (40.2391ms)\n✔ excluded TRIAL reads back by exact ID outside the eligibility view (39.5688ms)\n✔ tampered outbox hash fails before any request and retains evidence (45.271ms)\n✔ timeout retries stay bounded and preserve outbox without transport detail (55.989ms)\n✔ transient rate limit honors bounded Retry-After and retries same payload (34.3401ms)\n✔ zero or multiple exact-ID rows cannot acknowledge upload (38.4017ms)\n✔ forbidden credential markers in object keys are rejected before outbox creation (34.4658ms)\n✔ HTTP denial is not retried and response text is never surfaced (33.2237ms)\n✔ retainReadback writes one sanitized hosted row (11.1548ms)\n✔ retainReadback refuses overwrite and path escape (5.9489ms)\n✔ retainReadback validates expected hashes and fetched provenance (5.9854ms)\n✔ REGRESSION competing publication survives EEXIST unchanged (9.423ms)\n✔ REGRESSION final path is absent until complete JSON publication (76.5344ms)\n✔ NEG partial staging write is cleaned without publishing partial final JSON (5.8025ms)\n✔ NEG unsupported atomic publication fails closed and cleans only staging (6.5382ms)\nℹ tests 42\nℹ suites 0\nℹ pass 42\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1037.4585\n",
+  "stderr": "",
+  "checks": [
+    {
+      "path": "tools/runArchive.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialReport.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "environment": "approved local execution outside Windows sandbox; mocked transport only",
+  "prior_sandbox_result": "39/42; 3 hard-link controls blocked EPERM; no unsafe fallback added"
+}

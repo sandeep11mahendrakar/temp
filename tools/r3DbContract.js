@@ -76,10 +76,12 @@ function buildEnvelope(input) {
   const platform = optionalSource(first({ manifest, report }, ['report.platform', 'manifest.platform']));
   const stage = optionalSource(first({ manifest, report }, ['report.stage', 'manifest.stage']));
   const kind = optionalSource(first({ manifest, report }, ['report.experiment_kind', 'manifest.experiment_kind']));
-  const explicitOutcome = first({ manifest, report }, ['report.execution_outcome', 'manifest.execution_outcome', 'manifest.overall_status']);
+  const reportOutcome = first({ manifest, report }, ['report.execution_outcome']);
   const legacyOutcome = first({ manifest, report }, ['report.result.verdict']);
-  const legacyContaminated = explicitOutcome.value === null && legacyOutcome.value === 'CONTAMINATED';
-  const outcome = explicitOutcome.value === null && !legacyContaminated ? legacyOutcome : explicitOutcome;
+  const manifestOutcome = first({ manifest, report }, ['manifest.execution_outcome', 'manifest.overall_status']);
+  const legacyContaminated = reportOutcome.value === null && legacyOutcome.value === 'CONTAMINATED';
+  const outcome = reportOutcome.value !== null ? reportOutcome
+    : legacyOutcome.value !== null ? legacyOutcome : manifestOutcome;
   const explicitIntegrity = first({ manifest, report }, ['report.integrity_verdict', 'report.integrity.verdict', 'manifest.integrity_verdict']);
   const integrity = explicitIntegrity.value === null && legacyContaminated
     ? { value: 'CONTAMINATED', pointer: legacyOutcome.pointer } : optionalSource(explicitIntegrity);

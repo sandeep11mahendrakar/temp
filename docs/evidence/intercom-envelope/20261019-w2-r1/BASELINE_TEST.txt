@@ -1,0 +1,41 @@
+✔ request stays pending and routes to AUD (4.8047ms)
+✔ ACK records receipt but does not close the request (2.6217ms)
+✔ only ordered ACK, verdict, and SUB integration resolve the exchange (0.9757ms)
+✔ REJECT or UNVERIFIABLE plus HOLD closes only the exchange, not the task (0.9966ms)
+✔ valid AUD correction supersedes the prior verdict but waits for addressed SUB integration (0.8913ms)
+✔ addressed integration to a valid correction resolves using its superseding verdict (0.5337ms)
+✔ lowercase accept_supersedes is normalized to ACCEPT in the effective verdict (0.5226ms)
+✔ invalid correction sender, recipient, task, revision, action, evidence, or reply cannot supersede (1.9839ms)
+✔ conflicting corrections remain unresolved and flag a correction conflict (0.8666ms)
+✔ integration of the superseded verdict cannot resolve the corrected request (0.7543ms)
+✔ recipient and task filters select pending work by its current action owner (0.8195ms)
+✔ wrong ACK recipient cannot acknowledge a request (0.4314ms)
+✔ stale evidence revision cannot deliver a verdict or integration (0.547ms)
+✔ verdict without an earlier valid ACK remains unresolved (0.3291ms)
+✔ conflicting duplicate IDs are flagged and cannot resolve a chain (0.5967ms)
+✔ identical retransmission is idempotent (0.3806ms)
+✔ request owner can explicitly withdraw an unacknowledged stale revision (0.5536ms)
+✔ another worker cannot withdraw a request (0.3548ms)
+✔ request cannot be withdrawn after review has been acknowledged (0.3953ms)
+✔ generic routed messages may name a role without an individual (0.4438ms)
+✔ legacy requests anywhere in the full transcript stay manual-review warnings (0.9251ms)
+✔ unrouted legacy request remains visible without recipient filter (0.2749ms)
+✔ malformed addressed envelope is reported without closing a request (0.3476ms)
+✔ multiple independent verdicts are ambiguous and do not resolve (0.3566ms)
+✔ wrong verdict role and wrong reply target cannot advance review (0.3877ms)
+✔ verdict without evidence stays unresolved (0.3398ms)
+✔ literal evidence text is data and is never executed (3.3855ms)
+✔ CLI reads transcript, filters results, and leaves input bytes unchanged (136.6398ms)
+✔ CLI refuses environment-file inputs before reading them (130.2365ms)
+✔ CLI replays the versioned synthetic fixture with addressed lifecycle states (121.7457ms)
+✔ CLI applies a corrected verdict from a versioned synthetic transcript and requires integration (125.2069ms)
+✔ CLI --input and --recipient aliases match --file and --to (247.3549ms)
+✔ addressed request above a long unrelated tail is still found on full replay (0.8722ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 994.774

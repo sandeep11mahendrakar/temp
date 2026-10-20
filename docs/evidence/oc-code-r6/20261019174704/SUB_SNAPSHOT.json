@@ -1,0 +1,57 @@
+{
+  "snapshot_ist": "2026-10-19 17:47:04 IST",
+  "source": "SUB repair of OCC-A1-V-R5 evidence-byte secret-scan defect",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "revision": "6c6f2c3a37ecb3d90ac05144b8c622d4082c87e93419c93fe17baecac6acede1",
+  "files": [
+    {
+      "path": "docs/DB_COMPLETION_REPORT.md",
+      "sha256": "740df49b588f434af29063b84268b56fb174c6f967a7f58ff289196ba3a5da7e"
+    },
+    {
+      "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+      "sha256": "5526efa6fe4046f6eb51250c7807ca0cde328cad624c64c806fc58f502c7bc04"
+    },
+    {
+      "path": "docs/TRIAL_CHECKPOINT_RESUME_GAP.md",
+      "sha256": "028dcec51bc7e79ca95194eb1a00f014f4ee986a8f878b9492e7b00c873bdbd8"
+    },
+    {
+      "path": "tools/runArchive.js",
+      "sha256": "1692d5d2dde8d08622a43b69a1ede369c4c203a9c11083ef366abb4e971e0393"
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "sha256": "38775e233d82ddb629b2c9c31689706a4a97778cb8e0ba65c5d84eceb22da999"
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "sha256": "446912aaba879b621209f7eabdf3f635061dccf442df1f84d4656d85709fc181"
+    },
+    {
+      "path": "tools/trialReport.js",
+      "sha256": "5248ad2d392319e1aa87325646da8b4ec614433e332449ffa194322dfb35b1eb"
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "sha256": "d4609fa2a8f6668409c482fbf5583f34e125cd18e793c8377990400460a838b2"
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "sha256": "a242389bac882e9ee6f4bad13ec5e66a6adf3fa5d65a4ef39333ab9a226b29cd"
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "sha256": "8f471d1b9b0a76b34330d556692b6bea1f6b96a8d85dab00e1d74ec4bf53fb70"
+    }
+  ],
+  "checks": "docs/evidence/oc-code-r6/20261019174704/CHECKS.json",
+  "tests_added_vs_R5": {
+    "tools/trialReport.test.js": 4
+  },
+  "scope": "Scan actual retained bytes for all four secret-marker families; never echo values",
+  "limitations": [
+    "P59 and hosted proof remain separate",
+    "Hard-link filesystem support required; fail closed otherwise"
+  ]
+}

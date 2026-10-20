@@ -1,0 +1,30 @@
+[
+  {
+    "args": [
+      "--check",
+      "tools/trialReport.js"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--check",
+      "tools/trialReport.test.js"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--test",
+      "--test-reporter=tap",
+      "tools/trialReport.test.js"
+    ],
+    "exit": 0,
+    "stdout": "TAP version 13\n# Subtest: NEG unknown run verdict prevents GO despite CLEAN integrity and valid readback\nok 1 - NEG unknown run verdict prevents GO despite CLEAN integrity and valid readback\n  ---\n  duration_ms: 65.2721\n  type: 'test'\n  ...\n# Subtest: NEG unknown case verdict prevents GO even with recorded run PASS\nok 2 - NEG unknown case verdict prevents GO even with recorded run PASS\n  ---\n  duration_ms: 51.467\n  type: 'test'\n  ...\n# Subtest: NEG empty or malformed case list never produces GO\nok 3 - NEG empty or malformed case list never produces GO\n  ---\n  duration_ms: 27.7731\n  type: 'test'\n  ...\n# Subtest: NEG BLOCKED and FAIL without meaningful cause cannot produce GO\nok 4 - NEG BLOCKED and FAIL without meaningful cause cannot produce GO\n  ---\n  duration_ms: 21.4665\n  type: 'test'\n  ...\n# Subtest: NEG recorded run cause cannot conceal missing failure case cause\nok 5 - NEG recorded run cause cannot conceal missing failure case cause\n  ---\n  duration_ms: 13.7708\n  type: 'test'\n  ...\n# Subtest: NEG case cause cannot substitute for missing run-level cause\nok 6 - NEG case cause cannot substitute for missing run-level cause\n  ---\n  duration_ms: 14.5064\n  type: 'test'\n  ...\n# Subtest: NEG non-string run cause leaves cannot be coerced into recorded causes\nok 7 - NEG non-string run cause leaves cannot be coerced into recorded causes\n  ---\n  duration_ms: 36.1649\n  type: 'test'\n  ...\n# Subtest: POS genuine BLOCKED with recorded run and case causes is reviewable without becoming PASS\nok 8 - POS genuine BLOCKED with recorded run and case causes is reviewable without becoming PASS\n  ---\n  duration_ms: 12.7176\n  type: 'test'\n  ...\n# Subtest: REGRESSION missing declared case screenshot prevents GO despite matching readback\nok 9 - REGRESSION missing declared case screenshot prevents GO despite matching readback\n  ---\n  duration_ms: 16.3183\n  type: 'test'\n  ...\n# Subtest: POS retained and hashed case evidence permits review-only GO\nok 10 - POS retained and hashed case evidence permits review-only GO\n  ---\n  duration_ms: 16.837\n  type: 'test'\n  ...\n# Subtest: NEG same-length tampered case evidence prevents GO\nok 11 - NEG same-length tampered case evidence prevents GO\n  ---\n  duration_ms: 17.4241\n  type: 'test'\n  ...\n# Subtest: NEG existing but unlisted case evidence prevents GO\nok 12 - NEG existing but unlisted case evidence prevents GO\n  ---\n  duration_ms: 15.4466\n  type: 'test'\n  ...\n# Subtest: REGRESSION opaque marker in correctly hashed evidence bytes rejects GO without echo\nok 13 - REGRESSION opaque marker in correctly hashed evidence bytes rejects GO without echo\n  ---\n  duration_ms: 18.8857\n  type: 'test'\n  ...\n# Subtest: REGRESSION role marker in correctly hashed evidence bytes rejects GO without echo\nok 14 - REGRESSION role marker in correctly hashed evidence bytes rejects GO without echo\n  ---\n  duration_ms: 18.3677\n  type: 'test'\n  ...\n# Subtest: REGRESSION jwt marker in correctly hashed evidence bytes rejects GO without echo\nok 15 - REGRESSION jwt marker in correctly hashed evidence bytes rejects GO without echo\n  ---\n  duration_ms: 18.5009\n  type: 'test'\n  ...\n# Subtest: REGRESSION api marker in correctly hashed evidence bytes rejects GO without echo\nok 16 - REGRESSION api marker in correctly hashed evidence bytes rejects GO without echo\n  ---\n  duration_ms: 17.9214\n  type: 'test'\n  ...\n# Subtest: POS renders artifact-backed trial row with citations and review-only GO\nok 17 - POS renders artifact-backed trial row with citations and review-only GO\n  ---\n  duration_ms: 12.3522\n  type: 'test'\n  ...\n# Subtest: NEG missing manifest/readback is NOT_RECORDED and fails without fake values\nok 18 - NEG missing manifest/readback is NOT_RECORDED and fails without fake values\n  ---\n  duration_ms: 5.5956\n  type: 'test'\n  ...\n# Subtest: REGRESSION missing manifest row has 10 cells and storage remains NOT_RECORDED\nok 19 - REGRESSION missing manifest row has 10 cells and storage remains NOT_RECORDED\n  ---\n  duration_ms: 6.4055\n  type: 'test'\n  ...\n# Subtest: NEG readback identity/hash fields missing prevents GO\nok 20 - NEG readback identity/hash fields missing prevents GO\n  ---\n  duration_ms: 11.679\n  type: 'test'\n  ...\n# Subtest: NEG declared readback hashes that differ from retained bytes prevent GO\nok 21 - NEG declared readback hashes that differ from retained bytes prevent GO\n  ---\n  duration_ms: 12.0286\n  type: 'test'\n  ...\n# Subtest: POS preserves failure cause class and never rewrites a failed outcome as PASS\nok 22 - POS preserves failure cause class and never rewrites a failed outcome as PASS\n  ---\n  duration_ms: 13.5092\n  type: 'test'\n  ...\n# Subtest: NEG secret marker is reported by status only and never echoed\nok 23 - NEG secret marker is reported by status only and never echoed\n  ---\n  duration_ms: 11.7388\n  type: 'test'\n  ...\n# Subtest: CLI materializes and reads a DB-6 authored fixture without claiming a live run\nok 24 - CLI materializes and reads a DB-6 authored fixture without claiming a live run\n  ---\n  duration_ms: 81.3453\n  type: 'test'\n  ...\n# Subtest: NEG contradictory experiment_kind (TRIAL manifest / RESEARCH report) fails\nok 25 - NEG contradictory experiment_kind (TRIAL manifest / RESEARCH report) fails\n  ---\n  duration_ms: 14.1439\n  type: 'test'\n  ...\n# Subtest: POS cause from cases[].cause string and object block\nok 26 - POS cause from cases[].cause string and object block\n  ---\n  duration_ms: 14.1397\n  type: 'test'\n  ...\n1..26\n# tests 26\n# suites 0\n# pass 26\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 660.4815\n",
+    "stderr": ""
+  }
+]

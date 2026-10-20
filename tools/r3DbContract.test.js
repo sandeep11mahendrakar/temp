@@ -69,11 +69,28 @@ test('maps legacy contaminated result to integrity, not execution success', () =
   const source = input();
   delete source.report.experiment_kind; delete source.report.execution_outcome;
   delete source.report.integrity_verdict; delete source.report.aggregate_eligibility;
+  source.manifest.overall_status = 'SUCCESS';
   source.report.result = { verdict: 'CONTAMINATED' };
   const row = buildEnvelope(source);
   assert.equal(row.execution_outcome, 'NOT_RECORDED');
   assert.equal(row.integrity_verdict, 'CONTAMINATED');
   assert.equal(row.source_pointers.integrity_verdict, 'report.result.verdict');
+  assert.equal(row.source_pointers.execution_outcome, 'report.result.verdict');
+});
+
+test('report execution outcome and legacy verdict precede manifest status', () => {
+  const source = input();
+  source.manifest.overall_status = 'FAIL';
+  delete source.report.execution_outcome;
+  source.report.result = { verdict: 'PARTIAL_FAILURE' };
+  const row = buildEnvelope(source);
+  assert.equal(row.execution_outcome, 'PARTIAL');
+  assert.equal(row.source_pointers.execution_outcome, 'report.result.verdict');
+
+  source.report.execution_outcome = 'SUCCESS';
+  const explicit = buildEnvelope(source);
+  assert.equal(explicit.execution_outcome, 'PASS');
+  assert.equal(explicit.source_pointers.execution_outcome, 'report.execution_outcome');
 });
 
 test('rejects malformed roots and source hashes', () => {

@@ -1,0 +1,156 @@
+[
+  {
+    "file": "roles",
+    "statements": [
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      }
+    ]
+  },
+  {
+    "file": "companion",
+    "statements": [
+      {
+        "rows": [],
+        "fields": [],
+        "command": "BEGIN",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "ALTER",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "COMMIT",
+        "affectedRows": 0
+      }
+    ]
+  }
+]

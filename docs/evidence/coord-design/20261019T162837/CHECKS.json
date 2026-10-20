@@ -1,0 +1,30 @@
+[
+  {
+    "args": [
+      "--check",
+      "tools/subOnboard.js"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "tools/subOnboard.js",
+      "--help"
+    ],
+    "exit": 0,
+    "stdout": "node tools/subOnboard.js [--task=TASK-ID] [--limit=1..20]\nREAD_ONLY | no sends, writes, claims, tests, credentials, network or live actions\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "tools/subOnboard.js",
+      "--task=T-4",
+      "--limit=3"
+    ],
+    "exit": 0,
+    "stdout": "SUB_BOOT | IST=2026-10-19 21:58 IST | mode=READ_ONLY | authority=NOT_GRANTED_BY_SCRIPT\nREAD | AGENTS.md;CODEX_PROJECT_MEMORY.md;.agents/skills/project-submaster/SKILL.md\nREAD | .agents/skills/project-taskboard/SKILL.md;.agents/skills/project-intercom/SKILL.md\nREAD | .agents/skills/caveman/SKILL.md;docs/SUB_COORDINATION_ONBOARDING.md\nINPUT | file=docs/TASK_BOARD.md | sha256=c71b7c6632f198204506115dfab80e7e35be3eddb1b9f9073f5cea7c0519dfa2 | lines=3940\nINPUT | file=docs/INTERCOM.md | sha256=d7b1d09035e928c0dc4b145cdba17b1aba3393de8821108ff79a5a274882c115 | lines=1820\nWORKTREE | status_entries=139 | inspect_git_status_before_edit=YES\nINBOX | pending=2 | warnings=142 | legacy=0\nPENDING | task=T-4 | id=T4-STEP0-VR-W4-R1 | state=REQUESTED | next=AUD | intercom_line=1268\nPENDING | task=T-4 | id=T4-VR-SUB-R2A | state=REQUESTED | next=AUD | intercom_line=1800\nWARNING | intercom_line=1727 | inspect_source=YES\nWARNING | intercom_line=1785 | inspect_source=YES\nWARNING | intercom_line=1796 | inspect_source=YES\nNEXT | Read board top/current task region and Intercom last40 plus cited pending/warning lines.\nLIMIT | Missing inbox entry does not prove completion. Legacy/unparseable messages require manual review.\nGATES | Verify owners/locks/HOLDER/runtime and existing human approvals in live records; never infer from this output.\nROUTE | Worker repairs; independent AUD reviews; SUB integrates matching revision; OWNER decides reserved gates.\nDM | Only actionable blocker/decision/final verdict; no ACK/progress/heartbeat or reply to silence.\n",
+    "stderr": ""
+  }
+]

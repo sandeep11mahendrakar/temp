@@ -1,0 +1,36 @@
+{
+  "runtime": "installed PGlite0.5.10",
+  "scope": "fresh isolated in-memory callback probe; not diagnostic approval",
+  "notices": [
+    {
+      "message": "TV1_NOTICE_CAPTURE_PROBE",
+      "code": "00000",
+      "severity": "NOTICE"
+    }
+  ],
+  "results": [
+    {
+      "rows": [],
+      "fields": [],
+      "command": "DO",
+      "affectedRows": 0
+    },
+    {
+      "rows": [
+        {
+          "probe_value": 42
+        }
+      ],
+      "fields": [
+        {
+          "name": "probe_value",
+          "dataTypeID": 23
+        }
+      ],
+      "command": "SELECT",
+      "affectedRows": 0,
+      "rowCount": 1
+    }
+  ],
+  "connection_closed": true
+}

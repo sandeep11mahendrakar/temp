@@ -1,0 +1,11 @@
+{
+  "format": 1,
+  "target_ref": "xvizjawcpafdqrygzvcx",
+  "environment": "personal-dev/main",
+  "migration_sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+  "synthetic_prefix": "ocdb_tv1_REPLACE_WITH_REVIEWED_PREFIX_",
+  "fixture_ids": [],
+  "cases": [],
+  "not_approved": true,
+  "reason": "Corrected R2 and exact P59 diagnostic SQL were not supplied; a full, immutable, independently reviewed atomic plan is required."
+}

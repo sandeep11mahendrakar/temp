@@ -13,7 +13,7 @@ Contract module: `tools/r3DbContract.js`; API: `buildEnvelope(input)`, `validate
 | platform | string/null | `report.platform` then `manifest.platform` | absent => null + NOT_RECORDED; no relabeling |
 | stage | string/null | `report.stage` then `manifest.stage` | absent => null + NOT_RECORDED; no stage inference |
 | experiment_kind | enum | report then manifest: RESEARCH, TRIAL | absent => PENDING_VALIDATION; unsupported rejected |
-| execution_outcome | enum | explicit report, report.result.verdict, manifest status | PASS/PARTIAL/FAIL/BLOCKED/ERROR/INCONCLUSIVE/NOT_RECORDED; legacy SUCCESS/PARTIAL_FAILURE/MIXED aliases mapped, raw JSON retained |
+| execution_outcome | enum | precedence: `report.execution_outcome`, `report.result.verdict`, `manifest.execution_outcome`, `manifest.overall_status` | PASS/PARTIAL/FAIL/BLOCKED/ERROR/INCONCLUSIVE/NOT_RECORDED; legacy SUCCESS/PARTIAL_FAILURE/MIXED aliases mapped, raw JSON retained |
 | integrity_verdict | enum | explicit report integrity verdict | CLEAN/QUARANTINED/CONTAMINATED/INCONCLUSIVE/NOT_EVALUATED/PENDING_VALIDATION; absent is not CLEAN |
 | aggregate_eligibility | enum | report aggregate field or `report.eligibility.aggregate` | ELIGIBLE/EXCLUDED/PENDING_VALIDATION; absent => PENDING_VALIDATION |
 | supersedes_report | string/null | report then manifest | absent => null + NOT_RECORDED; same ID rejected |

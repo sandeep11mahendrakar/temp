@@ -36,14 +36,13 @@ function parseIndex(filePath) {
     const m = fusion.match(/([\d.]+)%/);
     const pct = m ? parseFloat(m[1]) : null;
     const tier = num <= 10 ? 1 : (num <= 20 ? 2 : (num <= 30 ? 3 : 4));
-    // excluded reason: blocked/contaminated/do-not-cite
+    // Contamination is row-level even when an earlier run is superseded.
+    // Keep these out of the campaign mean and disclose them in the excluded list.
     let excludedReason = null;
     const raw = r.toLowerCase();
-    if (pct === null) {
-      if (/blocked/i.test(raw)) excludedReason = 'BLOCKED';
-      else if (/contaminat|do-not-cite/i.test(raw)) excludedReason = 'CONTAMINATED/DO-NOT-CITE';
-      else excludedReason = 'no fusion value';
-    }
+    if (/contaminat|do-not-cite/i.test(raw)) excludedReason = 'CONTAMINATED/DO-NOT-CITE';
+    else if (pct === null && /blocked/i.test(raw)) excludedReason = 'BLOCKED';
+    else if (pct === null) excludedReason = 'no fusion value';
     out.push({ num, site, runId, fusion, pct, tier, excludedReason, raw: r.trim() });
   }
   return out;
@@ -56,9 +55,8 @@ function main() {
   const idxPath = args.index || DEFAULT_INDEX;
   const rows = parseIndex(idxPath);
 
-  const citable = rows.filter((r) => r.pct !== null && !r.excludedReason);
-  // also exclude contaminated even if they have a % (bbc 77.8%)
-  const citableClean = citable.filter((r) => !/contaminat|do-not-cite/i.test(r.raw));
+  const citableClean = rows.filter((r) => r.pct !== null && !r.excludedReason);
+  const excluded = rows.filter((r) => r.excludedReason);
 
   console.log('=== FX-2 campaignTable (read-only parse of INDEX.md) ===');
   console.log('Index:', idxPath);
@@ -77,19 +75,19 @@ function main() {
     const sub = citableClean.filter((r) => r.tier === t);
     const vals = sub.map((r) => r.pct);
     const m = mean(vals);
-    console.log(`Tier ${t}: n=${sub.length}, sum=${vals.reduce((s, x) => s + x, 0).toFixed(2)}, mean=${m === null ? 'n/a' : m.toFixed(2) + '%'}`);
+    console.log(`Tier ${t}: n=${sub.length}, rows=[${sub.map((r) => r.num).join(',')}], sum=${vals.reduce((s, x) => s + x, 0).toFixed(2)}, mean=${m === null ? 'n/a' : m.toFixed(2) + '%'}`);
     console.log(`  values: [${vals.join(', ')}]`);
   }
   const t12 = citableClean.filter((r) => r.tier === 1 || r.tier === 2);
   const m12 = mean(t12.map((r) => r.pct));
-  console.log(`Tier1+2 (20-site ledger): n=${t12.length}, sum=${t12.reduce((s, r) => s + r.pct, 0).toFixed(2)}, mean=${m12 === null ? 'n/a' : m12.toFixed(2) + '%'}`);
+  console.log(`Tier1+2 (20-site ledger): n=${t12.length}, rows=[${t12.map((r) => r.num).join(',')}], sum=${t12.reduce((s, r) => s + r.pct, 0).toFixed(2)}, mean=${m12 === null ? 'n/a' : m12.toFixed(2) + '%'}`);
   console.log('');
 
   console.log('--- Excluded rows + reason ---');
-  for (const r of rows.filter((x) => x.excludedReason)) {
+  for (const r of excluded) {
     console.log(`  ${r.num}\t${r.site}\t${r.excludedReason}`);
   }
-  console.log('Excluded count:', rows.filter((x) => x.excludedReason).length);
+  console.log('Excluded count:', excluded.length);
   console.log('Citable count:', citableClean.length);
   console.log('');
 
@@ -98,8 +96,14 @@ function main() {
   console.log('Citable (clean):', citableClean.length);
   console.log('Excluded:', rows.length - citableClean.length);
   console.log('');
-  console.log('Headline check: Tier1 mean computed above (memory cited ~20%); 48.7% cited for decontaminated 20-site ledger (Tier1+2).');
-  console.log('If computed mean differs from cited headline, the cited headline is replaced by the computed value (honest).');
+  console.log(`Reconciliation: citable ${citableClean.length} + excluded ${excluded.length} = total ${rows.length}`);
+  if (citableClean.length + excluded.length !== rows.length || excluded.length !== 12) {
+    console.error(`FX-7 FAIL: expected citable+excluded=total and excluded=12; got ${citableClean.length}+${excluded.length}=${rows.length}`);
+    process.exitCode = 1;
+  } else {
+    console.log(`FX-7 PASS: ${citableClean.length} citable + ${excluded.length} excluded = ${rows.length} total; excluded list count=${excluded.length}`);
+  }
+  console.log('Headline check: computed means above replace unreproducible historical 20%/48.7% claims.');
 
   // PX-1 OPTIONAL section: only when --case-records is passed. Absent adapter or
   // missing root degrades gracefully; the FX-2 output above is never changed.

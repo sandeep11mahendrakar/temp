@@ -8,7 +8,17 @@
 - Never expose secrets or include `.env`/credentials in outputs or commits. Board/ledger text writes use Node.js `fs` UTF-8 per project convention; preserve append-only logs.
 - For structural code exploration, use the installed `codebase-memory` skill when available.
 
-## Utility skills: `.agents/skills/project-memory-sync/SKILL.md` = daily durable-memory sync (trigger: "update the opencode memory").
+## Utility skills
+
+- `.agents/skills/project-memory-sync/SKILL.md` = daily durable-memory sync (trigger: "update the opencode memory").
+- `.agents/skills/project-taskboard/SKILL.md` = canonical board procedure.
+- `.agents/skills/project-intercom/SKILL.md` = canonical intercom procedure.
+
+## Canonical board/intercom manuals
+
+- Board procedure => `.agents/skills/project-taskboard/SKILL.md`; live board state => `docs/TASK_BOARD.md`.
+- Intercom procedure => `.agents/skills/project-intercom/SKILL.md`; live coordination => `docs/INTERCOM.md`.
+- `.agents/skills/` is the sole active skill tree. `.codex/` was archived to `_TEMP_BIN/.codex-legacy-2026-10-18/`; archived copies are not active instructions.
 
 ## Role dispatch (mandatory)
 
@@ -30,3 +40,15 @@ AI-agent-first compact style everywhere (board, intercom, ledgers, reports, repl
 4. `docs/INTERCOM.md` - last 40 lines.
 5. Evidence/artifacts - on demand, only cited ranges.
 `docs/FINAL_STATE.md` full read replaces 3-4 when the program state itself is the question.
+
+## Compact agent prompts and SUB startup (owner order 2026-10-19)
+
+- All WORKER/AUD/SUB/MASTER agent packets, prompts and coordination output use compact ASCII key=value or pipe rows, <=300 chars/line, with exact identifiers, negations, commands, paths and evidence retained.
+- Mandatory communication style: load .agents/skills/caveman/SKILL.md for worker/agent responses. Project ASCII schemas and required confirmations take precedence over optional Caveman prose formatting.
+- Caveman compresses wording only; no unmeasured token-saving claims, altered code/SQL, omitted gate/evidence, broken grammar or loss of meaning. User questions and safety-critical decisions remain clear full sentences.
+- Internal DM only for actionable blockers/conflicts, essential clarification or final verdict requiring action; no routine progress, ACK-only messages, heartbeat chatter or duplicate notice replies.
+- New SUB sessions read docs/SUB_COORDINATION_ONBOARDING.md and run node tools/subOnboard.js for read-only navigation; live board/intercom still govern. The script grants no role, claim or execution permission.
+
+
+## Rule 43 (owner amendment 2026-10-20)
+Workers may claim any genuinely claimable task without asking permission; first valid durable claim wins. Claimable = OPEN/unclaimed, deps met, no conflicting owner/lock, sufficient context, runtime/access satisfied. Workers may implement bounded scope, run authorized checks, submit proof, mark own work VERIFY. Workers may NEVER mark DONE or independently accept; only activated MASTER/SUB/AUD may record DONE, and numbered instances (SUB2, AUD2, ...) are equally eligible. DM discussion alone does not change task state; silence is not approval.

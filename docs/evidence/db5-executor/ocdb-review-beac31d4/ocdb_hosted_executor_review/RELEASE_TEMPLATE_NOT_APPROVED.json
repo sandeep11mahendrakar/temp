@@ -1,0 +1,13 @@
+{
+  "target_ref": "xvizjawcpafdqrygzvcx",
+  "environment": "personal-dev/main",
+  "migration_sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+  "plan_sha256": "NOT_APPROVED",
+  "operator": "OC-DB",
+  "sub_scope_release": "RECORDED",
+  "transport": "NOT_APPROVED",
+  "hosted_executor_approved": false,
+  "safety_block_cleared": false,
+  "human_approval_unverified": true,
+  "status": "DENY_EXECUTION"
+}

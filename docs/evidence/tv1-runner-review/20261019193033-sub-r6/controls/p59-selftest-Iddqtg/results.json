@@ -1,0 +1,569 @@
+[
+  {
+    "file": "roles",
+    "statements": [
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      }
+    ]
+  },
+  {
+    "file": "synthetic-team-fixture",
+    "statements": [
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "INSERT",
+        "affectedRows": 1,
+        "rowCount": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 1
+      }
+    ]
+  },
+  {
+    "file": "companion",
+    "statements": [
+      {
+        "rows": [],
+        "fields": [],
+        "command": "BEGIN",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "ALTER",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "CREATE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "REVOKE",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "GRANT",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "COMMIT",
+        "affectedRows": 0
+      }
+    ]
+  },
+  {
+    "file": "diagnostic",
+    "statements": [
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "BEGIN",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "SET",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 0
+      },
+      {
+        "rows": [
+          {
+            "case_id": "CAT/RLS",
+            "relname": "r3_runs",
+            "rls_on": true
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "relname",
+            "dataTypeID": 19
+          },
+          {
+            "name": "rls_on",
+            "dataTypeID": 16
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 0,
+        "rowCount": 1
+      },
+      {
+        "rows": [
+          {
+            "case_id": "CAT/VIEWS",
+            "relname": "r3_evidence_readback",
+            "reloptions": [
+              "security_invoker=true"
+            ]
+          },
+          {
+            "case_id": "CAT/VIEWS",
+            "relname": "r3_research_eligible",
+            "reloptions": [
+              "security_invoker=true"
+            ]
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "relname",
+            "dataTypeID": 19
+          },
+          {
+            "name": "reloptions",
+            "dataTypeID": 1009
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 0,
+        "rowCount": 2
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "SET",
+        "affectedRows": 0
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "INSERT",
+        "affectedRows": 4,
+        "rowCount": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [
+          {
+            "case_id": "POS-INSERT",
+            "fixture_count": 4
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "fixture_count",
+            "dataTypeID": 20
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 4,
+        "rowCount": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "RESET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "SET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "RESET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "SET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "RESET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "SET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [
+          {
+            "case_id": "POS-RETRY",
+            "row_count": 1,
+            "stored_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "row_count",
+            "dataTypeID": 20
+          },
+          {
+            "name": "stored_digest",
+            "dataTypeID": 25
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 4,
+        "rowCount": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [
+          {
+            "case_id": "NEG-06",
+            "run_id": "ocdb_tv1_20261019_eligible",
+            "app_id": "app",
+            "comparison_id": "cmp",
+            "schema_version": "1.0",
+            "payload_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "run_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "app_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "comparison_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "schema_version",
+            "dataTypeID": 25
+          },
+          {
+            "name": "payload_sha256",
+            "dataTypeID": 25
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 4,
+        "rowCount": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "RESET",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [
+          {
+            "case_id": "FINAL-IN-TX",
+            "fixture_count": 4
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "fixture_count",
+            "dataTypeID": 20
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 4,
+        "rowCount": 1
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "ROLLBACK",
+        "affectedRows": 4
+      },
+      {
+        "rows": [],
+        "fields": [],
+        "command": "DO",
+        "affectedRows": 4
+      },
+      {
+        "rows": [
+          {
+            "case_id": "POST-ROLLBACK",
+            "fixture_count": 0
+          }
+        ],
+        "fields": [
+          {
+            "name": "case_id",
+            "dataTypeID": 25
+          },
+          {
+            "name": "fixture_count",
+            "dataTypeID": 20
+          }
+        ],
+        "command": "SELECT",
+        "affectedRows": 4,
+        "rowCount": 1
+      }
+    ]
+  }
+]

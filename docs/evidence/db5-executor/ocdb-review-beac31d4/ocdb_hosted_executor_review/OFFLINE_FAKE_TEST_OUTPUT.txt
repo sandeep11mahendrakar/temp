@@ -1,0 +1,18 @@
+test_baseline_drift_fails_closed (test_ocdb_hosted_executor.HostedHarnessContractTests.test_baseline_drift_fails_closed) ... ok
+test_cleanup_query_failure_fails_closed (test_ocdb_hosted_executor.HostedHarnessContractTests.test_cleanup_query_failure_fails_closed) ... ok
+test_expected_sqlstate_savepoint_recovery_close_and_fresh_readback (test_ocdb_hosted_executor.HostedHarnessContractTests.test_expected_sqlstate_savepoint_recovery_close_and_fresh_readback) ... ok
+test_failed_close_never_qualifies_as_pass (test_ocdb_hosted_executor.HostedHarnessContractTests.test_failed_close_never_qualifies_as_pass) ... ok
+test_failed_rollback_does_not_block_close_and_cleanup (test_ocdb_hosted_executor.HostedHarnessContractTests.test_failed_rollback_does_not_block_close_and_cleanup) ... ok
+test_host_transport_must_have_separate_approval (test_ocdb_hosted_executor.HostedHarnessContractTests.test_host_transport_must_have_separate_approval) ... ok
+test_keyboard_interrupt_attempts_rollback_close_and_fresh_check (test_ocdb_hosted_executor.HostedHarnessContractTests.test_keyboard_interrupt_attempts_rollback_close_and_fresh_check) ... ok
+test_leftover_synthetic_rows_fails_closed (test_ocdb_hosted_executor.HostedHarnessContractTests.test_leftover_synthetic_rows_fails_closed) ... ok
+test_plan_cannot_change_transaction_control (test_ocdb_hosted_executor.HostedHarnessContractTests.test_plan_cannot_change_transaction_control) ... ok
+test_secret_in_exception_is_never_printed (test_ocdb_hosted_executor.HostedHarnessContractTests.test_secret_in_exception_is_never_printed) ... ok
+test_six_object_baseline_also_preserved (test_ocdb_hosted_executor.HostedHarnessContractTests.test_six_object_baseline_also_preserved) ... ok
+test_still_open_pid_fails_closed (test_ocdb_hosted_executor.HostedHarnessContractTests.test_still_open_pid_fails_closed) ... ok
+test_unexpected_error_still_rolls_back_closes_and_rechecks (test_ocdb_hosted_executor.HostedHarnessContractTests.test_unexpected_error_still_rolls_back_closes_and_rechecks) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.005s
+
+OK

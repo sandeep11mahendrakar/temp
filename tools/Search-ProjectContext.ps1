@@ -30,8 +30,8 @@ $defaultSources = @(
     'docs/CLAUDE_CHECKPOINT_DUMP.txt',
     'agents/README.md',
     'agents/memory/PROJECT_HANDOFF.md',
-    'agents/skills/INTERCOM_SKILL.md',
-    'agents/skills/TASKBOARD_SKILL.md',
+    '.agents/skills/project-intercom/SKILL.md',
+    '.agents/skills/project-taskboard/SKILL.md',
     'CODEX_PROJECT_MEMORY.md',
     'opencode-memory/memory.jsonl'
 )

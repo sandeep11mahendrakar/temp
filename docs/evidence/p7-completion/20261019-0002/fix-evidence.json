@@ -1,0 +1,40 @@
+{
+  "task": "P-7 evidence-path mapping repair",
+  "head": "487b226b905ecaa64241fef2f529357f52090fe2",
+  "command": "node --test tools/stats.test.js tools/spotcheck.test.js",
+  "raw_output": "targeted-tests.log",
+  "exit_code": 0,
+  "totals": {
+    "stats_test": 11,
+    "spotcheck_test": 11,
+    "tests": 22,
+    "pass": 22,
+    "fail": 0
+  },
+  "tests_added": {
+    "stats_test": 9,
+    "spotcheck_test": 9,
+    "basis": "AUD verified prior spotcheck delta +8; this patch adds one test (INTERCOM.md:670)"
+  },
+  "node_check": {
+    "command": "node --check tools/spotcheck.js",
+    "exit_code": 0
+  },
+  "secret_pattern_scan": {
+    "files": [
+      "tools/spotcheck.js",
+      "tools/spotcheck.test.js"
+    ],
+    "hits": 0
+  },
+  "sha256": {
+    "tools/spotcheck.js": "2ccc551751df81a8693d715b4d34c6b25a1a6238360307d0691d9edfd9991386",
+    "tools/spotcheck.test.js": "e4b51b359f86e50f22c013029648eb9781f62b802279033040d30c0cb74ae893",
+    "docs/evidence/p7-completion/20261019-0002/targeted-tests.log": "630db501cfa3fe626b4da060d611603f2e4bc66097bc7acc63a69175c850fd77"
+  },
+  "retained_archive_gate": {
+    "status": "UNMET",
+    "evidence": "../20261019-0001/archive_inventory.csv",
+    "reason": "0 compatible P-1 manifest/report pairs; do not generate SPOTCHECK.csv from synthetic data"
+  }
+}

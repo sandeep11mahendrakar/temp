@@ -1,0 +1,48 @@
+{
+  "snapshot_ist": "2026-10-19 17:23 IST",
+  "source": "owner-forwarded repair completion named R3 by worker; distinct SUB R4 request to avoid prior R3 ambiguity",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "revision": "2f8c2e54ecb4e964343d9fc24fbb36a70b65949c8fb080aaee098ef752f170a0",
+  "files": [
+    {
+      "path": "docs/DB_COMPLETION_REPORT.md",
+      "sha256": "b7777a9043aca38bf4dd59f544b3c90975050af58fea23120a5e5457ad4b300e"
+    },
+    {
+      "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+      "sha256": "5526efa6fe4046f6eb51250c7807ca0cde328cad624c64c806fc58f502c7bc04"
+    },
+    {
+      "path": "docs/TRIAL_CHECKPOINT_RESUME_GAP.md",
+      "sha256": "028dcec51bc7e79ca95194eb1a00f014f4ee986a8f878b9492e7b00c873bdbd8"
+    },
+    {
+      "path": "tools/runArchive.js",
+      "sha256": "1692d5d2dde8d08622a43b69a1ede369c4c203a9c11083ef366abb4e971e0393"
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "sha256": "249976226bb70b65634a79ee96200668622b7bcab2a3f9bd7b069b55f0f314ab"
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "sha256": "4aeaad1466b08a07b42aa3036f848c43f91ef4c3302c086461da1e8925cade0c"
+    },
+    {
+      "path": "tools/trialReport.js",
+      "sha256": "34eb30e784f9258a814bdcb4f495832cc2878b3898f0084a404ca7f3b24ea863"
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "sha256": "d11a13824020075d034eafdd6a9ebc5b5cce1f5de735f893c25507d53b896974"
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "sha256": "582a467cc021aa844e2e3bb19aabc862c3e616bde555160c647a42a502203224"
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "sha256": "dadb09585e94bf68460c2480f2c8961fd7582becf1f5297bb592bbf01703ebb5"
+    }
+  ]
+}

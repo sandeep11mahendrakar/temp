@@ -1,0 +1,47 @@
+{
+  "snapshot_ist": "2026-10-19 19:17:45 IST",
+  "source": "SUB implements directly authorized bounded P59 repairs; AUD-1 independent",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "revision": "3a48a5eb5d5f07ccc02c28435b0aaaa54bb2c6b769cf54e6dc6ac6d75cc11715",
+  "files": [
+    {
+      "path": "database/TV1_Diagnostics_R3.sql",
+      "sha256": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d"
+    },
+    {
+      "path": "database/r3_companion.sql",
+      "sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6"
+    },
+    {
+      "path": "docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md",
+      "sha256": "3eb5a850d93e1f62a2919cf0d556cac2ec2d12760a35b325dfc32f2d952e001f"
+    },
+    {
+      "path": "docs/TV1_R3_OFFLINE_RUNBOOK.md",
+      "sha256": "7a10516a3954d2fc79f69dd13876f052d0363ed877fc1294b109b8e96d649740"
+    },
+    {
+      "path": "tools/.tv1-runtime/package-lock.json",
+      "sha256": "3b0aacaecd8b6d08ce889f37cffdcf1da93c4c6a0c722c16768aaec29d83220f"
+    },
+    {
+      "path": "tools/tv1LocalRunner.js",
+      "sha256": "b834d105e6097fefe8a0b827f1b18f639d11c7d8386a08d57a1e07744b07f5b0"
+    },
+    {
+      "path": "tools/tv1LocalRunner.test.js",
+      "sha256": "432bc1856d877b0400ce21c1e43e85edd739de026ae1943479e230ff031f119f"
+    }
+  ],
+  "checks": "docs/evidence/tv1-runner-review/20261019191745-sub-r5/CHECKS.json",
+  "test_evidence": "docs/evidence/tv1-runner-review/20261019191745-sub-r5/controls",
+  "tests_added": {
+    "tools/tv1LocalRunner.test.js": 14
+  },
+  "limitations": [
+    "Local synthetic fixtures, not hosted TV1",
+    "Metadata scope and seeded fixture rows only",
+    "Windows sandbox temp remapping aborts PGlite reopen; approved local execution required",
+    "Close/rollback/notice faults explicitly injected; no real OS close failure claimed"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "kind": "custodial-recovery-snapshot",
+  "recorded_at_IST": "2026-10-19 09:36:01",
+  "original_author": "UNIDENTIFIED",
+  "custodian": "MASTER:CODEX",
+  "head": "487b226b905ecaa64241fef2f529357f52090fe2",
+  "scope_status": "?? tools/trialUploader.js\n?? tools/trialUploader.test.js\n",
+  "files": [
+    {
+      "path": "tools/trialUploader.js",
+      "snapshot": "trialUploader.js",
+      "bytes": 9380,
+      "sha256": "156f0efad2c5ae939d5f1ff0d4c2391d4038a84c8f64756f27067a5bfe2fc871"
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "snapshot": "trialUploader.test.js",
+      "bytes": 8616,
+      "sha256": "b8b530c1b0fd699d57d397c1b03d4b1132efa54fd76b6fcd7feee980958eb0de"
+    }
+  ],
+  "tracked_diff": "tracked.diff",
+  "note": "Untracked files may have empty tracked diff; preserved full bytes define inherited baseline. No original-author release or independent acceptance claimed."
+}

@@ -1,0 +1,6 @@
+{
+  "sample_class": "clean",
+  "run": { "id": "sample-clean", "source": "schema-fixture" },
+  "result": { "verdict": "PASS" },
+  "cases": [{ "id": "CLEAN-1", "verdict": "PASS", "tc_source": "fixture", "label": "ASSISTED", "block": null, "evid_paths": ["evidence.txt"] }]
+}

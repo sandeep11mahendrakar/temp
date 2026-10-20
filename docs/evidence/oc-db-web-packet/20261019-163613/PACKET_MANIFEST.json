@@ -1,0 +1,220 @@
+{
+  "snapshot_ist": "2026-10-19 16:36 IST",
+  "purpose": "offline OC-DB review only",
+  "files": [
+    {
+      "path": ".agents/skills/project-auditor/SKILL.md",
+      "sha256": "d5282eae8ebb1208bf42c0a4765bda3aed0e2d427a458ac18292afeaaf24c769",
+      "bytes": 3447
+    },
+    {
+      "path": ".agents/skills/project-context/SKILL.md",
+      "sha256": "e4711b0fbdd0835aa3667b4e65d5935cbb7b5ae45ec3add24dd1b4cfa653a466",
+      "bytes": 3115
+    },
+    {
+      "path": ".agents/skills/project-intercom/SKILL.md",
+      "sha256": "a7b61e049e1398c24fae5842815b397d550f6a0166a930585cbce4c8d4482499",
+      "bytes": 3758
+    },
+    {
+      "path": ".agents/skills/project-submaster/SKILL.md",
+      "sha256": "de174e532d7a669297228105f7eadd861b45a50fa042214adf691d459e5ab8b6",
+      "bytes": 4045
+    },
+    {
+      "path": ".agents/skills/project-taskboard/SKILL.md",
+      "sha256": "a58e2c845a9f84a340aa22c8c5a64eca1b4ce13c66c211daf3ca12103d657eea",
+      "bytes": 2995
+    },
+    {
+      "path": ".agents/skills/project-worker/SKILL.md",
+      "sha256": "7cbf91cf11993312c24e43d6676a5fcda5e381c1cfbbe791b5895e2121cd2ce3",
+      "bytes": 4331
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "5e471a0614266c0f770b14b4160c9ad08d834034d8e94ae3b8e32794b51b982d",
+      "bytes": 4043
+    },
+    {
+      "path": "CODEX_PROJECT_MEMORY.md",
+      "sha256": "23025e2b8de4036964a23545ba34f0443556684198c16f77e13a30abbe3763ed",
+      "bytes": 6689
+    },
+    {
+      "path": "database/r3_companion.sql",
+      "sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+      "bytes": 5702
+    },
+    {
+      "path": "database/r3_companion.test.sql",
+      "sha256": "ee4e5e64c119b33efcd2e27599770fd3fa39b8a211e237fb9c776eb0956eaa59",
+      "bytes": 12836
+    },
+    {
+      "path": "database/r3_companion_step0_negative.sql",
+      "sha256": "a7f362deef94ba8a1a57a6346fa19201cfe6cf950ea13457956f054a4209a3c6",
+      "bytes": 5367
+    },
+    {
+      "path": "database/r3_companion_step0_plan.md",
+      "sha256": "f73cf66557666050378ddbb33bf8221bb1aaffb2a84284ab67c142bf9cfb791e",
+      "bytes": 1307
+    },
+    {
+      "path": "database/r3_companion_step0_readback.sql",
+      "sha256": "a02ce37c8dbe972d0a62b052d05e74b64b6604f1fb346068547fa2cba1ccf56a",
+      "bytes": 6859
+    },
+    {
+      "path": "database/r3_companion_step0_rollback.sql",
+      "sha256": "c37b45e71d5188ddbc9aa6a12a94ec5d7a5ff514b08b025e956ad209729e6167",
+      "bytes": 679
+    },
+    {
+      "path": "docs/BLOCKER_CLEARANCE_HANDOFF_20261019.md",
+      "sha256": "4eab1750ae0b3bba0156d086d3b9bab13d6217d20cc0724ade678c7601bc822a",
+      "bytes": 21428
+    },
+    {
+      "path": "docs/DB5_STEP0_RUNBOOK.md",
+      "sha256": "4c8c273b121dadf6307407ca60f06a19a9a8ddae880e877bb000dddbbec7975c",
+      "bytes": 1041
+    },
+    {
+      "path": "docs/DB_FIELD_MAP.md",
+      "sha256": "24f06c355366b32ef913eb36d9f4c82c2eca6e5b832c6997fcb2afcda80916ad",
+      "bytes": 4698
+    },
+    {
+      "path": "docs/DB_SERVER_UPLOAD.md",
+      "sha256": "47ca99f7b52d9b426887ea1feef1328f1cad4b0a73dbe962f30710f98c5037e4",
+      "bytes": 7684
+    },
+    {
+      "path": "docs/DB_SQL_REVIEW.md",
+      "sha256": "0bf1e9dbfa899b2dbd276a2e14749dbcaeab8fc53308bb2752a2c06eceb0301e",
+      "bytes": 3383
+    },
+    {
+      "path": "docs/INTERCOM.md",
+      "sha256": "660f8bd8b7f22a9cb696f7ba88a98a1bc9354b1976d6f65c63eddeccd3315dde",
+      "bytes": 287709,
+      "source_sha256": "32449ed69e765c589ec285c15511156497ae6d70a16328f05b502e00ed71b125",
+      "source_bytes": 287673,
+      "export_transform": "redact_public_demo_passwords_v1"
+    },
+    {
+      "path": "docs/TASK_BOARD.md",
+      "sha256": "1bda3b654b4116cd99286b1241900973b4fdb2df7f8a4b691e2715a6baba4ecb",
+      "bytes": 701594
+    },
+    {
+      "path": "docs/TV1_CHECKLIST.md",
+      "sha256": "cf5b38645d0993cc67be7ff30c1e27b0698b4e837403d1b3a12c75a2990e5edf",
+      "bytes": 5983
+    },
+    {
+      "path": "docs/WORKER_ASSIGNMENT_TEMPLATE.md",
+      "sha256": "4f5c26b20cfe60c790b9f44099f1e8b6782675ba689227c31ecf74da8afb3152",
+      "bytes": 2625
+    },
+    {
+      "path": "docs/evidence/oc-db-web-packet/20261019-163613/R6_ACCEPTED_REFERENCES.md",
+      "sha256": "cb58beedd7fa1ac246071ff60e25c4659103338d5ad830269c5bc43f576b6102",
+      "bytes": 6028
+    },
+    {
+      "path": "docs/evidence/oc-db-web-packet/20261019-163613/REVIEW_CONTEXT.md",
+      "sha256": "913dabb8a7a8e13682cd340b1711e23487941d607fc7d494ba4f72de89194ccb",
+      "bytes": 1573
+    },
+    {
+      "path": "tools/r3DbContract.js",
+      "sha256": "6e8c750dc4245b7d779b066c0be2455629744804dfebc8a50eda21806db8ee7f",
+      "bytes": 13228
+    },
+    {
+      "path": "tools/r3DbContract.test.js",
+      "sha256": "91b12a3dd068634fcd60729444f459eafe6896a884afc27b01111f9344d64eb2",
+      "bytes": 6286
+    }
+  ],
+  "r6": {
+    "aggregate": "9fe071c560826b4cf4e578cda619e66f9aa685edf72245806b20cc3dd1352def",
+    "files": [
+      {
+        "path": "database/r3_companion_step0_negative.sql",
+        "published_sha256": "a7f362deef94ba8a1a57a6346fa19201cfe6cf950ea13457956f054a4209a3c6",
+        "actual_sha256": "a7f362deef94ba8a1a57a6346fa19201cfe6cf950ea13457956f054a4209a3c6",
+        "match": true
+      },
+      {
+        "path": "database/r3_companion_step0_plan.md",
+        "published_sha256": "f73cf66557666050378ddbb33bf8221bb1aaffb2a84284ab67c142bf9cfb791e",
+        "actual_sha256": "f73cf66557666050378ddbb33bf8221bb1aaffb2a84284ab67c142bf9cfb791e",
+        "match": true
+      },
+      {
+        "path": "database/r3_companion_step0_readback.sql",
+        "published_sha256": "a02ce37c8dbe972d0a62b052d05e74b64b6604f1fb346068547fa2cba1ccf56a",
+        "actual_sha256": "a02ce37c8dbe972d0a62b052d05e74b64b6604f1fb346068547fa2cba1ccf56a",
+        "match": true
+      },
+      {
+        "path": "database/r3_companion_step0_rollback.sql",
+        "published_sha256": "c37b45e71d5188ddbc9aa6a12a94ec5d7a5ff514b08b025e956ad209729e6167",
+        "actual_sha256": "c37b45e71d5188ddbc9aa6a12a94ec5d7a5ff514b08b025e956ad209729e6167",
+        "match": true
+      },
+      {
+        "path": "docs/DB5_STEP0_RUNBOOK.md",
+        "published_sha256": "4c8c273b121dadf6307407ca60f06a19a9a8ddae880e877bb000dddbbec7975c",
+        "actual_sha256": "4c8c273b121dadf6307407ca60f06a19a9a8ddae880e877bb000dddbbec7975c",
+        "match": true
+      }
+    ]
+  },
+  "migration": {
+    "path": "database/r3_companion.sql",
+    "current_sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "git_commit": "c8baedf72f7edfafa11a9faa6cda6b353a529a7a",
+    "git_blob_sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "matches_reviewed_commit": true,
+    "audit_ref": "docs/AUDIT.jsonl:103",
+    "scope": "historical DB-2 isolated SQL acceptance; no hosted apply acceptance"
+  },
+  "checklist": {
+    "file_sha256": "cf5b38645d0993cc67be7ff30c1e27b0698b4e837403d1b3a12c75a2990e5edf",
+    "aggregate": "7c081ec420dcb8e20af95254dddefd98fcb00ea70ca7c714c6eab6dead284901",
+    "review_status": "pending independent review"
+  },
+  "credential_pattern_counts": {
+    "google": 0,
+    "supabase": 0,
+    "jwt": 0,
+    "other": 0,
+    "bearer": 0,
+    "private_key": 0,
+    "url_credentials": 0
+  },
+  "redactions": [
+    {
+      "path": "docs/INTERCOM.md",
+      "count": 3,
+      "source_lines": [
+        1176,
+        1176,
+        1301
+      ],
+      "replacement": "[REDACTED_DEMO_PASSWORD]"
+    }
+  ],
+  "hosted_tv1_acceptance": false,
+  "additional_credential_scan_counts": {
+    "password_assignment": 0,
+    "exported_demo_passwords": 0
+  },
+  "export_note": "Only ZIP copies of listed docs have public-demo passwords redacted. Repository sources are unchanged; SQL/R6 sources remain exact original bytes."
+}

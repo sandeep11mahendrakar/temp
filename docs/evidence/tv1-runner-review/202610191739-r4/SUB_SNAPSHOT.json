@@ -1,0 +1,51 @@
+{
+  "snapshot_ist": "2026-10-19 17:39 IST",
+  "source": "owner-forwarded completed notice-capture submission; fresh request after prior stale pin",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "revision": "318953493432a8a37148ae543d27a07f278f5dcbf15b5b81e4661e6acd296914",
+  "files": [
+    {
+      "path": "database/TV1_Diagnostics_R3.sql",
+      "sha256": "08d88b9125a8269131c0bd2d0f7125164d791d10cc8e0e3dd8bc1f3933b76723"
+    },
+    {
+      "path": "database/r3_companion.sql",
+      "sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6"
+    },
+    {
+      "path": "docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md",
+      "sha256": "ff0398bd9637e0f78d79f141adb5594fbe5ba094584e9639502f6ec43e70af92"
+    },
+    {
+      "path": "docs/TV1_R3_OFFLINE_RUNBOOK.md",
+      "sha256": "ec158626d0e1e619e57518da06850cacdedf11ed35c9bf2a6b26ab0796cb6a31"
+    },
+    {
+      "path": "docs/evidence/tv1-r3/oc-trial-20261019/notices.json",
+      "sha256": "600e4f57af9d1ad3d8b9d18c43ba3f2e41290cd96c88260631ee7149d9564fa0"
+    },
+    {
+      "path": "docs/evidence/tv1-r3/oc-trial-20261019/results.json",
+      "sha256": "118eedce70f1961d13d97a2871ad3d0867320137e9cec3462ef3e509b4fc14fa"
+    },
+    {
+      "path": "docs/evidence/tv1-r3/oc-trial-20261019/run.json",
+      "sha256": "1514d87c17b39efe2ff0f47f485c500ef2520415a975b88b66d244ec0630e0f8"
+    },
+    {
+      "path": "tools/tv1LocalRunner.js",
+      "sha256": "39ec083ba07e61c4d06a522471c3538149799b6347302bfff17e41e5f3c0f34c"
+    },
+    {
+      "path": "tools/tv1LocalRunner.test.js",
+      "sha256": "0cd41cc05ca4bf8dc06fa7333fe2e1b8b8deb368ed84bad5158b37765fe66db7"
+    }
+  ],
+  "sub_findings": [
+    "Current results.json omits SQL rows: db.exec returns arrays, not command/affectedRows on array",
+    "Tests cover parseArgs only; no genuine failure/rollback/close controls",
+    "SQL post-rollback uses constant empty team CTE; no real inventory/fingerprint equality",
+    "Runtime version is hardcoded; require actual runtime query"
+  ],
+  "status": "P59 incomplete; independent review requested, not acceptance"
+}

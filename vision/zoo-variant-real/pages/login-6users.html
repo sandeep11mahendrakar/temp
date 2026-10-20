@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head>
+<link rel="stylesheet" href="/real.css"><title>zoo login 6 users</title></head>
+<body>
+<h1 id="page-title">Login</h1>
+<label for="u">User</label><input id="u" type="text" value="">
+<label for="p">Pass</label><input id="p" type="password" value="">
+<button id="login-btn" type="button">Login</button>
+<p id="login-echo"></p>
+<script>
+var USERS = { standard_user: 'ok', problem_user: 'ok', performance_user: 'ok', error_user: 'ok', visual_user: 'ok', locked_out_user: 'locked' };
+document.getElementById('login-btn').addEventListener('click', function () {
+  var u = document.getElementById('u').value;
+  var p = document.getElementById('p').value;
+  var echo = document.getElementById('login-echo');
+  if (!u || !p) { echo.textContent = 'Epic sadface: Username and password are required'; return; }
+  if (!(u in USERS)) { echo.textContent = 'Epic sadface: Username and password do not match'; return; }
+  if (USERS[u] === 'locked') { echo.textContent = 'Epic sadface: Sorry, this user has been locked out'; return; }
+  echo.textContent = 'Welcome ' + u + ' to inventory';
+});
+</script>
+</body></html>

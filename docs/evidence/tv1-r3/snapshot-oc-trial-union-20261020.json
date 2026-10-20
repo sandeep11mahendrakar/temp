@@ -1,0 +1,69 @@
+{
+  "schema": "tv1run-custody-check/union-supplement-v1",
+  "generated_ist": "2026-10-20",
+  "author": "worker (Lane B TV1-CUSTODY-CHECK), non-author of R2",
+  "supplements": [
+    "docs/evidence/tv1-r3/snapshot-oc-trial-20261020-r2.md",
+    "docs/evidence/tv1-runner-review/20261019193033-sub-r6/SUB_SNAPSHOT.json"
+  ],
+  "originals_untouched": true,
+  "recipe": "sorted path|sha256hex LF-join, no terminal LF",
+  "path_count": 10,
+  "provenance_groups": {
+    "common_5": [
+      "database/TV1_Diagnostics_R3.sql",
+      "docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md",
+      "docs/TV1_R3_OFFLINE_RUNBOOK.md",
+      "tools/tv1LocalRunner.js",
+      "tools/tv1LocalRunner.test.js"
+    ],
+    "r2_only_3": [
+      "docs/evidence/tv1-r3/oc-trial-20261019/notices.json",
+      "docs/evidence/tv1-r3/oc-trial-20261019/results.json",
+      "docs/evidence/tv1-r3/oc-trial-20261019/run.json"
+    ],
+    "r6_only_2": [
+      "database/r3_companion.sql",
+      "tools/.tv1-runtime/package-lock.json"
+    ]
+  },
+  "files": [
+    { "path": "database/TV1_Diagnostics_R3.sql", "sha256": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d", "in_r2": true, "in_r6": true },
+    { "path": "database/r3_companion.sql", "sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6", "in_r2": false, "in_r6": true },
+    { "path": "docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md", "sha256": "3eb5a850d93e1f62a2919cf0d556cac2ec2d12760a35b325dfc32f2d952e001f", "in_r2": true, "in_r6": true },
+    { "path": "docs/TV1_R3_OFFLINE_RUNBOOK.md", "sha256": "7a10516a3954d2fc79f69dd13876f052d0363ed877fc1294b109b8e96d649740", "in_r2": true, "in_r6": true },
+    { "path": "docs/evidence/tv1-r3/oc-trial-20261019/notices.json", "sha256": "600e4f57af9d1ad3d8b9d18c43ba3f2e41290cd96c88260631ee7149d9564fa0", "in_r2": true, "in_r6": false },
+    { "path": "docs/evidence/tv1-r3/oc-trial-20261019/results.json", "sha256": "118eedce70f1961d13d97a2871ad3d0867320137e9cec3462ef3e509b4fc14fa", "in_r2": true, "in_r6": false },
+    { "path": "docs/evidence/tv1-r3/oc-trial-20261019/run.json", "sha256": "1514d87c17b39efe2ff0f47f485c500ef2520415a975b88b66d244ec0630e0f8", "in_r2": true, "in_r6": false },
+    { "path": "tools/.tv1-runtime/package-lock.json", "sha256": "3b0aacaecd8b6d08ce889f37cffdcf1da93c4c6a0c722c16768aaec29d83220f", "in_r2": false, "in_r6": true },
+    { "path": "tools/tv1LocalRunner.js", "sha256": "cc6fa9cc5f50cb71331dc11d9cde119bc7a988f411030dfaa1e591ffde72bae8", "in_r2": true, "in_r6": true },
+    { "path": "tools/tv1LocalRunner.test.js", "sha256": "5eb7c48d183b5841fcb300992ae4c178d37e27ff192e62ce8eb93a5abf5d7209", "in_r2": true, "in_r6": true }
+  ],
+  "aggregate": "eba0c237da54c90b66e07eb0f350f6d83634b4efeac4ca516b99b1b696012ca7",
+  "source_verification": {
+    "r2_aggregate_verified": true,
+    "r2_stated_aggregate": "c367dac8c2a5d1f96a08ae79e3fb50ac2be79df699520d3e96da1b27cc83392e",
+    "r2_all_current_bytes_match": true,
+    "r6_all_current_bytes_match": true,
+    "union_all_current_bytes_match": true
+  },
+  "observed_drift": [
+    "tools/visionTrialExecutor.test.js sha256 changed from LEDGER recorded 9a1d2da52542f701af57eba6c28106c0a7961938aa0903253013fd573dc4015f to current 5e77aba302ed080f1c2fb463d60810cab2acdde9565be04f15bfeab1b0be83fc (AUD-2 manual fix 6, test hash 5e77aba302ed; dated source change, not a defect).",
+    "LEDGER recorded current_runtime for tools/tv1LocalRunner.test.js = 16 vs static_test_calls = 14; runtime vs static discrepancy already documented in LEDGER (node --test counts nested tests). Not a defect."
+  ],
+  "baseline_verification": {
+    "ledger_files_total": 20,
+    "ledger_tracked": 2,
+    "ledger_untracked": 18,
+    "hash_mismatches": 1,
+    "hash_mismatch_files": ["tools/visionTrialExecutor.test.js"],
+    "missing_files": 0,
+    "checks_files_listed": 20,
+    "visionConfigPreflight_focused_test": { "tests": 8, "pass": 8, "fail": 0, "exit": 0 }
+  },
+  "limits": [
+    "No hosted RLS/view/duplicate evidence; local self-check only.",
+    "R2 scope drop (r3_companion.sql + package-lock.json) remains owner-unconfirmed; this supplement does not claim hosted acceptance.",
+    "AUD-2 cannot independently accept their own authored artifacts; verification only."
+  ]
+}

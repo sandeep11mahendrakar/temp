@@ -1,0 +1,48 @@
+{
+  "snapshot_ist": "2026-10-19 17:04 IST",
+  "source": "owner-forwarded report; SUB-pinned current ten-file bytes",
+  "recipe": "sorted path|sha256hex LF-join no terminal LF",
+  "revision": "e08a1ec5fefde4a427414b647d4083bfd13df937d0ce47aef1a63cdf22a7559a",
+  "files": [
+    {
+      "path": "docs/DB_COMPLETION_REPORT.md",
+      "sha256": "eb15db302348069c0fae15527b616058ffd03fda9152827e0c30edf821400eab"
+    },
+    {
+      "path": "docs/TRIAL_ARTIFACT_ADAPTER_BLOCKER.md",
+      "sha256": "c7a9423e8ccda57156c45603eeca99fcbe5eebb385230c73a7e4a0446d4ddd71"
+    },
+    {
+      "path": "docs/TRIAL_CHECKPOINT_RESUME_GAP.md",
+      "sha256": "028dcec51bc7e79ca95194eb1a00f014f4ee986a8f878b9492e7b00c873bdbd8"
+    },
+    {
+      "path": "tools/runArchive.js",
+      "sha256": "1692d5d2dde8d08622a43b69a1ede369c4c203a9c11083ef366abb4e971e0393"
+    },
+    {
+      "path": "tools/trialArtifacts.js",
+      "sha256": "c545f6382a74c122e8f656b2b5dd14b388e9b686b627e7dd66e2eb29b34ee3de"
+    },
+    {
+      "path": "tools/trialArtifacts.test.js",
+      "sha256": "4aeaad1466b08a07b42aa3036f848c43f91ef4c3302c086461da1e8925cade0c"
+    },
+    {
+      "path": "tools/trialReport.js",
+      "sha256": "34eb30e784f9258a814bdcb4f495832cc2878b3898f0084a404ca7f3b24ea863"
+    },
+    {
+      "path": "tools/trialReport.test.js",
+      "sha256": "d11a13824020075d034eafdd6a9ebc5b5cce1f5de735f893c25507d53b896974"
+    },
+    {
+      "path": "tools/trialUploader.js",
+      "sha256": "e4e075dd44bcbfbf4bd0f15de67c41106669d7c6c1e7d06afba6e7ecf7503da2"
+    },
+    {
+      "path": "tools/trialUploader.test.js",
+      "sha256": "dadb09585e94bf68460c2480f2c8961fd7582becf1f5297bb592bbf01703ebb5"
+    }
+  ]
+}

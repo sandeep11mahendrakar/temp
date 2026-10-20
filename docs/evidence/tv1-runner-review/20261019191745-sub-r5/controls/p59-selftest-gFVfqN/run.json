@@ -1,0 +1,62 @@
+{
+  "started": "2026-10-19T13:48:11.012Z",
+  "mode": "LOCAL_ISOLATED",
+  "expectedBaseline": "zero",
+  "fixtureBaseline": "zero",
+  "testFault": "fingerprint",
+  "source_sha256": {
+    "migration": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "diagnostic": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d"
+  },
+  "runtime": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit",
+    "role": "postgres",
+    "pglite": "0.5.10"
+  },
+  "baseline": {
+    "objects_n": 0,
+    "names": [],
+    "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "postcheck": {
+    "inventory": {
+      "objects_n": 1,
+      "names": [
+        "unexpected_drift"
+      ],
+      "fingerprint": "0b8839a79ec1ff93168a6da4f85f5ace"
+    },
+    "fixture_count": 0,
+    "same_baseline": false,
+    "same_team_rows": true,
+    "fresh_connection": true
+  },
+  "rollback": {
+    "attempted": true,
+    "ok": true
+  },
+  "close": {
+    "attempted": true,
+    "closed": true,
+    "ok": true
+  },
+  "exit": 1,
+  "postcheck_closed": true,
+  "ended": "2026-10-19T13:48:16.764Z",
+  "errors": [
+    {
+      "stage": "execution",
+      "message": "PREFLIGHT/BASELINE measured catalog differs from approved local expectation",
+      "code": "P0001",
+      "constraint": null
+    },
+    {
+      "stage": "fresh-postcheck",
+      "message": "FRESH_POSTCHECK baseline/rows/fixtures differ",
+      "code": null,
+      "constraint": null
+    }
+  ],
+  "cases": [],
+  "noticeCount": 0
+}

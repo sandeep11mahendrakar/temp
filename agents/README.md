@@ -1,4 +1,5 @@
 ARCHIVED 2026-10-18 => superseded by .agents/skills/* (Codex migration); do not reorganize history.
+ACTIVE SKILLS => `.agents/skills/`; `agents/` is legacy context/pointers, not a second active role tree. Follow current `AGENTS.md` and live board/intercom.
 
 # agents/ — agent coordination memory (read this first)
 

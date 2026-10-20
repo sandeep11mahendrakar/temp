@@ -1,0 +1,27 @@
+{
+  "runtime": "v24.18.0",
+  "files": [
+    {
+      "path": "tools/intercomEnvelope.js",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "tools/intercomEnvelope.test.js",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "tools/intercomInbox.js",
+      "exists": true,
+      "sha256": "4eb2aade78bcad51dee99bd6e147599017437b553665d20aff744ef8394508a2"
+    },
+    {
+      "path": "tools/intercomInbox.test.js",
+      "exists": true,
+      "sha256": "1832464eaf1f73e4e3e41552b28be5f9855a008937dbe9924f83fc77a5883468"
+    }
+  ],
+  "command": "node --test tools/intercomInbox.test.js",
+  "exit": 0
+}

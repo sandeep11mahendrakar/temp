@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "path": "database/TV1_Diagnostics_R3.sql",
+      "match": true,
+      "secret_value_matches": 0
+    },
+    {
+      "path": "database/r3_companion.sql",
+      "match": true,
+      "secret_value_matches": 0
+    },
+    {
+      "path": "docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md",
+      "match": true,
+      "secret_value_matches": 0
+    },
+    {
+      "path": "docs/TV1_R3_OFFLINE_RUNBOOK.md",
+      "match": true,
+      "secret_value_matches": 0
+    },
+    {
+      "path": "tools/.tv1-runtime/package-lock.json",
+      "match": true,
+      "secret_value_matches": 0
+    },
+    {
+      "path": "tools/tv1LocalRunner.js",
+      "match": true,
+      "secret_value_matches": 0
+    },
+    {
+      "path": "tools/tv1LocalRunner.test.js",
+      "match": true,
+      "secret_value_matches": 0
+    }
+  ],
+  "secret_scan_scope": "value-shaped patterns on all seven tracked/untracked pinned files; marker names in SQL are not secrets",
+  "remote_exit": 0,
+  "remote_empty": true,
+  "diff_check_exit": 0,
+  "diff_check_stdout": "",
+  "diff_check_stderr": "warning: in the working copy of '.agents/skills/project-auditor/SKILL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of '.agents/skills/project-master/SKILL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of '.agents/skills/project-submaster/SKILL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of '.agents/skills/project-worker/SKILL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'AGENTS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'CODEX_PROJECT_MEMORY.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'agents/README.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'agents/skills/INTERCOM_SKILL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'agents/skills/TASKBOARD_SKILL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/AUDIT.jsonl', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/CLAIMS_MATRIX.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/DB_FIELD_MAP.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/FINAL_EVAL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/FINAL_STATE.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/INTERCOM.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/R3_RESULTS.jsonl', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/SUGGESTIONS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/VERIFIER_PROMPT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/WORKER_ASSIGNMENT_TEMPLATE.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/WORKER_PROMPT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tools/Search-ProjectContext.ps1', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tools/campaignTable.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tools/r3DbContract.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tools/r3DbContract.test.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'vision/storage/outputs/g2z_results.json', LF will be replaced by CRLF the next time Git touches it\n"
+}

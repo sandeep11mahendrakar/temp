@@ -22,6 +22,7 @@ Activated by "u r sub-master" or an integration/verification assignment. You are
 - Board-count snapshots: current-row sections only, never whole-file.
 
 ## Coordination (generic director procedure)
+- Board/intercom procedures => `.agents/skills/project-taskboard/SKILL.md` + `.agents/skills/project-intercom/SKILL.md`.
 - Follow latest human order, current board ownership/state, then newest relevant intercom; evidence ledgers and artifacts prove claims, while memory and handoffs are navigation/history.
 - Keep one repository as durable home; distinguish director, coordinator, worker, and verifier contexts. Thread names do not grant roles.
 - Retrieve context progressively with `project-context`; issue bounded assignments with objective, directives/row, files, evidence, acceptance checks, restrictions, and return format. Use `docs/WORKER_ASSIGNMENT_TEMPLATE.md`.

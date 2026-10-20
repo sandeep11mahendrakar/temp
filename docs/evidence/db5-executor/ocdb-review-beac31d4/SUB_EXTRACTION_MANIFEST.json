@@ -1,0 +1,38 @@
+{
+  "zip_sha256": "beac31d4f8d5aa060dc8d330aa12a097855dba33e8430ff39e874c8b0b579751",
+  "status": "review-only unexecuted",
+  "files": [
+    {
+      "path": "ocdb_hosted_executor_review/FILE_SHA256_MANIFEST.txt",
+      "sha256": "55a17b0d30f0ad4994bb6b23a7e6620faaa200d5841caf3652efa29b10628320"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/SQL_SUBCASE_EXPECTED_MATRIX_PROVISIONAL.md",
+      "sha256": "624ac5707c4d63b27d9a4c61f573864c222a8358485447032a1015c2f9f8c085"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/CASE_PLAN_TEMPLATE_NOT_APPROVED.json",
+      "sha256": "910629214bb84728e0415aceac83c099451bbe896f21a3aa8fd17f604686513e"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/README_REVIEW_ONLY.md",
+      "sha256": "18f25b13f769378843461402909ec94d67534b491e8dee6ca0518d6a7ec98170"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/RELEASE_TEMPLATE_NOT_APPROVED.json",
+      "sha256": "77cbc6676609d08f8ab7676a22b5e40ef0668000796d947de81f370faba7a783"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/OFFLINE_FAKE_TEST_OUTPUT.txt",
+      "sha256": "c662d75b4f7959bc08261411138f825b02d259efebe733e3c6da8e9c2c84ab82"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/ocdb_hosted_executor.py",
+      "sha256": "2daa6544afaf48bbe6293caefdac4308402ef107ff694765202b435da9e4c38f"
+    },
+    {
+      "path": "ocdb_hosted_executor_review/test_ocdb_hosted_executor.py",
+      "sha256": "3d699a8c3984e147e73875f98e20d5814180505db9c99ec03dc869365cbbe5c2"
+    }
+  ]
+}

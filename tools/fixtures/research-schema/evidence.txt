@@ -1,0 +1,1 @@
+Synthetic schema-validation fixture evidence. Not a live site run.

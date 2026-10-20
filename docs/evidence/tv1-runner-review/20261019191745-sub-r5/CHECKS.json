@@ -1,0 +1,27 @@
+{
+  "ist": "2026-10-19 19:17:45 IST",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test",
+    "tools/tv1LocalRunner.test.js"
+  ],
+  "exit_code": 0,
+  "stdout": "✔ parse explicit profiles and reject unknown flags (4.0436ms)\n✔ missing expected inventory and remote mode reject before database/evidence creation (188.5109ms)\n✔ POS actual SQL zero fixture preserves baseline and rows after rollback and reopening (6988.1916ms)\n✔ POS actual SQL six fixture preserves baseline and rows after rollback and reopening (6532.6571ms)\n✔ NEG approved zero inventory mismatches actual six before diagnostic writes (5880.0221ms)\n✔ NEG approved six inventory mismatches actual zero before diagnostic writes (5849.6052ms)\n✔ NEG real catalog fingerprint drift is detected, not treated as empty (6143.9197ms)\n✔ NEG actual rls capability defect fails for intended reason (6062.6525ms)\n✔ NEG actual invoker capability defect fails for intended reason (5587.2137ms)\n✔ NEG actual trigger capability defect fails for intended reason (5973.4316ms)\n✔ NEG actual role capability defect fails for intended reason (6135.6573ms)\n✔ NEG error after four real fixture inserts rolls back and closes before fresh verification (5477.5618ms)\n✔ NEG notice-capture failure rolls back and closes without fabricated PASS (5545.5687ms)\n✔ NEG rollback failure preserves original SQL error; close still aborts and fresh postcheck runs (6084.0686ms)\n✔ NEG close failure is retained as failure even after actual close (5680.5557ms)\n✔ NEG preexisting diagnostic IDs refused and retained, never cleaned as owned new rows (5602.7852ms)\nℹ tests 16\nℹ suites 0\nℹ pass 16\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 84046.4538\n",
+  "stderr": "",
+  "error": null,
+  "syntax": [
+    {
+      "path": "tools/tv1LocalRunner.js",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "tools/tv1LocalRunner.test.js",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "environment": "Approved local execution; fresh persisted PGlite databases; mock fault hooks labelled; no remote actions"
+}

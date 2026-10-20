@@ -1,0 +1,220 @@
+{
+  "schema": "tests-added-baseline-checks/v2",
+  "repo_head": "487b226b905ecaa64241fef2f529357f52090fe2",
+  "generated_ist": "2026-10-19 23:11:31 IST",
+  "commands": [
+    "node --test tools/credPreflight.test.js",
+    "node --test tools/intercomInbox.test.js",
+    "node --test tools/preflight.test.js",
+    "node --test tools/r3DbContract.test.js",
+    "node --test tools/r3DbExport.test.js",
+    "node --test tools/r3DbWorkflow.test.js",
+    "node --test tools/researchSchema.test.js",
+    "node --test tools/runArchive.test.js",
+    "node --test tools/runBatch.test.js",
+    "node --test tools/spotcheck.test.js",
+    "node --test tools/stats.test.js",
+    "node --test tools/trialArtifacts.test.js",
+    "node --test tools/trialReadiness.test.js",
+    "node --test tools/trialReport.test.js",
+    "node --test tools/trialUploader.test.js",
+    "node --test tools/trialVerifier.test.js",
+    "node --test tools/tv1LocalRunner.test.js",
+    "node --test tools/visionConfigPreflight.test.js",
+    "node --test tools/visionTrialExecutor.bridge.test.js",
+    "node --test tools/visionTrialExecutor.test.js",
+    "git show HEAD:tools/r3DbContract.test.js | grep -c 'test('",
+    "git show HEAD:tools/r3DbExport.test.js | grep -c 'test('",
+    "node --test <staged HEAD blob of tools/r3DbContract.test.js> (staged with HEAD blob of tools/r3DbContract.js)",
+    "node --test <staged HEAD blob of tools/r3DbExport.test.js>  => not runnable, see base_runtime_reason"
+  ],
+  "raw_outputs": {
+    "tools/credPreflight.test.js": {
+      "runtime_tests": 6,
+      "runtime_pass": 6,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 6,
+      "sha256": "2ea1b05238936442f77b6dff2fc36424dd400bff57cd81dbb3e6c737901509e1"
+    },
+    "tools/intercomInbox.test.js": {
+      "runtime_tests": 33,
+      "runtime_pass": 33,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 33,
+      "sha256": "1832464eaf1f73e4e3e41552b28be5f9855a008937dbe9924f83fc77a5883468"
+    },
+    "tools/preflight.test.js": {
+      "runtime_tests": 3,
+      "runtime_pass": 3,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 3,
+      "sha256": "d3d91ad14311f45c5e4f3e91f8aaa7bb673f191ca8b4e64c92acc9e895af39bb"
+    },
+    "tools/r3DbContract.test.js": {
+      "runtime_tests": 13,
+      "runtime_pass": 13,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 13,
+      "sha256": "91b12a3dd068634fcd60729444f459eafe6896a884afc27b01111f9344d64eb2"
+    },
+    "tools/r3DbExport.test.js": {
+      "runtime_tests": 5,
+      "runtime_pass": 5,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 5,
+      "sha256": "819dd611d4de90cd0826dc97ae9377b99b9cf9f7f03ef001aa470b35556e8349"
+    },
+    "tools/r3DbWorkflow.test.js": {
+      "runtime_tests": 8,
+      "runtime_pass": 8,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 8,
+      "sha256": "3e02b3dd399f960e5804ead32d1a9f0872ba20c935b884c0b7163193f4bbc036"
+    },
+    "tools/researchSchema.test.js": {
+      "runtime_tests": 5,
+      "runtime_pass": 5,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 5,
+      "sha256": "cc0b3ff92011211fcd5f2255ed3b7bb5814b3e513285eaa35567d700c18e930b"
+    },
+    "tools/runArchive.test.js": {
+      "runtime_tests": 7,
+      "runtime_pass": 7,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 7,
+      "sha256": "472484d43b40f9be20068f4ed71db0357221d15386c9917a28e1b1531c85dd67"
+    },
+    "tools/runBatch.test.js": {
+      "runtime_tests": 11,
+      "runtime_pass": 11,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 11,
+      "sha256": "095ae681dc97d5358ce70a135b1de5493ad2ac561a6866441ba26bd0aab87f9a"
+    },
+    "tools/spotcheck.test.js": {
+      "runtime_tests": 11,
+      "runtime_pass": 11,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 11,
+      "sha256": "e4b51b359f86e50f22c013029648eb9781f62b802279033040d30c0cb74ae893"
+    },
+    "tools/stats.test.js": {
+      "runtime_tests": 11,
+      "runtime_pass": 11,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 11,
+      "sha256": "fb1f4491c35975c24b977f8ad73fa846ecef2bc0fc6ffe1010d2ed8153d83ec3"
+    },
+    "tools/trialArtifacts.test.js": {
+      "runtime_tests": 3,
+      "runtime_pass": 3,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 3,
+      "sha256": "446912aaba879b621209f7eabdf3f635061dccf442df1f84d4656d85709fc181"
+    },
+    "tools/trialReadiness.test.js": {
+      "runtime_tests": 4,
+      "runtime_pass": 4,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 4,
+      "sha256": "128ba7a56192c9cebeb3be3526ebc7e592a4cb825b6c10e2670a8964c2d13cef"
+    },
+    "tools/trialReport.test.js": {
+      "runtime_tests": 26,
+      "runtime_pass": 26,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 23,
+      "sha256": "ffcaf8559c59c74390108032454461b209664c64f1dea8e12fd9192f9f57c0ed"
+    },
+    "tools/trialUploader.test.js": {
+      "runtime_tests": 25,
+      "runtime_pass": 25,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 25,
+      "sha256": "8f471d1b9b0a76b34330d556692b6bea1f6b96a8d85dab00e1d74ec4bf53fb70"
+    },
+    "tools/trialVerifier.test.js": {
+      "runtime_tests": 26,
+      "runtime_pass": 26,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 26,
+      "sha256": "42447927452f434834d3e7516ea40a44695bdfa625b29db9071cc32e1b26d870"
+    },
+    "tools/tv1LocalRunner.test.js": {
+      "runtime_tests": 16,
+      "runtime_pass": 16,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 14,
+      "sha256": "5eb7c48d183b5841fcb300992ae4c178d37e27ff192e62ce8eb93a5abf5d7209"
+    },
+    "tools/visionConfigPreflight.test.js": {
+      "runtime_tests": 8,
+      "runtime_pass": 8,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 8,
+      "sha256": "f425a2a74fc3bae933b149a8372fe69ce8d0cb4667325084d4f2c3360daee241"
+    },
+    "tools/visionTrialExecutor.bridge.test.js": {
+      "runtime_tests": 2,
+      "runtime_pass": 2,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 2,
+      "sha256": "1eaf47fa422a62f0d72e67da135120450575a4a0c1d1c99cf41fc68db3ce93c6"
+    },
+    "tools/visionTrialExecutor.test.js": {
+      "runtime_tests": 4,
+      "runtime_pass": 4,
+      "runtime_fail": 0,
+      "exit": 0,
+      "static_test_calls": 4,
+      "sha256": "9a1d2da52542f701af57eba6c28106c0a7961938aa0903253013fd573dc4015f"
+    },
+    "BASE:tools/r3DbContract.test.js": {
+      "runtime_tests": 12,
+      "runtime_pass": 12,
+      "runtime_fail": 0,
+      "exit": 0
+    }
+  },
+  "base_raw_outputs": {
+    "tools/r3DbContract.test.js": {
+      "base_static": 12,
+      "base_runtime": 12,
+      "base_runtime_reason": null,
+      "base_runtime_exit": 0,
+      "cmd": "git show HEAD:tools/r3DbContract.test.js | grep -c 'test('"
+    },
+    "tools/r3DbExport.test.js": {
+      "base_static": 5,
+      "base_runtime": null,
+      "base_runtime_reason": "base blob not executable: HEAD:tools/r3DbExport.js requires ./researchSchema, which is untracked and absent at HEAD; base compared via static count instead",
+      "base_runtime_exit": null,
+      "cmd": "git show HEAD:tools/r3DbExport.test.js | grep -c 'test('"
+    }
+  },
+  "notes": [
+    "Every number above is copied from the recorded raw output of the listed command.",
+    "Untracked files have no git base, so tests_added is honestly UNVERIFIABLE-now; the snapshot makes the delta computable from now on.",
+    "No baseline number is inferred or back-filled; a base that could not be executed is marked with a reason, not a guess."
+  ]
+}

@@ -1,0 +1,15 @@
+# TV1RUN re-pin snapshot OC-TRIAL-20261019-R1
+
+Files:
+database/TV1_Diagnostics_R3.sql|079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d
+tools/tv1LocalRunner.js|cc6fa9cc5f50cb71331dc11d9cde119bc7a988f411030dfaa1e591ffde72bae8
+tools/tv1LocalRunner.test.js|5eb7c48d183b5841fcb300992ae4c178d37e27ff192e62ce8eb93a5abf5d7209
+docs/TV1_R3_OFFLINE_RUNBOOK.md|7a10516a3954d2fc79f69dd13876f052d0363ed877fc1294b109b8e96d649740
+docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md|3eb5a850d93e1f62a2919cf0d556cac2ec2d12760a35b325dfc32f2d952e001f
+docs/evidence/tv1-r3/oc-trial-20261019/run.json|1514d87c17b39efe2ff0f47f485c500ef2520415a975b88b66d244ec0630e0f8
+docs/evidence/tv1-r3/oc-trial-20261019/notices.json|600e4f57af9d1ad3d8b9d18c43ba3f2e41290cd96c88260631ee7149d9564fa0
+docs/evidence/tv1-r3/oc-trial-20261019/results.json|118eedce70f1961d13d97a2871ad3d0867320137e9cec3462ef3e509b4fc14fa
+
+Aggregate: a1e91cfc002e5d75062149364165d5017f844d8470e18d5be4e483361101a967
+
+Checks not run: hosted RLS/view/duplicate evidence not available; local self-check only.

@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head>
+<link rel="stylesheet" href="/real.css"><title>zoo dialogs</title></head>
+<body>
+<h1 id="page-title">Dialogs</h1>
+<button id="alert-btn" type="button">Show alert</button>
+<button id="confirm-btn" type="button">Show confirm</button>
+<button id="prompt-btn" type="button">Show prompt</button>
+<p id="dialog-echo"></p>
+<script>
+document.getElementById('alert-btn').addEventListener('click', function () {
+  window.alert('zoo alert: hello');
+  document.getElementById('dialog-echo').textContent = 'alert dismissed';
+});
+document.getElementById('confirm-btn').addEventListener('click', function () {
+  var ok = window.confirm('zoo confirm: proceed?');
+  document.getElementById('dialog-echo').textContent = ok ? 'confirm accepted' : 'confirm cancelled';
+});
+document.getElementById('prompt-btn').addEventListener('click', function () {
+  var v = window.prompt('zoo prompt: your name?', 'Ada');
+  document.getElementById('dialog-echo').textContent = v === null ? 'prompt cancelled' : 'prompt answered: ' + v;
+});
+</script>
+</body></html>

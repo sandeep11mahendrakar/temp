@@ -1,0 +1,27 @@
+{
+  "revision": "29f74443f35aa75f100bfac355392e0a6d2041b22d877e76ffaaaed661d1b74d",
+  "recipe": "sha256(sorted path|sha256 LF joined; no terminal LF)",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "dbadcc37b1ecd0b91435d0c0839a104a748a5df8aa19d4efc873c10e61efa601"
+    },
+    {
+      "path": "docs/SUGGESTIONS.md",
+      "sha256": "b25ccbfeaf4232647e5e8ef49ebad33b05ac1c5f47886623a638ff41b47ecb4a"
+    },
+    {
+      "path": "tools/subOnboard.js",
+      "sha256": "a6499e8326a27dba3bade7f30281a635ebeb603693ad6733056dcde218afd7f2"
+    },
+    {
+      "path": "docs/SUB_COORDINATION_ONBOARDING.md",
+      "sha256": "d0d2c0da1e60b4c6f263d6a1ae73368d59be44742bdddd316c93d18f9e59dbd4"
+    },
+    {
+      "path": ".agents/skills/caveman/SKILL.md",
+      "sha256": "415d43518f2b1a9498c15a445d4657117b129ee5e81b19454ce348439cc6672b"
+    }
+  ],
+  "IST": "2026-10-19 21:58 IST"
+}

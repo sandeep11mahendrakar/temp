@@ -1,0 +1,39 @@
+{
+  "scope": "INDEPENDENT_ARCHIVE_RECOMPUTATION_NOT_RUNTIME_RERUN",
+  "outer_sha256": "4b1ae4e36151afd601e72411f2e65135cc9dcbb4ab197915e21ee8a4b60b7c5f",
+  "outer_checksums": 4,
+  "crc_archives_pass": 4,
+  "companion_sha256": "4b24cf06438c65e6880620017ac5e5ddc3d47461dbed3e954da76b60f38578c1",
+  "source_manifest_files": 37,
+  "source_aggregate": "9b661be5edfb3c327514c62717b48ab1078fabb95fa01a050385cd4b3547d3f6",
+  "helper_sha256": "214df1faa4b05f0776d8bafafbde2d2a4744a07fdf5657e8ebc3c80f7bb47082",
+  "current_driver_sha256": "f30b02b8c3a51c2acf73ec3d9d378625aabc8b1037630a5e352f87b857fd1669",
+  "historical_driver_hash": "NOT_RECORDED",
+  "patch_hashes_match": true,
+  "supplied_windows_tests_ok": 48,
+  "supplied_native_pipe_case_ok": true,
+  "supplied_js_tests_pass": 16,
+  "supplied_steps_exit0": 12,
+  "supplied_neg05_exact": 6,
+  "profiles": {
+    "zero": {
+      "events": 36,
+      "unique_ids": 35,
+      "notices": 36,
+      "statements": 59,
+      "baseline_objects": 0,
+      "rollback_close_fresh_reopen": true
+    },
+    "six": {
+      "events": 36,
+      "unique_ids": 35,
+      "notices": 36,
+      "statements": 66,
+      "baseline_objects": 6,
+      "rollback_close_fresh_reopen": true
+    }
+  },
+  "packaged_scripts_executed": false
+}
+
+AUD_CHECK_EXIT=0

@@ -1,0 +1,79 @@
+{
+  "ts": "2026-10-13T17:01:37.114Z",
+  "api_calls": 0,
+  "turns": [
+    {
+      "turn": 0,
+      "action": "status",
+      "verif": "services",
+      "ok": true,
+      "dt": 16
+    },
+    {
+      "turn": 1,
+      "action": "perceive",
+      "verif": "elements=18",
+      "ok": true,
+      "dt": 2015
+    },
+    {
+      "turn": 2,
+      "action": "fill-user",
+      "verif": "input_value",
+      "ok": true,
+      "dt": 3136
+    },
+    {
+      "turn": 4,
+      "action": "fill-pass",
+      "verif": "input_value",
+      "ok": true,
+      "dt": 2984
+    },
+    {
+      "turn": "4b",
+      "action": "ocr-check-user",
+      "verif": "user-persists=true",
+      "ok": true,
+      "shot": "act_after_fill_1791910904834.png"
+    },
+    {
+      "turn": 5,
+      "action": "locate-login",
+      "verif": "login-btn=true",
+      "ok": true,
+      "dt": 0
+    },
+    {
+      "turn": 6,
+      "action": "click-login",
+      "verif": "url_change",
+      "ok": true,
+      "dt": 2048,
+      "url": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "turn": 7,
+      "action": "perceive",
+      "verif": "inventory+logout/products=true",
+      "ok": true,
+      "dt": 1598,
+      "url": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "turn": 8,
+      "action": "evidence",
+      "verif": "shots+history",
+      "ok": true,
+      "dt": 16
+    },
+    {
+      "turn": 9,
+      "action": "reset",
+      "verif": "session-closed",
+      "ok": true,
+      "dt": 193
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,263 @@
+{
+  "schema": "tests-added-baseline/v2",
+  "generated_ist": "2026-10-19 23:11:31 IST",
+  "repo_head": "487b226b905ecaa64241fef2f529357f52090fe2",
+  "counting_methods": {
+    "runtime": "count of tests reported by `node --test <file>` (authoritative)",
+    "static": "count of source-level `test(` call sites (used only when a base blob cannot be executed)",
+    "sha256": "sha256 of the file bytes on disk at snapshot time"
+  },
+  "snapshot_scope": {
+    "test_files_total": 20,
+    "tracked": 2
+  },
+  "tracked": {
+    "tools/r3DbContract.test.js": {
+      "base_commit": "487b226b905ecaa64241fef2f529357f52090fe2",
+      "base_static": 12,
+      "current_static": 13,
+      "current_runtime": 13,
+      "current_runtime_pass": 13,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "91b12a3dd068634fcd60729444f459eafe6896a884afc27b01111f9344d64eb2",
+      "base_runtime": 12,
+      "tests_added_runtime": 1,
+      "tests_added": 1,
+      "tests_added_basis": "runtime node --test count at base vs current"
+    },
+    "tools/r3DbExport.test.js": {
+      "base_commit": "487b226b905ecaa64241fef2f529357f52090fe2",
+      "base_static": 5,
+      "current_static": 5,
+      "current_runtime": 5,
+      "current_runtime_pass": 5,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "819dd611d4de90cd0826dc97ae9377b99b9cf9f7f03ef001aa470b35556e8349",
+      "base_runtime": null,
+      "base_runtime_reason": "base blob not executable: HEAD:tools/r3DbExport.js requires ./researchSchema, which is untracked and absent at HEAD; base compared via static count instead",
+      "tests_added_runtime": "UNVERIFIABLE-now",
+      "tests_added": 0,
+      "tests_added_basis": "static test() call count at base vs current (base not executable)"
+    }
+  },
+  "untracked": {
+    "tools/credPreflight.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 6,
+      "current_runtime": 6,
+      "current_runtime_pass": 6,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "2ea1b05238936442f77b6dff2fc36424dd400bff57cd81dbb3e6c737901509e1",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/intercomInbox.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 33,
+      "current_runtime": 33,
+      "current_runtime_pass": 33,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "1832464eaf1f73e4e3e41552b28be5f9855a008937dbe9924f83fc77a5883468",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/preflight.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 3,
+      "current_runtime": 3,
+      "current_runtime_pass": 3,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "d3d91ad14311f45c5e4f3e91f8aaa7bb673f191ca8b4e64c92acc9e895af39bb",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/r3DbWorkflow.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 8,
+      "current_runtime": 8,
+      "current_runtime_pass": 8,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "3e02b3dd399f960e5804ead32d1a9f0872ba20c935b884c0b7163193f4bbc036",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/researchSchema.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 5,
+      "current_runtime": 5,
+      "current_runtime_pass": 5,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "cc0b3ff92011211fcd5f2255ed3b7bb5814b3e513285eaa35567d700c18e930b",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/runArchive.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 7,
+      "current_runtime": 7,
+      "current_runtime_pass": 7,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "472484d43b40f9be20068f4ed71db0357221d15386c9917a28e1b1531c85dd67",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/runBatch.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 11,
+      "current_runtime": 11,
+      "current_runtime_pass": 11,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "095ae681dc97d5358ce70a135b1de5493ad2ac561a6866441ba26bd0aab87f9a",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/spotcheck.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 11,
+      "current_runtime": 11,
+      "current_runtime_pass": 11,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "e4b51b359f86e50f22c013029648eb9781f62b802279033040d30c0cb74ae893",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/stats.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 11,
+      "current_runtime": 11,
+      "current_runtime_pass": 11,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "fb1f4491c35975c24b977f8ad73fa846ecef2bc0fc6ffe1010d2ed8153d83ec3",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/trialArtifacts.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 3,
+      "current_runtime": 3,
+      "current_runtime_pass": 3,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "446912aaba879b621209f7eabdf3f635061dccf442df1f84d4656d85709fc181",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/trialReadiness.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 4,
+      "current_runtime": 4,
+      "current_runtime_pass": 4,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "128ba7a56192c9cebeb3be3526ebc7e592a4cb825b6c10e2670a8964c2d13cef",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/trialReport.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 23,
+      "current_runtime": 26,
+      "current_runtime_pass": 26,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "ffcaf8559c59c74390108032454461b209664c64f1dea8e12fd9192f9f57c0ed",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/trialUploader.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 25,
+      "current_runtime": 25,
+      "current_runtime_pass": 25,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "8f471d1b9b0a76b34330d556692b6bea1f6b96a8d85dab00e1d74ec4bf53fb70",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/trialVerifier.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 26,
+      "current_runtime": 26,
+      "current_runtime_pass": 26,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "42447927452f434834d3e7516ea40a44695bdfa625b29db9071cc32e1b26d870",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/tv1LocalRunner.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 14,
+      "current_runtime": 16,
+      "current_runtime_pass": 16,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "5eb7c48d183b5841fcb300992ae4c178d37e27ff192e62ce8eb93a5abf5d7209",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/visionConfigPreflight.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 8,
+      "current_runtime": 8,
+      "current_runtime_pass": 8,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "f425a2a74fc3bae933b149a8372fe69ce8d0cb4667325084d4f2c3360daee241",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/visionTrialExecutor.bridge.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 2,
+      "current_runtime": 2,
+      "current_runtime_pass": 2,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "1eaf47fa422a62f0d72e67da135120450575a4a0c1d1c99cf41fc68db3ce93c6",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    },
+    "tools/visionTrialExecutor.test.js": {
+      "base": "none",
+      "base_commit": null,
+      "current_static": 4,
+      "current_runtime": 4,
+      "current_runtime_pass": 4,
+      "current_runtime_fail": 0,
+      "current_runtime_exit": 0,
+      "sha256": "9a1d2da52542f701af57eba6c28106c0a7961938aa0903253013fd573dc4015f",
+      "tests_added": "UNVERIFIABLE-now",
+      "tests_added_basis": "no base blob exists in git for this path; UNVERIFIABLE-now by construction, delta-computable-after from this snapshot"
+    }
+  }
+}
