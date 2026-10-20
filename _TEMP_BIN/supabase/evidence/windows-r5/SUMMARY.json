@@ -1,0 +1,453 @@
+{
+  "context": "OFFLINE_LOCAL_ONLY",
+  "evidence_folder": "C:\\Users\\sandeep\\pes\\temp\\OC_DB_R5_ONE_GO_WINDOWS\\R5_EVIDENCE_20261019T191635922Z\\OC_DB_R3_LOCAL_EVIDENCE_20261019T191636500164Z",
+  "hosted_sql": "NOT_RUN",
+  "input_integrity": {
+    "aggregate_sha256": "9b661be5edfb3c327514c62717b48ab1078fabb95fa01a050385cd4b3547d3f6",
+    "file_hashes_verified": 37,
+    "migration_sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "zip_entries": 39,
+    "zip_sha256": "cae1405f07c68467914c2297443199c704a3e5df7d6f987244603fa85d5f5c01"
+  },
+  "input_integrity_after": "cae1405f07c68467914c2297443199c704a3e5df7d6f987244603fa85d5f5c01",
+  "local_fake_adapter_patch": {
+    "native_test_sha256": "dc42401d2a90b9b6a648908be23f1f905b83a34f9fe53fefa2e3486b62e0b3c7",
+    "original_sha256": "d4e6245b2c2ca1222d4c95f6b965cd37100f7b02ede30ed9c01bc7e615837fe1",
+    "replacement_sha256": "32cbb6ad7c0deb0de9202404c10a3eac1e03524017c73ad9844e91d8f2ffb329",
+    "scope": "TEMP_EXTRACT_TEST_DOUBLE_ONLY"
+  },
+  "migration": "NOT_APPLIED",
+  "p59_six_proven": true,
+  "p59_six_validation": {
+    "case_count": 35,
+    "errors": [],
+    "ok": true,
+    "profile": "six",
+    "secret_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "p59_zero_proven": true,
+  "p59_zero_validation": {
+    "case_count": 35,
+    "errors": [],
+    "ok": true,
+    "profile": "zero",
+    "secret_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "pglite_proven": true,
+  "runtime": {
+    "machine": "AMD64",
+    "node_version": "NOT_READ",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "system": "Windows"
+  },
+  "status": "LOCAL_EVIDENCE_COLLECTED_INDEPENDENT_AUD_REQUIRED",
+  "steps": [
+    {
+      "argv": [
+        "npm.cmd",
+        "ci",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "pglite_pinned_npm_cache_only.stderr.sanitized.txt",
+      "sanitized_stdout": "pglite_pinned_npm_cache_only.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "pglite_pinned_npm_cache_only",
+      "timeout_seconds": 120
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "node_version.stderr.sanitized.txt",
+      "sanitized_stdout": "node_version.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "node_version",
+      "timeout_seconds": 15
+    },
+    {
+      "argv": [
+        "C:\\Users\\sandeep\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "unittest",
+        "tests.test_frozen_executor",
+        "tests.test_r3_repairs",
+        "tests.test_local_adapter_patch_r5",
+        "-v"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "python_unittest.stderr.sanitized.txt",
+      "sanitized_stdout": "python_unittest.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "python_unittest",
+      "timeout_seconds": 240
+    },
+    {
+      "argv": [
+        "C:\\Users\\sandeep\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "src/offline_review.py"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "p59_source_review.stderr.sanitized.txt",
+      "sanitized_stdout": "p59_source_review.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "p59_source_review",
+      "timeout_seconds": 60
+    },
+    {
+      "argv": [
+        "C:\\Users\\sandeep\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "src/offline_probe.py"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "simulated_rollback_probe.stderr.sanitized.txt",
+      "sanitized_stdout": "simulated_rollback_probe.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "simulated_rollback_probe",
+      "timeout_seconds": 120
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "tests/neg05_pglite_local_only.cjs"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "neg05_node_syntax.stderr.sanitized.txt",
+      "sanitized_stdout": "neg05_node_syntax.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "neg05_node_syntax",
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "node",
+        "tests/neg05_pglite_local_only.cjs"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "neg05_real_local_pglite.stderr.sanitized.txt",
+      "sanitized_stdout": "neg05_real_local_pglite.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "neg05_real_local_pglite",
+      "timeout_seconds": 180
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "current_p59/tools/tv1LocalRunner.js"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "p59_runner_syntax.stderr.sanitized.txt",
+      "sanitized_stdout": "p59_runner_syntax.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "p59_runner_syntax",
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "node",
+        "--check",
+        "current_p59/tools/tv1LocalRunner.test.js"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "p59_tests_syntax.stderr.sanitized.txt",
+      "sanitized_stdout": "p59_tests_syntax.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "p59_tests_syntax",
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "current_p59/tools/tv1LocalRunner.test.js"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "p59_real_local_tests.stderr.sanitized.txt",
+      "sanitized_stdout": "p59_real_local_tests.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "p59_real_local_tests",
+      "timeout_seconds": 240
+    },
+    {
+      "argv": [
+        "node",
+        "current_p59/tools/tv1LocalRunner.js",
+        "--self-check",
+        "--expected-baseline",
+        "zero",
+        "--evidence-root",
+        "C:\\Users\\sandeep\\AppData\\Local\\Temp\\ocdb-r3-offline-i9kwp3da\\p59_positive_zero"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "p59_zero_local_sql.stderr.sanitized.txt",
+      "sanitized_stdout": "p59_zero_local_sql.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "p59_zero_local_sql",
+      "timeout_seconds": 240
+    },
+    {
+      "argv": [
+        "node",
+        "current_p59/tools/tv1LocalRunner.js",
+        "--self-check",
+        "--expected-baseline",
+        "six",
+        "--fixture-baseline",
+        "six",
+        "--evidence-root",
+        "C:\\Users\\sandeep\\AppData\\Local\\Temp\\ocdb-r3-offline-i9kwp3da\\p59_positive_six"
+      ],
+      "cleanup": {
+        "cleanup_confirmed": true,
+        "required": false
+      },
+      "exit_code": 0,
+      "sanitized_stderr": "p59_six_local_sql.stderr.sanitized.txt",
+      "sanitized_stdout": "p59_six_local_sql.stdout.sanitized.txt",
+      "secret_pattern_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "EXITED",
+      "step": "p59_six_local_sql",
+      "timeout_seconds": 240
+    }
+  ],
+  "windows_proven": true
+}

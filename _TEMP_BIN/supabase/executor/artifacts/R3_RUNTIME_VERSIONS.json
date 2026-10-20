@@ -1,0 +1,14 @@
+{
+  "architecture": "x86_64",
+  "cryptography_version": "46.0.4",
+  "executable": "/opt/pyvenv/bin/python",
+  "hosted_execution": false,
+  "local_pglite": "NOT_INSTALLED_IN_THIS_SESSION",
+  "local_postgresql": "NOT_AVAILABLE_IN_THIS_SESSION",
+  "migration_attempted": false,
+  "node": "v22.16.0",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "sys_platform": "linux",
+  "test_execution_os": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "windows_native_execution": "NOT_AVAILABLE_IN_THIS_SESSION"
+}

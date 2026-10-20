@@ -1,0 +1,11 @@
+{
+  "case_catalog_sha256": "037215b0a2cb5e8df50e99e7bd56c1c015883f04bf0c964a22b62c37789ff2e2",
+  "exact_case_ids": 35,
+  "executor_core_sha256": "54f26f1ad99cd437d47708d0bc85c97a2826bf8941e8e61af7fd891728c844dd",
+  "file_hashes_match": 7,
+  "hosted_sql_executed": false,
+  "migration_attempted": false,
+  "mode": "OFFLINE_STATIC_REVIEW_ONLY",
+  "release_key_configured": false,
+  "source_revision": "87ef5658d907fa75b265ac4f3329d79383cf428f21be9cfe2f0f4a853d7b50e9"
+}

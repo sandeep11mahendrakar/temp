@@ -1,0 +1,101 @@
+{
+  "case_count": 35,
+  "category": "SIMULATED_ONLY",
+  "close_acks": 1,
+  "driver": "FakeFactory",
+  "fresh_assertions": [
+    {
+      "baseline_count": 0,
+      "baseline_preserved": true,
+      "fixtures_remaining": 0,
+      "old_backend_absent": true,
+      "rls_enabled": true,
+      "type": "FRESH_ASSERTIONS"
+    }
+  ],
+  "fresh_close_acks": 1,
+  "fresh_rollback_acks": 1,
+  "hosted_proof": "NOT_RUN",
+  "migration_apply": "NOT_ATTEMPTED",
+  "neg05": [
+    {
+      "actual": {
+        "constraint": "r3_runs_schema_version_ck",
+        "sqlstate": "23514"
+      },
+      "case_id": "NEG-05/BAD-SCHEMA",
+      "expected_constraint": "r3_runs_schema_version_ck",
+      "expected_sqlstate": "23514",
+      "role": "service_role",
+      "status": "PASS",
+      "type": "CASE"
+    },
+    {
+      "actual": {
+        "constraint": "r3_runs_aggregate_eligibility_ck",
+        "sqlstate": "23514"
+      },
+      "case_id": "NEG-05/BAD-ELIGIBILITY",
+      "expected_constraint": "r3_runs_aggregate_eligibility_ck",
+      "expected_sqlstate": "23514",
+      "role": "service_role",
+      "status": "PASS",
+      "type": "CASE"
+    },
+    {
+      "actual": {
+        "constraint": "r3_runs_eligible_research_ids_ck",
+        "sqlstate": "23514"
+      },
+      "case_id": "NEG-05/TRIAL-ELIGIBLE",
+      "expected_constraint": "r3_runs_eligible_research_ids_ck",
+      "expected_sqlstate": "23514",
+      "role": "service_role",
+      "status": "PASS",
+      "type": "CASE"
+    },
+    {
+      "actual": {
+        "constraint": "r3_runs_eligible_research_ids_ck",
+        "sqlstate": "23514"
+      },
+      "case_id": "NEG-05/MISSING-IDS",
+      "expected_constraint": "r3_runs_eligible_research_ids_ck",
+      "expected_sqlstate": "23514",
+      "role": "service_role",
+      "status": "PASS",
+      "type": "CASE"
+    },
+    {
+      "actual": {
+        "constraint": "r3_runs_supersedes_ck",
+        "sqlstate": "23514"
+      },
+      "case_id": "NEG-05/SELF-SUPERSEDES",
+      "expected_constraint": "r3_runs_supersedes_ck",
+      "expected_sqlstate": "23514",
+      "role": "service_role",
+      "status": "PASS",
+      "type": "CASE"
+    },
+    {
+      "actual": {
+        "constraint": "r3_runs_trial_excluded_ck",
+        "sqlstate": "23514"
+      },
+      "case_id": "NEG-05/TRIAL-PENDING",
+      "expected_constraint": "r3_runs_trial_excluded_ck",
+      "expected_sqlstate": "23514",
+      "role": "service_role",
+      "status": "PASS",
+      "type": "CASE"
+    }
+  ],
+  "required_case_count": 35,
+  "rollback_acks": 1,
+  "status": "PASS_OFFLINE_CONTROL_FLOW_ONLY",
+  "watchdogs": {
+    "fresh": "EXIT_ZERO",
+    "main": "EXIT_ZERO"
+  }
+}

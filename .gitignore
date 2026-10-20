@@ -92,3 +92,17 @@ logs/
 /mc-*/
 /px1-*/
 /docs/evidence/**/local-db/
+
+# Owner-approved shared Supabase folder; keep all other temp-bin contents local
+!/_TEMP_BIN/
+/_TEMP_BIN/*
+!/_TEMP_BIN/supabase/
+/_TEMP_BIN/supabase/**/.env*
+/_TEMP_BIN/supabase/**/node_modules/
+/_TEMP_BIN/supabase/**/__pycache__/
+/_TEMP_BIN/supabase/**/local-db/
+/_TEMP_BIN/supabase/**/*.pyc
+/_TEMP_BIN/supabase/**/*.pem
+/_TEMP_BIN/supabase/**/*.key
+/_TEMP_BIN/supabase/**/*.p12
+/_TEMP_BIN/supabase/**/*.pfx

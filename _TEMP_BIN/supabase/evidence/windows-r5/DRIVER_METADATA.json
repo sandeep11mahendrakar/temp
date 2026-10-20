@@ -1,0 +1,14 @@
+{
+    "scope":  "OFFLINE_ONLY",
+    "hosted":  "NOT_RUN",
+    "migration":  "NOT_APPLIED",
+    "generated_utc":  "2026-10-19T19:18:49.4305652Z",
+    "os_version":  "Microsoft Windows NT 10.0.26100.0",
+    "powershell_version":  "5.1.26100.9711",
+    "helper_exit_code":  0,
+    "helper_status":  "LOCAL_EVIDENCE_COLLECTED_INDEPENDENT_AUD_REQUIRED",
+    "r3_zip_sha256":  "cae1405f07c68467914c2297443199c704a3e5df7d6f987244603fa85d5f5c01",
+    "r5_helper_sha256":  "214df1faa4b05f0776d8bafafbde2d2a4744a07fdf5657e8ebc3c80f7bb47082",
+    "driver":  "RUN_ALL_OFFLINE_R5.ps1",
+    "evidence_mode":  "SANITIZED_AND_PRIVATE"
+}

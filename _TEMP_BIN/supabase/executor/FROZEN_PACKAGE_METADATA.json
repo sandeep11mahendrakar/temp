@@ -1,0 +1,21 @@
+{
+  "file_count_in_aggregate": 37,
+  "frozen_aggregate_sha256": "9b661be5edfb3c327514c62717b48ab1078fabb95fa01a050385cd4b3547d3f6",
+  "hosted_exec": "NOT_RUN",
+  "linux_unittests": {
+    "exit_code": 0,
+    "passed": 45,
+    "run": 46,
+    "skipped_windows": 1
+  },
+  "local_pglite_invocation_exit_code": 77,
+  "local_postgresql_pglite": "NOT_RUN_DEPENDENCY_MISSING",
+  "manifest_formula": "sorted path|sha256 LF joined, no terminal LF, excludes metadata and manifest",
+  "migration_retry": "NOT_ATTEMPTED",
+  "migration_sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+  "p59_revision": "87ef5658d907fa75b265ac4f3329d79383cf428f21be9cfe2f0f4a853d7b50e9",
+  "r2_disposition": "REJECT_HISTORY_PRESERVED",
+  "release_trust_root": "UNCONFIGURED",
+  "status": "OFFLINE_FROZEN_R3_UNEXECUTED_NOT_AUTHORIZED",
+  "windows_native": "NOT_RUN"
+}

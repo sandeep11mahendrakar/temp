@@ -1,0 +1,416 @@
+{
+  "scope": "Supabase lane working copy; original evidence remains immutable",
+  "source_zip_sha256": "cae1405f07c68467914c2297443199c704a3e5df7d6f987244603fa85d5f5c01",
+  "files": [
+    {
+      "path": "executor/DEPENDENCIES_PINNED.txt",
+      "sha256": "ea47d25c26eed2880392bc48d3c216de600e93a04a05688c89084763633ce3c6",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/EXECUTABLE_CASE_PLAN.json",
+      "sha256": "62c71270669d2357a6e177a93281b15fb13d61ca8bb45fd23dcab08d6db3c7e6",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/FILE_SHA256_MANIFEST.txt",
+      "sha256": "503441b6be3511069fae2a4db1aca2fdda2cf9e35a114641ca801fcafaa02653",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/FROZEN_PACKAGE_METADATA.json",
+      "sha256": "31190e0c56fe986074a13d76e3b5af05c7a37fcdbc56f8435351b6157aa37899",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/P59_ATOMIC_CASE_MAPPING.md",
+      "sha256": "126c79d1694f5beb940237ab2ebc7d6d227a7c5cf7139710bf6035f65d61b8ee",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/R2_REJECT_HISTORY.md",
+      "sha256": "0ae126e78d92791eccc1432917912afe805ed00ba91414e4bdbe2c0921893300",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/R3_REPAIR_SUMMARY_AND_AUD_REQUEST.md",
+      "sha256": "b5f0a3133b0ac5d59dc5aa6de264ef9b0983958bc92a9e7a5bf850a0e2acc7e4",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/README_AUD_REVIEW.md",
+      "sha256": "5f8b9b67368dfac6350f67e049a51eecb6290e5b63a0183c58ef084e3df1bd5e",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/TRUSTED_RELEASE_SCHEMA_REVIEW_ONLY.md",
+      "sha256": "f6bad54817c17cb3d8ca4f02aa8aaccee4e16104162e63b56ef8495fdf5c6e30",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R2_HISTORICAL_FAKE_TEST_OUTPUT.txt",
+      "sha256": "6b29cca8031bd298aaf8a2792196a4df350f43caaa3d88274d7bf9487fec39b2",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R2_HISTORICAL_SOURCE_AUDIT.json",
+      "sha256": "2a3df9c41ba505b19a17fb7dfccc297016b1c726339a55911bcec18a4b27ff1a",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R3_FAKE_TRANSACTION_CLEANUP_RAW_LINUX.txt",
+      "sha256": "6b1426e96529c519aec88331d96cd1c37c77689d8f324b9cede25f74efdea90d",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R3_FULL_UNITTEST_RAW_LINUX.txt",
+      "sha256": "4332310bd3b3ced93f5a2b9eb5bb020d629725cfb32cd5cc1925d491d847efcd",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R3_NEG05_PGLITE_ATTEMPT_RAW_LINUX.txt",
+      "sha256": "c999a1d3b7df7f32daceff3325db6621139ac197e42641e1c98858b2da67bce7",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R3_RUNTIME_VERSIONS.json",
+      "sha256": "7ab3c42eef785e5ced9a4d9790850112cfbe69908264bc19082e010838e5d579",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/artifacts/R3_SOURCE_INTEGRITY_RAW_LINUX.txt",
+      "sha256": "52e5c071d0832524c2dae8855c1910b7d54eca64906da6633e84ad9c19e2d139",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/database/TV1_Diagnostics_R3.sql",
+      "sha256": "079c84c8c9f98e0e302f9f3b2604592ba0495cfc0c06a9d11a87b1be1b98458d",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/database/r3_companion.sql",
+      "sha256": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/docs/DB5_HOSTED_PROCEDURE_R3.md",
+      "sha256": "818d97cba63798dab8fe12fa76547de09bbc2a4307bc065a83b54fd14a0bcc96",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/docs/OC_DB_CURRENT_HANDOFF_20261019.md",
+      "sha256": "641122b372051e6ee05b6f1549a75fed9c7a83575b4937a2ddd9d05da1e5cfcf",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/docs/OC_DB_EXECUTOR_R1_REPAIR_REPLY.md",
+      "sha256": "87c21c38c450b3072fe62fa22b4ec3d3a18188cedf93f1e91ecd9b86de3b53b7",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/docs/TV1_R3_EXPECTED_OUTPUT_MATRIX.md",
+      "sha256": "3eb5a850d93e1f62a2919cf0d556cac2ec2d12760a35b325dfc32f2d952e001f",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/docs/TV1_R3_OFFLINE_RUNBOOK.md",
+      "sha256": "7a10516a3954d2fc79f69dd13876f052d0363ed877fc1294b109b8e96d649740",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/docs/evidence/tv1-runner-review/20261019193033-sub-r6/SUB_SNAPSHOT.json",
+      "sha256": "d9e2e32dc3bdda183677c193abb33f7051006866e1ed1f8769a7bebda86861c4",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/tools/.tv1-runtime/package-lock.json",
+      "sha256": "3b0aacaecd8b6d08ce889f37cffdcf1da93c4c6a0c722c16768aaec29d83220f",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/tools/tv1LocalRunner.js",
+      "sha256": "cc6fa9cc5f50cb71331dc11d9cde119bc7a988f411030dfaa1e591ffde72bae8",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/current_p59/tools/tv1LocalRunner.test.js",
+      "sha256": "5eb7c48d183b5841fcb300992ae4c178d37e27ff192e62ce8eb93a5abf5d7209",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/approved_entry.py",
+      "sha256": "dd9aab89f7192deba343348410587051d1ec72ed1a99f10ef25e9e3958076e66",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/bundle_auth.py",
+      "sha256": "014dd58f560ecbda381657028c33559580af170794ce1faaa67b5fd1f0b117f3",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/case_catalog.py",
+      "sha256": "18e148754544f7b4755d2251272ea136a23d96f04162a69957d2cc63c6b35e4f",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/executor_runtime.py",
+      "sha256": "23c2b716d8a4450bfe3bd9662c0aeab1eaf4007c1cd1e2c42eb51db32bd6b1d1",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/offline_probe.py",
+      "sha256": "8074b7d73b07e8f5bf22414176b1621516f3a3bd72b4635e54001b6914eec01d",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/offline_review.py",
+      "sha256": "2a0c8743f31f471eb4923d8c020dd1f2e4b0976dad73ead3ba70ab7bf91b395a",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/src/release_auth.py",
+      "sha256": "8306a2e84efeab9cc0a0aa7b158eb68860d141e0818fe8a42d7e15322c8088d2",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/tests/fake_adapter.py",
+      "sha256": "d4e6245b2c2ca1222d4c95f6b965cd37100f7b02ede30ed9c01bc7e615837fe1",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/tests/neg05_pglite_local_only.cjs",
+      "sha256": "ef40d8a41e8c4fea66d397f8ccb1a5b8427a2366193d85f2196d7c07a6ea2c26",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/tests/test_frozen_executor.py",
+      "sha256": "436d05bf53a09717975a4dc7cebf07eb1cde257e0e45c22239eca87e0acea946",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "executor/tests/test_r3_repairs.py",
+      "sha256": "00cf1ea043acdde63aa5602e36355d832aaba8b72a2b6c5a77ea9ea011022d98",
+      "origin": "frozen-R3-source"
+    },
+    {
+      "path": "windows/OC_DB_R3_WINDOWS_OFFLINE_EVIDENCE_R5.py",
+      "sha256": "214df1faa4b05f0776d8bafafbde2d2a4744a07fdf5657e8ebc3c80f7bb47082",
+      "origin": "R5-companion"
+    },
+    {
+      "path": "windows/RUN_ALL_OFFLINE_R5.ps1",
+      "sha256": "f30b02b8c3a51c2acf73ec3d9d378625aabc8b1037630a5e352f87b857fd1669",
+      "origin": "R5-companion"
+    },
+    {
+      "path": "windows/SHA256SUMS.txt",
+      "sha256": "90d4a8e0afea22467e9aaa28202c16aea4910968a7035cda7893588f9a3d5657",
+      "origin": "R5-companion"
+    },
+    {
+      "path": "windows/patches/fake_adapter.py",
+      "sha256": "32cbb6ad7c0deb0de9202404c10a3eac1e03524017c73ad9844e91d8f2ffb329",
+      "origin": "R5-companion"
+    },
+    {
+      "path": "windows/patches/test_local_adapter_patch_r5.py",
+      "sha256": "dc42401d2a90b9b6a648908be23f1f905b83a34f9fe53fefa2e3486b62e0b3c7",
+      "origin": "R5-companion"
+    },
+    {
+      "path": "evidence/review/AUD_REVIEW_REQUEST_ASCII.md",
+      "sha256": "9592ecadc654bd1314538dbff2fb928207108fab421df61fbd96951a278c1026",
+      "origin": "R5-review-envelope"
+    },
+    {
+      "path": "evidence/review/EVIDENCE_SELF_CHECK.json",
+      "sha256": "3416560c0165e77803166ac54c828a3e2689ff58cd761df4cb6fe95f3d8078d1",
+      "origin": "R5-review-envelope"
+    },
+    {
+      "path": "evidence/review/EVIDENCE_SELF_CHECK_RAW.txt",
+      "sha256": "8ae6a0f4c0a599cc0d53054ff37a48ab6cde441b20543948911099399296be8b",
+      "origin": "R5-review-envelope"
+    },
+    {
+      "path": "evidence/review/SHA256SUMS.txt",
+      "sha256": "6bb4bb9227cf827be252c54432eebf31104217fb476e8009d22e645e331dfc2d",
+      "origin": "R5-review-envelope"
+    },
+    {
+      "path": "evidence/windows-r5/neg05_node_syntax.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/neg05_node_syntax.stdout.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/neg05_real_local_pglite.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/neg05_real_local_pglite.stdout.sanitized.txt",
+      "sha256": "a31d62ec0b713b6511aeddb6ea3de3e86c88b2afdf60f4ca7e43bf90ff5e89be",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/node_version.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/node_version.stdout.sanitized.txt",
+      "sha256": "b447734bea5971cc4beed4007192e4cf2e07a9f04fdaff5d9df3bb307e61987e",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_real_local_tests.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_real_local_tests.stdout.sanitized.txt",
+      "sha256": "c017f46ce2303f114fc740fcbe5cc3a4cec2dbf9692cc8d1ae9ca337797267c5",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_runner_syntax.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_runner_syntax.stdout.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_six_local_sql.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_six_local_sql.stdout.sanitized.txt",
+      "sha256": "1cb0c8aa3f4429a16e0cdb2fad96ab814535c86ba4437c11ef2a377afcca5848",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_six_notices.json",
+      "sha256": "8675d8869e248733068a5807ff87c628c44874f783c97b05e6b6b71f5aacbbf2",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_six_results.json",
+      "sha256": "569dca7e63ad329b01c4695fd02553da8c53203377791458a03238e3781f84cf",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_six_run.json",
+      "sha256": "2af63bd853e1c7c2005c9c4d02e9ebb8fd480d9cb6f4402fedc6f78de6efe669",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_source_review.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_source_review.stdout.sanitized.txt",
+      "sha256": "2ba3c16b08d62ddb4763c5f7f54d1948ebd9b6f38709851cc9eb749d5fd196b4",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_tests_syntax.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_tests_syntax.stdout.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_zero_local_sql.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_zero_local_sql.stdout.sanitized.txt",
+      "sha256": "1cb0c8aa3f4429a16e0cdb2fad96ab814535c86ba4437c11ef2a377afcca5848",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_zero_notices.json",
+      "sha256": "1caf87a3cc03c396f0f86c9d8a616f8ed7a1f9d08b6860b93e8f148414d60929",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_zero_results.json",
+      "sha256": "8acf8063ce9de7fe9c57af6231abb5789a73287c94650aca7a75511cb780409e",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/p59_zero_run.json",
+      "sha256": "26b5f776b220e8b8e6617b625e1505c948b2c942b955b5d129b7a504f6935e56",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/pglite_pinned_npm_cache_only.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/pglite_pinned_npm_cache_only.stdout.sanitized.txt",
+      "sha256": "84b3615a2b55669c4069410770606e7290261ae70a9db72789bff656c372ce48",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/python_unittest.stderr.sanitized.txt",
+      "sha256": "7ad2706cc9b86e26b387f254c93ab0384512abbe1b2db92133ed4d3750e03965",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/python_unittest.stdout.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/simulated_rollback_probe.stderr.sanitized.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/simulated_rollback_probe.stdout.sanitized.txt",
+      "sha256": "7fe0bc52f63eb9a5b4a6566b8f81ac065c8d8c7b1582f63fe4f7b03c74ba3a16",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/SUMMARY.json",
+      "sha256": "02e58e7eb6520b7f85ef1b2a3bfbdb9d640af980295f264fa55354da319f75ac",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/windows-r5/DRIVER_METADATA.json",
+      "sha256": "d28a2ced72635382d0592bcc75570a8354e59fc16b2e72a78103dc301b09d5f6",
+      "origin": "R5-original-Windows-evidence"
+    },
+    {
+      "path": "evidence/AUD_R5_ACCEPT_SCOPE.md",
+      "sha256": "d96b3fbe8aed237fb16d56fe33aa230e38720116fc9b45956bc1ae9bbb82570d",
+      "origin": "docs/evidence/db5-executor/R5_AUD_01a15a1a.md"
+    },
+    {
+      "path": "evidence/SUB_R5_INTEGRATION.md",
+      "sha256": "7b7d28ea5454b8491fbde6cbbeef2f2b2405488083b82269f6a8a28d8dba19cd",
+      "origin": "docs/evidence/db5-executor/ocdb-r5-windows-4b1ae4e36151/SUB_INTEGRATION.md"
+    }
+  ]
+}

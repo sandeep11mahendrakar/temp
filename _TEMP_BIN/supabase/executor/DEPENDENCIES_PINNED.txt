@@ -1,0 +1,7 @@
+# Offline run versions observed for this review container; no network installs made.
+Python >= 3.11 (review runtime: CPython; no API version assumption for hosted)
+cryptography==46.0.4
+# Native dependency for optional test invocation only:
+# unittest (Python standard library)
+# The source packet's local PGlite runtime has its original package-lock.json
+# No psycopg / network / Supabase driver bundled or invoked.

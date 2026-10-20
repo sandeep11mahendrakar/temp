@@ -1,0 +1,24 @@
+✔ parse explicit profiles and reject unknown flags (3.8778ms)
+✔ missing expected inventory and remote mode reject before database/evidence creation (172.9221ms)
+✔ POS actual SQL zero fixture preserves baseline and rows after rollback and reopening (6526.8332ms)
+✔ POS actual SQL six fixture preserves baseline and rows after rollback and reopening (5583.7424ms)
+✔ NEG approved zero inventory mismatches actual six before diagnostic writes (5561.0022ms)
+✔ NEG approved six inventory mismatches actual zero before diagnostic writes (5561.1903ms)
+✔ NEG real catalog fingerprint drift is detected, not treated as empty (5498.9352ms)
+✔ NEG actual rls capability defect fails for intended reason (5516.6374ms)
+✔ NEG actual invoker capability defect fails for intended reason (5440.0463ms)
+✔ NEG actual trigger capability defect fails for intended reason (5423.1549ms)
+✔ NEG actual role capability defect fails for intended reason (5479.1883ms)
+✔ NEG error after four real fixture inserts rolls back and closes before fresh verification (5412.2259ms)
+✔ NEG notice-capture failure rolls back and closes without fabricated PASS (5481.189ms)
+✔ NEG rollback failure preserves original SQL error; close still aborts and fresh postcheck runs (5463.0004ms)
+✔ NEG close failure is retained as failure even after actual close (5500.426ms)
+✔ NEG preexisting diagnostic IDs refused and retained, never cleaned as owned new rows (5574.4697ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 78496.0138

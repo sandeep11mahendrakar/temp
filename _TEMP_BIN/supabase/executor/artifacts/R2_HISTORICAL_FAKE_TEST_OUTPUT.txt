@@ -1,0 +1,37 @@
+test_01_sources_pinned (tests.test_frozen_executor.TestFrozen.test_01_sources_pinned) ... ok
+test_02_case_exact (tests.test_frozen_executor.TestFrozen.test_02_case_exact) ... ok
+test_03_missing (tests.test_frozen_executor.TestFrozen.test_03_missing) ... ok
+test_04_extra (tests.test_frozen_executor.TestFrozen.test_04_extra) ... ok
+test_05_replaced (tests.test_frozen_executor.TestFrozen.test_05_replaced) ... ok
+test_06_role_replaced (tests.test_frozen_executor.TestFrozen.test_06_role_replaced) ... ok
+test_07_bad_write_id (tests.test_frozen_executor.TestFrozen.test_07_bad_write_id) ... ok
+test_08_function_path (tests.test_frozen_executor.TestFrozen.test_08_function_path) ... ok
+test_09_release_unsigned_rejected (tests.test_frozen_executor.TestFrozen.test_09_release_unsigned_rejected) ... ok
+test_10_unpinned_release_refused (tests.test_frozen_executor.TestFrozen.test_10_unpinned_release_refused) ... ok
+test_11_signed_test_release (tests.test_frozen_executor.TestFrozen.test_11_signed_test_release) ... ok
+test_12_wrong_release_binding (tests.test_frozen_executor.TestFrozen.test_12_wrong_release_binding) ... ok
+test_13_tampered_signature (tests.test_frozen_executor.TestFrozen.test_13_tampered_signature) ... ok
+test_14_extra_permission_fields (tests.test_frozen_executor.TestFrozen.test_14_extra_permission_fields) ... ok
+test_15_expires (tests.test_frozen_executor.TestFrozen.test_15_expires) ... ok
+test_16_fake_positive (tests.test_frozen_executor.TestFrozen.test_16_fake_positive) ... ok
+test_17_expected_states_present (tests.test_frozen_executor.TestFrozen.test_17_expected_states_present) ... ok
+test_18_wrong_sqlstate_fail_closed (tests.test_frozen_executor.TestFrozen.test_18_wrong_sqlstate_fail_closed) ... ok
+test_18b_sqlstate_evidence_on_mismatch (tests.test_frozen_executor.TestFrozen.test_18b_sqlstate_evidence_on_mismatch) ... ok
+test_18c_unexpected_sql_success_evidence (tests.test_frozen_executor.TestFrozen.test_18c_unexpected_sql_success_evidence) ... ok
+test_19_execute_watchdog (tests.test_frozen_executor.TestFrozen.test_19_execute_watchdog) ... ok
+test_20_rollback_watchdog (tests.test_frozen_executor.TestFrozen.test_20_rollback_watchdog) ... ok
+test_21_close_watchdog (tests.test_frozen_executor.TestFrozen.test_21_close_watchdog) ... ok
+test_22_cleanup_watchdog (tests.test_frozen_executor.TestFrozen.test_22_cleanup_watchdog) ... ok
+test_23_no_prod_trust_anchor (tests.test_frozen_executor.TestFrozen.test_23_no_prod_trust_anchor) ... ok
+test_24_no_dsn_or_connection_import (tests.test_frozen_executor.TestFrozen.test_24_no_dsn_or_connection_import) ... ok
+test_25_fixture_ids_exact_four (tests.test_frozen_executor.TestFrozen.test_25_fixture_ids_exact_four) ... ok
+test_26_signed_but_unapproved_route_refused (tests.test_frozen_executor.TestFrozen.test_26_signed_but_unapproved_route_refused) ... ok
+test_27_crypto_tamper (tests.test_frozen_executor.TestFrozen.test_27_crypto_tamper) ... ok
+test_28_mutated_p59_source_rejected (tests.test_frozen_executor.TestFrozen.test_28_mutated_p59_source_rejected) ... ok
+test_29_extra_p59_id_refused (tests.test_frozen_executor.TestFrozen.test_29_extra_p59_id_refused) ... ok
+test_30_subcase_raw_output_all_scoped (tests.test_frozen_executor.TestFrozen.test_30_subcase_raw_output_all_scoped) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 26.889s
+
+OK

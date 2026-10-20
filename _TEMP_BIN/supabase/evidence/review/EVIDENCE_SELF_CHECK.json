@@ -1,0 +1,196 @@
+{
+  "scope": "OFFLINE_EVIDENCE_ONLY_NOT_HOSTED_TV1",
+  "source_zip_sha256": "2bf2012faf3223a08a8a0b04ea3a181a9fdb218859f9ad832333dc544f89bf72",
+  "source_zip_crc_pass": true,
+  "source_zip_entries": 32,
+  "driver_sha256": null,
+  "helper_exit": 0,
+  "helper_status": "LOCAL_EVIDENCE_COLLECTED_INDEPENDENT_AUD_REQUIRED",
+  "windows_os": "Microsoft Windows NT 10.0.26100.0",
+  "powershell": "5.1.26100.9711",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "unit_test_native_windows": true,
+  "unit_test_count": 48,
+  "unit_test_end_OK": true,
+  "p59_node_tests_pass": 16,
+  "p59_node_tests_fail": 0,
+  "steps": [
+    {
+      "step": "pglite_pinned_npm_cache_only",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "node_version",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "python_unittest",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "p59_source_review",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "simulated_rollback_probe",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "neg05_node_syntax",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "neg05_real_local_pglite",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "p59_runner_syntax",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "p59_tests_syntax",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "p59_real_local_tests",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "p59_zero_local_sql",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    },
+    {
+      "step": "p59_six_local_sql",
+      "exit": 0,
+      "status": "EXITED",
+      "cleanup_confirmed": true,
+      "secret_pattern_positive": 0
+    }
+  ],
+  "neg05_local_database": {
+    "mode": "ISOLATED_LOCAL_PGLITE_ONLY",
+    "cases": [
+      {
+        "id": "NEG-05/BAD-SCHEMA",
+        "sqlstate": "23514",
+        "constraint": "r3_runs_schema_version_ck",
+        "ok": true
+      },
+      {
+        "id": "NEG-05/BAD-ELIGIBILITY",
+        "sqlstate": "23514",
+        "constraint": "r3_runs_aggregate_eligibility_ck",
+        "ok": true
+      },
+      {
+        "id": "NEG-05/TRIAL-ELIGIBLE",
+        "sqlstate": "23514",
+        "constraint": "r3_runs_eligible_research_ids_ck",
+        "ok": true
+      },
+      {
+        "id": "NEG-05/MISSING-IDS",
+        "sqlstate": "23514",
+        "constraint": "r3_runs_eligible_research_ids_ck",
+        "ok": true
+      },
+      {
+        "id": "NEG-05/SELF-SUPERSEDES",
+        "sqlstate": "23514",
+        "constraint": "r3_runs_supersedes_ck",
+        "ok": true
+      },
+      {
+        "id": "NEG-05/TRIAL-PENDING",
+        "sqlstate": "23514",
+        "constraint": "r3_runs_trial_excluded_ck",
+        "ok": true
+      }
+    ],
+    "six_pass": true,
+    "fixture_count_after_rollback": 0,
+    "baseline_preserved": true,
+    "driver_pass": true
+  },
+  "p59_profiles": {
+    "zero": {
+      "exit": 0,
+      "case_entries": 36,
+      "case_events_pass": 36,
+      "notice_entries": 36,
+      "run_notice_count": 36,
+      "errors": [],
+      "rollback_ok": true,
+      "close_ok": true,
+      "postcheck_closed": true,
+      "fresh_connection": true,
+      "fixture_after": 0,
+      "baseline_before_count": 0,
+      "baseline_after_count": 0,
+      "baseline_fingerprint_match": true,
+      "same_team_rows": true,
+      "statement_count": 59
+    },
+    "six": {
+      "exit": 0,
+      "case_entries": 36,
+      "case_events_pass": 36,
+      "notice_entries": 36,
+      "run_notice_count": 36,
+      "errors": [],
+      "rollback_ok": true,
+      "close_ok": true,
+      "postcheck_closed": true,
+      "fresh_connection": true,
+      "fixture_after": 0,
+      "baseline_before_count": 6,
+      "baseline_after_count": 6,
+      "baseline_fingerprint_match": true,
+      "same_team_rows": true,
+      "statement_count": 66
+    }
+  },
+  "hosted_migration": "NOT_APPLIED",
+  "tv1_status": "UNVERIFIED",
+  "release_route": "BLOCKED_PENDING_NORMAL_AUTHORIZATION",
+  "limitations": [
+    "Original R3 source zip is not included in this evidence upload; its 37/37 hash validation appears in helper summary, not independently re-run here",
+    "No independently approved hosted executor or TV-1 ACCEPT",
+    "Native Windows tests and PGlite outcomes are evidence supplied by Windows owner; auditing their authenticity requires independent evaluation",
+    "Historical NEG-05/TRIAL-ELIGIBLE naming vs PENDING_VALIDATION + ELIGIBLE still requires AUD decision"
+  ],
+  "sanitized_log_heuristic_secret_files": 0
+}

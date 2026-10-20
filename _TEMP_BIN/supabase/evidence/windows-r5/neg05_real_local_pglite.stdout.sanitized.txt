@@ -1,0 +1,56 @@
+{
+  "mode": "ISOLATED_LOCAL_PGLITE_ONLY",
+  "results": [
+    {
+      "case_id": "NEG-05/BAD-SCHEMA",
+      "expected_sqlstate": "23514",
+      "expected_constraint": "r3_runs_schema_version_ck",
+      "actual_sqlstate": "23514",
+      "actual_constraint": "r3_runs_schema_version_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/BAD-ELIGIBILITY",
+      "expected_sqlstate": "23514",
+      "expected_constraint": "r3_runs_aggregate_eligibility_ck",
+      "actual_sqlstate": "23514",
+      "actual_constraint": "r3_runs_aggregate_eligibility_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/TRIAL-ELIGIBLE",
+      "expected_sqlstate": "23514",
+      "expected_constraint": "r3_runs_eligible_research_ids_ck",
+      "actual_sqlstate": "23514",
+      "actual_constraint": "r3_runs_eligible_research_ids_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/MISSING-IDS",
+      "expected_sqlstate": "23514",
+      "expected_constraint": "r3_runs_eligible_research_ids_ck",
+      "actual_sqlstate": "23514",
+      "actual_constraint": "r3_runs_eligible_research_ids_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/SELF-SUPERSEDES",
+      "expected_sqlstate": "23514",
+      "expected_constraint": "r3_runs_supersedes_ck",
+      "actual_sqlstate": "23514",
+      "actual_constraint": "r3_runs_supersedes_ck",
+      "pass": true
+    },
+    {
+      "case_id": "NEG-05/TRIAL-PENDING",
+      "expected_sqlstate": "23514",
+      "expected_constraint": "r3_runs_trial_excluded_ck",
+      "actual_sqlstate": "23514",
+      "actual_constraint": "r3_runs_trial_excluded_ck",
+      "pass": true
+    }
+  ],
+  "fixture_count_after_rollback": 0,
+  "baseline_preserved": true,
+  "pass": true
+}

@@ -1,2 +1,5 @@
 # Preserve immutable evidence bytes across Windows/cloud checkouts
 /docs/evidence/** -text
+
+# Preserve Supabase source/evidence bytes
+/_TEMP_BIN/supabase/** -text

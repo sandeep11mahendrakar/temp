@@ -1,0 +1,17 @@
+INDEPENDENT_OFFLINE_ARCHIVE_CHECK
+zip_sha256=2bf2012faf3223a08a8a0b04ea3a181a9fdb218859f9ad832333dc544f89bf72
+zip_entries=32
+crc_pass=True
+windows_unit_test_count=48
+windows_unittest_ok=True
+windows_native_pipe_case_ran=True
+node_local_pass=16
+node_local_fail=0
+steps_12_exit_zero=True
+neg05_real_local_6_constraints=True
+neg05_after_rollback_count=0
+zero_profile={'exit': 0, 'case_entries': 36, 'case_events_pass': 36, 'notice_entries': 36, 'run_notice_count': 36, 'errors': [], 'rollback_ok': True, 'close_ok': True, 'postcheck_closed': True, 'fresh_connection': True, 'fixture_after': 0, 'baseline_before_count': 0, 'baseline_after_count': 0, 'baseline_fingerprint_match': True, 'same_team_rows': True, 'statement_count': 59}
+six_profile={'exit': 0, 'case_entries': 36, 'case_events_pass': 36, 'notice_entries': 36, 'run_notice_count': 36, 'errors': [], 'rollback_ok': True, 'close_ok': True, 'postcheck_closed': True, 'fresh_connection': True, 'fixture_after': 0, 'baseline_before_count': 6, 'baseline_after_count': 6, 'baseline_fingerprint_match': True, 'same_team_rows': True, 'statement_count': 66}
+secret_heuristic_matching_files=0
+AUD_STATUS=PENDING
+HOSTED_TV1=UNVERIFIED
