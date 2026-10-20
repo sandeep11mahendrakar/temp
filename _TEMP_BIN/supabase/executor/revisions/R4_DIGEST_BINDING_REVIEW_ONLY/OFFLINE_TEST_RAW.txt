@@ -1,0 +1,10 @@
+test_existing_signed_claim_rejects_mutated_entry_and_adapter (test_future_artifact_digest.TestFuturePin.test_existing_signed_claim_rejects_mutated_entry_and_adapter) ... ok
+test_missing_adapter_and_clearance_gate_fail_closed (test_future_artifact_digest.TestFuturePin.test_missing_adapter_and_clearance_gate_fail_closed) ... ok
+test_mutation_rejection_all_pinned_sources (test_future_artifact_digest.TestFuturePin.test_mutation_rejection_all_pinned_sources) ... ok
+test_repeatable_digest (test_future_artifact_digest.TestFuturePin.test_repeatable_digest) ... ok
+test_symlink_rejected (test_future_artifact_digest.TestFuturePin.test_symlink_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.024s
+
+OK
