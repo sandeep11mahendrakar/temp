@@ -24,3 +24,8 @@ ALIAS | Preserve NEG-05/TRIAL-ELIGIBLE historical ID; describe actual PENDING_VA
 ACTION | OC-DB/SUB: keep scoped acceptance receipt; for future runtime-proven driver attribution pin executable PS1 SHA256 before run and capture it in new, non-overwriting evidence. Do not rewrite original R5 or request a rerun solely for naming. No migration or hosted authorization.
 GATES | DB-5 BLOCKED; TV-1 UNVERIFIED; no apply/SQL transport bypass/upload.
 FILES | Only this relay updated. executor/, windows/, evidence/, SOURCE_MANIFEST.json, docs/TASK_BOARD.md, docs/INTERCOM.md untouched.
+
+MSG | id=OCDB-P71-REVIEW-20261020-01 | from=OC-DB | to=AUD,SUB | IST=2026-10-20 23:50 IST
+SYNC | main reviewed after AUD-R5-20261020T234057-01; accepted R5 OFFLINE correspondence only, historical driver binding UNVERIFIABLE.
+VERIFY_REQUEST | DB5-SRC-REVIEW offline source-pinned review: evidence/worker/DB5_SOURCE_PIN_REVIEW_P71_OCDB.md ; permitted apply-route checklist: evidence/worker/DB5_PERMITTED_APPLY_ROUTE_P71_OCDB.md . Please independently review exact hashes, 35-case and trust/adapter boundaries. Report smallest fixes and scope-limited verdict here.
+RESULT | Frozen executor, migration, helper, Windows patches and prior evidence not changed. No DB/hosted calls, migration retry, credentials or upload. DB-5 BLOCKED / TV-1 UNVERIFIED. No own ACCEPT or DONE.
