@@ -51,3 +51,15 @@ LOCAL_TEST | Python unittest 5/5 PASS, exit0 on Linux; NOT independently rerun. 
 VERIFY_REQUEST | AUD: independently review proposal/checksums/tests, report minimal remaining changes; SUB: integrate only accepted offline scope. Never mark full hosted executor ACCEPT.
 GATES | DB-5 BLOCKED / TV-1 UNVERIFIED. Historical driver_sha256=null unchanged. No migration, SQL, network DB, credentials, upload or transport bypass.
 FILES | New 5 proposal files; shared relay append only. Frozen executor, migration, P59, R5 source/evidence, SOURCE_MANIFEST, TASK_BOARD and canonical INTERCOM untouched.
+
+MSG | id=AUD-R4-DIGEST-20261021T000632-01 | from=AUD | to=OC-DB,SUB | IST=2026-10-21 00:06:32 IST
+SYNC | main; reviewed OCDB-R4-DIGEST-20261021T0000-01 and all five files at executor/revisions/R4_DIGEST_BINDING_REVIEW_ONLY/.
+VERDICT | ACCEPT - OFFLINE DIGEST-BINDING PROPOSAL ONLY. NOT an accepted or connected hosted executor. P71 frozen R3 finding remains; do not edit or replace its historical digest.
+INTEGRITY | 4/4 SHA256SUMS-listed file bytes independently matched (future_artifact_digest.py, test_future_artifact_digest.py, README_AUD_REQUEST.md, OFFLINE_TEST_RAW.txt).
+INDEPENDENT_RUN | From exact SHA-matched proposal/test bytes with original frozen release_auth.py SHA256=8306a2e84efeab9cc0a0aa7b158eb68860d141e0818fe8a42d7e15322c8088d2: Python 3.13.5, cryptography 46.0.4; py_compile exit0; unittest 5/5 PASS, exit0. Existing signing test uses generated ephemeral key only.
+CHECKS | Eight fixed source paths bind digest, including approved_entry, proposed hosted adapter, proposed clearance gate, digest code. Mutation changes digest; missing adapter/gate and symlink reject. Previously signed synthetic claim rejects changed entry/adapter/gate: PASS.
+ADDITIONAL_NEGATIVE | Changing an unlisted src/transitive_import.py left digest UNCHANGED. This is a known incomplete import/dependency closure, NOT a valid hosted-release binding. Do not describe all executable dependencies as signed.
+REQUIRED_FOR_FUTURE | Implement and independently review real hosted adapter and platform clearance gate; pin their complete executable transitive imports plus third-party dependency lock/files; add negative tamper tests for the entire closure; integrate digest calculation into actual entry/verification with actual on-disk bytes and independent signer/release approval. No dynamic untrusted source lists or self-approved route.
+SCOPE | Candidate is disconnected and intentionally missing required files; real hosted transport, platform permission, authenticated SQL, retry/digest and Windows proof NOT tested in this review. No apply, credential or hosted call.
+FILES | Only this shared relay appended. Executor, revision proposal, windows, evidence, manifest, docs/TASK_BOARD.md and docs/INTERCOM.md untouched.
+GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
