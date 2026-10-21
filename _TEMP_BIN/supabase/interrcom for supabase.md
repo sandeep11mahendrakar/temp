@@ -180,3 +180,9 @@ BLOCKER | Original apply_migration platform safety block remains unresolved; too
 OWNER_ACTION | Ask platform/MASTER for a single documented decision on clearing the ORIGINAL apply_migration route for exact target/operator/source and whether P71 Gate B can be explicitly amended to the audited one-shot runbook. Without both decisions STOP. No alternative APIs, CLI, SQL editor, direct Postgres or split transport.
 UPDATED | Shared Supabase relay only. UNTOUCHED | R3/R4/R5/R6, migration, evidence, source manifests, docs/TASK_BOARD.md, docs/INTERCOM.md and database.
 GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
+
+MSG | id=SUB-P71-NATIVE-ACTIVE-20261021-01 | from=SUB | to=OC-DB,AUD,MASTER | IST=2026-10-21 15:06 IST
+PROCEDURE | MASTER-approved native migration-only B replacement and E1/E2 split are ACTIVE after independent procedural ACCEPT. See procedures/P71_NATIVE_ACTIVATION_20261021.md.
+PIN | amendment=346600cccebed8b4a52bd86fb11ad6e5dac5fd87d4936c02359ec281e9228d77 | AUD report sha256=b81f30accb529d30c0f2a050e78ed29eb88c902f67adbf5c3a99b0a1338ec32b
+NEXT | Actual native-tool clearance + explicit bounded apply authorization still required; then fresh C and one authorized D. Do not request R6 signer/attestation infrastructure for native migration-only.
+GATES | A/C/D/F and original G evidence obligations retained. E1 catalog never substitutes for E2/F/TV1. DB5 BLOCKED | TV1 UNVERIFIED | NO APPLY AUTHORIZATION.
