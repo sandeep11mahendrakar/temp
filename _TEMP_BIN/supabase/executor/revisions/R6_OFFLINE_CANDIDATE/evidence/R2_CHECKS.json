@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python",
+    "-I",
+    "-B",
+    "_TEMP_BIN\\supabase\\executor\\revisions\\R6_OFFLINE_CANDIDATE\\run_tests.py"
+  ],
+  "exit": 1,
+  "seconds": 97.438,
+  "utc": "2026-10-20T18:53:52.467845+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "ist": "2026-10-21 00:48:45 IST",
+  "command": "python -I -B _TEMP_BIN/supabase/executor/revisions/R6_OFFLINE_CANDIDATE/evidence/verify_pin.py",
+  "exit": 0,
+  "stdout": "PIN_CHECK.stdout.txt",
+  "stderr": "PIN_CHECK.stderr.txt",
+  "candidate_changed": false,
+  "suites_rerun": false,
+  "publication_attempted": false
+}

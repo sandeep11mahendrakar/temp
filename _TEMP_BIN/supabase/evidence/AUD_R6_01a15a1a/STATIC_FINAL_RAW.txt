@@ -1,0 +1,21 @@
+{
+  "command": "python -I -B _TEMP_BIN\\supabase\\evidence\\AUD_R6_01a15a1a\\independent_static_checks.py",
+  "manifest_files": 39,
+  "aggregate": "23f126a0c3b718f3f58f629a5a27036d2ff42876c1f30b0845cb3c352cf003db",
+  "artifact_digest": "72c69c31e687a7d28f75873c87137c28b603950c97c210f5846c259061e5ef51",
+  "source_modules": 10,
+  "bound_files": 13,
+  "ast_files": 15,
+  "historical_matches": 82,
+  "plan_cases": 35,
+  "neg05_cases": 6,
+  "dependency_file_counts": {
+    "cffi": 52,
+    "cryptography": 199,
+    "pycparser": 21
+  },
+  "runtime_files": 2719,
+  "exit": 0
+}
+
+EXIT=0

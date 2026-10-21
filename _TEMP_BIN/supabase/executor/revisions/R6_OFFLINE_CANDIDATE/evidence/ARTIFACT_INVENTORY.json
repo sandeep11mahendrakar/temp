@@ -1,0 +1,52 @@
+{
+  "files": {
+    "data/case_plan.json": "62c71270669d2357a6e177a93281b15fb13d61ca8bb45fd23dcab08d6db3c7e6",
+    "data/migration.sql": "b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6",
+    "dependency.lock.json": "d5d59af16367e0f1681090b95d77d725b7dcb93947f3ebaefab3c3636e5f22ec",
+    "entry.py": "995f1af750544d766379292dc97a127e46c0ed90694648c65ba956c117f50219",
+    "src/approved_entry.py": "a51b315e3447186ce41e15a682532979535884df1d472e37fba941392db0f1c7",
+    "src/case_catalog.py": "18e148754544f7b4755d2251272ea136a23d96f04162a69957d2cc63c6b35e4f",
+    "src/closure.py": "bdef4f5974c91f642e0695a06df080c6387083de1d86056630eaa8528484830a",
+    "src/executor_runtime.py": "446bd77e8caea045f0bcf6830b6748a59a7b946dccd052e2f5399bfea5766360",
+    "src/hosted_session_adapter.py": "faec4f52b327a5c3c9cd2602d8b92a23d53c99f0169cb56eb3413702c3c36543",
+    "src/platform_clearance_gate.py": "96a5db60def4e4b36cb6c58e3b747262475f27a0493805a44f0217b6915281bc",
+    "src/policy.py": "938c696788df89d22af2d487b6015b211c04baa62b510131209d050af42930e6",
+    "src/release_auth.py": "8306a2e84efeab9cc0a0aa7b158eb68860d141e0818fe8a42d7e15322c8088d2",
+    "src/session_allowlist.py": "2f55011ba6d152e92bd8bcdf557ceaf001f74ce25728ca7caf27e72f0c156d52"
+  },
+  "imports": {
+    "entry.py": [
+      "src/approved_entry.py",
+      "src/closure.py"
+    ],
+    "src/approved_entry.py": [
+      "src/case_catalog.py",
+      "src/closure.py",
+      "src/executor_runtime.py",
+      "src/hosted_session_adapter.py",
+      "src/platform_clearance_gate.py",
+      "src/policy.py",
+      "src/release_auth.py",
+      "src/session_allowlist.py"
+    ],
+    "src/case_catalog.py": [],
+    "src/closure.py": [
+      "src/policy.py"
+    ],
+    "src/executor_runtime.py": [
+      "src/case_catalog.py"
+    ],
+    "src/hosted_session_adapter.py": [
+      "src/executor_runtime.py",
+      "src/platform_clearance_gate.py"
+    ],
+    "src/platform_clearance_gate.py": [],
+    "src/policy.py": [],
+    "src/release_auth.py": [],
+    "src/session_allowlist.py": [
+      "src/case_catalog.py",
+      "src/executor_runtime.py"
+    ]
+  },
+  "sha256": "72c69c31e687a7d28f75873c87137c28b603950c97c210f5846c259061e5ef51"
+}

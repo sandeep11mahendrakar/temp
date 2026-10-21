@@ -1,0 +1,10 @@
+{
+  "files": {
+    "CHECKS.json": "8fb9334f56fe27e0cd17ae0cb4c395a40e41eb6f1f31c315ca9507753b475ac4",
+    "PIN_CHECK.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "PIN_CHECK.stdout.txt": "29ab9761456eb2bb2cd110b86db59b5c1fd7a779b5305d1d3b72ef2f54b2ec82",
+    "REMAINING_REQUIREMENTS.md": "f1cbba57d3aed0f96551f0946fe804f5b70a639f102bf6e0064097fa4c8d174e"
+  },
+  "aggregate_sha256": "6461ded625559f8e9be06d57a3af53d585563f6dcce91380a240127856328aae",
+  "recipe": "sorted relative path|sha256 LF-joined without terminal LF"
+}

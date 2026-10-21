@@ -1,0 +1,552 @@
+{
+  "cases": [
+    {
+      "after_rollback": false,
+      "expected": true,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "PREFLIGHT/OWNER",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT ((current_user=pg_catalog.pg_get_userbyid(c.relowner) OR (SELECT COALESCE(rolsuper,false) FROM pg_catalog.pg_roles WHERE rolname=current_user)) AND pg_catalog.has_table_privilege(current_user,'public.r3_runs','UPDATE') AND pg_catalog.has_table_privilege(current_user,'public.r3_runs','DELETE')) AS ok FROM pg_catalog.pg_class c WHERE c.oid='public.r3_runs'::regclass"
+    },
+    {
+      "after_rollback": false,
+      "expected": true,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "PREFLIGHT/ROLES",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT pg_catalog.pg_has_role(session_user,'anon','SET') AND pg_catalog.pg_has_role(session_user,'authenticated','SET') AND pg_catalog.pg_has_role(session_user,'service_role','SET') AS ok"
+    },
+    {
+      "after_rollback": false,
+      "expected": true,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "PREFLIGHT/TRIGGER",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='public.r3_runs'::regclass AND tgname='r3_runs_append_only' AND tgenabled IN ('O','A')) AS ok"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "PREFLIGHT/BASELINE",
+      "kind": "baseline_count",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT count(*)::integer AS objects_n FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relkind IN ('r','p','v','m','f','S') AND left(c.relname,3)<>'r3_'"
+    },
+    {
+      "after_rollback": false,
+      "expected": true,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "CAT/RLS",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT COALESCE((SELECT relrowsecurity FROM pg_catalog.pg_class WHERE oid='public.r3_runs'::regclass),false) AS ok"
+    },
+    {
+      "after_rollback": false,
+      "expected": true,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "CAT/SECURITY-INVOKER",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT count(*)=2 AS ok FROM pg_catalog.pg_class WHERE oid IN ('public.r3_research_eligible'::regclass,'public.r3_evidence_readback'::regclass) AND 'security_invoker=true'=ANY(reloptions)"
+    },
+    {
+      "after_rollback": false,
+      "expected": [
+        "ocdb_tv1_20261019_eligible",
+        "ocdb_tv1_20261019_trial",
+        "ocdb_tv1_20261019_excluded",
+        "ocdb_tv1_20261019_pending"
+      ],
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "POS-INSERT",
+      "kind": "insert4",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible",
+        "1.0",
+        "RESEARCH",
+        "ELIGIBLE",
+        "ocdb_tv1_20261019_eligible",
+        "ocdb_tv1_20261019_eligible",
+        "ocdb_tv1_20261019_trial",
+        "1.0",
+        "TRIAL",
+        "EXCLUDED",
+        "ocdb_tv1_20261019_trial",
+        "ocdb_tv1_20261019_trial",
+        "ocdb_tv1_20261019_excluded",
+        "1.0",
+        "RESEARCH",
+        "EXCLUDED",
+        "ocdb_tv1_20261019_excluded",
+        "ocdb_tv1_20261019_excluded",
+        "ocdb_tv1_20261019_pending",
+        "1.0",
+        "PENDING_VALIDATION",
+        "PENDING_VALIDATION",
+        "ocdb_tv1_20261019_pending",
+        "ocdb_tv1_20261019_pending"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) VALUES (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb), (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb), (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb), (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb) RETURNING run_id"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-01/SELECT",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "anon",
+      "sql": "SELECT run_id FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-01/INSERT",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible",
+        "1.0",
+        "RESEARCH",
+        "ELIGIBLE",
+        "ocdb_tv1_20261019_eligible",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "anon",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) VALUES (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb)"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-01/UPDATE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "FAIL",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "anon",
+      "sql": "UPDATE public.r3_runs SET execution_outcome=%s WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-01/DELETE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "anon",
+      "sql": "DELETE FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-01/ELIGIBLE-VIEW",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "anon",
+      "sql": "SELECT run_id FROM public.r3_research_eligible WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-01/READBACK-VIEW",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "anon",
+      "sql": "SELECT run_id FROM public.r3_evidence_readback WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-02/SELECT",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "authenticated",
+      "sql": "SELECT run_id FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-02/INSERT",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible",
+        "1.0",
+        "RESEARCH",
+        "ELIGIBLE",
+        "ocdb_tv1_20261019_eligible",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "authenticated",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) VALUES (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb)"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-02/UPDATE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "FAIL",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "authenticated",
+      "sql": "UPDATE public.r3_runs SET execution_outcome=%s WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-02/DELETE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "authenticated",
+      "sql": "DELETE FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-02/ELIGIBLE-VIEW",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "authenticated",
+      "sql": "SELECT run_id FROM public.r3_research_eligible WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-02/READBACK-VIEW",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "authenticated",
+      "sql": "SELECT run_id FROM public.r3_evidence_readback WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-03-SERVICE/UPDATE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "FAIL",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "UPDATE public.r3_runs SET execution_outcome=%s WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "42501",
+      "id": "NEG-03-SERVICE/DELETE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "DELETE FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": 0,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "POS-RETRY",
+      "kind": "retry",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible",
+        "1.0",
+        "RESEARCH",
+        "ELIGIBLE",
+        "ocdb_tv1_20261019_eligible",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) VALUES (%s,'app','cmp','web','A',%s,%s,'PASS','CLEAN',%s,NULL,repeat('a',64),repeat('b',64),repeat('c',64),jsonb_build_object('run_id',%s::text),jsonb_build_object('run',jsonb_build_object('id',%s::text)),'{}'::jsonb,'{}'::jsonb) ON CONFLICT (run_id) DO NOTHING RETURNING run_id"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_pkey",
+      "expected_sqlstate": "23505",
+      "id": "NEG-04/HASH-CONFLICT",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,repeat('9',64),manifest,report,source_pointers,availability FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_schema_version_ck",
+      "expected_sqlstate": "23514",
+      "id": "NEG-05/BAD-SCHEMA",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_bad_schema",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT new_id,app_id,comparison_id,platform,stage,'2.0',experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,jsonb_set(manifest,'{run_id}',to_jsonb(new_id),true),jsonb_set(report,'{run,id}',to_jsonb(new_id),true),source_pointers,availability FROM (SELECT %s::text AS new_id, src.* FROM public.r3_runs AS src WHERE src.run_id=%s) AS source"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_aggregate_eligibility_ck",
+      "expected_sqlstate": "23514",
+      "id": "NEG-05/BAD-ELIGIBILITY",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_bad_eligibility",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT new_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,'UNKNOWN',supersedes_report,manifest_sha256,report_sha256,payload_sha256,jsonb_set(manifest,'{run_id}',to_jsonb(new_id),true),jsonb_set(report,'{run,id}',to_jsonb(new_id),true),source_pointers,availability FROM (SELECT %s::text AS new_id, src.* FROM public.r3_runs AS src WHERE src.run_id=%s) AS source"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_eligible_research_ids_ck",
+      "expected_sqlstate": "23514",
+      "id": "NEG-05/TRIAL-ELIGIBLE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_nonresearch_eligible",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT new_id,app_id,comparison_id,platform,stage,schema_version,'PENDING_VALIDATION',execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,jsonb_set(manifest,'{run_id}',to_jsonb(new_id),true),jsonb_set(report,'{run,id}',to_jsonb(new_id),true),source_pointers,availability FROM (SELECT %s::text AS new_id, src.* FROM public.r3_runs AS src WHERE src.run_id=%s) AS source"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_eligible_research_ids_ck",
+      "expected_sqlstate": "23514",
+      "id": "NEG-05/MISSING-IDS",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_missing_ids",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT new_id,NULL::text,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,jsonb_set(manifest,'{run_id}',to_jsonb(new_id),true),jsonb_set(report,'{run,id}',to_jsonb(new_id),true),source_pointers,availability FROM (SELECT %s::text AS new_id, src.* FROM public.r3_runs AS src WHERE src.run_id=%s) AS source"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_supersedes_ck",
+      "expected_sqlstate": "23514",
+      "id": "NEG-05/SELF-SUPERSEDES",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_self_supersedes",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT new_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,new_id,manifest_sha256,report_sha256,payload_sha256,jsonb_set(manifest,'{run_id}',to_jsonb(new_id),true),jsonb_set(report,'{run,id}',to_jsonb(new_id),true),source_pointers,availability FROM (SELECT %s::text AS new_id, src.* FROM public.r3_runs AS src WHERE src.run_id=%s) AS source"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": "r3_runs_trial_excluded_ck",
+      "expected_sqlstate": "23514",
+      "id": "NEG-05/TRIAL-PENDING",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_trial_pending",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "service_role",
+      "sql": "INSERT INTO public.r3_runs (run_id,app_id,comparison_id,platform,stage,schema_version,experiment_kind,execution_outcome,integrity_verdict,aggregate_eligibility,supersedes_report,manifest_sha256,report_sha256,payload_sha256,manifest,report,source_pointers,availability) SELECT new_id,app_id,comparison_id,platform,stage,schema_version,'TRIAL',execution_outcome,integrity_verdict,'PENDING_VALIDATION',supersedes_report,manifest_sha256,report_sha256,payload_sha256,jsonb_set(manifest,'{run_id}',to_jsonb(new_id),true),jsonb_set(report,'{run,id}',to_jsonb(new_id),true),source_pointers,availability FROM (SELECT %s::text AS new_id, src.* FROM public.r3_runs AS src WHERE src.run_id=%s) AS source"
+    },
+    {
+      "after_rollback": false,
+      "expected": "ocdb_tv1_20261019_eligible",
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "NEG-06",
+      "kind": "one_id",
+      "live_result": "NOT_RUN",
+      "params": [
+        [
+          "ocdb_tv1_20261019_eligible",
+          "ocdb_tv1_20261019_trial",
+          "ocdb_tv1_20261019_excluded",
+          "ocdb_tv1_20261019_pending"
+        ]
+      ],
+      "role": "service_role",
+      "sql": "SELECT run_id FROM public.r3_research_eligible WHERE run_id=ANY(%s::text[]) ORDER BY run_id"
+    },
+    {
+      "after_rollback": false,
+      "expected": true,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "NEG-03-OWNER-PREFLIGHT",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [],
+      "role": "owner",
+      "sql": "SELECT ((current_user=pg_catalog.pg_get_userbyid(c.relowner) OR (SELECT COALESCE(rolsuper,false) FROM pg_catalog.pg_roles WHERE rolname=current_user)) AND pg_catalog.has_table_privilege(current_user,'public.r3_runs','UPDATE') AND pg_catalog.has_table_privilege(current_user,'public.r3_runs','DELETE')) AS ok FROM pg_catalog.pg_class c WHERE c.oid='public.r3_runs'::regclass"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "55000",
+      "id": "NEG-03-OWNER-TRIGGER/UPDATE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "FAIL",
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "owner",
+      "sql": "UPDATE public.r3_runs SET execution_outcome=%s WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": null,
+      "expected_constraint": null,
+      "expected_sqlstate": "55000",
+      "id": "NEG-03-OWNER-TRIGGER/DELETE",
+      "kind": "error",
+      "live_result": "NOT_RUN",
+      "params": [
+        "ocdb_tv1_20261019_eligible"
+      ],
+      "role": "owner",
+      "sql": "DELETE FROM public.r3_runs WHERE run_id=%s"
+    },
+    {
+      "after_rollback": false,
+      "expected": 4,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "FINAL-IN-TX",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [
+        [
+          "ocdb_tv1_20261019_eligible",
+          "ocdb_tv1_20261019_trial",
+          "ocdb_tv1_20261019_excluded",
+          "ocdb_tv1_20261019_pending"
+        ]
+      ],
+      "role": "owner",
+      "sql": "SELECT count(*)::integer FROM public.r3_runs WHERE run_id=ANY(%s::text[])"
+    },
+    {
+      "after_rollback": true,
+      "expected": 0,
+      "expected_constraint": null,
+      "expected_sqlstate": null,
+      "id": "POST-ROLLBACK",
+      "kind": "scalar",
+      "live_result": "NOT_RUN",
+      "params": [
+        [
+          "ocdb_tv1_20261019_eligible",
+          "ocdb_tv1_20261019_trial",
+          "ocdb_tv1_20261019_excluded",
+          "ocdb_tv1_20261019_pending"
+        ]
+      ],
+      "role": "owner",
+      "sql": "SELECT count(*)::integer FROM public.r3_runs WHERE run_id=ANY(%s::text[])"
+    }
+  ],
+  "hosted_execution": "NOT_RUN",
+  "plan_sha256": "037215b0a2cb5e8df50e99e7bd56c1c015883f04bf0c964a22b62c37789ff2e2",
+  "source_revision": "87ef5658d907fa75b265ac4f3329d79383cf428f21be9cfe2f0f4a853d7b50e9",
+  "status": "UNEXECUTED_STATIC_SPECIFICATION"
+}

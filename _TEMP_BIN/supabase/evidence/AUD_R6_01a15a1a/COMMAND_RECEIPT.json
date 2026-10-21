@@ -1,0 +1,23 @@
+{
+  "aud_session": "01a15a1a-102a-7120-a673-b3a533d4a783",
+  "test_command": [
+    "python",
+    "-I",
+    "-B",
+    "_TEMP_BIN/supabase/executor/revisions/R6_OFFLINE_CANDIDATE/run_tests.py"
+  ],
+  "tool_session_id": 20321,
+  "exit": 0,
+  "collected": 34,
+  "passed": 33,
+  "skipped": 1,
+  "seconds": 325.546,
+  "raw_provenance": "functions.write_stdin tool result cc8a06 and preceding stdout/stderr chunks; retained tail is partial",
+  "static_command": [
+    "python",
+    "-I",
+    "-B",
+    "_TEMP_BIN/supabase/evidence/AUD_R6_01a15a1a/independent_static_checks.py"
+  ],
+  "static_exit": 0
+}

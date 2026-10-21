@@ -1,0 +1,26 @@
+{
+  "ist": "2026-10-21 00:33:42 IST",
+  "status": "LOCAL_VERIFY_PENDING_INDEPENDENT_AUD",
+  "published": false,
+  "source_commit": null,
+  "base_commit": "b4ba9fce24fd6f9e774fdfe679ee30144333b17a",
+  "artifact_sha256": "72c69c31e687a7d28f75873c87137c28b603950c97c210f5846c259061e5ef51",
+  "tests": {
+    "collected": 34,
+    "passed": 33,
+    "skipped": 1,
+    "exit": 0,
+    "raw": "evidence/FINAL_TEST.stderr.txt"
+  },
+  "syntax_files": 15,
+  "historical_files_verified": 82,
+  "historical_mismatches": 0,
+  "secret_marker_matches": 0,
+  "secret_scan_scope": "candidate files only; no env/credential lookup",
+  "blockers": [
+    "NATIVE_WINDOWS_LINK_VALIDATION",
+    "EXTERNAL_SIGNER_AND_IMMUTABLE_LAUNCHER",
+    "PLATFORM_CLEARANCE_AND_PERMITTED_TRANSPORT",
+    "GITHUB_PUBLICATION_AUTO_REVIEW_REJECTED"
+  ]
+}

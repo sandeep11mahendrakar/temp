@@ -1,0 +1,25 @@
+PARTIAL TOOL OUTPUT ONLY; not full test log.
+ok
+test_six_neg05_constraints_and_unique_ids (tests.test_candidate.RuntimeTests.test_six_neg05_constraints_and_unique_ids) ... ok
+test_sql_role_params_and_case_plan_allowlist (tests.test_candidate.RuntimeTests.test_sql_role_params_and_case_plan_allowlist) ... ok
+test_startup_exception_still_attempts_fresh_cleanup (tests.test_candidate.RuntimeTests.test_startup_exception_still_attempts_fresh_cleanup) ... ok
+test_watchdog_timeout_and_fresh_cleanup (tests.test_candidate.RuntimeTests.test_watchdog_timeout_and_fresh_cleanup) ... ok
+test_cached_bytecode_is_also_bound (tests.test_candidate.SourceBindingTests.test_cached_bytecode_is_also_bound) ... ok
+test_changed_package_bytes_and_native_transitive_dependency_rejected (tests.test_candidate.SourceBindingTests.test_changed_package_bytes_and_native_transitive_dependency_rejected) ... ok
+test_complete_graph_and_stable_digest (tests.test_candidate.SourceBindingTests.test_complete_graph_and_stable_digest) ... ok
+test_dependency_inventory_matches_review_lock (tests.test_candidate.SourceBindingTests.test_dependency_inventory_matches_review_lock) ... ok
+test_direct_and_ancestor_reparse_metadata_rejected (tests.test_candidate.SourceBindingTests.test_direct_and_ancestor_reparse_metadata_rejected) ... ok
+test_missing_dependency_and_unrecorded_package_file_refused (tests.test_candidate.SourceBindingTests.test_missing_dependency_and_unrecorded_package_file_refused) ... ok
+test_missing_each_required_file (tests.test_candidate.SourceBindingTests.test_missing_each_required_file) ... ok
+test_no_caller_source_list_argument (tests.test_candidate.SourceBindingTests.test_no_caller_source_list_argument) ... ok
+test_signed_release_rejects_changed_lockfile_plan_migration (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_changed_lockfile_plan_migration) ... ok
+test_signed_release_rejects_each_source_and_transitive_import_mutation (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_each_source_and_transitive_import_mutation) ... ok
+test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction) ... skipped 'Windows native junction creation denied EPERM; retained R3 raw; reparse rejection tested with injected filesystem metadata'
+test_unexpected_import_module_dynamic_import_and_binary (tests.test_candidate.SourceBindingTests.test_unexpected_import_module_dynamic_import_and_binary) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 325.546s
+
+OK (skipped=1)
+
+PROCESS_EXIT=0

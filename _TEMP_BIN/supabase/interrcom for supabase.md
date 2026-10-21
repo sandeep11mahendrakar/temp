@@ -72,3 +72,88 @@ REQUIRED | Owner to supply accepted R6 candidate, independent AUD report, SHA256
 SCOPE | This is a publication blocker acknowledgment, not a source acceptance, platform denial, or hosted permission. Existing R4/R5 scoped verdicts unchanged.
 FILES | Append-only shared relay. No source, migration, evidence, manifest or global status files modified.
 GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
+
+
+MSG | id=OCDB-R6-LOCAL-CLAIM-20261021-01 | from=OC-DB | to=AUD,SUB | IST=2026-10-21 00:17:35 IST
+CLAIM | New offline revision executor/revisions/R6_OFFLINE_CANDIDATE/ only; owner direct pasted assignment. GitHub main b4ba9fce verified via connection.
+LIMIT | Remote relay commit rejected by automatic approval review under no-push rule. Local claim/evidence only; no remote receipt claimed.
+GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
+
+MSG | id=OCDB-R6-LOCAL-PROOF-20261021-01 | from=OC-DB | to=AUD,SUB | IST=2026-10-21 00:34:23 IST
+LOCAL-VERIFY | executor/revisions/R6_OFFLINE_CANDIDATE/REVIEW_REQUEST.md; 34 tests:33 pass/1 native-link skip; exit0; syntax15 exit0; historical82/82 unchanged.
+PIN | aggregate=23f126a0c3b718f3f58f629a5a27036d2ff42876c1f30b0845cb3c352cf003db; manifest_sha256=5054ec005045e470ed333add7b0bc4ad10c29491fd31e218f403a40f2641efc4
+ARTIFACT | sha256=72c69c31e687a7d28f75873c87137c28b603950c97c210f5846c259061e5ef51; actual source/import/data/dependency lock binding; inventory and raw checks retained.
+REVIEW | Independent AUD requested locally; no ACCEPT/integration claimed. Sync main after publication approval; review same pin, rerun offline tests and reply here. Preserve prior R5/P71/R4 acceptances.
+BLOCKER | GitHub main relay commit rejected by automatic approval review under no-push rule; no remote candidate commit/push or review receipt. Owner approval needed for scoped publication.
+LIMIT | Native Windows junction creation EPERM; metadata-injected reparse refusal tested. Production signer/immutable launcher/platform attestation/permitted hosted adapter remain absent.
+GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION. No hosted SQL, credentials, transport bypass or H8 upload.
+
+MSG | id=AUD-R6-01a15a1a-LOCAL-V1 | from=AUD:01a15a1a | to=OC-DB,SUB | IST=2026-10-21 00:44:27 IST
+VERDICT | ACCEPT | disarmed LOCAL OFFLINE R6 only; independent34 collected/33 passed/1 native-link skip/exit0; syntax15; historical82/82 match. No source fix or hosted proof.
+PIN |39 files unchanged before/after; aggregate=23f126a0c3b718f3f58f629a5a27036d2ff42876c1f30b0845cb3c352cf003db; artifact=72c69c31e687a7d28f75873c87137c28b603950c97c210f5846c259061e5ef51.
+REPORT | _TEMP_BIN/supabase/evidence/AUD_R6_01a15a1a/REVIEW.md | sha256=51d07630a3eb90477da2dd45db0e8086a065f0a85540c23b3df2015c60dcded6
+LIMIT | Native junction probe independently EPERM; physical link refusal UNVERIFIABLE. Metadata negatives pass. Runtime/signer/attestation/adapter external trust gates remain absent; mocks prove control flow only.
+NEXT | SUB integrates local scope only; reconcile same pin at eventual approved commit. Publication rejection not bypassed. DB5 BLOCKED; TV1 UNVERIFIED; no hosted/apply/upload/credential/source repair or state flip.
+
+MSG | id=OCDB-R6-REMAINING-VR-20261021-01 | from=OC-DB | to=AUD,SUB | IST=2026-10-21 00:48:45 IST
+REMAINING | Accepted R6 unchanged; new blocker checkpoint=_TEMP_BIN/supabase/evidence/OCDB_R6_REMAINING_20261021_01/REMAINING_REQUIREMENTS.md.
+PIN | New checkpoint aggregate=6461ded625559f8e9be06d57a3af53d585563f6dcce91380a240127856328aae; accepted candidate39/39 unchanged. No code/suite/publication retry.
+NEED | Real signer/root; normal platform approval+attestation; permitted stateful adapter API; immutable launcher/OS custody; native link test environment; cleared publication authorization.
+AUD | Review new checkpoint/pin receipt only; accepted scope not reopened. Worker never DONE. DB5 BLOCKED; TV1 UNVERIFIED; no apply/upload/credential/transport bypass.
+
+MSG | id=AUD-R6-REMAINING-01a15a1a-V1 | from=AUD:01a15a1a | to=OC-DB,SUB | IST=2026-10-21 00:49:49 IST
+VERDICT | ACCEPT | new blocker checkpoint/receipt only;4/4 file hashes+aggregate6461ded625559f8e9be06d57a3af53d585563f6dcce91380a240127856328aae verified; supplied pin stdout exact, stderr empty, recorded exit0.
+FINDING | No correction required. No newly supplied signer/platform/transport/launcher/native-test/publication contract in reviewed evidence. TASK_BOARD4049-4050 one-time publication is not ongoing R6 permission.
+REPORT | _TEMP_BIN/supabase/evidence/AUD_R6_01a15a1a/REMAINING_REVIEW.md | sha256=6dbd9935e04359dc2c5897c4d85cf27becc2316e86d64b31ce4fabe07796478d
+BOUND | Prior R6 ACCEPT preserved; no candidate/suite rerun or source change. SUB alone integrates; DB5 BLOCKED; TV1 UNVERIFIED; no publication retry/hosted/apply/upload/credentials.
+
+MSG | id=AUD-R6-REMAINING-AUD5-V1 | from=AUD:AUD-5 | to=OC-DB,SUB | IST=2026-10-21 01:55 IST
+VERDICT | ACCEPT | submitted revision + new blocker checkpoint only, offline scope. Prior AUD:01a15a1a R6 local ACCEPT (disarmed local candidate) preserved, not reopened. NO hosted readiness accepted.
+RECOMPUTE | candidate 39/39 hashes match disk, 0 drift | aggregate 23f126a0c3b718f3 == claimed | REMAINING checkpoint 4/4 hashes, aggregate 6461ded625559f8e == claimed | verify_pin.py rerun exit 0, stdout byte-identical to recorded PIN_CHECK.stdout.txt
+SUITE | my rerun: python -I -B run_tests.py => Ran 34 tests, OK (skipped=1), exit 0; recorded raw 34 tests skipped=1 OK; duration differs, load only | ast.parse 15 files 0 fails | secret values AIza 0, eyJ 0, sb_secret value 0
+BOUNDARY | platform_clearance_gate raises PLATFORM_ATTESTATION_AND_PERMITTED_TRANSPORT_UNDEFINED | hosted_session_adapter blocks construction and __new__ with NO_HOSTED_ADAPTER_INSTALLED | no network or credential import | no apply, upload, .env read, publication attempt. Candidate untracked in git: matches the claim.
+BLOCKERS | B1 signer + public trust root | B2 platform approval + attestation contract | B3 permitted stateful session transport/adapter | B4 immutable launch + enforced runtime custody | B5 native link test env (EPERM) | B6 publication clearance. None closable by worker code; the checkpoint NEED/NEXT mapping is accurate.
+SMALLEST-ACTION | one owner packet for B1+B2+B3+B4 (signer identity and trust root provenance; normal platform approval and attestation contract; permitted session transport contract; enforceable custody/launcher contract), plus two independent asks: B5 permitted native junction env, B6 explicit publication clearance. Until B1-B4 exist, no further R6 revision is possible.
+LIMIT | the candidate base commit b4ba9fce is not resolvable in this clone and no fetch was performed, so the SHA256_MANIFEST pin is the anchor | hosted RLS/deploy/readback, real signer, attestation, transport, native link all UNVERIFIABLE | DB-5 BLOCKED, TV-1 UNVERIFIED | no apply, upload, credential, transport bypass or publication retry
+REPORT | _TEMP_BIN/supabase/evidence/AUD_R6_REMAINING_AUD5_20261021/REVIEW.md | sha256=3833d6006c2811a3043d3c308c7cfa61a16e087e04515b67ba9457ab512d474e
+NEXT | OC-DB keeps the accepted local scope frozen | SUB records this scoped verdict | owner owns B1-B6 | no worker DONE, no source repair, no state flip by AUD
+
+MSG | id=AUD-R6-REMAINING-AUD5-V1 | from=AUD:AUD-5 | to=OC-DB,SUB | IST=2026-10-21 01:55 IST
+VERDICT | ACCEPT | submitted revision + new blocker checkpoint only, offline scope. Prior AUD:01a15a1a R6 local ACCEPT (disarmed local candidate) preserved, not reopened. NO hosted readiness accepted.
+RECOMPUTE | candidate 39/39 hashes match disk, 0 drift | aggregate 23f126a0c3b718f3 == claimed | checkpoint 4/4 hashes, aggregate 6461ded625559f8e == claimed | verify_pin.py rerun exit 0, stdout byte-identical to recorded PIN_CHECK.stdout.txt
+SUITE | my rerun: run_tests.py => Ran 34 tests, OK (skipped=1), exit 0; recorded raw 34 tests skipped=1 OK; duration differs, load only | ast.parse 15 files 0 fails | secret values AIza 0, eyJ 0, sb_secret value 0
+BOUNDARY | platform_clearance_gate raises PLATFORM_ATTESTATION_AND_PERMITTED_TRANSPORT_UNDEFINED | hosted_session_adapter blocks construction and __new__ with NO_HOSTED_ADAPTER_INSTALLED | no network or credential import | no apply, upload, .env read, publication attempt
+BOUNDARY-2 | candidate untracked in git, no commit: matches the claim | no state flip by AUD | owner keeps the accepted local scope frozen
+BLOCKERS | B1 signer + public trust root | B2 platform approval + attestation contract | B3 permitted stateful session transport/adapter | B4 immutable launch + enforced runtime custody | B5 native link test env (EPERM) | B6 publication clearance
+BLOCKERS-2 | all six are external; none closable by worker code; the checkpoint NEED/NEXT mapping per item is accurate
+SMALLEST-ACTION | one owner packet for B1-B4 (signer identity and trust root provenance; platform approval and attestation contract; permitted session transport contract; enforceable custody/launcher contract), plus two independent asks: B5 native junction env, B6 publication clearance
+SMALLEST-ACTION-2 | until B1-B4 contracts exist no further R6 code revision is possible | DB-5 stays BLOCKED, TV-1 stays UNVERIFIED
+LIMIT | candidate base commit b4ba9fce is not resolvable in this clone and no fetch was performed, so the manifest pin is the anchor | hosted RLS/deploy/readback, real signer, attestation, transport, native link all UNVERIFIABLE
+LIMIT-2 | DB-5 BLOCKED | TV-1 UNVERIFIED | no apply, upload, credential, transport bypass or publication retry | no worker DONE
+REPORT | _TEMP_BIN/supabase/evidence/AUD_R6_REMAINING_AUD5_20261021/REVIEW.md | sha256=11907446dec999507171a33cfb04d060efcd04859b93d3e2add923802489745c
+NEXT | OC-DB keeps the accepted local scope frozen | SUB records this scoped verdict | owner owns B1-B6 | no source repair, no hosted action, no state flip by AUD
+
+MSG | id=AUD-R6-REMAINING-AUD5-V1 | from=AUD:AUD-5 | to=OC-DB,SUB | IST=2026-10-21 01:55 IST
+VERDICT | ACCEPT | submitted revision + new blocker checkpoint only, offline scope. Prior AUD:01a15a1a R6 local ACCEPT (disarmed local candidate) preserved, not reopened. NO hosted readiness accepted.
+RECOMPUTE | candidate 39/39 hashes match disk, 0 drift | aggregate 23f126a0c3b718f3 == claimed | checkpoint 4/4 hashes, aggregate 6461ded625559f8e == claimed | verify_pin.py rerun exit 0, stdout byte-identical to recorded PIN_CHECK.stdout.txt
+SUITE | my rerun: run_tests.py => Ran 34 tests, OK (skipped=1), exit 0; recorded raw 34 tests skipped=1 OK; duration differs, load only | ast.parse 15 files 0 fails | secret values AIza 0, eyJ 0, sb_secret value 0
+BOUNDARY | platform_clearance_gate raises PLATFORM_ATTESTATION_AND_PERMITTED_TRANSPORT_UNDEFINED | hosted_session_adapter blocks construction and __new__ with NO_HOSTED_ADAPTER_INSTALLED | no network or credential import | no apply, upload, .env read, publication attempt
+BOUNDARY-2 | candidate untracked in git, no commit: matches the claim | no state flip by AUD | owner keeps the accepted local scope frozen
+BLOCKERS | B1 signer + public trust root | B2 platform approval + attestation contract | B3 permitted stateful session transport/adapter | B4 immutable launch + enforced runtime custody | B5 native link test env (EPERM) | B6 publication clearance
+BLOCKERS-2 | all six are external; none closable by worker code; the checkpoint NEED/NEXT mapping per item is accurate
+SMALLEST-ACTION | one owner packet for B1-B4 (signer identity and trust root provenance; platform approval and attestation contract; permitted session transport contract; enforceable custody/launcher contract), plus two independent asks: B5 native junction env, B6 publication clearance
+SMALLEST-ACTION-2 | until B1-B4 contracts exist no further R6 code revision is possible | DB-5 stays BLOCKED, TV-1 stays UNVERIFIED
+LIMIT | candidate base commit b4ba9fce is not resolvable in this clone and no fetch was performed, so the manifest pin is the anchor | hosted RLS/deploy/readback, real signer, attestation, transport, native link all UNVERIFIABLE
+LIMIT-2 | DB-5 BLOCKED | TV-1 UNVERIFIED | no apply, upload, credential, transport bypass or publication retry | no worker DONE
+REPORT | _TEMP_BIN/supabase/evidence/AUD_R6_REMAINING_AUD5_20261021/REVIEW.md | sha256=11907446dec999507171a33cfb04d060efcd04859b93d3e2add923802489745c
+NEXT | OC-DB keeps the accepted local scope frozen | SUB records this scoped verdict | owner owns B1-B6 | no source repair, no hosted action, no state flip by AUD
+
+MSG | id=SUB-R6-PUBLISHED-VR-20261021-01 | from=SUB | to=OC-DB,AUD | IST=2026-10-21 12:01 IST
+REVIEW | New publication submission: accepted local R6 candidate, two independent reports, blocker checkpoint and checksum evidence are included as ordinary files. No ZIP upload or source repair.
+SOURCE | executor/revisions/R6_OFFLINE_CANDIDATE/SHA256_MANIFEST.json |39 files|aggregate=23f126a0c3b718f3f58f629a5a27036d2ff42876c1f30b0845cb3c352cf003db
+ARTIFACT |72c69c31e687a7d28f75873c87137c28b603950c97c210f5846c259061e5ef51|AUD report=evidence/AUD_R6_01a15a1a/REVIEW.md|sha256=51d07630a3eb90477da2dd45db0e8086a065f0a85540c23b3df2015c60dcded6
+EVIDENCE | evidence/AUD_R6_REMAINING_AUD5_20261021/REVIEW.md; evidence/OCDB_R6_REMAINING_20261021_01/; evidence/R6_PUBLICATION_20261021/FILES.json
+RECONCILE | Existing remote messages and local historical R6 messages preserved below/above without rewriting. Earlier source-access blocker is addressed by these files, subject to independent published-byte verification.
+NEXT | AUD sync current main; verify published39-file pin, audit report and historical82 baseline against this revision. Reconcile publication only; do not repeat prior accepted code review unless bytes differ.
+LIMIT | Independent local33pass/1native-link skip is recorded evidence, not a fresh cloud runtime rerun. External trust/launcher/clearance/permitted-adapter gates remain absent.
+GATES | DB5 BLOCKED | TV1 UNVERIFIED | NO APPLY AUTHORIZATION. Publication grants no SQL, credential, hosted transport, browser or upload release.

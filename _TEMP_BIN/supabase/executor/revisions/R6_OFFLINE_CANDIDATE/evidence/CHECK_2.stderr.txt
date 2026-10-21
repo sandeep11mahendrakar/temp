@@ -1,0 +1,473 @@
+test_actual_entry_validates_on_disk_bytes_before_signature (tests.test_candidate.ReleaseAndClearanceTests.test_actual_entry_validates_on_disk_bytes_before_signature) ... ok
+test_cli_stays_blocked_and_redacts_errors (tests.test_candidate.ReleaseAndClearanceTests.test_cli_stays_blocked_and_redacts_errors) ... ok
+test_invalid_signature_rejected (tests.test_candidate.ReleaseAndClearanceTests.test_invalid_signature_rejected) ... ok
+test_missing_mismatched_and_fabricated_external_clearance_never_open (tests.test_candidate.ReleaseAndClearanceTests.test_missing_mismatched_and_fabricated_external_clearance_never_open) ... ok
+test_no_real_signer_and_no_injected_roots_in_entry_api (tests.test_candidate.ReleaseAndClearanceTests.test_no_real_signer_and_no_injected_roots_in_entry_api) ... ok
+test_signed_release_is_not_platform_clearance (tests.test_candidate.ReleaseAndClearanceTests.test_signed_release_is_not_platform_clearance) ... ok
+test_target_digest_plan_expiry_and_authorization_rejection (tests.test_candidate.ReleaseAndClearanceTests.test_target_digest_plan_expiry_and_authorization_rejection) ... ok
+test_broken_send_does_not_skip_rollback_and_close (tests.test_candidate.RuntimeTests.test_broken_send_does_not_skip_rollback_and_close) ... ok
+test_child_failure_and_broken_ipc_never_pass (tests.test_candidate.RuntimeTests.test_child_failure_and_broken_ipc_never_pass) ... ok
+test_cleanup_watchdog_and_start_failure_stay_fail (tests.test_candidate.RuntimeTests.test_cleanup_watchdog_and_start_failure_stay_fail) ... ok
+test_connect_failure_and_abnormal_child_still_launch_cleanup (tests.test_candidate.RuntimeTests.test_connect_failure_and_abnormal_child_still_launch_cleanup) ... ok
+test_exact_35_cases_through_guarded_adapter (tests.test_candidate.RuntimeTests.test_exact_35_cases_through_guarded_adapter) ... ok
+test_residual_fixtures_and_baseline_drift_fail (tests.test_candidate.RuntimeTests.test_residual_fixtures_and_baseline_drift_fail) ... ok
+test_rollback_and_close_failure_and_fresh_cleanup (tests.test_candidate.RuntimeTests.test_rollback_and_close_failure_and_fresh_cleanup) ... ok
+test_six_neg05_constraints_and_unique_ids (tests.test_candidate.RuntimeTests.test_six_neg05_constraints_and_unique_ids) ... ok
+test_sql_role_params_and_case_plan_allowlist (tests.test_candidate.RuntimeTests.test_sql_role_params_and_case_plan_allowlist) ... ok
+test_startup_exception_still_attempts_fresh_cleanup (tests.test_candidate.RuntimeTests.test_startup_exception_still_attempts_fresh_cleanup) ... ok
+test_watchdog_timeout_and_fresh_cleanup (tests.test_candidate.RuntimeTests.test_watchdog_timeout_and_fresh_cleanup) ... ok
+test_changed_package_bytes_and_native_transitive_dependency_rejected (tests.test_candidate.SourceBindingTests.test_changed_package_bytes_and_native_transitive_dependency_rejected) ... ERROR
+test_changed_package_bytes_and_native_transitive_dependency_rejected (tests.test_candidate.SourceBindingTests.test_changed_package_bytes_and_native_transitive_dependency_rejected) ... ERROR
+test_complete_graph_and_stable_digest (tests.test_candidate.SourceBindingTests.test_complete_graph_and_stable_digest) ... ERROR
+test_complete_graph_and_stable_digest (tests.test_candidate.SourceBindingTests.test_complete_graph_and_stable_digest) ... ERROR
+test_dependency_inventory_matches_review_lock (tests.test_candidate.SourceBindingTests.test_dependency_inventory_matches_review_lock) ... ERROR
+test_dependency_inventory_matches_review_lock (tests.test_candidate.SourceBindingTests.test_dependency_inventory_matches_review_lock) ... ERROR
+test_missing_dependency_and_unrecorded_package_file_refused (tests.test_candidate.SourceBindingTests.test_missing_dependency_and_unrecorded_package_file_refused) ... ERROR
+test_missing_dependency_and_unrecorded_package_file_refused (tests.test_candidate.SourceBindingTests.test_missing_dependency_and_unrecorded_package_file_refused) ... ERROR
+test_missing_each_required_file (tests.test_candidate.SourceBindingTests.test_missing_each_required_file) ... ERROR
+test_missing_each_required_file (tests.test_candidate.SourceBindingTests.test_missing_each_required_file) ... ERROR
+test_no_caller_source_list_argument (tests.test_candidate.SourceBindingTests.test_no_caller_source_list_argument) ... ERROR
+test_no_caller_source_list_argument (tests.test_candidate.SourceBindingTests.test_no_caller_source_list_argument) ... ERROR
+test_signed_release_rejects_changed_lockfile_plan_migration (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_changed_lockfile_plan_migration) ... ERROR
+test_signed_release_rejects_changed_lockfile_plan_migration (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_changed_lockfile_plan_migration) ... ERROR
+test_signed_release_rejects_each_source_and_transitive_import_mutation (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_each_source_and_transitive_import_mutation) ... ERROR
+test_signed_release_rejects_each_source_and_transitive_import_mutation (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_each_source_and_transitive_import_mutation) ... ERROR
+test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction) ... ERROR
+test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction) ... ERROR
+test_unexpected_import_module_dynamic_import_and_binary (tests.test_candidate.SourceBindingTests.test_unexpected_import_module_dynamic_import_and_binary) ... ERROR
+test_unexpected_import_module_dynamic_import_and_binary (tests.test_candidate.SourceBindingTests.test_unexpected_import_module_dynamic_import_and_binary) ... ERROR
+
+======================================================================
+ERROR: test_changed_package_bytes_and_native_transitive_dependency_rejected (tests.test_candidate.SourceBindingTests.test_changed_package_bytes_and_native_transitive_dependency_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpaioleflc\\candidate'
+
+======================================================================
+ERROR: test_changed_package_bytes_and_native_transitive_dependency_rejected (tests.test_candidate.SourceBindingTests.test_changed_package_bytes_and_native_transitive_dependency_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpaioleflc'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpaioleflc'
+
+======================================================================
+ERROR: test_complete_graph_and_stable_digest (tests.test_candidate.SourceBindingTests.test_complete_graph_and_stable_digest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp_vx5orng\\candidate'
+
+======================================================================
+ERROR: test_complete_graph_and_stable_digest (tests.test_candidate.SourceBindingTests.test_complete_graph_and_stable_digest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp_vx5orng'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp_vx5orng'
+
+======================================================================
+ERROR: test_dependency_inventory_matches_review_lock (tests.test_candidate.SourceBindingTests.test_dependency_inventory_matches_review_lock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp1o0dhqb_\\candidate'
+
+======================================================================
+ERROR: test_dependency_inventory_matches_review_lock (tests.test_candidate.SourceBindingTests.test_dependency_inventory_matches_review_lock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp1o0dhqb_'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp1o0dhqb_'
+
+======================================================================
+ERROR: test_missing_dependency_and_unrecorded_package_file_refused (tests.test_candidate.SourceBindingTests.test_missing_dependency_and_unrecorded_package_file_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp5wiy1bfv\\candidate'
+
+======================================================================
+ERROR: test_missing_dependency_and_unrecorded_package_file_refused (tests.test_candidate.SourceBindingTests.test_missing_dependency_and_unrecorded_package_file_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp5wiy1bfv'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp5wiy1bfv'
+
+======================================================================
+ERROR: test_missing_each_required_file (tests.test_candidate.SourceBindingTests.test_missing_each_required_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp_j74_5hg\\candidate'
+
+======================================================================
+ERROR: test_missing_each_required_file (tests.test_candidate.SourceBindingTests.test_missing_each_required_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp_j74_5hg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmp_j74_5hg'
+
+======================================================================
+ERROR: test_no_caller_source_list_argument (tests.test_candidate.SourceBindingTests.test_no_caller_source_list_argument)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpdnss65xy\\candidate'
+
+======================================================================
+ERROR: test_no_caller_source_list_argument (tests.test_candidate.SourceBindingTests.test_no_caller_source_list_argument)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpdnss65xy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpdnss65xy'
+
+======================================================================
+ERROR: test_signed_release_rejects_changed_lockfile_plan_migration (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_changed_lockfile_plan_migration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpss0ae4w9\\candidate'
+
+======================================================================
+ERROR: test_signed_release_rejects_changed_lockfile_plan_migration (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_changed_lockfile_plan_migration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpss0ae4w9'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpss0ae4w9'
+
+======================================================================
+ERROR: test_signed_release_rejects_each_source_and_transitive_import_mutation (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_each_source_and_transitive_import_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpi6vbkmmh\\candidate'
+
+======================================================================
+ERROR: test_signed_release_rejects_each_source_and_transitive_import_mutation (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_each_source_and_transitive_import_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpi6vbkmmh'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpi6vbkmmh'
+
+======================================================================
+ERROR: test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpn8u5d1jg\\candidate'
+
+======================================================================
+ERROR: test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpn8u5d1jg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpn8u5d1jg'
+
+======================================================================
+ERROR: test_unexpected_import_module_dynamic_import_and_binary (tests.test_candidate.SourceBindingTests.test_unexpected_import_module_dynamic_import_and_binary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 118, in setUp
+    shutil.copytree(ROOT / 'src', self.root / 'src')
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 600, in copytree
+    return _copytree(entries=entries, src=src, dst=dst, symlinks=symlinks,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 498, in _copytree
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+  File "<frozen os>", line 215, in makedirs
+  File "<frozen os>", line 225, in makedirs
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpj_a16p_g\\candidate'
+
+======================================================================
+ERROR: test_unexpected_import_module_dynamic_import_and_binary (tests.test_candidate.SourceBindingTests.test_unexpected_import_module_dynamic_import_and_binary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 637, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpj_a16p_g'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 639, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\sandeep\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\sandeep\\AppData\\Local\\Packages\\sandbox.{4ac4f54b-01e1-4629-8938-fa8509204eb1}\\AC\\Temp\\tmpj_a16p_g'
+
+----------------------------------------------------------------------
+Ran 28 tests in 50.457s
+
+FAILED (errors=20)

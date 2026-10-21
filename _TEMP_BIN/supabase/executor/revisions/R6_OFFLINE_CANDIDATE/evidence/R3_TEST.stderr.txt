@@ -1,0 +1,89 @@
+test_actual_entry_validates_on_disk_bytes_before_signature (tests.test_candidate.ReleaseAndClearanceTests.test_actual_entry_validates_on_disk_bytes_before_signature) ... ok
+test_cli_stays_blocked_and_redacts_errors (tests.test_candidate.ReleaseAndClearanceTests.test_cli_stays_blocked_and_redacts_errors) ... ok
+test_invalid_signature_rejected (tests.test_candidate.ReleaseAndClearanceTests.test_invalid_signature_rejected) ... ok
+test_missing_mismatched_and_fabricated_external_clearance_never_open (tests.test_candidate.ReleaseAndClearanceTests.test_missing_mismatched_and_fabricated_external_clearance_never_open) ... ok
+test_no_real_signer_and_no_injected_roots_in_entry_api (tests.test_candidate.ReleaseAndClearanceTests.test_no_real_signer_and_no_injected_roots_in_entry_api) ... ok
+test_signed_release_is_not_platform_clearance (tests.test_candidate.ReleaseAndClearanceTests.test_signed_release_is_not_platform_clearance) ... ok
+test_target_digest_plan_expiry_and_authorization_rejection (tests.test_candidate.ReleaseAndClearanceTests.test_target_digest_plan_expiry_and_authorization_rejection) ... ok
+test_broken_send_does_not_skip_rollback_and_close (tests.test_candidate.RuntimeTests.test_broken_send_does_not_skip_rollback_and_close) ... ok
+test_child_failure_and_broken_ipc_never_pass (tests.test_candidate.RuntimeTests.test_child_failure_and_broken_ipc_never_pass) ... ok
+test_cleanup_watchdog_and_start_failure_stay_fail (tests.test_candidate.RuntimeTests.test_cleanup_watchdog_and_start_failure_stay_fail) ... ok
+test_connect_failure_and_abnormal_child_still_launch_cleanup (tests.test_candidate.RuntimeTests.test_connect_failure_and_abnormal_child_still_launch_cleanup) ... ok
+test_each_neg05_breaks_one_independent_predicate (tests.test_candidate.RuntimeTests.test_each_neg05_breaks_one_independent_predicate) ... ok
+test_exact_35_cases_through_guarded_adapter (tests.test_candidate.RuntimeTests.test_exact_35_cases_through_guarded_adapter) ... ok
+test_malformed_pid_ipc_still_attempts_fresh_cleanup (tests.test_candidate.RuntimeTests.test_malformed_pid_ipc_still_attempts_fresh_cleanup) ... ok
+test_process_construction_failure_closes_both_pipe_handles (tests.test_candidate.RuntimeTests.test_process_construction_failure_closes_both_pipe_handles) ... ok
+test_residual_fixtures_and_baseline_drift_fail (tests.test_candidate.RuntimeTests.test_residual_fixtures_and_baseline_drift_fail) ... ok
+test_rollback_and_close_failure_and_fresh_cleanup (tests.test_candidate.RuntimeTests.test_rollback_and_close_failure_and_fresh_cleanup) ... ok
+test_six_neg05_constraints_and_unique_ids (tests.test_candidate.RuntimeTests.test_six_neg05_constraints_and_unique_ids) ... ok
+test_sql_role_params_and_case_plan_allowlist (tests.test_candidate.RuntimeTests.test_sql_role_params_and_case_plan_allowlist) ... ok
+test_startup_exception_still_attempts_fresh_cleanup (tests.test_candidate.RuntimeTests.test_startup_exception_still_attempts_fresh_cleanup) ... ok
+test_watchdog_timeout_and_fresh_cleanup (tests.test_candidate.RuntimeTests.test_watchdog_timeout_and_fresh_cleanup) ... ok
+test_cached_bytecode_is_also_bound (tests.test_candidate.SourceBindingTests.test_cached_bytecode_is_also_bound) ... ok
+test_changed_package_bytes_and_native_transitive_dependency_rejected (tests.test_candidate.SourceBindingTests.test_changed_package_bytes_and_native_transitive_dependency_rejected) ... ok
+test_complete_graph_and_stable_digest (tests.test_candidate.SourceBindingTests.test_complete_graph_and_stable_digest) ... ok
+test_dependency_inventory_matches_review_lock (tests.test_candidate.SourceBindingTests.test_dependency_inventory_matches_review_lock) ... ok
+test_missing_dependency_and_unrecorded_package_file_refused (tests.test_candidate.SourceBindingTests.test_missing_dependency_and_unrecorded_package_file_refused) ... ok
+test_missing_each_required_file (tests.test_candidate.SourceBindingTests.test_missing_each_required_file) ... ok
+test_no_caller_source_list_argument (tests.test_candidate.SourceBindingTests.test_no_caller_source_list_argument) ... ok
+test_signed_release_rejects_changed_lockfile_plan_migration (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_changed_lockfile_plan_migration) ... ok
+test_signed_release_rejects_each_source_and_transitive_import_mutation (tests.test_candidate.SourceBindingTests.test_signed_release_rejects_each_source_and_transitive_import_mutation) ... ok
+test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction) ... FAIL
+test_unexpected_import_module_dynamic_import_and_binary (tests.test_candidate.SourceBindingTests.test_unexpected_import_module_dynamic_import_and_binary) ... ok
+
+======================================================================
+FAIL: test_symlink_and_parent_junction (tests.test_candidate.SourceBindingTests.test_symlink_and_parent_junction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\tests\test_candidate.py", line 185, in test_symlink_and_parent_junction
+    self.assertEqual(run.returncode, 0, run.stderr.decode(errors='replace'))
+AssertionError: 1 != 0 : node:fs:1877
+
+  binding.symlink(
+
+          ^
+
+
+
+Error: EPERM: operation not permitted, symlink 'C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\evidence\fake-only-mkxidmdc\elsewhere\src' -> 'C:\Users\sandeep\pes\CAPSTONE\sem 6 reivew 3\code\_TEMP_BIN\supabase\executor\revisions\R6_OFFLINE_CANDIDATE\evidence\fake-only-mkxidmdc\candidate\src'
+
+    at Object.symlinkSync (node:fs:1877:11)
+
+    at [eval]:1:20
+
+    at runScriptInThisContext (node:internal/vm:219:10)
+
+    at node:internal/process/execution:451:12
+
+    at [eval]-wrapper:6:24
+
+    at runScriptInContext (node:internal/process/execution:449:60)
+
+    at evalFunction (node:internal/process/execution:283:30)
+
+    at evalTypeScript (node:internal/process/execution:295:3)
+
+    at node:internal/main/eval_string:71:3 {
+
+  errno: -4048,
+
+  code: 'EPERM',
+
+  syscall: 'symlink',
+
+  path: 'C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\_TEMP_BIN\\supabase\\executor\\revisions\\R6_OFFLINE_CANDIDATE\\evidence\\fake-only-mkxidmdc\\elsewhere\\src',
+
+  dest: 'C:\\Users\\sandeep\\pes\\CAPSTONE\\sem 6 reivew 3\\code\\_TEMP_BIN\\supabase\\executor\\revisions\\R6_OFFLINE_CANDIDATE\\evidence\\fake-only-mkxidmdc\\candidate\\src'
+
+}
+
+
+
+Node.js v24.18.0
+
+
+
+----------------------------------------------------------------------
+Ran 32 tests in 122.642s
+
+FAILED (failures=1)

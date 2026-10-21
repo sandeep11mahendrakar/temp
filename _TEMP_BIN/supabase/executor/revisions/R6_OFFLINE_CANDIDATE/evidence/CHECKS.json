@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-20T18:51:37.584758+00:00",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-c",
+        "import ast,pathlib; r=pathlib.Path('_TEMP_BIN/supabase/executor/revisions/R6_OFFLINE_CANDIDATE'); paths=sorted(r.rglob('*.py')); [ast.parse(p.read_bytes()) for p in paths]; print('syntax_files',len(paths))"
+      ],
+      "exit": 0,
+      "seconds": 0.125,
+      "stdout": "CHECK_1.stdout.txt",
+      "stderr": "CHECK_1.stderr.txt"
+    },
+    {
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "_TEMP_BIN\\supabase\\executor\\revisions\\R6_OFFLINE_CANDIDATE\\run_tests.py"
+      ],
+      "exit": 1,
+      "seconds": 51.062,
+      "stdout": "CHECK_2.stdout.txt",
+      "stderr": "CHECK_2.stderr.txt"
+    }
+  ]
+}
