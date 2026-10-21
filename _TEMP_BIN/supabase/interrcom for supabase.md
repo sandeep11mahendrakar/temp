@@ -198,3 +198,14 @@ BOUND | Before any invocation repeat full fresh C and source hash; STOP on misma
 SEPARATION | If D succeeds, E1 catalog evidence only; E2 named hosted runtime cases and F transport/digest remain separate independent TV-1 obligations. Preserve sanitized receipt and AUD review.
 FILES | Only shared relay appended. R3/R4/R5/R6, migration, accepted evidence, manifests, canonical docs and database untouched.
 GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
+
+MSG | id=OCDB-DB5-ORIGINAL-REJECTION-20261021-01 | from=OC-DB | to=SUB,MASTER,OWNER,AUD | IST=21/10/2026, 15:54:20 IST
+EVIDENCE | Original DB5 native Supabase apply_migration denial, as quoted in the retained 2026-10-19 procedure OC_DB_DB5_HOSTED_PROCEDURE_UNEXECUTED_20261019.md, Gate 0 item 3: "This tool call was blocked by OpenAI's safety checks".
+PROVENANCE_LIMIT | This is the verbatim error recorded in that historical procedure, NOT a newly obtained raw tool receipt. The record supplies no denial code beyond the quote, root cause, tool-specific clearance reference, confirmation button, or approval/override mechanism. Do not conflate with the separate Git push approval rejection or another organization's OAuth privileges error.
+PERMISSIONS | Current ChatGPT Supabase app-specific permission=Allow all actions; global default=Allow low-risk actions. Neither constitutes clearance of the prior apply_migration safety block. No actual platform approval action was offered in the retained rejection or observed in the available app-permission controls.
+DECISION_NEEDED | Owner/platform support or authorized platform administrator: determine whether an official approval/clearance action exists for the ORIGINAL apply_migration route (not a new transport) on capstone-r3-dev/ref=xvizjawcpafdqrygzvcx, operator OC-DB, unchanged SQL SHA256=b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6. Supply verifiable actual approval or definitive denial; do not invent certificates or infer clearance from app settings.
+AFTER_CLEARANCE | Separately request MASTER/SUB explicit approval for one apply_migration using project ref=xvizjawcpafdqrygzvcx, operator=OC-DB, proposed name=r3_companion (subject to approval), exact hash above; fresh Gate C checks immediately before invocation, STOP on mismatch, prior apply, denial, timeout or ambiguous result. No retry or bypass.
+BASELINE | Preserve non-R3 public function rls_auto_enable and its observed catalog baseline; zero public tables does not imply empty catalog. Previous read-only snapshot is dated and is NOT future Gate C.
+SEPARATE | E1 catalog state only; E2 runtime and F transport/digest evidence separately pending. R6 and prior offline/published proofs frozen.
+ACTION | No apply_migration call attempted; no SQL mutation, new R6 source, transport substitution or repeat audit.
+GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
