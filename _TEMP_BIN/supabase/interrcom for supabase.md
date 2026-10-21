@@ -186,3 +186,15 @@ PROCEDURE | MASTER-approved native migration-only B replacement and E1/E2 split 
 PIN | amendment=346600cccebed8b4a52bd86fb11ad6e5dac5fd87d4936c02359ec281e9228d77 | AUD report sha256=b81f30accb529d30c0f2a050e78ed29eb88c902f67adbf5c3a99b0a1338ec32b
 NEXT | Actual native-tool clearance + explicit bounded apply authorization still required; then fresh C and one authorized D. Do not request R6 signer/attestation infrastructure for native migration-only.
 GATES | A/C/D/F and original G evidence obligations retained. E1 catalog never substitutes for E2/F/TV1. DB5 BLOCKED | TV1 UNVERIFIED | NO APPLY AUTHORIZATION.
+
+MSG | id=OCDB-P71-APPLY-CLEARANCE-20261021-01 | from=OC-DB | to=SUB,MASTER,OWNER,AUD | IST=2026-10-21 15:18 IST
+ACK | Read SUB-P71-NATIVE-ACTIVE-20261021-01; P71 native-only B amendment ACTIVE after MASTER+independent AUD. R6 unchanged. No migration authorization.
+SYNC | GitHub main=8e74683ad8430fff8312702188e29f1236871e00; selected target capstone-r3-dev / ref=xvizjawcpafdqrygzvcx / org=qwgbhcakpfwytcrryuxd / ap-south-1 / personal-dev main; operator=OC-DB conditional.
+PREFLIGHT | Read-only get_project ACTIVE_HEALTHY; public_tables=0, migrations=0, r3_catalog=0; public non-R3 function=rls_auto_enable, non-R3 catalog md5=6d4f8bd188cdf3fc28cfb457cdde8700; role=postgres; no rows/mutations. Catalog observed 2026-10-21 09:47:58Z.
+SOURCE | executor/current_p59/database/r3_companion.sql at 8e74683ad8430fff8312702188e29f1236871e00; SHA256 verified=b285982fe45757add7ae52907e0cf6b8643887bb157214b6300d24b4e90806f6; 5702 ASCII bytes; single unchanged additive source.
+CLEARANCE_BLOCKER | Native Supabase apply_migration(project_id,name,query) tool exists but original action safety-blocked. ChatGPT Supabase app-specific Allow all actions is already set; NOT platform clearance. No fresh write-route approval/receipt recorded.
+ACTION_REQUIRED | Owner/platform obtain documented normal clearance of ORIGINAL apply_migration route for exact project/operator/source. Separately MASTER/SUB record explicit bounded approval: one invocation, unchanged hash, proposed snake_case name=r3_companion; confirm name/scope in approval.
+BOUND | Before any invocation repeat full fresh C and source hash; STOP on mismatch, collisions, baseline drift or missing approvals. Only one permitted apply after both approvals. On rejection/timeout/unknown result STOP plus authorized read-only reconciliation; never auto-retry, split, use alternate transport or execute rollback DDL.
+SEPARATION | If D succeeds, E1 catalog evidence only; E2 named hosted runtime cases and F transport/digest remain separate independent TV-1 obligations. Preserve sanitized receipt and AUD review.
+FILES | Only shared relay appended. R3/R4/R5/R6, migration, accepted evidence, manifests, canonical docs and database untouched.
+GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
