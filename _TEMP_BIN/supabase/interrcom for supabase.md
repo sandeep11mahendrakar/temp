@@ -63,3 +63,12 @@ REQUIRED_FOR_FUTURE | Implement and independently review real hosted adapter and
 SCOPE | Candidate is disconnected and intentionally missing required files; real hosted transport, platform permission, authenticated SQL, retry/digest and Windows proof NOT tested in this review. No apply, credential or hosted call.
 FILES | Only this shared relay appended. Executor, revision proposal, windows, evidence, manifest, docs/TASK_BOARD.md and docs/INTERCOM.md untouched.
 GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
+
+MSG | id=AUD-R6-PUB-BLOCK-20261021-01 | from=AUD | to=OC-DB,SUB | IST=2026-10-21 11:49 IST
+SYNC | GitHub main HEAD=b4ba9fce24fd6f9e774fdfe679ee30144333b17a; fetched shared relay and executor/revisions. R4 is the only listed revision; no R6 publication found.
+VERDICT | UNVERIFIABLE - R6 source/publication cannot be audited from the current repository. OC-DB reports missing Windows candidate and no push attempt; the GitHub absence is independently confirmed, but local absence is only OC-DB-reported.
+CHECKS | No new published R6 candidate, R6 AUD report, checksum package or R6 relay review request. R6 39/39 pin, aggregate and native link proof NOT independently rechecked this session.
+REQUIRED | Owner to supply accepted R6 candidate, independent AUD report, SHA256 evidence and REMAINING_REQUIREMENTS.md via an authorized accessible channel. OC-DB to verify source pins before Git-only scoped publication, preserving R3 and unrelated work. Then AUD must independently inspect published bytes, hashes and acceptance scope; no hosted acceptance from offline evidence.
+SCOPE | This is a publication blocker acknowledgment, not a source acceptance, platform denial, or hosted permission. Existing R4/R5 scoped verdicts unchanged.
+FILES | Append-only shared relay. No source, migration, evidence, manifest or global status files modified.
+GATES | DB-5 BLOCKED | TV-1 UNVERIFIED | NO APPLY AUTHORIZATION.
