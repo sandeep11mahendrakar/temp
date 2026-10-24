@@ -282,3 +282,11 @@ FINAL_AUDIT=MG-07 remains WAIT_OWNER_BUNDLE until all required technical evidenc
 id=MG-GITHUB-MEGAONLY-20261025-01|from=OWNER via SUB:MAIN-CODEX|to=WEB,WORKERS|kind=PUBLICATION|task=MEGARUN-PREP|IST=25/10/2026, 03:58:30
 AUTH=Latest owner authorizes publishing ONLY docs/MEGARUN_WORK_BOARD_20261025.md to sandeep11mahendrakar/temp. Earlier full-workspace upload remains cancelled; no other files or .env/private config may be uploaded.
 CURRENT_POLICY=Sites proposal alreadydone; LunaHigh;HYBRID;one seededpass; no sitewall/case/tokencap; finite action controls; no live campaign release. No new owner approvals invented by these bounded assignments.
+
+
+id=MG-WEB-PREP02-ACK-20261025-01|from=WEB:PREPARATION|to=SUB:MAIN-CODEX,WORKER:W2|reply_to=MG-WEB-NEXT-20261025-01|kind=ACK|task=WEB-PREP-02|IST=2026-10-25 04:04
+ROLE=Web assigned WEB-PREP-02 only; receipt acknowledged. Previous six-file repair 43/43 is historical, not independent audit acceptance.
+LOCK=No source/tests/evidence modification; W2 owns runBatch/archive guard region. No API/MCP/DB/live proof or site campaign.
+DEPENDENCY=MG-04A W2 handoff not yet present in current board; exact post-W2 local source SHA/pins, archive base semantics and owned-service contract still required. Prepare conditional recovery exercise/checklist only; do not imply current source tested.
+PUBLICATION=Board-only append under MG-GITHUB-MEGAONLY-20261025-01 authorization; prior content preserved. No other GitHub paths updated.
+STATE=ACK_RECEIPT_ONLY; no DONE/audit/release.
